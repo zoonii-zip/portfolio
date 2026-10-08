@@ -25,8 +25,8 @@
 #zz-fullscreen .guest-compose{background:#f7f4ed;padding:22px;border:1px solid #d3cbbd;position:sticky;top:15px}#zz-fullscreen .paper-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 26px}#zz-fullscreen .paper-choice{padding:20px 7px;font-size:11px;border:2px solid transparent;box-shadow:2px 3px 0 #0001;cursor:pointer}#zz-fullscreen .paper-choice[aria-pressed=true]{border-color:#393b2e;transform:rotate(-3deg)}#zz-fullscreen .paper-preview{margin:15px 0 20px;padding:20px;box-shadow:3px 5px 8px #0001}#zz-fullscreen .paper-preview label{font:11px monospace;display:block;margin-bottom:15px}#zz-fullscreen .paper-preview input,#zz-fullscreen .paper-preview textarea{width:100%;box-sizing:border-box;background:transparent;border:0;border-bottom:1px solid #7776;border-radius:0;padding:9px 0;font:15px/1.7 Arial;color:#37372b;resize:vertical}#zz-fullscreen .paper-preview small{display:block;text-align:right;font:10px monospace}#zz-fullscreen .guest-stick{width:100%;padding:16px;background:#333c30;color:#fff9e7;border:0;cursor:pointer;font-size:13px}#zz-fullscreen #zz-guest-status{font-size:10px;line-height:1.7;color:#746e62}
 #zz-fullscreen .just-stuck{animation:stick-note .5s ease-out}@keyframes stick-note{from{opacity:0;transform:translateY(-35px) rotate(12deg) scale(1.15)}to{opacity:1;transform:rotate(var(--note-rotation))}}@media(prefers-reduced-motion:reduce){#zz-fullscreen .just-stuck{animation:none}}@media(max-width:760px){#zz-fullscreen .guest-layout{grid-template-columns:1fr}#zz-fullscreen .guest-compose{position:static;grid-row:1}#zz-fullscreen .guest-wall{padding:20px;min-height:350px}#zz-fullscreen #zz-guestresult{gap:20px 12px}#zz-fullscreen .wall-note{padding:15px}}
 #zz-logo-entry{position:relative;overflow:hidden}#zz-trail-layer{position:absolute;inset:0;pointer-events:none;z-index:5}#zz-logo-entry .falling-graphic{position:absolute;left:0;top:0;will-change:transform,opacity;filter:drop-shadow(3px 5px 3px #0002)}#zz-logo-entry .falling-graphic img{width:100%;height:100%;object-fit:contain}#zz-logo-entry .sample-graphic{border:2px solid #fff8e6;border-radius:22%;display:grid;place-items:center;font:900 25px Arial;color:#292a21}#zz-logo-entry .trail-tools{position:relative;z-index:6;display:flex;flex-direction:column;align-items:center;gap:12px;font:11px monospace;margin-top:18px}#zz-logo-entry .trail-tools label{cursor:pointer;border-bottom:1px solid #aaa;padding-bottom:5px}#zz-trail-upload{display:block;font:10px Arial;max-width:220px;margin-top:8px}#zz-scrollboard{position:relative;z-index:6}@media(pointer:coarse){#zz-trail-hint{display:none}}
-#zz-fullscreen .movable-object{touch-action:none;cursor:grab;user-select:none}#zz-fullscreen .movable-object.object-moving{cursor:grabbing;transition:none!important;filter:drop-shadow(8px 14px 8px #0003)}</style>
- <header class="top"><button class="wordmark" data-action="home" aria-label="홈으로 돌아가기">zoonii.zip</button></header>
+#zz-fullscreen .movable-object{touch-action:none;cursor:pointer;user-select:none}#zz-fullscreen .movable-object.object-moving{cursor:grabbing;transition:none!important;filter:drop-shadow(8px 14px 8px #0003)}</style>
+ <header class="top"><button class="wordmark" data-action="intro" aria-label="인트로로 돌아가기">zoonii.zip</button></header>
  <div class="viewportHint mono">FIDGET BOARD / WIREFRAME 3.0<br><br><span id="zz-location">ENTRY</span></div>
  <div class="view" id="zz-stage"><div class="world" id="zz-world">
   <div class="backtype">THINGS I MADE<br>+ THINGS THAT<br>MADE ME.</div>
@@ -58,7 +58,7 @@
  if(overlay.classList.contains('open')){cameraClone=overlay.cloneNode(true);cameraClone.removeAttribute('id');cameraClone.classList.add('camera-old-room');cameraClone.inert=true;cameraClone.setAttribute('aria-hidden','true');cameraClone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));cameraPlane.appendChild(cameraClone)}
  root.scrollIntoView({behavior:'instant',block:'start'});moving=true;root.classList.add('travelling');cameraKey=key;cameraX=nextX;cameraY=nextY;overlay.style.setProperty('--room-x',nextX+'px');overlay.style.setProperty('--room-y',nextY+'px');done();if(key==='about'&&!reduced){overlay.animate([{opacity:0,scale:'.55'},{opacity:1,scale:'1'}],{duration:1000,easing:'cubic-bezier(.22,1,.36,1)'});}void cameraPlane.offsetWidth;cameraPlane.style.transform=`translate(${-nextX}px,${-nextY}px)`;q('#zz-location').textContent='TRAVELLING / '+key.toUpperCase();finishCamera(()=>q('[data-action="close"]').focus({preventScroll:true}))}
  function folder(mode){if(overlay.classList.contains('open'))folderNow(mode);else travel(mode,()=>folderNow(mode))}
- function action(a){if(directions[a])travel(a,()=>actionNow(a));else actionNow(a)}
+ function action(a){if(a==='intro'){close(()=>{document.getElementById('zz-logo-entry').scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});document.querySelector('#zz-logo-entry .zip-package').focus({preventScroll:true})});return}if(directions[a])travel(a,()=>actionNow(a));else actionNow(a)}
  const board=document.getElementById('zz-fullscreen');document.getElementById('zz-scrollboard').addEventListener('click',()=>board.scrollIntoView({behavior:reduced?'auto':'smooth'}));
 
  const teachHTML=`<span class="mono">DESIGN × EDUCATION</span><h2>만드는 경험을,<br>배우는 경험으로.</h2><p>HTML/CSS 웹 코딩, Figma 기초부터 AI를 활용한 Figma MCP 연동까지.<br>비전공 학생과 예비 창업주를 대상으로 강의해왔습니다.</p><div class="teachrow"><span class="mono">2026.10 / 예정</span><strong>항공대학교 · AI 활용 Figma MCP 연동</strong><small>비전공 학생 대상 · 한국 시간</small></div><div class="teachrow"><span class="mono">2026.10 / 진행 완료</span><strong>배재대학교 · AI 활용 Figma MCP 연동</strong><small>비전공 학생 대상 · 한국 시간</small></div><div class="teachrow"><span class="mono">2025.11 / 진행 완료</span><strong>항공대학교 · 예비창업자를 위한 피그마 앱디자인 기초 강의</strong></div><div class="teachrow"><span class="mono">2024.11 / 2023.11</span><strong>한국공학대학교 · Figma 기초</strong><small>예비 창업주 대상</small></div><div class="teachrow"><span class="mono">2021.01 / 2021.03–06 / 2021.03–07</span><strong>미림마이스터고등학교 · HTML/CSS 웹 코딩</strong><small>겨울방학 기초·응용 / 방과후 웹 코딩 / MTA 자격증 과정</small></div><button class="action" data-action="teach-contact">강의 문의 ↗</button>`;
@@ -138,12 +138,27 @@
  root.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&['home','about','career','files','club','contact','guest'].includes(b.dataset.action))selectDock(b.dataset.action)});
  document.getElementById('zz-leave-note').addEventListener('click',()=>selectDock('guest'));
  const dockObserver=new IntersectionObserver(entries=>{if(overlay.classList.contains('open'))return;entries.forEach(entry=>{if(entry.isIntersecting)selectDock(entry.target.id==='zz-message-section'?'guest':'home')})},{threshold:.6});['zz-logo-entry','zz-fullscreen','zz-message-section'].forEach(id=>dockObserver.observe(document.getElementById(id)));selectDock('home');
+
+ // Board shortcuts share the board scale and drag behavior; compact copies serve subpages.
+ document.querySelectorAll('#zz-fixed-links button').forEach(source=>{const item=source.cloneNode(true);item.dataset.action=item.dataset.fixed;delete item.dataset.fixed;item.className='board-shortcut';item.querySelector('.dock-tooltip').remove();world.append(item)});
+ const overviewButton=document.createElement('button');overviewButton.id='zz-overview-button';overviewButton.type='button';overviewButton.setAttribute('aria-label','전체보기');overviewButton.setAttribute('aria-haspopup','dialog');overviewButton.setAttribute('aria-expanded','false');overviewButton.setAttribute('aria-controls','zz-overview');overviewButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></svg><span>전체보기</span>';document.body.append(overviewButton);
+ const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-labelledby','zz-overview-title');overview.innerHTML=`<header><div><small>ZOONII.ZIP / DIRECTORY</small><h2 id="zz-overview-title">전체보기</h2></div><button type="button" class="overview-close" aria-label="전체보기 닫기">닫기 ×</button></header><nav aria-label="전체 공간">${[['home','피젯보드'],['about','프로필'],['career','커리어'],['files','아카이브'],['club','띵띵클럽'],['guest','작가에게 한마디'],['contact','콘택트']].map(([key,label],i)=>`<button type="button" data-overview-action="${key}"><small>0${i+1}</small><span>${label}</span><span>↗</span></button>`).join('')}</nav><section><h3>SELECTED PROJECTS <small>/ ${Object.keys(projects).length}</small></h3><div class="overview-projects">${Object.entries(projects).map(([id,p])=>`<button type="button" data-overview-project="${id}"><small>${p.mode} / ${p.period}</small><strong>${p.name} ↗</strong><span>${p.role}</span></button>`).join('')}</div></section>`;document.body.append(overview);
+ let overviewClosing=false;
+ function closeOverview(done){if(overviewClosing)return;overviewClosing=true;overview.classList.remove('visible');setTimeout(()=>{overview.close();document.documentElement.classList.remove('overview-open');overviewButton.setAttribute('aria-expanded','false');overviewClosing=false;if(done)done()},reduced?0:450)}
+ overviewButton.addEventListener('click',()=>{if(moving||overview.open)return;overview.showModal();document.documentElement.classList.add('overview-open');overviewButton.setAttribute('aria-expanded','true');requestAnimationFrame(()=>requestAnimationFrame(()=>overview.classList.add('visible')))});
+ overview.addEventListener('cancel',e=>{e.preventDefault();closeOverview()});
+ overview.addEventListener('click',e=>{if(e.target===overview){const r=overview.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeOverview();return}if(e.target.closest('.overview-close')){closeOverview();return}const target=e.target.closest('[data-overview-action],[data-overview-project]');if(!target)return;closeOverview(()=>{current=null;activeFolder=null;const key=target.dataset.overviewAction;if(key){selectDock(key);if(key==='home'){close();root.scrollIntoView({behavior:reduced?'instant':'smooth'})}else action(key)}else{selectDock('files');travel('files',()=>project(target.dataset.overviewProject))}})});
+
  let objectDrag=null,suppressObjectClickUntil=0;
- const movable=world.querySelectorAll('button[data-action]');movable.forEach(el=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0'});
+ const movable=world.querySelectorAll('button[data-action]');movable.forEach((el,i)=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0';el.style.setProperty('--float-duration',(i%2?6:5)+'s');el.style.setProperty('--float-lift',(i%2?-20:-15)+'px');el.style.setProperty('--float-delay',(i%2?1:0)+(Math.floor(i/2)*.3)+'s')});
+ // Float only while the main board is visible; dragging uses independent offsets.
+ new IntersectionObserver(entries=>{root.classList.toggle('board-visible',entries[0].isIntersecting)},{threshold:.15}).observe(root);
+ const syncBoardVisibility=()=>root.classList.toggle('board-page-hidden',document.hidden);
+ document.addEventListener('visibilitychange',syncBoardVisibility);syncBoardVisibility();
  root.addEventListener('click',e=>{if(performance.now()<suppressObjectClickUntil&&e.target.closest('.movable-object')){e.preventDefault();e.stopImmediatePropagation()}},true);
- q('#zz-stage').addEventListener('pointerdown',e=>{if(overlay.classList.contains('open')||moving||e.button!==0)return;const el=e.target.closest('.movable-object');if(el){objectDrag={el,sx:e.clientX,sy:e.clientY,mx:Number(el.dataset.moveX),my:Number(el.dataset.moveY),moved:false,scale:z};el.setPointerCapture(e.pointerId);return}if(!entered)return;drag={sx:e.clientX,sy:e.clientY,x,y,moved:false};q('#zz-stage').setPointerCapture(e.pointerId)});
- q('#zz-stage').addEventListener('pointermove',e=>{if(objectDrag){const d=objectDrag,dx=(e.clientX-d.sx)/d.scale,dy=(e.clientY-d.sy)/d.scale;if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)>6)d.moved=true;if(d.moved){d.el.classList.add('object-moving');d.el.style.zIndex='25';const mx=Math.max(-700,Math.min(700,d.mx+dx)),my=Math.max(-500,Math.min(500,d.my+dy));d.el.dataset.moveX=mx;d.el.dataset.moveY=my;d.el.style.translate=mx+'px '+my+'px'}return}if(!drag)return;const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.hypot(dx,dy)>6)drag.moved=true;if(drag.moved){world.classList.add('dragging');x=Math.max(-700,Math.min(700,drag.x+dx));y=Math.max(-500,Math.min(500,drag.y+dy));render()}});
- const endDrag=()=>{if(objectDrag){if(objectDrag.moved)suppressObjectClickUntil=performance.now()+350;objectDrag.el.classList.remove('object-moving');objectDrag.el.style.zIndex='';objectDrag=null}world.classList.remove('dragging');setTimeout(()=>{drag=null},0)};q('#zz-stage').addEventListener('pointerup',endDrag);q('#zz-stage').addEventListener('pointercancel',endDrag);
+ q('#zz-stage').addEventListener('pointerdown',e=>{if(overlay.classList.contains('open')||moving||e.button!==0)return;const el=e.target.closest('.movable-object');if(el){el.classList.add('object-held');objectDrag={el,sx:e.clientX,sy:e.clientY,mx:Number(el.dataset.moveX),my:Number(el.dataset.moveY),moved:false,scale:z};el.setPointerCapture(e.pointerId);return}if(!entered)return;drag={sx:e.clientX,sy:e.clientY,x,y,moved:false};q('#zz-stage').setPointerCapture(e.pointerId)});
+ q('#zz-stage').addEventListener('pointermove',e=>{if(objectDrag){const d=objectDrag,dx=(e.clientX-d.sx)/d.scale,dy=(e.clientY-d.sy)/d.scale;if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)>6)d.moved=true;if(d.moved){d.el.classList.add('object-moving');d.el.style.zIndex='25';const mx=Math.max(-700,Math.min(700,d.mx+dx)),my=Math.max(-500,Math.min(500,d.my+dy));d.el.dataset.moveX=mx;d.el.dataset.moveY=my;d.el.style.setProperty('--move-x',mx+'px');d.el.style.setProperty('--move-y',my+'px')}return}if(!drag)return;const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.hypot(dx,dy)>6)drag.moved=true;if(drag.moved){world.classList.add('dragging');x=Math.max(-700,Math.min(700,drag.x+dx));y=Math.max(-500,Math.min(500,drag.y+dy));render()}});
+ const endDrag=()=>{if(objectDrag){if(objectDrag.moved)suppressObjectClickUntil=performance.now()+350;objectDrag.el.classList.remove('object-moving','object-held');objectDrag.el.style.zIndex='';objectDrag=null}world.classList.remove('dragging');setTimeout(()=>{drag=null},0)};q('#zz-stage').addEventListener('pointerup',endDrag);q('#zz-stage').addEventListener('pointercancel',endDrag);
  let zipY=null;q('#zz-track').addEventListener('pointerdown',e=>{zipY=e.clientY;q('#zz-track').setPointerCapture(e.pointerId)});q('#zz-track').addEventListener('pointermove',e=>{if(zipY===null)return;const d=Math.max(0,Math.min(80,e.clientY-zipY));q('#zz-pull').style.transform=`translateY(${d}px)`});q('#zz-track').addEventListener('pointerup',e=>{if(zipY!==null&&e.clientY-zipY>60)enter();zipY=null;q('#zz-pull').style.transform=''});q('#zz-track').addEventListener('pointercancel',()=>{zipY=null;q('#zz-pull').style.transform=''});
  root.addEventListener('keydown',e=>{if(e.key==='Escape'){back();q('#zz-nav').classList.remove('open');q('#zz-navbutton').setAttribute('aria-expanded','false')}});
  let sheetDrag=null;body.addEventListener('pointerdown',e=>{const el=e.target.closest('.sheet');if(!el)return;sheetDrag={el,sx:e.clientX,sy:e.clientY,left:el.offsetLeft,top:el.offsetTop};el.style.zIndex='5';el.setPointerCapture(e.pointerId)});body.addEventListener('pointermove',e=>{if(!sheetDrag)return;const d=sheetDrag,parent=d.el.parentElement;d.el.style.left=Math.max(0,Math.min(parent.clientWidth-d.el.offsetWidth,d.left+e.clientX-d.sx))+'px';d.el.style.top=Math.max(0,Math.min(parent.clientHeight-d.el.offsetHeight,d.top+e.clientY-d.sy))+'px'});body.addEventListener('pointerup',()=>sheetDrag=null);body.addEventListener('pointercancel',()=>sheetDrag=null);
@@ -391,4 +406,60 @@ to{opacity:1;transform:rotate(var(--note-rotation))}
  #zz-fullscreen .panelhead{padding-top:65px}
 }
 @media(prefers-reduced-motion:reduce){#zz-fixed-links button{transition:none}}
-</style><script src="week-navigation.js" data-week="1"></script></body></html>
+</style><style>
+/* Main shortcuts use the same 190–230px artwork scale as the board objects. */
+#zz-fullscreen .board-shortcut{position:absolute;top:90px;width:190px;padding:0;display:flex;flex-direction:column;align-items:center;gap:12px;background:none;border:0;color:#34372d;font:15px Arial;transform:rotate(-5deg)}
+#zz-fullscreen .board-shortcut[data-action="guest"]{left:130px}
+#zz-fullscreen .board-shortcut[data-action="contact"]{left:350px!important;top:90px!important;transform:rotate(5deg)}
+#zz-fullscreen .board-shortcut .dock-art{display:block;width:190px;filter:drop-shadow(5px 7px 3px #332d2930)}
+#zz-fullscreen .board-shortcut svg{display:block;width:100%;height:auto}
+#zz-fixed-links{visibility:hidden;opacity:0;pointer-events:none;transition:opacity .25s}
+html.viewing-space #zz-fixed-links{visibility:visible;opacity:1;pointer-events:auto}
+#zz-overview-button{position:fixed;right:28px;top:24px;z-index:320;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #bdb5a4;border-radius:24px;background:#f8f4e9;color:#34372d;font:12px Arial;cursor:pointer}
+#zz-overview-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
+html.overview-open{overflow:hidden}
+#zz-overview{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:88vw;max-width:none;height:100dvh;max-height:none;padding:40px clamp(24px,5vw,80px) 60px;border:0;border-left:1px solid #c4bba8;background:#f4f0e5;color:#34372d;overflow:auto;overscroll-behavior:contain;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,1,.36,1);font-family:Arial,sans-serif;box-shadow:-15px 0 60px #24251e20}
+#zz-overview.visible{transform:translateX(0)}
+#zz-overview::backdrop{background:#24251e35}
+#zz-overview header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:35px}
+#zz-overview small{font:11px monospace;line-height:1.6}
+#zz-overview h2{font-size:clamp(36px,5vw,64px);letter-spacing:-.06em;margin:14px 0}
+#zz-overview button{cursor:pointer;color:inherit;font:inherit;background:none;border:0;text-align:left}
+#zz-overview .overview-close{padding:12px;border:1px solid #aaa38f;border-radius:24px;white-space:nowrap}
+#zz-overview nav{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;margin-bottom:55px}
+#zz-overview nav button{display:flex;gap:20px;align-items:center;border-bottom:1px solid #c6bfaf;padding:23px 0;font-size:clamp(17px,2vw,26px)}
+#zz-overview nav button span:last-child{margin-left:auto}
+#zz-overview h3{font:12px monospace;letter-spacing:.08em;margin-bottom:22px}
+#zz-overview .overview-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+#zz-overview .overview-projects button{display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid #ccc3b2;min-height:140px}
+#zz-overview .overview-projects span{font-size:12px;line-height:1.6;color:#6a665c}
+#zz-overview button:hover{background:#e8e1d1}
+#zz-overview button:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #98633f;outline-offset:4px}
+@media(max-width:760px){#zz-overview-button{right:14px;top:16px;padding:10px}#zz-overview-button span{display:none}#zz-overview{width:92vw;padding:24px 20px 40px}#zz-overview nav{grid-template-columns:1fr; margin-bottom:35px}#zz-overview nav button{padding:16px 0}#zz-overview .overview-projects{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#zz-overview,#zz-fixed-links{transition:none}}
+</style><style>
+/* Reference motion: y [0, -15/-20, 0], 5/6s ease-in-out, staggered starts. */
+#zz-fullscreen .movable-object{
+ --move-x:0px;--move-y:0px;
+ translate:var(--move-x) var(--move-y);
+ animation:zz-board-float var(--float-duration,5s) ease-in-out var(--float-delay,0s) infinite;
+ animation-play-state:paused;
+ transition:transform .5s ease,filter .5s ease;
+}
+#zz-fullscreen.board-visible .movable-object{animation-play-state:running}
+#zz-fullscreen .movable-object:is(:hover,:focus-visible){transform:rotate(0deg)}
+#zz-fullscreen .movable-object:is(:hover,:focus-visible,.object-held),
+#zz-fullscreen.travelling .movable-object,
+#zz-fullscreen.board-page-hidden .movable-object,
+html.viewing-space #zz-fullscreen .movable-object,
+html.overview-open #zz-fullscreen .movable-object{animation-play-state:paused}
+@keyframes zz-board-float{
+ 0%,100%{translate:var(--move-x) var(--move-y)}
+ 50%{translate:var(--move-x) calc(var(--move-y) + var(--float-lift,-15px))}
+}
+@media(prefers-reduced-motion:reduce){
+ #zz-fullscreen .movable-object{animation:none!important;transition:none!important}
+}
+/* Keep the finger cursor throughout the working site, including overlays and navigation. */
+html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!important}
+</style><script src="week-navigation.js" data-week="working"></script></body></html>
