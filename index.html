@@ -683,4 +683,14 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-message-section .memo-coming-soon h3{font:600 clamp(20px,2.5vw,28px)/1.5 Arial,'Apple SD Gothic Neo',sans-serif;margin:16px 0 10px;letter-spacing:-.04em}
 #zz-message-section .memo-coming-soon p{font-size:16px;line-height:1.7;margin:0}
 #zz-message-section #zz-guestresult:empty{display:none}
+</style><style id="zoonii-studio-intro-background">
+/* Original studio photograph: vintage colour and print effects rendered in CSS. */
+#zz-logo-entry{background:#e7c8a2;isolation:isolate}
+#zz-logo-entry::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:url("assets/intro-studio-background.webp") center 48% / cover no-repeat;filter:saturate(1.85) contrast(1.12) sepia(.22) brightness(.91)}
+#zz-logo-entry::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(circle,#33232065 .65px,transparent .9px),linear-gradient(125deg,#f6be5633,#de724c1a 48%,#39a7b91a);background-size:3px 3px,100% 100%;mix-blend-mode:multiply}
+#zz-logo-entry .intro-cloud-layer{display:none}
+#zz-logo-entry .intro-label,#zz-logo-entry>p,#zz-logo-entry>small{color:#252b25;text-shadow:0 1px 2px #fff8e6}
+#zz-logo-entry .intro-label,#zz-logo-entry>p{background:#fff4deeb;padding:9px 16px;border-radius:5px}
+#zz-logo-entry .trail-tools{background:#fff4def0}
+@media(max-width:650px){#zz-logo-entry::before{background-position:48% center}#zz-logo-entry::after{background-size:3.5px 3.5px,100% 100%}}
 </style></body></html>
