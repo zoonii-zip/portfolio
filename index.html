@@ -560,9 +560,12 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  const photo=new Image();
  const states=new WeakMap();
  let ready=false,frame=0,px=0,py=0,tracking=false;
- // Sample the original photograph. Only the iris neighbourhood is displaced;
- // the eyelids, paper edges and surrounding skin remain at their original positions.
- const eyes=[{x:486,y:453},{x:797,y:456}];
+ // Keep the photographed eyelids fixed. Move a rigid photographic iris layer
+ // inside the eye opening, without stretching the surrounding photograph.
+ const eyes=[
+  {x:486,y:453,rx:28,ry:26,opening:'M 438 457 C 451 440 466 434 486 434 C 510 434 528 447 540 465 C 523 478 501 480 483 478 C 463 476 449 470 438 457 Z'},
+  {x:797,y:456,rx:28,ry:26,opening:'M 760 464 C 771 444 785 436 799 436 C 819 435 840 446 856 464 C 839 478 822 480 799 479 C 781 477 769 472 760 464 Z'}
+ ];
  const width=160,height=96;
  const source=document.createElement('canvas');
  source.width=1536;source.height=1024;
@@ -572,36 +575,45 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  photo.onload=()=>{
   if(!sourceContext)return;
   sourceContext.drawImage(photo,0,0,1536,1024);
-  patches=eyes.map(eye=>({
-   ...eye,left:eye.x-width/2,top:eye.y-height/2,
-   pixels:sourceContext.getImageData(eye.x-width/2,eye.y-height/2,width,height).data
-  }));
+  patches=eyes.map(eye=>{
+   const left=eye.x-width/2,top=eye.y-height/2;
+   const original=sourceContext.getImageData(left,top,width,height);
+   const backing=document.createElement('canvas');backing.width=width;backing.height=height;
+   const background=sourceContext.getImageData(left,top,width,height);
+   const iris=document.createElement('canvas');iris.width=width;iris.height=height;
+   const foreground=new ImageData(width,height);
+   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    const i=(y*width+x)*4;
+    const radius=Math.hypot((x-width/2)/eye.rx,(y-height/2)/eye.ry);
+    const alpha=Math.max(0,Math.min(1,(1-radius)*eye.rx/0.7));
+    for(let c=0;c<3;c++)foreground.data[i+c]=original.data[i+c];
+    foreground.data[i+3]=Math.round(255*alpha);
+    if(!alpha)continue;
+    // Reuse the photograph's sclera colours only behind the original iris.
+    // The short travel reveals a narrow strip rather than enlarging the eye.
+    const row=y*width*4;
+    const l=row+(width/2-38)*4,r=row+(width/2+38)*4;
+    const mix=Math.max(0,Math.min(1,(x-width/2+38)/76));
+    for(let c=0;c<3;c++){
+     const sclera=original.data[l+c]*(1-mix)+original.data[r+c]*mix;
+     background.data[i+c]=original.data[i+c]*(1-alpha)+sclera*alpha;
+    }
+   }
+   backing.getContext('2d').putImageData(background,0,0);
+   iris.getContext('2d').putImageData(foreground,0,0);
+   return {...eye,left,top,backing,iris,opening:new Path2D(eye.opening)};
+  });
   ready=true;schedule();
  };
  photo.src='assets/profile-collage.webp';
- function paint(context,patch,output,dx,dy){
-  const input=patch.pixels,data=output.data;
-  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
-   const i=(y*width+x)*4;
-   const ox=x-width/2,oy=y-height/2;
-   const radius=Math.hypot(ox/75,oy/42);
-   if(radius>=1){data[i+3]=0;continue;}
-   // A flat centre moves the photographic iris together; smooth falloff keeps
-   // the sclera narrow and prevents seams at either end of the eye.
-   const warpRadius=Math.hypot((ox-dx*.5)/64,(oy-dy*.5)/29);
-   const t=Math.max(0,Math.min(1,(warpRadius-.38)/.62));
-   const weight=1-t*t*(3-2*t);
-   const sx=Math.max(0,Math.min(width-1.001,x-dx*weight));
-   const sy=Math.max(0,Math.min(height-1.001,y-dy*weight));
-   const ix=Math.floor(sx),iy=Math.floor(sy),fx=sx-ix,fy=sy-iy;
-   const p=(iy*width+ix)*4,q=p+width*4;
-   for(let c=0;c<3;c++)data[i+c]=
-    (input[p+c]*(1-fx)+input[p+4+c]*fx)*(1-fy)+
-    (input[q+c]*(1-fx)+input[q+4+c]*fx)*fy;
-   const feather=Math.max(0,Math.min(1,(1-radius)/.2));
-   data[i+3]=Math.round(255*feather*feather*(3-2*feather));
-  }
-  context.putImageData(output,patch.left,patch.top);
+ function paint(context,patch,dx,dy){
+  context.clearRect(patch.left,patch.top,width,height);
+  if(Math.abs(dx)+Math.abs(dy)<.03)return;
+  context.save();
+  context.clip(patch.opening);
+  context.drawImage(patch.backing,patch.left,patch.top);
+  context.drawImage(patch.iris,patch.left+dx,patch.top+dy);
+  context.restore();
  }
  function tick(){
   frame=0;
@@ -614,7 +626,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   if(!state){
    const context=canvas.getContext('2d');
    if(!context)return;
-   state={context,eyes:eyes.map(()=>({x:0,y:0,output:context.createImageData(width,height)}))};
+   state={context,eyes:eyes.map(()=>({x:0,y:0}))};
    states.set(canvas,state);
   }
   let settling=false;
@@ -624,7 +636,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
     const dx=(px-r.left)*1536/r.width-patch.x;
     const dy=(py-r.top)*1024/r.height-patch.y;
     const len=Math.hypot(dx,dy),amount=Math.min(1,len/350);
-    if(len){tx=dx/len*14*amount;ty=dy/len*4*amount;}
+    if(len){tx=dx/len*7*amount;ty=dy/len*2*amount;}
    }
    const pos=state.eyes[index];
    // Reduced motion removes easing, but preserves direct pointer interaction.
@@ -632,7 +644,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    pos.x+=(tx-pos.x)*ease;pos.y+=(ty-pos.y)*ease;
    if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}
    else settling=true;
-   paint(state.context,patch,pos.output,pos.x,pos.y);
+   paint(state.context,patch,pos.x,pos.y);
   });
   if(settling)frame=requestAnimationFrame(tick);
  }
