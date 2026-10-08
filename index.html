@@ -124,7 +124,7 @@
  function careerView(){open('CAREER / 전체 이력',`<div class="career-index"><span class="mono">2013 — NOW / CAREER INDEX</span><h2>만들어온 것들.</h2><p>실무 프로젝트를 분야별로 살펴보세요. 강의·전시 이력은 하단에서 확인할 수 있습니다.</p><div class="career-filter" role="group" aria-label="이력 분야">${careerFields.map(([key,label])=>`<button type="button" data-career-filter="${key}" aria-pressed="${key===careerFilter}">${label}</button>`).join('')}</div><div class="career-table-wrap"><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody id="zz-career-rows"></tbody></table></div><div class="career-paging"><span id="zz-career-count"></span><div><button data-career-page="-1" aria-label="이전 페이지">←</button><span id="zz-career-page"></span><button data-career-page="1" aria-label="다음 페이지">→</button></div></div><details class="career-more"><summary>학력 · 강의 상세 · 전시 · 수상 보기 +</summary><div class="career-full">${careerExtras}</div></details></div>`);renderCareerIndex()}
  function renderCareerIndex(){const rows=careerRecords.filter(r=>!['teaching','exhibition'].includes(r[4])&&(careerFilter==='all'||r[4]===careerFilter)).sort((a,b)=>b[1]-a[1]);const pages=Math.max(1,Math.ceil(rows.length/10));careerPage=Math.max(1,Math.min(careerPage,pages));const target=q('#zz-career-rows');target.innerHTML='';rows.slice((careerPage-1)*10,careerPage*10).forEach(r=>{const tr=document.createElement('tr');[r[0],r[2],r[3],r[5]].forEach(t=>{const td=document.createElement('td');td.textContent=t;tr.appendChild(td)});target.appendChild(tr)});q('#zz-career-count').textContent=rows.length+'개 이력 · 최신순';q('#zz-career-page').textContent=careerPage+' / '+pages;root.querySelectorAll('[data-career-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.careerFilter===careerFilter)));q('[data-career-page="-1"]').disabled=careerPage===1;q('[data-career-page="1"]').disabled=careerPage===pages}
  root.addEventListener('click',e=>{const filter=e.target.closest('[data-career-filter]'),page=e.target.closest('[data-career-page]');if(filter){careerFilter=filter.dataset.careerFilter;careerPage=1;renderCareerIndex()}if(page){careerPage+=Number(page.dataset.careerPage);renderCareerIndex()}});
- function actionNow(a){if(a==='about'){open('PROFILE / ZOONII',`<div class="profile-layout"><div class="face-collage profile-artwork"><img class="zoonii-profile-art" src="assets/profile-collage-child-restored.png" width="1536" height="1024" alt="하늘색 zoonii 로고, 데님 모자, 찢어진 종이 질감의 눈과 입, 어린 시절 주연의 사진으로 만든 콜라주"><svg class="profile-eye-layer" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="zz-eye-feather" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="4"/></filter><mask id="zz-left-photo" maskUnits="userSpaceOnUse" x="346" y="353" width="280" height="200"><ellipse cx="486" cy="453" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><filter id="zz-left-gaze" filterUnits="userSpaceOnUse" x="0" y="0" width="1536" height="1024" color-interpolation-filters="sRGB"><feImage href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTM2IiBoZWlnaHQ9IjEwMjQiPjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0iZyI+PHN0b3Agb2Zmc2V0PSIwLjM1IiBzdG9wLWNvbG9yPSJ3aGl0ZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxlbGxpcHNlIGN4PSI0ODYiIGN5PSI0NTMiIHJ4PSI1MyIgcnk9IjI5IiBmaWxsPSJ1cmwoI2cpIi8+PC9zdmc+" x="0" y="0" width="1536" height="1024" result="falloff"/><feFlood class="profile-photo-pupil" data-eye-x="486" data-eye-y="453" flood-color="rgb(50%,50%,50%)" result="direction"/><feComposite in="direction" in2="falloff" operator="in" result="localDirection"/><feFlood flood-color="rgb(50%,50%,50%)" result="neutral"/><feComposite in="localDirection" in2="neutral" operator="over" result="map"/><feDisplacementMap in="SourceGraphic" in2="map" scale="40" xChannelSelector="R" yChannelSelector="G"/></filter><mask id="zz-right-photo" maskUnits="userSpaceOnUse" x="657" y="356" width="280" height="200"><ellipse cx="797" cy="456" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><filter id="zz-right-gaze" filterUnits="userSpaceOnUse" x="0" y="0" width="1536" height="1024" color-interpolation-filters="sRGB"><feImage href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTM2IiBoZWlnaHQ9IjEwMjQiPjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0iZyI+PHN0b3Agb2Zmc2V0PSIwLjM1IiBzdG9wLWNvbG9yPSJ3aGl0ZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxlbGxpcHNlIGN4PSI3OTciIGN5PSI0NTYiIHJ4PSI1MyIgcnk9IjI5IiBmaWxsPSJ1cmwoI2cpIi8+PC9zdmc+" x="0" y="0" width="1536" height="1024" result="falloff"/><feFlood class="profile-photo-pupil" data-eye-x="797" data-eye-y="456" flood-color="rgb(50%,50%,50%)" result="direction"/><feComposite in="direction" in2="falloff" operator="in" result="localDirection"/><feFlood flood-color="rgb(50%,50%,50%)" result="neutral"/><feComposite in="localDirection" in2="neutral" operator="over" result="map"/><feDisplacementMap in="SourceGraphic" in2="map" scale="40" xChannelSelector="R" yChannelSelector="G"/></filter><mask id="zz-mouth-photo" maskUnits="userSpaceOnUse" x="546" y="551" width="280" height="200"><ellipse cx="686" cy="651" rx="106" ry="63" fill="white" filter="url(#zz-eye-feather)"/></mask></defs><g mask="url(#zz-left-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024" filter="url(#zz-left-gaze)"/></g><g mask="url(#zz-right-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024" filter="url(#zz-right-gaze)"/></g><g mask="url(#zz-mouth-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024"/></g></svg></div><div><span class="mono">PROFILE / 2013 — NOW</span><h2>김주연 / Zoonii</h2><h3 class="profile-statement">내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</h3><p class="profile-description">아직 말로만 존재하는 아이디어를 함께 구체화하고,<br>보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><button class="action" data-action="career">CAREER ↗</button><button class="action" data-action="contact">LET’S TALK ↗</button></div></div>`);return}if(a==='career'){careerFilter='all';careerPage=1;careerView();return}
+ function actionNow(a){if(a==='about'){open('PROFILE / ZOONII',`<div class="profile-layout"><div class="face-collage profile-artwork"><img class="zoonii-profile-art" src="assets/profile-collage-child-restored.png" width="1536" height="1024" alt="하늘색 zoonii 로고, 데님 모자, 찢어진 종이 질감의 눈과 입, 어린 시절 주연의 사진으로 만든 콜라주"><svg class="profile-eye-layer" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="zz-eye-feather" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="4"/></filter><mask id="zz-left-photo" maskUnits="userSpaceOnUse" x="346" y="353" width="280" height="200"><ellipse cx="486" cy="453" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><mask id="zz-right-photo" maskUnits="userSpaceOnUse" x="657" y="356" width="280" height="200"><ellipse cx="797" cy="456" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><mask id="zz-mouth-photo" maskUnits="userSpaceOnUse" x="546" y="551" width="280" height="200"><ellipse cx="686" cy="651" rx="106" ry="63" fill="white" filter="url(#zz-eye-feather)"/></mask></defs><g mask="url(#zz-left-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024"/></g><g mask="url(#zz-right-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024"/></g><g mask="url(#zz-mouth-photo)"><image href="assets/profile-collage.webp" width="1536" height="1024"/></g></svg><canvas class="profile-eye-canvas" width="1536" height="1024" aria-hidden="true"></canvas></div><div><span class="mono">PROFILE / 2013 — NOW</span><h2>김주연 / Zoonii</h2><h3 class="profile-statement">내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</h3><p class="profile-description">아직 말로만 존재하는 아이디어를 함께 구체화하고,<br>보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><button class="action" data-action="career">CAREER ↗</button><button class="action" data-action="contact">LET’S TALK ↗</button></div></div>`);return}if(a==='career'){careerFilter='all';careerPage=1;careerView();return}
  if(a==='guest'){open('작가에게 한마디','');const guest=document.getElementById('zz-message-section');guest.hidden=false;body.append(guest);renderGuestWall();return}
  if(a==='club'){open('THINGTHINGCLUB / FAIRS & GOODS',`<h2>THINGTHINGCLUB</h2><p>감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로.</p><h3>EXHIBITION / FAIR</h3><div class="teachrow">Seoul Illustration Fair V.15–V.18</div><div class="teachrow">Hong Kong Illustration & Creative Show V.5–V.6</div><div class="teachrow">Taipei Illustration Fair 2025</div><h3>SMARTSTORE / GOODS</h3><div class="goods-preview"><div><strong>액막이 키링</strong><small>상품 이미지 · 판매 링크 준비 중</small></div><div><strong>동전지갑</strong><small>상품 이미지 · 판매 링크 준비 중</small></div><div><strong>미니 노트</strong><small>상품 이미지 · 판매 링크 준비 중</small></div></div><button class="action" disabled>스마트스토어 링크 준비 중</button><p class="mono">상품은 구성 예시입니다. 실제 판매 여부와 상품 URL을 제공받으면 연결합니다.</p>`);return}
  legacyAction(a)}
@@ -535,7 +535,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 @media(max-width:760px){#zz-fullscreen .profile-layout{grid-template-columns:1fr}}
 </style><style>
 #zz-fullscreen .profile-artwork{position:relative}
-#zz-fullscreen .profile-eye-layer{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#zz-fullscreen .profile-eye-layer,#zz-fullscreen .profile-eye-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
 /* Remove inherited archive spacing; scroll only when profile content needs it. */
 #zz-fullscreen .panelbody:has(>.profile-layout){min-height:calc(100svh - 128px);padding:24px max(5vw,24px) 120px!important;display:grid;align-items:center}
@@ -549,37 +549,93 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 </style><script>
 (()=> {
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
- let frame=0,px=0,py=0,tracking=false;
- const positions=new WeakMap();
+ const photo=new Image();
+ const states=new WeakMap();
+ let ready=false,frame=0,px=0,py=0,tracking=false;
+ // Sample the original photograph. Only the iris neighbourhood is displaced;
+ // the eyelids, paper edges and surrounding skin remain at their original positions.
+ const eyes=[{x:486,y:453},{x:797,y:456}];
+ const width=160,height=96;
+ const source=document.createElement('canvas');
+ source.width=1536;source.height=1024;
+ const sourceContext=source.getContext('2d',{willReadFrequently:true});
+ let patches=[];
+ function schedule(){if(!frame)frame=requestAnimationFrame(tick);}
+ photo.onload=()=>{
+  if(!sourceContext)return;
+  sourceContext.drawImage(photo,0,0,1536,1024);
+  patches=eyes.map(eye=>({
+   ...eye,left:eye.x-width/2,top:eye.y-height/2,
+   pixels:sourceContext.getImageData(eye.x-width/2,eye.y-height/2,width,height).data
+  }));
+  ready=true;schedule();
+ };
+ photo.src='assets/profile-collage.webp';
+ function paint(context,patch,output,dx,dy){
+  const input=patch.pixels,data=output.data;
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+   const i=(y*width+x)*4;
+   const ox=x-width/2,oy=y-height/2;
+   const radius=Math.hypot(ox/75,oy/42);
+   if(radius>=1){data[i+3]=0;continue;}
+   // A flat centre moves the photographic iris together; smooth falloff keeps
+   // the sclera narrow and prevents seams at either end of the eye.
+   const warpRadius=Math.hypot((ox-dx*.5)/64,(oy-dy*.5)/29);
+   const t=Math.max(0,Math.min(1,(warpRadius-.38)/.62));
+   const weight=1-t*t*(3-2*t);
+   const sx=Math.max(0,Math.min(width-1.001,x-dx*weight));
+   const sy=Math.max(0,Math.min(height-1.001,y-dy*weight));
+   const ix=Math.floor(sx),iy=Math.floor(sy),fx=sx-ix,fy=sy-iy;
+   const p=(iy*width+ix)*4,q=p+width*4;
+   for(let c=0;c<3;c++)data[i+c]=
+    (input[p+c]*(1-fx)+input[p+4+c]*fx)*(1-fy)+
+    (input[q+c]*(1-fx)+input[q+4+c]*fx)*fy;
+   const feather=Math.max(0,Math.min(1,(1-radius)/.2));
+   data[i+3]=Math.round(255*feather*feather*(3-2*feather));
+  }
+  context.putImageData(output,patch.left,patch.top);
+ }
  function tick(){
   frame=0;
   const art=document.querySelector('.profile-artwork');
-  if(!art||!art.isConnected)return;
+  const canvas=art?.querySelector('.profile-eye-canvas');
+  if(!ready||!canvas||!art.isConnected)return;
   const r=art.getBoundingClientRect();
   if(!r.width||!r.height)return;
+  let state=states.get(canvas);
+  if(!state){
+   const context=canvas.getContext('2d');
+   if(!context)return;
+   state={context,eyes:eyes.map(()=>({x:0,y:0,output:context.createImageData(width,height)}))};
+   states.set(canvas,state);
+  }
   let settling=false;
-  art.querySelectorAll('.profile-photo-pupil').forEach(p=>{
-   const x=Number(p.dataset.eyeX),y=Number(p.dataset.eyeY);
+  patches.forEach((patch,index)=>{
    let tx=0,ty=0;
-   if(tracking&&!reduce.matches){
-    const dx=(px-r.left)*1536/r.width-x,dy=(py-r.top)*1024/r.height-y;
+   if(tracking){
+    const dx=(px-r.left)*1536/r.width-patch.x;
+    const dy=(py-r.top)*1024/r.height-patch.y;
     const len=Math.hypot(dx,dy),amount=Math.min(1,len/350);
     if(len){tx=dx/len*14*amount;ty=dy/len*4*amount;}
    }
-   const pos=positions.get(p)||{x:0,y:0};
-   pos.x+=(tx-pos.x)*.12;pos.y+=(ty-pos.y)*.12;
-   if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}else settling=true;
-   positions.set(p,pos);p.setAttribute('flood-color',`rgb(${50-pos.x/40*100}%,${50-pos.y/40*100}%,50%)`);
+   const pos=state.eyes[index];
+   // Reduced motion removes easing, but preserves direct pointer interaction.
+   const ease=reduce.matches?1:.18;
+   pos.x+=(tx-pos.x)*ease;pos.y+=(ty-pos.y)*ease;
+   if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}
+   else settling=true;
+   paint(state.context,patch,pos.output,pos.x,pos.y);
   });
   if(settling)frame=requestAnimationFrame(tick);
  }
- function schedule(){if(!frame)frame=requestAnimationFrame(tick);}
  window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
  window.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
  document.documentElement.addEventListener('pointerleave',()=>{tracking=false;schedule();});
  window.addEventListener('blur',()=>{tracking=false;schedule();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){tracking=false;if(frame)cancelAnimationFrame(frame);frame=0;}else schedule();});
- reduce.addEventListener('change',()=>{tracking=false;schedule();});
+ reduce.addEventListener('change',schedule);
+ // Profile is inserted dynamically; initialise it even when the cursor is still.
+ new MutationObserver(schedule).observe(document.querySelector('#zz-fullscreen .panelbody'),{childList:true});
 })();
 </script><style>
 #zz-message-section #zz-leave-note,#zz-message-section .guest-compose{display:none!important}
