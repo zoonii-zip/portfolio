@@ -1,0 +1,24 @@
+#zz-weeks{position:fixed;left:max(16px,env(safe-area-inset-left));top:max(16px,env(safe-area-inset-top));z-index:410;font:14px/1.6 Arial,'Apple SD Gothic Neo',sans-serif;color:#34362b}
+#zz-weeks *{box-sizing:border-box}
+#zz-weeks .weeks-toggle{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:24px;background:#292d27;color:#f7f2e4;border:1px solid #faf7e5;box-shadow:0 4px 15px #292d2714;cursor:pointer;font:12px/1.5 Arial,sans-serif}
+#zz-weeks .weeks-dot{width:6px;height:6px;border-radius:50%;background:#e8c87b}
+#zz-weeks .weeks-current{color:#d5cfbe;margin-left:4px}
+#zz-weeks .weeks-plus{font-size:18px;line-height:1;transition:transform .2s}
+#zz-weeks .weeks-toggle[aria-expanded=true] .weeks-plus{transform:rotate(45deg)}
+#zz-weeks-panel{width:min(350px,calc(100vw - 32px));max-height:calc(100svh - 90px);overflow-y:auto;margin-top:12px;padding:26px 22px 20px;background:#f7f2e5;border:1px solid #c9c2b3;border-radius:18px;box-shadow:0 14px 45px #292d2726}
+#zz-weeks-panel[hidden]{display:none}
+#zz-weeks .weeks-eyebrow{font:10px/1.5 monospace;letter-spacing:.08em;color:#756d5b}
+#zz-weeks h2{margin:13px 0 10px;font-size:23px;line-height:1.4;letter-spacing:-1px;font-weight:500}
+#zz-weeks p{margin:0;color:#756d5b;font-size:13px;line-height:1.8}
+#zz-weeks .weeks-list{list-style:none;padding:0;margin:23px 0 18px;display:grid;gap:8px}
+#zz-weeks .weeks-list a,#zz-weeks .weeks-list button{display:flex;align-items:center;gap:12px;width:100%;padding:15px 12px;border:1px solid #d9d1c0;border-radius:10px;text-decoration:none;color:inherit;background:transparent;font:14px Arial,sans-serif;text-align:left}
+#zz-weeks .weeks-list a:hover{background:#e8e0ce}
+#zz-weeks .weeks-list a[aria-current=page]{background:#e8e5d7;border-color:#8a9079}
+#zz-weeks .weeks-number{font:12px monospace;color:#8a806a}
+#zz-weeks .weeks-status{margin-left:auto;font-size:11px;color:#666e54}
+#zz-weeks .weeks-list button:disabled{color:#a39b8b;cursor:default}
+#zz-weeks .weeks-list button:disabled .weeks-status,#zz-weeks .weeks-list button:disabled .weeks-number{color:#a39b8b}
+#zz-weeks .weeks-footnote{font-size:11px;border-top:1px solid #ddd5c3;padding-top:14px}
+#zz-weeks button:focus-visible,#zz-weeks a:focus-visible{outline:2px solid #b96342;outline-offset:3px}
+@media(max-width:760px){#zz-weeks{left:max(10px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top))}#zz-weeks .weeks-toggle{padding:9px 13px;font-size:11px}#zz-weeks-panel{width:min(350px,calc(100vw - 20px))}}
+@media(prefers-reduced-motion:reduce){#zz-weeks .weeks-plus{transition:none}}
