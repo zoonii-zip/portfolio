@@ -143,9 +143,23 @@
  document.querySelectorAll('#zz-fixed-links button').forEach(source=>{const item=source.cloneNode(true);item.dataset.action=item.dataset.fixed;delete item.dataset.fixed;item.className='board-shortcut';item.querySelector('.dock-tooltip').remove();world.append(item)});
  const overviewButton=document.createElement('button');overviewButton.id='zz-overview-button';overviewButton.type='button';overviewButton.setAttribute('aria-label','전체보기');overviewButton.setAttribute('aria-haspopup','dialog');overviewButton.setAttribute('aria-expanded','false');overviewButton.setAttribute('aria-controls','zz-overview');overviewButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></svg><span>전체보기</span>';document.body.append(overviewButton);
  const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-labelledby','zz-overview-title');overview.innerHTML=`<header><div><small>ZOONII.ZIP / DIRECTORY</small><h2 id="zz-overview-title">전체보기</h2></div><button type="button" class="overview-close" aria-label="전체보기 닫기">닫기 ×</button></header><nav aria-label="전체 공간">${[['home','피젯보드'],['about','프로필'],['career','커리어'],['files','아카이브'],['club','띵띵클럽'],['guest','작가에게 한마디'],['contact','콘택트']].map(([key,label],i)=>`<button type="button" data-overview-action="${key}"><small>0${i+1}</small><span>${label}</span><span>↗</span></button>`).join('')}</nav><section><h3>SELECTED PROJECTS <small>/ ${Object.keys(projects).length}</small></h3><div class="overview-projects">${Object.entries(projects).map(([id,p])=>`<button type="button" data-overview-project="${id}"><small>${p.mode} / ${p.period}</small><strong>${p.name} ↗</strong><span>${p.role}</span></button>`).join('')}</div></section>`;document.body.append(overview);
+ // Keep the scroll surface separate so the curved edge can extend outside the dialog.
+ const overviewContent=document.createElement('div');overviewContent.className='overview-content';
+ while(overview.firstChild)overviewContent.append(overview.firstChild);
+ overview.append(overviewContent);
+ const curve=document.createElementNS('http://www.w3.org/2000/svg','svg');
+ curve.classList.add('overview-curve');curve.setAttribute('viewBox','0 0 100 1000');curve.setAttribute('preserveAspectRatio','none');curve.setAttribute('aria-hidden','true');
+ const curvePath=document.createElementNS(curve.namespaceURI,'path');curve.append(curvePath);overview.append(curve);
+ let curveFrame=0,curveControl=-100;
+ const paintCurve=()=>curvePath.setAttribute('d',`M100 0 L100 1000 Q${curveControl} 500 100 0 Z`);
+ paintCurve();
+ // Match the reference cubic-bezier(.76,0,.24,1) for the SVG path morph.
+ function curveEase(progress){let lo=0,hi=1,t=progress;for(let i=0;i<14;i++){t=(lo+hi)/2;const x=3*(1-t)*(1-t)*t*.76+3*(1-t)*t*t*.24+t*t*t;if(x<progress)lo=t;else hi=t}return 3*(1-t)*t*t+t*t*t}
+ function morphCurve(target,duration){cancelAnimationFrame(curveFrame);if(reduced){curveControl=target;paintCurve();return}const from=curveControl,start=performance.now();function tick(now){const progress=Math.min(1,(now-start)/duration);curveControl=from+(target-from)*curveEase(progress);paintCurve();if(progress<1)curveFrame=requestAnimationFrame(tick)}curveFrame=requestAnimationFrame(tick)}
+ overview.querySelectorAll('nav button').forEach(button=>{const label=button.children[1];label.classList.add('overview-label');const text=label.textContent;button.setAttribute('aria-label',text);label.setAttribute('aria-hidden','true');label.textContent='';Array.from(text).forEach((letter,i)=>{const span=document.createElement('span');span.textContent=letter===' '?'\u00a0':letter;span.style.setProperty('--letter-index',i);label.append(span)})});
  let overviewClosing=false;
- function closeOverview(done){if(overviewClosing)return;overviewClosing=true;overview.classList.remove('visible');setTimeout(()=>{overview.close();document.documentElement.classList.remove('overview-open');overviewButton.setAttribute('aria-expanded','false');overviewClosing=false;if(done)done()},reduced?0:450)}
- overviewButton.addEventListener('click',()=>{if(moving||overview.open)return;overview.showModal();document.documentElement.classList.add('overview-open');overviewButton.setAttribute('aria-expanded','true');requestAnimationFrame(()=>requestAnimationFrame(()=>overview.classList.add('visible')))});
+ function closeOverview(done){if(overviewClosing)return;overviewClosing=true;overview.classList.remove('visible');morphCurve(-100,800);setTimeout(()=>{overview.close();document.documentElement.classList.remove('overview-open');overviewButton.setAttribute('aria-expanded','false');overviewClosing=false;if(done)done()},reduced?0:800)}
+ overviewButton.addEventListener('click',()=>{if(moving||overview.open)return;curveControl=-100;paintCurve();overview.showModal();overviewContent.scrollTop=0;document.documentElement.classList.add('overview-open');overviewButton.setAttribute('aria-expanded','true');requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!overview.open||overviewClosing)return;overview.classList.add('visible');morphCurve(100,1000)}))});
  overview.addEventListener('cancel',e=>{e.preventDefault();closeOverview()});
  overview.addEventListener('click',e=>{if(e.target===overview){const r=overview.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeOverview();return}if(e.target.closest('.overview-close')){closeOverview();return}const target=e.target.closest('[data-overview-action],[data-overview-project]');if(!target)return;closeOverview(()=>{current=null;activeFolder=null;const key=target.dataset.overviewAction;if(key){selectDock(key);if(key==='home'){close();root.scrollIntoView({behavior:reduced?'instant':'smooth'})}else action(key)}else{selectDock('files');travel('files',()=>project(target.dataset.overviewProject))}})});
 
@@ -418,7 +432,13 @@ html.viewing-space #zz-fixed-links{visibility:visible;opacity:1;pointer-events:a
 #zz-overview-button{position:fixed;right:28px;top:24px;z-index:320;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #bdb5a4;border-radius:24px;background:#f8f4e9;color:#34372d;font:12px Arial;cursor:pointer}
 #zz-overview-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
 html.overview-open{overflow:hidden}
-#zz-overview{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:88vw;max-width:none;height:100dvh;max-height:none;padding:40px clamp(24px,5vw,80px) 60px;border:0;border-left:1px solid #c4bba8;background:#f4f0e5;color:#34372d;overflow:auto;overscroll-behavior:contain;transform:translateX(100%);transition:transform .45s cubic-bezier(.22,1,.36,1);font-family:Arial,sans-serif;box-shadow:-15px 0 60px #24251e20}
+#zz-overview{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:88vw;max-width:none;height:100dvh;max-height:none;padding:0;border:0;background:transparent;color:#34372d;overflow:visible;transform:translateX(calc(100% + 100px));transition:transform .8s cubic-bezier(.76,0,.24,1);font-family:Arial,sans-serif;box-shadow:-15px 0 60px #24251e20}
+#zz-overview .overview-content{box-sizing:border-box;height:100%;padding:40px clamp(24px,5vw,80px) 60px;background:#f4f0e5;overflow:auto;overscroll-behavior:contain}
+#zz-overview .overview-curve{position:absolute;top:0;left:-99px;width:100px;height:100%;fill:#f4f0e5;pointer-events:none}
+#zz-overview .overview-label{display:inline-block;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+#zz-overview .overview-label>span{display:inline-block;transition:transform .5s cubic-bezier(.34,1.56,.64,1);transition-delay:0s}
+#zz-overview nav button:is(:hover,:focus-visible) .overview-label{transform:translateX(-16px)}
+#zz-overview nav button:is(:hover,:focus-visible) .overview-label>span{transform:translateX(16px);transition-delay:calc(.25s + var(--letter-index)*.075s)}
 #zz-overview.visible{transform:translateX(0)}
 #zz-overview::backdrop{background:#24251e35}
 #zz-overview header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:35px}
@@ -435,8 +455,8 @@ html.overview-open{overflow:hidden}
 #zz-overview .overview-projects span{font-size:12px;line-height:1.6;color:#6a665c}
 #zz-overview button:hover{background:#e8e1d1}
 #zz-overview button:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #98633f;outline-offset:4px}
-@media(max-width:760px){#zz-overview-button{right:14px;top:16px;padding:10px}#zz-overview-button span{display:none}#zz-overview{width:92vw;padding:24px 20px 40px}#zz-overview nav{grid-template-columns:1fr; margin-bottom:35px}#zz-overview nav button{padding:16px 0}#zz-overview .overview-projects{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){#zz-overview,#zz-fixed-links{transition:none}}
+@media(max-width:760px){#zz-overview-button{right:14px;top:16px;padding:10px}#zz-overview-button span{display:none}#zz-overview{width:92vw}#zz-overview .overview-content{padding:24px 20px 40px}#zz-overview .overview-curve{left:calc(-8vw + 1px);width:8vw}#zz-overview nav{grid-template-columns:1fr; margin-bottom:35px}#zz-overview nav button{padding:16px 0}#zz-overview .overview-projects{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#zz-overview,#zz-fixed-links,#zz-overview .overview-label,#zz-overview .overview-label>span{transition:none!important;transform:none!important}}
 </style><style>
 /* Reference motion: y [0, -15/-20, 0], 5/6s ease-in-out, staggered starts. */
 #zz-fullscreen .movable-object{
