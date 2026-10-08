@@ -1,9 +1,11 @@
 (() => {
   const script = document.currentScript;
   const base = new URL('.', script.src);
-  const currentWeek = Number(script.dataset.week || 1);
+  const currentVersion = script.dataset.week || 'working';
+  const currentLabel = currentVersion === 'working' ? '작업중' : `${currentVersion}주차`;
   // Publish a saved page first, then set its path here. Keep older pages intact.
   const weeks = [
+    { number: 'working', label: '작업중', path: 'index.html' },
     { number: 1, path: 'weeks/week-1.html' },
     { number: 2, path: null },
     { number: 3, path: null },
@@ -20,21 +22,22 @@
   nav.innerHTML = `
     <button class="weeks-toggle" type="button" aria-expanded="false" aria-controls="zz-weeks-panel">
       <span class="weeks-dot" aria-hidden="true"></span>
-      <span>주차별 모습 <span class="weeks-current">/ ${currentWeek}주차</span></span>
+      <span>주차별 모습 <span class="weeks-current">/ ${currentLabel}</span></span>
       <span class="weeks-plus" aria-hidden="true">+</span>
     </button>
     <section id="zz-weeks-panel" aria-labelledby="zz-weeks-title" hidden>
       <div class="weeks-eyebrow">ZOONII.ZIP / WEEK BY WEEK</div>
       <h2 id="zz-weeks-title">조금씩 달라지는 주니집.</h2>
-      <p>4주 동안 만들어가는 공간.<br>주차를 골라 그때의 모습을 둘러보세요.</p>
+      <p>4주 동안 만들어가는 공간.<br>작업중인 최신 화면과 주차별 기록을 둘러보세요.</p>
       <ol class="weeks-list"></ol>
-      <p class="weeks-footnote">새로운 모습은 매주 이곳에 쌓입니다.</p>
+      <p class="weeks-footnote">수정사항은 작업중에 반영되고, 저장한 주차의 모습은 그대로 남습니다.</p>
     </section>`;
   const list = nav.querySelector('.weeks-list');
   for (const week of weeks) {
     const item = document.createElement('li');
     const control = document.createElement(week.path ? 'a' : 'button');
-    const selected = week.number === currentWeek;
+    const selected = String(week.number) === currentVersion;
+    const working = week.number === 'working';
     if (week.path) {
       control.href = new URL(week.path, base).href;
       if (selected) control.setAttribute('aria-current', 'page');
@@ -42,7 +45,7 @@
       control.type = 'button';
       control.disabled = true;
     }
-    control.innerHTML = `<span class="weeks-number" aria-hidden="true">0${week.number}</span><span>${week.number}주차</span><span class="weeks-status">${week.path ? (selected ? '지금 보는 모습' : '둘러보기 ↗') : '공개 예정'}</span>`;
+    control.innerHTML = `<span class="weeks-number" aria-hidden="true">${working ? '↻' : `0${week.number}`}</span><span>${week.label || `${week.number}주차`}</span><span class="weeks-status">${week.path ? (selected ? '지금 보는 모습' : working ? '최신 수정본 ↗' : '둘러보기 ↗') : '공개 예정'}</span>`;
     item.append(control);
     list.append(item);
   }
