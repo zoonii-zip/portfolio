@@ -563,8 +563,8 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  // Keep the photographed eyelids fixed. Move a rigid photographic iris layer
  // inside the eye opening, without stretching the surrounding photograph.
  const eyes=[
-  {x:486,y:453,rx:28,ry:26,opening:'M 438 457 C 451 440 466 434 486 434 C 510 434 528 447 540 465 C 523 478 501 480 483 478 C 463 476 449 470 438 457 Z'},
-  {x:797,y:456,rx:28,ry:26,opening:'M 760 464 C 771 444 785 436 799 436 C 819 435 840 446 856 464 C 839 478 822 480 799 479 C 781 477 769 472 760 464 Z'}
+  {x:486,y:453,rx:28,ry:26,opening:'M 432 458 C 443 439 465 424 486 426 C 511 426 534 443 548 465 C 534 478 507 482 483 479 C 459 478 442 469 432 458 Z'},
+  {x:797,y:456,rx:28,ry:26,opening:'M 756 465 C 767 443 782 428 797 429 C 819 429 845 444 862 465 C 842 479 822 483 798 481 C 778 480 766 473 756 465 Z'}
  ];
  const width=160,height=96;
  const source=document.createElement('canvas');
@@ -588,15 +588,19 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
     const alpha=Math.max(0,Math.min(1,(1-radius)*eye.rx/0.7));
     for(let c=0;c<3;c++)foreground.data[i+c]=original.data[i+c];
     foreground.data[i+3]=Math.round(255*alpha);
-    if(!alpha)continue;
+    // The erasure has its own larger mask: sharing the iris feather left
+    // part of the original dark edge visible after the new iris moved away.
+    const eraseRadius=Math.hypot((x-width/2)/(eye.rx+4),(y-height/2)/(eye.ry+4));
+    const eraseAlpha=Math.max(0,Math.min(1,(1-eraseRadius)*32));
+    if(!eraseAlpha)continue;
     // Reuse the photograph's sclera colours only behind the original iris.
     // The short travel reveals a narrow strip rather than enlarging the eye.
     const row=y*width*4;
-    const l=row+(width/2-38)*4,r=row+(width/2+38)*4;
+    const l=row+(width/2-36)*4,r=row+(width/2+38)*4;
     const mix=Math.max(0,Math.min(1,(x-width/2+38)/76));
     for(let c=0;c<3;c++){
-     const sclera=original.data[l+c]*(1-mix)+original.data[r+c]*mix;
-     background.data[i+c]=original.data[i+c]*(1-alpha)+sclera*alpha;
+     const sclera=original.data[l+c]*(1-mix)*.25+original.data[r+c]*(.75+mix*.25);
+     background.data[i+c]=original.data[i+c]*(1-eraseAlpha)+sclera*eraseAlpha;
     }
    }
    backing.getContext('2d').putImageData(background,0,0);
