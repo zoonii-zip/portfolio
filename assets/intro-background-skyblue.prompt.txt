@@ -1,0 +1,5 @@
+Mode: built-in image_gen edit
+Source: assets/intro-background.png
+Output: assets/intro-background-skyblue.png
+
+Use case: precise-object-edit. Edit target: the attached wide tropical screen-print illustration used as a website intro background. Change only the yellow SKY to a clear light sky blue (#87CEEB), preserving the original paper grain, distressed print texture and style. Remove only the THREE ISOLATED SMALL CLOUDS high in the open sky (upper-left around x180/y200, upper-middle-right around x1145/y155, upper-right around x1450/y305); fill those locations with the same sky-blue textured sky, because the website will animate those clouds separately. Keep ALL the large lower cloud banks, the small low cloud below the orange sun, sun, black/dark brown palm silhouettes, blue distant hills, sandy/cream foreground, black linework, blue-striped building, and their locations and colors UNCHANGED. Preserve the same 16:9 composition and framing, no added objects or text. This is a surgical recolor and small cloud removal, not a redraw.
