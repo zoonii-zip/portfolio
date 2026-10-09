@@ -658,12 +658,12 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    if(tracking){
     const dx=(px-r.left)*1536/r.width-patch.x;
     const dy=(py-r.top)*1024/r.height-patch.y;
-    const len=Math.hypot(dx,dy),amount=Math.min(1,len/350);
-    if(len){tx=dx/len*7*amount;ty=dy/len*2*amount;}
+    const len=Math.hypot(dx,dy),amount=Math.min(1,len/220);
+    if(len){tx=dx/len*10*amount;ty=dy/len*2.5*amount;}
    }
    const pos=state.eyes[index];
    // Reduced motion removes easing, but preserves direct pointer interaction.
-   const ease=reduce.matches?1:.18;
+   const ease=reduce.matches?1:.55;
    pos.x+=(tx-pos.x)*ease;pos.y+=(ty-pos.y)*ease;
    if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}
    else settling=true;
