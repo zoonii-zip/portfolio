@@ -580,8 +580,8 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  const photo=new Image();
  const states=new WeakMap();
  let ready=false,frame=0,px=0,py=0,tracking=false;
- // Keep the photographed eyelids fixed. Move a rigid photographic iris layer
- // inside the eye opening, without stretching the surrounding photograph.
+ // Warp the original eye continuously; keep its photographed boundary fixed.
+ // Separate iris/backing layers left visible seams when the gaze moved.
  const eyes=[
   {x:486,y:453,rx:28,ry:26,opening:'M 432 458 C 443 439 465 424 486 426 C 511 426 534 443 548 465 C 534 478 507 482 483 479 C 459 478 442 469 432 458 Z'},
   {x:797,y:456,rx:28,ry:26,opening:'M 756 465 C 767 443 782 428 797 429 C 819 429 845 444 862 465 C 842 479 822 483 798 481 C 778 480 766 473 756 465 Z'}
@@ -598,34 +598,25 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   patches=eyes.map(eye=>{
    const left=eye.x-width/2,top=eye.y-height/2;
    const original=sourceContext.getImageData(left,top,width,height);
-   const backing=document.createElement('canvas');backing.width=width;backing.height=height;
-   const background=sourceContext.getImageData(left,top,width,height);
-   const iris=document.createElement('canvas');iris.width=width;iris.height=height;
-   const foreground=new ImageData(width,height);
+   const opening=new Path2D(eye.opening);
+   const inside=new Uint8Array(width*height),weight=new Float32Array(width*height);
    for(let y=0;y<height;y++)for(let x=0;x<width;x++){
-    const i=(y*width+x)*4;
-    const radius=Math.hypot((x-width/2)/eye.rx,(y-height/2)/eye.ry);
-    const alpha=Math.max(0,Math.min(1,(1-radius)*eye.rx/0.7));
-    for(let c=0;c<3;c++)foreground.data[i+c]=original.data[i+c];
-    foreground.data[i+3]=Math.round(255*alpha);
-    // The erasure has its own larger mask: sharing the iris feather left
-    // part of the original dark edge visible after the new iris moved away.
-    const eraseRadius=Math.hypot((x-width/2)/(eye.rx+4),(y-height/2)/(eye.ry+4));
-    const eraseAlpha=Math.max(0,Math.min(1,(1-eraseRadius)*32));
-    if(!eraseAlpha)continue;
-    // Reuse the photograph's sclera colours only behind the original iris.
-    // The short travel reveals a narrow strip rather than enlarging the eye.
-    const row=y*width*4;
-    const l=row+(width/2-36)*4,r=row+(width/2+38)*4;
-    const mix=Math.max(0,Math.min(1,(x-width/2+38)/76));
-    for(let c=0;c<3;c++){
-     const sclera=original.data[l+c]*(1-mix)*.25+original.data[r+c]*(.75+mix*.25);
-     background.data[i+c]=original.data[i+c]*(1-eraseAlpha)+sclera*eraseAlpha;
-    }
+    inside[y*width+x]=sourceContext.isPointInPath(opening,left+x+.5,top+y+.5)?1:0;
    }
-   backing.getContext('2d').putImageData(background,0,0);
-   iris.getContext('2d').putImageData(foreground,0,0);
-   return {...eye,left,top,backing,iris,opening:new Path2D(eye.opening)};
+   const edge=[];
+   for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
+    const i=y*width+x;
+    if(inside[i]&&(!inside[i-1]||!inside[i+1]||!inside[i-width]||!inside[i+width]))edge.push([x,y]);
+   }
+   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    const i=y*width+x;if(!inside[i])continue;
+    let distance=24;
+    for(const [ex,ey] of edge)distance=Math.min(distance,Math.hypot(x-ex,y-ey));
+    const t=Math.min(1,distance/24);
+    weight[i]=t*t*(3-2*t);
+   }
+   const surface=document.createElement('canvas');surface.width=width;surface.height=height;
+   return {...eye,left,top,original,weight,surface,context:surface.getContext('2d'),output:new ImageData(width,height)};
   });
   ready=true;schedule();
  };
@@ -633,11 +624,21 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  function paint(context,patch,dx,dy){
   context.clearRect(patch.left,patch.top,width,height);
   if(Math.abs(dx)+Math.abs(dy)<.03)return;
-  context.save();
-  context.clip(patch.opening);
-  context.drawImage(patch.backing,patch.left,patch.top);
-  context.drawImage(patch.iris,patch.left+dx,patch.top+dy);
-  context.restore();
+  const input=patch.original.data,output=patch.output.data;
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+   const i=y*width+x,w=patch.weight[i];
+   if(!w){output[i*4+3]=0;continue;}
+   const sx=Math.max(0,Math.min(width-1.001,x-dx*w));
+   const sy=Math.max(0,Math.min(height-1.001,y-dy*w));
+   const x0=Math.floor(sx),y0=Math.floor(sy),fx=sx-x0,fy=sy-y0;
+   const a=(y0*width+x0)*4,b=a+4,c=a+width*4,d=c+4;
+   for(let channel=0;channel<3;channel++){
+    output[i*4+channel]=(input[a+channel]*(1-fx)+input[b+channel]*fx)*(1-fy)+(input[c+channel]*(1-fx)+input[d+channel]*fx)*fy;
+   }
+   output[i*4+3]=255;
+  }
+  patch.context.putImageData(patch.output,0,0);
+  context.drawImage(patch.surface,patch.left,patch.top);
  }
  function tick(){
   frame=0;
@@ -660,7 +661,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
     const dx=(px-r.left)*1536/r.width-patch.x;
     const dy=(py-r.top)*1024/r.height-patch.y;
     const len=Math.hypot(dx,dy),amount=Math.min(1,len/220);
-    if(len){tx=dx/len*14*amount;ty=dy/len*4*amount;}
+    if(len){tx=dx/len*10*amount;ty=dy/len*3*amount;}
    }
    const pos=state.eyes[index];
    // Reduced motion removes easing, but preserves direct pointer interaction.
