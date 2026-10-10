@@ -842,3 +842,36 @@ html.viewing-space #zz-fullscreen .top .wordmark{pointer-events:auto}
 #zz-fullscreen .club-glitter .club-sticker-label{font:11px monospace;letter-spacing:.06em;color:#30271d;background:#f6efdc;padding:5px 9px;border-radius:2px}
 #zz-fullscreen [data-action="club"].object.club-glitter:hover{transform:rotate(3deg) translateY(-5px)}
 </style>
+<style>
+/* Guestbook is a single viewport-sized memo board. */
+#zz-fullscreen .overlay:has(#zz-body>#zz-message-section){overflow:hidden;background:#ded6c7;background-image:radial-gradient(#ad9e8270 .8px,transparent .8px);background-size:8px 8px}
+#zz-fullscreen .overlay:has(#zz-body>#zz-message-section)>.panelhead{position:absolute;inset:0 0 auto;z-index:3}
+#zz-fullscreen #zz-body:has(>#zz-message-section){width:100%;max-width:none;height:100dvh;min-height:0;padding:0!important;overflow:hidden}
+#zz-fullscreen #zz-body>#zz-message-section{height:100dvh!important;min-height:0!important;padding:128px 28px 115px!important;overflow:hidden;border:0;background:transparent}
+#zz-message-section .guest-room{height:100%;max-width:none;min-height:0}
+#zz-message-section .guest-room>header{display:none}
+#zz-message-section .guest-layout{height:100%;min-height:0;margin:0;gap:24px;align-items:stretch;overflow:hidden}
+#zz-message-section .guest-wall{height:100%;min-height:0;padding:20px;border:0;border-radius:0;background:transparent;overflow:hidden}
+#zz-message-section #zz-guestresult{min-height:0!important;height:calc(100% - 30px)}
+#zz-message-section .guest-compose,#zz-message-section.writing-note .guest-compose{min-height:0;padding:18px;display:flex!important;flex-direction:column}
+#zz-message-section .paper-choices{margin:12px 0 18px;gap:8px}
+#zz-message-section .paper-choice{padding:12px 7px}
+#zz-message-section #zz-guestform{display:flex;flex-direction:column;flex:1;min-height:0}
+#zz-message-section .paper-preview{flex:1;min-height:0;display:flex;flex-direction:column;margin:12px 0;padding:14px}
+#zz-message-section .paper-preview label{margin-bottom:8px}
+#zz-message-section .paper-preview label:has(textarea){display:flex;flex-direction:column;flex:1;min-height:0}
+#zz-message-section .paper-preview textarea{flex:1;min-height:40px;height:100%;resize:none}
+#zz-message-section .guest-stick{padding:10px}
+#zz-message-section #zz-guest-status{margin:8px 0 0}
+html:has(#zz-body>#zz-message-section) #zz-fixed-links{display:none}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body>#zz-message-section{padding:114px 14px 100px!important}
+ #zz-message-section .guest-layout{grid-template-columns:1fr!important;grid-template-rows:minmax(45px,1fr) minmax(0,390px);gap:10px}
+ #zz-message-section .guest-wall{grid-row:1;padding:4px 8px}
+ #zz-message-section .guest-compose{grid-row:2;padding:12px}
+ #zz-message-section .paper-choices{grid-template-columns:repeat(4,1fr);margin:8px 0 12px;gap:5px}
+ #zz-message-section .paper-choice{padding:9px 2px;font-size:10px}
+ #zz-message-section .paper-preview{margin:8px 0;padding:10px}
+ #zz-message-section .paper-preview input{padding:4px 0}
+}
+</style>
