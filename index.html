@@ -744,16 +744,15 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-fullscreen .panelhead,
 #zz-fullscreen .top .wordmark,
 #zz-fullscreen .panelhead button[data-action="close"],
-#zz-fullscreen .panelhead button[data-action="close"]:hover,
-#zz-overview-button,
-#zz-overview-button:hover,
-#zz-weeks .weeks-toggle,
-#zz-weeks .weeks-toggle:hover{
+#zz-fullscreen .panelhead button[data-action="close"]:hover{
  background:transparent!important;
  backdrop-filter:none!important;
  -webkit-backdrop-filter:none!important;
  box-shadow:none!important;
  border-color:transparent!important;
 }
-#zz-weeks .weeks-toggle{color:#34372d}
+/* Only the two top utility buttons have filled backgrounds. */
+#zz-weeks .weeks-toggle,#zz-overview-button{background:#343d32;color:#fff8e8;border:1px solid #65715b;box-shadow:0 2px 6px #282e2420}
+#zz-weeks .weeks-toggle:hover,#zz-overview-button:hover{background:#4b5845;color:#fff8e8}
+#zz-weeks .weeks-toggle:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #b18436;outline-offset:3px}
 </style><link rel="stylesheet" href="intro-folder-roll.css"><script src="intro-folder-roll.js"></script></body></html>
