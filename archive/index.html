@@ -138,13 +138,14 @@
  function folderNow(mode){
   archiveMode=mode==='ALL'?'STORY':mode;activeFolder=archiveMode;current=null;
   const rows=Object.entries(projects).filter(([id,p])=>p.mode===archiveMode);
-  const heading={STORY:'Stories on a shelf.',PRODUCT:'A desk of possibilities.',VISUAL:'Collected identities.'}[archiveMode];
-  const desc={STORY:'서로 다른 이야기, 나란히 꽂아둔 그림들.',PRODUCT:'생각을 연결하고, 경험을 만드는 화면들.',VISUAL:'작은 명함부터 한 권의 책까지, 브랜드의 조각들.'}[archiveMode];
+  const heading={STORY:'Stories on a shelf.',PRODUCT:'Projects on my desktop.',VISUAL:'Collected identities.'}[archiveMode];
+  const desc={STORY:'서로 다른 이야기, 나란히 꽂아둔 그림들.',PRODUCT:'폴더마다 담아둔 웹과 앱의 경험. 하나씩 열어보세요.',VISUAL:'작은 명함부터 한 권의 책까지, 브랜드의 조각들.'}[archiveMode];
   const tones=['#244e43','#e66d38','#e7d997','#5365aa','#c84450','#708796'];
   const cards=rows.map(([id,p],i)=>{
    const num=String(i+1).padStart(2,'0');
    if(archiveMode==='STORY')return `<article class="shelf-book spine-${i}" style="--object-tone:${tones[i%6]};--book-height:${[350,325,365,395,342,370][i%6]}px" aria-label="${p.name}, ${p.period}, 상세 준비 중"><span class="spine-number">${num}</span><strong>${p.name}</strong><span class="spine-subtitle">${p.role}</span><small>${p.period}</small></article>`;
-   if(archiveMode==='PRODUCT')return `<article class="desktop-window window-${i}" style="--object-tone:${tones[i%6]}"><div class="window-chrome"><span aria-hidden="true">● ● ●</span><small>PROJECT ${num}</small><span aria-hidden="true">↗</span></div><div class="screen-composition" aria-hidden="true"><div class="screen-sidebar"><b>Z.</b><i></i><i></i><i></i></div><div class="screen-content"><small>EXPERIENCE / ${num}</small><b>${['COMES','DISCOVERY','Genie Labs','PASS','$LUCK'][i]}</b><div class="screen-shapes"><i></i><i></i><i></i></div><span class="screen-line"></span><span class="screen-line short"></span></div></div><div class="object-label"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period} <em>상세 준비 중</em></small></div></article>`;
+   if(archiveMode==='PRODUCT'){const brand=[['COMES','#305fc6'],['Discovery','#242a30'],['Genie Labs','#2587aa'],['PASS','#e73246'],['$LUCK','#6751bc']][i];return `<a class="project-folder folder-${i}" href="/projects/${id}/" style="--folder-color:${brand[1]};--folder-rotation:${[-4,3,-2,2,-3][i]}deg" aria-label="${p.name} 프로젝트 보기"><span class="project-folder-art"><img src="assets/archive-folder-paper.png" alt="" width="1536" height="1024"><span class="folder-ink" aria-hidden="true"></span><span class="folder-brand">${brand[0]}</span><span class="folder-stamp">WEB / APP · ${num}</span></span><span class="folder-caption"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period}</small></span></a>`;}
+
    return `<article class="sample-tray" style="--object-tone:${tones[i%6]}"><div class="tray-materials ${i===4?'editorial-materials':''}" aria-hidden="true"><div class="sample-sheet"><small>${i===4?'ANNUAL REPORT':'IDENTITY STUDY'}</small><b>${i===4?'KISA':p.name}</b><span>●</span></div><div class="sample-card"><b>${p.name}</b><small>${i===4?'2022 / REPORT':'DESIGN / '+num}</small></div><div class="sample-swatch"></div></div><div class="object-label"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period} <em>상세 준비 중</em></small></div><span class="tray-index">${num}</span></article>`;
   }).join('');
   open(menuLabels.files,`<div class="archive-shell theme-${archiveMode.toLowerCase()}">${archiveTabs()}<section id="archive-panel" role="tabpanel" tabindex="0" aria-labelledby="archive-tab-${archiveMode}"><header class="archive-cover"><span class="mono">ZOONII.ZIP / SELECTED WORKS</span><h2>${heading}</h2><p>${desc}</p></header><div class="collection-scene"><div class="collection-meta"><span>${archiveMode==='STORY'?'THE BOOKSHELF':archiveMode==='PRODUCT'?'THE DIGITAL DESK':'THE SAMPLE COLLECTION'}</span><span>${String(rows.length).padStart(2,'0')} PROJECTS</span></div><div class="collection-objects">${cards}</div>${archiveMode==='STORY'?'<div class="shelf-plank" aria-hidden="true"></div>':''}<footer class="collection-footer"><span>${archiveLabels[archiveMode]}</span><span>프로젝트 이미지 · 상세 준비 중</span></footer></div></section></div>`);
@@ -750,7 +751,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-message-section .memo-coming-soon h3{font:600 clamp(20px,2.5vw,28px)/1.5 Arial,'Apple SD Gothic Neo',sans-serif;margin:16px 0 10px;letter-spacing:-.04em}
 #zz-message-section .memo-coming-soon p{font-size:16px;line-height:1.7;margin:0}
 #zz-message-section #zz-guestresult:empty{display:none}
-</style><link rel="stylesheet" href="archive-themes.css"><style>
+</style><link rel="stylesheet" href="archive-themes.css?v=desktop-folders-1"><style>
 #zz-logo-entry .intro-copy{max-width:calc(100% - 40px);text-align:center;line-height:1.6}
 #zz-logo-entry .intro-copy span{display:block;text-wrap:balance}
 #zz-logo-entry .intro-copy [lang="en"]{font-size:clamp(16px,2.2vw,24px);letter-spacing:-.025em}
