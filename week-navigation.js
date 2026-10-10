@@ -27,8 +27,8 @@
     </button>
     <section id="zz-weeks-panel" aria-labelledby="zz-weeks-title" hidden>
       <div class="weeks-eyebrow">ZOONII.ZIP / WEEK BY WEEK</div>
-      <h2 id="zz-weeks-title">A work in progress.</h2>
-      <p>A space taking shape over four weeks.<br>Explore the latest version and weekly snapshots.</p>
+      <h2 id="zz-weeks-title">조금씩 완성해가는 중입니다.</h2>
+      <p>4주 동안 조금씩 모습을 갖춰가는 공간입니다.<br>최신 버전과 주차별 기록을 둘러보세요.</p>
       <ol class="weeks-list"></ol>
       <p class="weeks-footnote">Updates appear in In Progress. Saved weekly snapshots stay as they were.</p>
     </section>`;
