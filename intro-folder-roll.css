@@ -45,3 +45,8 @@
 #zz-logo-entry .trail-tools{background:#242424e6;color:#e8e1d5}
 #zz-logo-entry .trail-tools button{color:#f5f0e5;border-color:#817b70}
 #zz-logo-entry #zz-scrollboard{color:#f5f0e5;border-bottom-color:#817b70}
+
+/* Lift the folder while keeping the intro caption in place. */
+#zz-logo-entry .zip-package {
+  top: calc(50% - var(--intro-lift) - clamp(28px, 5svh, 48px));
+}
