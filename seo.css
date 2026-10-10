@@ -9,3 +9,5 @@ html.zz-text-view #zz-logo-entry,html.zz-text-view #zz-fullscreen,html.zz-text-v
 #zz-fullscreen .seo-project-link{position:absolute;inset:0;z-index:5;border-radius:inherit;color:inherit}
 #zz-fullscreen .seo-project-link:focus-visible{outline:3px solid #262622;outline-offset:5px}
 #zz-fullscreen .seo-project-link span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+#zz-fullscreen .profile-expertise{font-size:14px;line-height:1.8;max-width:440px}
