@@ -669,9 +669,8 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  photo.src='assets/profile-collage.webp';
  function paint(context,patch,dx,dy){
   context.clearRect(patch.left,patch.top,width,height);
-  if(Math.abs(dx)+Math.abs(dy)<.03)return;
   const input=patch.original.data,output=patch.output.data;
-  const cx=width/2,cy=height/2;
+  const cx=width/2,cy=height/2,irisScale=1.1;
   const sample=(x,y,c)=>{
    x=Math.max(0,Math.min(width-1.001,x));y=Math.max(0,Math.min(height-1.001,y));
    const ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;
@@ -682,14 +681,15 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    const i=y*width+x,w=patch.weight[i];
    if(!w){output[i*4+3]=0;continue;}
    const originalRadius=Math.hypot((x-cx)/patch.rx,(y-cy)/patch.ry);
-   const movedRadius=Math.hypot((x-cx-dx)/patch.rx,(y-cy-dy)/patch.ry);
+   const irisX=cx+(x-cx-dx)/irisScale,irisY=cy+(y-cy-dy)/irisScale;
+   const movedRadius=Math.hypot((irisX-cx)/patch.rx,(irisY-cy)/patch.ry);
    const erase=Math.max(0,Math.min(1,(1.12-originalRadius)/.12));
    const iris=Math.max(0,Math.min(1,(1.04-movedRadius)/.08));
    for(let c=0;c<3;c++){
     // Use photographed sclera from the same row to reveal the area behind the iris.
     const white=sample(cx+36,y,c);
     const backing=input[i*4+c]*(1-erase)+white*erase;
-    output[i*4+c]=backing*(1-iris)+sample(x-dx,y-dy,c)*iris;
+    output[i*4+c]=backing*(1-iris)+sample(irisX,irisY,c)*iris;
    }
    output[i*4+3]=Math.round(w*255);
   }
