@@ -37,7 +37,7 @@
     return inView && !document.hidden && !motion.matches;
   }
 
-  function schedule(delay = 1700) {
+  function schedule(delay = 1200) {
     clearTimeout(timer);
     if (active()) timer = setTimeout(advance, delay);
   }
@@ -55,10 +55,12 @@
       next.draggable = false;
       next.setAttribute('aria-hidden', 'true');
       reel.appendChild(next);
-      const timing = { duration: 580, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' };
+      // Keep both silhouettes registered in the same frame, like tracing paper.
+      // A short dissolve changes the material without moving the folder.
+      const timing = { duration: 160, easing: 'linear', fill: 'both' };
       animations = [
-        current.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], timing),
-        next.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], timing)
+        current.animate([{ opacity: 1 }, { opacity: 0 }], timing),
+        next.animate([{ opacity: 0 }, { opacity: 1 }], timing)
       ];
       await Promise.all(animations.map(animation => animation.finished));
       if (turn !== revision) return;
@@ -71,7 +73,7 @@
       animations = [];
     } catch {
       if (turn !== revision) return;
-      // Keep the displayed folder if an image cannot load or a roll is interrupted.
+      // Keep the displayed folder if an image cannot load or a transition is interrupted.
       reel.querySelectorAll('img').forEach(image => { if (image !== current) image.remove(); });
     } finally {
       if (turn === revision) schedule();
@@ -84,7 +86,7 @@
     animations.forEach(animation => animation.cancel());
     animations = [];
     reel.querySelectorAll('img').forEach(image => { if (image !== current) image.remove(); });
-    schedule(started ? 1700 : 4400);
+    schedule(started ? 1200 : 4400);
   }
 
   new IntersectionObserver(entries => {
