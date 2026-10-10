@@ -1,0 +1,11 @@
+/* Progressive enhancement: useful HTML remains visible if application JS fails. */
+#zz-readable{position:relative;z-index:100;background:#f2efe7;color:#262622;padding:40px max(24px,calc((100vw - 960px)/2));font:16px/1.8 Arial,'Apple SD Gothic Neo',sans-serif;min-height:100vh;box-sizing:border-box}
+#zz-readable img{max-width:100%;height:auto}#zz-readable nav{display:flex;flex-wrap:wrap;gap:18px}#zz-readable a{text-decoration:underline}#zz-readable td,#zz-readable th{padding:8px;border-bottom:1px solid #aaa;text-align:left}#zz-readable table{width:100%}
+html.zz-seo-ready #zz-readable{display:none}
+html.zz-text-view #zz-readable{display:block}
+html.zz-text-view #zz-logo-entry,html.zz-text-view #zz-fullscreen,html.zz-text-view #zz-global-dock,html.zz-text-view #zz-fixed-links{display:none!important}
+.zz-text-link{position:fixed;left:12px;top:-100px;z-index:9999;background:#f2efe7;color:#262622;padding:12px}
+.zz-text-link:focus{top:12px}
+#zz-fullscreen .seo-project-link{position:absolute;inset:0;z-index:5;border-radius:inherit;color:inherit}
+#zz-fullscreen .seo-project-link:focus-visible{outline:3px solid #262622;outline-offset:5px}
+#zz-fullscreen .seo-project-link span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
