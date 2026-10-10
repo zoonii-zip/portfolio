@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ko"><head>
+    <meta name="msvalidate.01" content="E75ED6307F530A9D9CBAA8EE0F377BE7">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KF5XJ511X1"></script>
     <script>
@@ -744,16 +745,17 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-fullscreen .panelhead,
 #zz-fullscreen .top .wordmark,
 #zz-fullscreen .panelhead button[data-action="close"],
-#zz-fullscreen .panelhead button[data-action="close"]:hover,
-#zz-overview-button,
-#zz-overview-button:hover,
-#zz-weeks .weeks-toggle,
-#zz-weeks .weeks-toggle:hover{
+#zz-fullscreen .panelhead button[data-action="close"]:hover{
  background:transparent!important;
  backdrop-filter:none!important;
  -webkit-backdrop-filter:none!important;
  box-shadow:none!important;
  border-color:transparent!important;
 }
-#zz-weeks .weeks-toggle{color:#34372d}
+/* Only the two top utility buttons have filled backgrounds. */
+#zz-weeks .weeks-toggle{background:#292d27!important;color:#f7f2e4!important;border:1px solid #faf7e5!important;box-shadow:0 4px 15px #292d2714!important}
+#zz-overview-button{background:#f8f4e9!important;color:#34372d!important;border:1px solid #bdb5a4!important;box-shadow:0 2px 6px #282e2414!important}
+#zz-weeks .weeks-toggle:hover{background:#424b3c!important}
+#zz-overview-button:hover{background:#e8dfce!important}
+#zz-weeks .weeks-toggle:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #b18436;outline-offset:3px}
 </style><link rel="stylesheet" href="intro-folder-roll.css"><script src="intro-folder-roll.js"></script></body></html>
