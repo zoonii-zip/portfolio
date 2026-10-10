@@ -7,6 +7,20 @@
  const categories={STORY:'/archive/illustration/',PRODUCT:'/archive/uiux/',VISUAL:'/archive/branding/'};
  const titles={Profile:'/profile/',Career:'/career/',Archive:'/archive/',Contact:'/contact/',Guestbook:'/guestbook/',ThingThingClub:'/thingthingclub/'};
  const path=()=>location.pathname==='/index.html'?'/':location.pathname;
+ // Fresh home entries must show the intro, not a restored board scroll offset.
+ const isIntroEntry=()=>path()==='/' && new URLSearchParams(location.search).get('view')!=='text' && (!location.hash || location.hash==='#zz-fullscreen' || location.hash==='#zz-logo-entry');
+ if(isIntroEntry()&&'scrollRestoration' in history)history.scrollRestoration='manual';
+ let entryInteracted=false;
+ for(const event of ['wheel','touchstart','pointerdown','keydown']){
+  window.addEventListener(event,()=>{entryInteracted=true;},{once:true,passive:true});
+ }
+ function showInitialIntro(){
+  if(!isIntroEntry()||entryInteracted||document.documentElement.classList.contains('viewing-space'))return;
+  if(location.hash==='#zz-fullscreen')history.replaceState(history.state,'',location.pathname+location.search);
+  document.getElementById('zz-logo-entry')?.scrollIntoView({behavior:'instant',block:'start'});
+ }
+ window.addEventListener('pageshow',showInitialIntro);
+
  function metadata(page,url){
   document.title=page.title;
   for(const [selector,value] of [
@@ -49,6 +63,7 @@
  document.addEventListener('DOMContentLoaded',()=>{
   if(!window.ZooniiSEOView)return;
   if(path()!=='/')restore();
+  else {showInitialIntro();requestAnimationFrame(showInitialIntro);}
   document.documentElement.classList.add('zz-seo-ready');
   const textLink=document.createElement('a');textLink.className='zz-text-link';textLink.href='#zz-readable';textLink.textContent='텍스트로 포트폴리오 보기';document.body.prepend(textLink);
   textLink.addEventListener('click',e=>{e.preventDefault();document.documentElement.classList.add('zz-text-view');const main=document.getElementById('zz-readable');main.focus();main.scrollIntoView();});
