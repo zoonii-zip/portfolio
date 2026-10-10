@@ -19,7 +19,14 @@
   if(location.hash==='#zz-fullscreen')history.replaceState(history.state,'',location.pathname+location.search);
   document.getElementById('zz-logo-entry')?.scrollIntoView({behavior:'instant',block:'start'});
  }
- window.addEventListener('pageshow',showInitialIntro);
+ window.addEventListener('pageshow',event=>{
+  // BFCache restores JavaScript variables as well as the old board position.
+  // Interaction from the previous visit must not suppress the new entry reset.
+  if(event.persisted)entryInteracted=false;
+  showInitialIntro();
+  requestAnimationFrame(()=>requestAnimationFrame(showInitialIntro));
+ });
+ window.addEventListener('load',showInitialIntro);
 
  function metadata(page,url){
   document.title=page.title;
