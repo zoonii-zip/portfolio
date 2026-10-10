@@ -219,15 +219,15 @@
  overview.addEventListener('cancel',e=>{e.preventDefault();closeOverview()});
  overview.addEventListener('click',e=>{if(e.target===overview){const r=overview.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeOverview();return}if(e.target.closest('.overview-close')){closeOverview();return}const target=e.target.closest('[data-overview-action],[data-overview-project]');if(!target)return;closeOverview(()=>{current=null;activeFolder=null;const key=target.dataset.overviewAction;if(key){selectDock(key);if(key==='home'){close();root.scrollIntoView({behavior:reduced?'instant':'smooth'})}else action(key)}else{selectDock('files');travel('files',()=>project(target.dataset.overviewProject))}})});
 
- const boardToy=document.createElement('button');boardToy.type='button';boardToy.className='unicorn-keychain';boardToy.dataset.boardToy='unicorn';boardToy.setAttribute('aria-label','유니콘 인형 키링 — 드래그해서 옮기기');boardToy.innerHTML='<img src="assets/unicorn-keychain-vintage.png" width="1080" height="1440" alt="빈티지 파스텔 톤의 유니콘 봉제 인형 키링" draggable="false">';world.append(boardToy);
+ const boardToy=document.createElement('button');boardToy.type='button';boardToy.className='unicorn-keychain';boardToy.dataset.boardToy='unicorn';boardToy.setAttribute('aria-label','걸린 유니콘 인형 — 마우스로 흔들고 클릭해서 튕기기');boardToy.innerHTML='<img src="assets/unicorn-keychain-vintage.png" width="1080" height="1440" alt="빈티지 파스텔 톤의 유니콘 봉제 인형 키링" draggable="false">';world.append(boardToy);
  let objectDrag=null,suppressObjectClickUntil=0;
- const movable=world.querySelectorAll('button[data-action],button[data-board-toy]');movable.forEach((el,i)=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0';el.style.setProperty('--float-duration',(i%2?6:5)+'s');el.style.setProperty('--float-lift',(i%2?-20:-15)+'px');el.style.setProperty('--float-delay',(i%2?1:0)+(Math.floor(i/2)*.3)+'s')});
+ const movable=world.querySelectorAll('button[data-action]');movable.forEach((el,i)=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0';el.style.setProperty('--float-duration',(i%2?6:5)+'s');el.style.setProperty('--float-lift',(i%2?-20:-15)+'px');el.style.setProperty('--float-delay',(i%2?1:0)+(Math.floor(i/2)*.3)+'s')});
  // Float only while the main board is visible; dragging uses independent offsets.
  new IntersectionObserver(entries=>{root.classList.toggle('board-visible',entries[0].isIntersecting)},{threshold:.15}).observe(root);
  const syncBoardVisibility=()=>root.classList.toggle('board-page-hidden',document.hidden);
  document.addEventListener('visibilitychange',syncBoardVisibility);syncBoardVisibility();
  root.addEventListener('click',e=>{if(performance.now()<suppressObjectClickUntil&&e.target.closest('.movable-object')){e.preventDefault();e.stopImmediatePropagation()}},true);
- q('#zz-stage').addEventListener('pointerdown',e=>{if(overlay.classList.contains('open')||moving||e.button!==0)return;const el=e.target.closest('.movable-object');if(el){el.classList.add('object-held');objectDrag={el,sx:e.clientX,sy:e.clientY,mx:Number(el.dataset.moveX),my:Number(el.dataset.moveY),moved:false,scale:z};el.setPointerCapture(e.pointerId);return}if(!entered)return;drag={sx:e.clientX,sy:e.clientY,x,y,moved:false};q('#zz-stage').setPointerCapture(e.pointerId)});
+ q('#zz-stage').addEventListener('pointerdown',e=>{if(overlay.classList.contains('open')||moving||e.button!==0||e.target.closest('[data-board-toy]'))return;const el=e.target.closest('.movable-object');if(el){el.classList.add('object-held');objectDrag={el,sx:e.clientX,sy:e.clientY,mx:Number(el.dataset.moveX),my:Number(el.dataset.moveY),moved:false,scale:z};el.setPointerCapture(e.pointerId);return}if(!entered)return;drag={sx:e.clientX,sy:e.clientY,x,y,moved:false};q('#zz-stage').setPointerCapture(e.pointerId)});
  q('#zz-stage').addEventListener('pointermove',e=>{if(objectDrag){const d=objectDrag,dx=(e.clientX-d.sx)/d.scale,dy=(e.clientY-d.sy)/d.scale;if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)>6)d.moved=true;if(d.moved){d.el.classList.add('object-moving');d.el.style.zIndex='25';const mx=Math.max(-700,Math.min(700,d.mx+dx)),my=Math.max(-500,Math.min(500,d.my+dy));d.el.dataset.moveX=mx;d.el.dataset.moveY=my;d.el.style.setProperty('--move-x',mx+'px');d.el.style.setProperty('--move-y',my+'px')}return}if(!drag)return;const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.hypot(dx,dy)>6)drag.moved=true;if(drag.moved){world.classList.add('dragging');x=Math.max(-700,Math.min(700,drag.x+dx));y=Math.max(-500,Math.min(500,drag.y+dy));render()}});
  const endDrag=()=>{if(objectDrag){if(objectDrag.moved)suppressObjectClickUntil=performance.now()+350;objectDrag.el.classList.remove('object-moving','object-held');objectDrag.el.style.zIndex='';objectDrag=null}world.classList.remove('dragging');setTimeout(()=>{drag=null},0)};q('#zz-stage').addEventListener('pointerup',endDrag);q('#zz-stage').addEventListener('pointercancel',endDrag);
  let zipY=null;q('#zz-track').addEventListener('pointerdown',e=>{zipY=e.clientY;q('#zz-track').setPointerCapture(e.pointerId)});q('#zz-track').addEventListener('pointermove',e=>{if(zipY===null)return;const d=Math.max(0,Math.min(80,e.clientY-zipY));q('#zz-pull').style.transform=`translateY(${d}px)`});q('#zz-track').addEventListener('pointerup',e=>{if(zipY!==null&&e.clientY-zipY>60)enter();zipY=null;q('#zz-pull').style.transform=''});q('#zz-track').addEventListener('pointercancel',()=>{zipY=null;q('#zz-pull').style.transform=''});
@@ -566,7 +566,7 @@ html.overview-open{overflow:hidden}
 #zz-logo-entry .zip-package,#zz-logo-entry .zip-package:hover{width:min(94vw,780px);height:min(58svh,585px);padding:0;background:transparent;border:0;box-shadow:none}
 #zz-logo-entry .intro-title-image{display:block;width:50%;height:50%;object-fit:contain;user-select:none}
 #zz-logo-entry .falling-graphic img[src$="intro-horse.webp"]{clip-path:inset(2.7%)}
-#zz-fullscreen .unicorn-keychain{position:absolute;left:var(--board-left);top:var(--board-top);width:180px;padding:0;border:0;background:none;transform:rotate(8deg);touch-action:none}
+#zz-fullscreen .unicorn-keychain{position:absolute;left:var(--board-left);top:var(--board-top);width:280px;padding:0;border:0;background:none;transform:none;touch-action:none}
 #zz-fullscreen .unicorn-keychain img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(4px 7px 3px #332d2940)}
 /* Main board composition matched to the supplied reference screenshot. */
 #zz-fullscreen .world{top:50%!important}
@@ -578,7 +578,7 @@ html.overview-open{overflow:hidden}
 #zz-fullscreen .movable-object{
  --move-x:0px;--move-y:0px;
  translate:var(--move-x) var(--move-y);
- animation:zz-board-float var(--float-duration,5s) ease-in-out var(--float-delay,0s) infinite;
+ animation:none;
  animation-play-state:paused;
  transition:transform .5s ease,filter .5s ease;
 }
@@ -762,4 +762,4 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-weeks .weeks-toggle:hover{background:#424b3c!important}
 #zz-overview-button:hover{background:#e8dfce!important}
 #zz-weeks .weeks-toggle:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #b18436;outline-offset:3px}
-</style><link rel="stylesheet" href="intro-folder-roll.css"><script src="intro-folder-roll.js"></script></body></html>
+</style><link rel="stylesheet" href="intro-folder-roll.css"><script src="intro-folder-roll.js"></script><link rel="stylesheet" href="hanging-toy.css"><script src="hanging-toy.js"></script></body></html>

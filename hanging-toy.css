@@ -1,0 +1,16 @@
+#zz-fullscreen .unicorn-keychain{isolation:isolate;overflow:visible}
+#zz-fullscreen .unicorn-keychain img{
+ transform-origin:49% 1%;
+ transform:rotate(var(--toy-angle,0deg));
+ will-change:transform;
+}
+#zz-fullscreen .unicorn-keychain::after{
+ content:'';position:absolute;left:49%;top:1%;width:12px;height:12px;
+ transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle at 35% 30%,#e2c399,#926943 55%,#593b27);
+ box-shadow:1px 2px 2px #31201570;z-index:1;
+}
+#zz-fullscreen .unicorn-keychain:focus-visible{outline:2px dashed #725438;outline-offset:8px}
+@media(prefers-reduced-motion:reduce){
+ #zz-fullscreen .unicorn-keychain img{transform:none;will-change:auto}
+}
