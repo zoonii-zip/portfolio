@@ -74,8 +74,6 @@
   document.documentElement.classList.add('zz-seo-ready');
   const textLink=document.createElement('a');textLink.className='zz-text-link';textLink.href='#zz-readable';textLink.textContent='텍스트로 포트폴리오 보기';document.body.prepend(textLink);
   textLink.addEventListener('click',e=>{e.preventDefault();document.documentElement.classList.add('zz-text-view');const main=document.getElementById('zz-readable');main.focus();main.scrollIntoView();});
-  const menu=document.querySelector('#zz-overview nav');
-  if(menu){const a=document.createElement('a');a.href=path()+'?view=text';a.textContent='Text version';a.addEventListener('click',()=>{a.href=path()+'?view=text';});menu.append(a);}
   if(new URLSearchParams(location.search).get('view')==='text')document.documentElement.classList.add('zz-text-view');
  });
  window.addEventListener('popstate',restore);
