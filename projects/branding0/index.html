@@ -67,7 +67,7 @@
  <div class="view" id="zz-stage"><div class="world" id="zz-world">
   <div class="backtype">THINGS I MADE<br>+ THINGS THAT<br>MADE ME.</div>
   <button class="center profile-sticker" data-action="about"><span class="pin-tape"></span><div class="portrait-slot"><span>ZOONII</span><small>PORTRAIT / IMAGE PENDING</small></div><span class="profile-name">김주연 / Zoonii</span><small>Designer · Illustrator · Educator</small><span class="profile-open">OPEN PROFILE ↗</span></button>
-  <button class="object club-sticker" data-action="club"><span class="club-face" aria-hidden="true"><span class="eye e-left"></span><span class="eye e-right"></span><span class="grin"></span></span><span class="club-title">THINGTHING<br>CLUB</span><small>감정을 파는 식료품점 ↗<br>캐릭터 배치 예시 · 실제 자산 미연결</small></button>
+  <button class="object club-sticker club-glitter" data-action="club" aria-label="ThingThingClub 열기"><img src="assets/thingthing-horse-glitter.png" width="1216" height="1280" alt="핑크와 청록 글리터 코팅의 띵띵클럽 목마 스티커" draggable="false"><span class="club-sticker-label">THINGTHING CLUB ↗</span></button>
   <button class="object career-sticker" data-action="career"><span class="mono">CAREER.LOG / 2013 — NOW</span><span class="career-number">10+</span><span>YEARS OF MAKING</span><small>제품 · 브랜드 · 일러스트 · 교육<br>경력의 흐름을 펼쳐보기 ↗</small></button>
   <button class="receipt-sticker" data-action="files"><span class="pin-tape"></span><strong>ZOONII ARCHIVE</strong><span class="mono">ITEM / FIELD / FILE</span><hr><span class="receipt-row">ILLUSTRATION <i>06</i></span><span class="receipt-row">WEB / APP <i>05</i></span><span class="receipt-row">BRAND / EDITORIAL <i>05</i></span><hr><span class="mono">16 SELECTED PROJECTS</span><strong class="barcode">|||| ||| |||||| || |||||</strong><small>OPEN ALL FILES ↗</small></button>
 
@@ -794,3 +794,10 @@ html.viewing-space #zz-fullscreen .top{position:fixed;top:16px;left:0;right:0;z-
 html.viewing-space #zz-fullscreen .top .wordmark{pointer-events:auto}
 @media(max-width:760px){html.viewing-space #zz-fullscreen .top{top:12px}}
 </style></body></html>
+
+<style>
+#zz-fullscreen [data-action="club"].object.club-glitter{width:250px;padding:0;background:transparent;border:0;box-shadow:none;gap:5px;transform:rotate(7deg)}
+#zz-fullscreen .club-glitter img{display:block;width:100%;height:auto;filter:drop-shadow(3px 5px 2px #39241145);user-select:none}
+#zz-fullscreen .club-glitter .club-sticker-label{font:11px monospace;letter-spacing:.06em;color:#30271d;background:#f6efdc;padding:5px 9px;border-radius:2px}
+#zz-fullscreen [data-action="club"].object.club-glitter:hover{transform:rotate(3deg) translateY(-5px)}
+</style>
