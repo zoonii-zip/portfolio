@@ -37,7 +37,7 @@
     return inView && !document.hidden && !motion.matches;
   }
 
-  function schedule(delay = 450) {
+  function schedule(delay = 220) {
     clearTimeout(timer);
     if (active()) timer = setTimeout(advance, delay);
   }
@@ -57,7 +57,7 @@
       reel.appendChild(next);
       // Keep both silhouettes registered in the same frame, like tracing paper.
       // A short dissolve changes the material without moving the folder.
-      const timing = { duration: 90, easing: 'linear', fill: 'both' };
+      const timing = { duration: 60, easing: 'linear', fill: 'both' };
       animations = [
         current.animate([{ opacity: 1 }, { opacity: 0 }], timing),
         next.animate([{ opacity: 0 }, { opacity: 1 }], timing)
@@ -86,7 +86,7 @@
     animations.forEach(animation => animation.cancel());
     animations = [];
     reel.querySelectorAll('img').forEach(image => { if (image !== current) image.remove(); });
-    schedule(started ? 450 : 1200);
+    schedule(started ? 220 : 600);
   }
 
   new IntersectionObserver(entries => {
