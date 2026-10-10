@@ -579,7 +579,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
  const photo=new Image();
  const states=new WeakMap();
- let ready=false,frame=0,px=0,py=0,tracking=false;
+ let ready=false,frame=0,px=0,py=0,tracking=false,lastFrame=0;
  // Warp the original eye continuously; keep its photographed boundary fixed.
  // Separate iris/backing layers left visible seams when the gaze moved.
  const eyes=[
@@ -612,7 +612,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
     const i=y*width+x;if(!inside[i])continue;
     let distance=24;
     for(const [ex,ey] of edge)distance=Math.min(distance,Math.hypot(x-ex,y-ey));
-    const t=Math.min(1,distance/24);
+    const t=Math.max(0,Math.min(1,(distance-5)/19));
     weight[i]=t*t*(3-2*t);
    }
    const surface=document.createElement('canvas');surface.width=width;surface.height=height;
@@ -640,8 +640,9 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   patch.context.putImageData(patch.output,0,0);
   context.drawImage(patch.surface,patch.left,patch.top);
  }
- function tick(){
+ function tick(now){
   frame=0;
+  const elapsed=lastFrame?Math.min(50,now-lastFrame):16.7;lastFrame=now;
   const art=document.querySelector('.profile-artwork');
   const canvas=art?.querySelector('.profile-eye-canvas');
   if(!ready||!canvas||!art.isConnected)return;
@@ -654,18 +655,20 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    state={context,eyes:eyes.map(()=>({x:0,y:0}))};
    states.set(canvas,state);
   }
+  // One shared gaze target prevents the eyes converging on the pointer.
+  // Small source-pixel offsets keep the photographed iris nearly undeformed.
+  let tx=0,ty=0;
+  if(tracking&&!reduce.matches){
+   const dx=(px-r.left)*1536/r.width-641.5;
+   const dy=(py-r.top)*1024/r.height-454.5;
+   tx=Math.tanh(dx/500)*3;
+   ty=Math.tanh(dy/450)*.6;
+  }
   let settling=false;
   patches.forEach((patch,index)=>{
-   let tx=0,ty=0;
-   if(tracking){
-    const dx=(px-r.left)*1536/r.width-patch.x;
-    const dy=(py-r.top)*1024/r.height-patch.y;
-    const len=Math.hypot(dx,dy),amount=Math.min(1,len/220);
-    if(len){tx=dx/len*10*amount;ty=dy/len*3*amount;}
-   }
    const pos=state.eyes[index];
-   // Reduced motion removes easing, but preserves direct pointer interaction.
-   const ease=reduce.matches?1:.55;
+   // Time-based easing stays consistent across display refresh rates.
+   const ease=reduce.matches?1:1-Math.exp(-elapsed/150);
    pos.x+=(tx-pos.x)*ease;pos.y+=(ty-pos.y)*ease;
    if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}
    else settling=true;
@@ -673,8 +676,8 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   });
   if(settling)frame=requestAnimationFrame(tick);
  }
- window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
- window.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
+ window.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'){tracking=false;schedule();return;}px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
+ window.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){tracking=false;schedule();}},{passive:true});
  document.documentElement.addEventListener('pointerleave',()=>{tracking=false;schedule();});
  window.addEventListener('blur',()=>{tracking=false;schedule();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){tracking=false;if(frame)cancelAnimationFrame(frame);frame=0;}else schedule();});
