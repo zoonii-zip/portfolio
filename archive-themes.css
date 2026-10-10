@@ -146,3 +146,28 @@
  #zz-fullscreen .theme-story .shelf-book small{font-size:7px;writing-mode:vertical-rl}
  #zz-fullscreen .theme-story .spine-4{margin-left:2px;margin-right:12px;--lean:4deg}
 }
+/* Textured project folders arranged on a desktop. */
+#zz-fullscreen .archive-shell.theme-product{--collection-bg:#d9e1df}
+#zz-fullscreen .theme-product #archive-panel{background:linear-gradient(145deg,#e8ede8,#bdcfcc);border:1px solid #b6c5bf;border-radius:12px 0 12px 12px}
+#zz-fullscreen .theme-product .archive-cover{padding-bottom:20px}
+#zz-fullscreen .theme-product .archive-cover h2{font-family:Arial,sans-serif;font-size:clamp(28px,3vw,44px);font-weight:600}
+#zz-fullscreen .theme-product .collection-scene{position:relative}
+#zz-fullscreen .theme-product .collection-meta{color:#3d554e;border-top:1px solid #6a877b55;font-size:11px}
+#zz-fullscreen .theme-product .collection-objects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 16px;min-height:520px;align-items:start;padding:20px 0 35px}
+#zz-fullscreen .project-folder{display:flex;flex-direction:column;align-items:center;min-width:0;text-decoration:none;color:#263b35;border-radius:8px;padding:10px 4px;transition:background .2s}
+#zz-fullscreen .project-folder:hover,#zz-fullscreen .project-folder:focus-visible{background:#ffffff38}
+#zz-fullscreen .project-folder-art{position:relative;display:block;width:100%;isolation:isolate;transform:rotate(var(--folder-rotation));transition:transform .25s;filter:drop-shadow(0 10px 7px #203e3425)}
+#zz-fullscreen .project-folder:hover .project-folder-art{transform:translateY(-8px) rotate(0deg)}
+#zz-fullscreen .project-folder-art img{display:block;width:100%;height:auto}
+#zz-fullscreen .folder-ink{position:absolute;left:11.4%;right:11.4%;top:20.2%;bottom:7%;background:var(--folder-color);mix-blend-mode:multiply;clip-path:polygon(0 6%,3% 0,45% 0,49% 5%,95% 5%,100% 9%,100% 96%,98% 100%,2% 100%,0 97%);border-radius:8px}
+#zz-fullscreen .folder-brand{position:absolute;left:19%;right:15%;top:45%;font:800 clamp(18px,2.6vw,38px)/1.05 Arial,sans-serif;letter-spacing:-.05em;color:#fff8e5;text-align:center;text-shadow:0 1px 1px #0002;overflow-wrap:anywhere}
+#zz-fullscreen .folder-stamp{position:absolute;left:20%;bottom:16%;font:8px monospace;letter-spacing:.1em;color:#fff8e5}
+#zz-fullscreen .folder-caption{display:flex;flex-direction:column;gap:5px;text-align:center;padding:10px 8px 0;max-width:260px}
+#zz-fullscreen .folder-caption strong{font:600 15px/1.5 Arial,sans-serif;word-break:keep-all}
+#zz-fullscreen .folder-caption>span{font:12px/1.6 Arial,sans-serif;word-break:keep-all;color:#4b625a}
+#zz-fullscreen .folder-caption small{font:10px/1.5 monospace;color:#587066}
+#zz-fullscreen .project-folder.folder-1{margin-top:35px}
+#zz-fullscreen .project-folder.folder-3{margin-left:30px}
+#zz-fullscreen .project-folder.folder-4{margin-top:20px;margin-left:30px}
+@media(max-width:1100px){#zz-fullscreen .theme-product .collection-objects{grid-template-columns:repeat(2,minmax(0,1fr))}#zz-fullscreen .project-folder.folder-3,#zz-fullscreen .project-folder.folder-4{margin-left:0}}
+@media(max-width:760px){#zz-fullscreen .theme-product #archive-panel{padding:24px 12px}#zz-fullscreen .theme-product .collection-objects{grid-template-columns:1fr;gap:18px;min-height:0}#zz-fullscreen .project-folder{width:100%;max-width:290px;justify-self:center}#zz-fullscreen .project-folder.folder-1,#zz-fullscreen .project-folder.folder-4{margin-top:0}#zz-fullscreen .folder-brand{font-size:clamp(20px,5vw,32px)}#zz-fullscreen .folder-stamp{font-size:7px}#zz-fullscreen .folder-caption strong{font-size:14px}#zz-fullscreen .folder-caption>span{font-size:11px}}
