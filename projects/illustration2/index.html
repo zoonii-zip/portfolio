@@ -625,9 +625,9 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
  const photo=new Image();
  const states=new WeakMap();
- let ready=false,frame=0,px=0,py=0,tracking=false,lastFrame=0,lastPointer=0;
- // Warp the original eye continuously; keep its photographed boundary fixed.
- // Separate iris/backing layers left visible seams when the gaze moved.
+ let ready=false,frame=0,px=0,py=0,tracking=false,lastFrame=0;
+ // Translate the photographed iris rigidly over a sclera backing.
+ // The opening mask keeps eyelids, lashes and the paper cutout stationary.
  const eyes=[
   {x:486,y:453,rx:28,ry:26,opening:'M 432 458 C 443 439 465 424 486 426 C 511 426 534 443 548 465 C 534 478 507 482 483 479 C 459 478 442 469 432 458 Z'},
   {x:797,y:456,rx:28,ry:26,opening:'M 756 465 C 767 443 782 428 797 429 C 819 429 845 444 862 465 C 842 479 822 483 798 481 C 778 480 766 473 756 465 Z'}
@@ -658,7 +658,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
     const i=y*width+x;if(!inside[i])continue;
     let distance=24;
     for(const [ex,ey] of edge)distance=Math.min(distance,Math.hypot(x-ex,y-ey));
-    const t=Math.max(0,Math.min(1,(distance-5)/19));
+    const t=Math.max(0,Math.min(1,(distance-1)/3));
     weight[i]=t*t*(3-2*t);
    }
    const surface=document.createElement('canvas');surface.width=width;surface.height=height;
@@ -671,17 +671,27 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   context.clearRect(patch.left,patch.top,width,height);
   if(Math.abs(dx)+Math.abs(dy)<.03)return;
   const input=patch.original.data,output=patch.output.data;
+  const cx=width/2,cy=height/2;
+  const sample=(x,y,c)=>{
+   x=Math.max(0,Math.min(width-1.001,x));y=Math.max(0,Math.min(height-1.001,y));
+   const ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;
+   const a=(iy*width+ix)*4+c,b=a+4,d=a+width*4;
+   return (input[a]*(1-fx)+input[b]*fx)*(1-fy)+(input[d]*(1-fx)+input[d+4]*fx)*fy;
+  };
   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
    const i=y*width+x,w=patch.weight[i];
    if(!w){output[i*4+3]=0;continue;}
-   const sx=Math.max(0,Math.min(width-1.001,x-dx*w));
-   const sy=Math.max(0,Math.min(height-1.001,y-dy*w));
-   const x0=Math.floor(sx),y0=Math.floor(sy),fx=sx-x0,fy=sy-y0;
-   const a=(y0*width+x0)*4,b=a+4,c=a+width*4,d=c+4;
-   for(let channel=0;channel<3;channel++){
-    output[i*4+channel]=(input[a+channel]*(1-fx)+input[b+channel]*fx)*(1-fy)+(input[c+channel]*(1-fx)+input[d+channel]*fx)*fy;
+   const originalRadius=Math.hypot((x-cx)/patch.rx,(y-cy)/patch.ry);
+   const movedRadius=Math.hypot((x-cx-dx)/patch.rx,(y-cy-dy)/patch.ry);
+   const erase=Math.max(0,Math.min(1,(1.12-originalRadius)/.12));
+   const iris=Math.max(0,Math.min(1,(1.04-movedRadius)/.08));
+   for(let c=0;c<3;c++){
+    // Use photographed sclera from the same row to reveal the area behind the iris.
+    const white=sample(cx+36,y,c);
+    const backing=input[i*4+c]*(1-erase)+white*erase;
+    output[i*4+c]=backing*(1-iris)+sample(x-dx,y-dy,c)*iris;
    }
-   output[i*4+3]=255;
+   output[i*4+3]=Math.round(w*255);
   }
   patch.context.putImageData(patch.output,0,0);
   context.drawImage(patch.surface,patch.left,patch.top);
@@ -702,13 +712,13 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    states.set(canvas,state);
   }
   // One shared gaze target prevents the eyes converging on the pointer.
-  // Follow the pointer, then gently look around when it is idle.
-  let tx=reduce.matches?0:Math.sin(now/1350)*16,ty=reduce.matches?0:Math.sin(now/1900)*4;
-  if(tracking && now-lastPointer<2500){
+  // Hold the gaze at the pointer; no autonomous movement.
+  let tx=0,ty=0;
+  if(tracking){
    const dx=(px-r.left)*1536/r.width-641.5;
    const dy=(py-r.top)*1024/r.height-454.5;
-   tx=Math.tanh(dx/240)*18;
-   ty=Math.tanh(dy/300)*5;
+   tx=Math.tanh(dx/300)*12;
+   ty=Math.tanh(dy/350)*3;
   }
   let settling=false;
   patches.forEach((patch,index)=>{
@@ -721,10 +731,10 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
    paint(state.context,patch,pos.x,pos.y);
    if(index===0){canvas.dataset.gazeX=pos.x.toFixed(2);canvas.dataset.gazeY=pos.y.toFixed(2);}
   });
-  if(settling||!reduce.matches)frame=requestAnimationFrame(tick);
+  if(settling)frame=requestAnimationFrame(tick);
  }
- window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;tracking=true;lastPointer=performance.now();schedule();},{passive:true,capture:true});
- window.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;tracking=true;lastPointer=performance.now();schedule();},{passive:true});
+ window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true,capture:true});
+ window.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
  document.documentElement.addEventListener('pointerleave',()=>{tracking=false;schedule();});
  window.addEventListener('blur',()=>{tracking=false;schedule();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){tracking=false;if(frame)cancelAnimationFrame(frame);frame=0;}else schedule();});
