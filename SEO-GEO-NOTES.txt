@@ -1,0 +1,56 @@
+ZOONII.ZIP SEO / GEO 적용 내역 — 2026-10-10
+
+원본: 저장소 루트의 index.html
+현재 구조: 별도 프레임워크 없이 HTML / CSS / JavaScript, GitHub Pages용 정적 사이트.
+실제 도메인: CNAME과 사용자 지정 주소에서 확인한 https://zoonii.zip
+
+적용 내용
+- 페이지별 title, description, canonical, OG, Twitter 메타데이터.
+- 기존 폴더·보드·화면 이동·프로필·아카이브 디자인과 애니메이션 유지.
+- /profile/, /career/, /archive/, /archive/illustration/, /archive/uiux/, /archive/branding/ 주소.
+- 작품 16개에 /projects/<기존 프로젝트 ID>/ 주소. 기존 이름·역할·기간만 표시.
+- 기존 작품 카드에 키보드로 접근 가능한 실제 링크 추가.
+- 주소를 직접 열거나 새로고침해도 해당 화면을 표시. 뒤로가기와 메타데이터 동기화.
+- 각 문서에 main, h1, 목록/표, 실제 링크를 포함한 기본 HTML 제공.
+- JavaScript가 실행되지 않아도 주요 내용을 읽을 수 있음. Menu의 Text version으로도 접근 가능.
+- 기존 구체적인 이미지 alt 유지, 기본 HTML 프로필 이미지에도 alt 추가.
+- Person, WebSite, WebPage, 작품별 CreativeWork JSON-LD. 허구의 경력·지역·외부 프로필·날짜를 넣지 않음.
+- robots.txt: 일반 크롤러 및 OAI-SearchBot 접근 허용. GPTBot 개별 정책은 추가하지 않음.
+- sitemap.xml: 현재 7개 페이지. 미래/미완성 URL과 가짜 수정일을 넣지 않음.
+- 준비 중인 작품 16개와 문의/방명록/클럽 페이지는 noindex,follow 및 sitemap 제외.
+  문의 전송과 상품 판매가 이미 작동한다고 주장하지 않음.
+
+개발하면서 유지하는 방법
+index.html이 인터랙션과 기존 작품/경력 데이터의 원본입니다.
+프로필 문구, 프로젝트 설명 등은 scripts/build-seo.py의 페이지 내용도 함께 갱신하세요.
+정적 경로의 index.html 및 seo-pages.js는 생성 결과이므로 직접 편집하지 마세요.
+화면이나 데이터를 수정한 후, 배포 전에 프로젝트 폴더에서 실행:
+  python3 scripts/build-seo.py
+  python3 scripts/verify-seo.py
+생성된 경로 폴더, seo.css, seo.js, seo-pages.js, robots.txt, sitemap.xml도 함께 배포합니다.
+완성된 작품은 설명과 실제 자산을 채운 후 해당 페이지의 index=False 정책을 변경하세요.
+현재 생성기는 최신 미완성 프로젝트 구조를 기준으로 하므로 작품 상세 UI를 완성할 때
+bridge의 project 분기와 정적 상세 내용을 같은 데이터로 연결하는 작업이 필요합니다.
+사이트가 커지면 프로필/작품 데이터를 별도 파일로 통합하는 것이 다음 단계입니다.
+
+검증
+- 26개 HTML의 canonical, title, description, OG/Twitter, robots 메타 검사.
+- JSON-LD JSON 파싱, 사이트맵 7개 URL, 실제 내부 링크와 이미지 경로 검사.
+- 인라인 및 추가 JavaScript 문법 검사, git diff 공백 검사 통과.
+- 브라우저: 프로필 이동/새로고침, 일러스트레이션→웹앱 아카이브 탭,
+  작품 상세 진입/뒤로가기, noindex, 메타데이터 동기화 확인.
+- 스크립트를 제거한 별도 테스트 문서에서도 목록과 링크 확인.
+- 확인한 브라우저 화면에서 콘솔 오류 없음.
+
+배포 후 별도 확인이 필요한 것
+- Google Search Console / Bing / 네이버 등록과 소유권 인증, 실제 색인 결과 확인.
+- 문의 폼 연결, 작품별 최종 이미지·설명, 주차별 과거 스냅샷의 검색 노출 정책 확정.
+- 실제 운영 환경에서 크롤러 접근 및 공유 이미지 수집 확인.
+- 모바일 전체 회귀 테스트, 검색 노출 또는 AI 인용 성과 측정.
+
+참고
+https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+https://developers.google.com/search/docs/appearance/ai-features
+https://developers.openai.com/api/docs/bots
+OpenAI Docs 스킬로 검색 크롤러 공식 문서를 확인했습니다.
+SEO/GEO 설정은 검색과 AI 인용을 보장하지 않습니다.
