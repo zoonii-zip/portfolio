@@ -114,3 +114,35 @@
  #zz-fullscreen .archive-shell .archive-tabs button:first-child strong{font-size:13px;white-space:nowrap}
  #zz-fullscreen .shelf-book.spine-3 strong,#zz-fullscreen .shelf-book.spine-5 strong{font-size:clamp(12px,2.7vw,18px)}
 }
+/* Typographic book spines, closely shelved against a black recess. */
+#zz-fullscreen .theme-story .collection-scene{background:#10110f;color:#f6f2e7;padding:0 30px 22px}
+#zz-fullscreen .theme-story .collection-meta{color:#a9aba2;border:0;padding:20px 0}
+#zz-fullscreen .theme-story .collection-footer{color:#b5b6af;padding-top:18px}
+#zz-fullscreen .theme-story .collection-objects{background:none;min-height:440px;padding:25px 28px 0;gap:2px;align-items:flex-end;overflow:hidden}
+#zz-fullscreen .theme-story .shelf-book{flex:0 1 var(--spine-width,64px);height:var(--book-height);padding:12px 6px 10px;border-radius:1px;transform:rotate(var(--lean,0deg));box-shadow:inset 2px 0 2px #fff6,inset -3px 0 3px #0005,2px 0 2px #0008;color:var(--spine-ink,#181916);background:var(--spine-paper,#f1eee4);border:1px solid #0004}
+#zz-fullscreen .theme-story .shelf-book:hover{transform:translateY(-12px) rotate(var(--lean,0deg))}
+#zz-fullscreen .theme-story .shelf-book strong{writing-mode:vertical-rl;font:700 var(--spine-size,30px)/1 Arial,'Apple SD Gothic Neo',sans-serif;letter-spacing:-.05em;margin:12px 0 0;padding:0;background:none;color:inherit;white-space:nowrap}
+#zz-fullscreen .theme-story .spine-number{font:9px/1 monospace;text-align:left;align-self:stretch;width:auto;border:0;padding:0}
+#zz-fullscreen .theme-story .spine-subtitle{writing-mode:vertical-rl;font:9px/1.1 monospace;letter-spacing:.02em;margin-top:14px;max-height:90px;overflow:hidden}
+#zz-fullscreen .theme-story .shelf-book small{font:9px/1 monospace;writing-mode:horizontal-tb;padding-top:12px;margin-top:auto}
+#zz-fullscreen .theme-story .spine-0{--spine-width:53px;--spine-paper:linear-gradient(#fff3dc 0 35%,#ff562f 65%,#f32938);--spine-ink:#bd1758;--spine-size:34px}
+#zz-fullscreen .theme-story .spine-0 strong{font-family:Georgia,serif;font-style:italic}
+#zz-fullscreen .theme-story .spine-1{--spine-width:65px;--spine-paper:#cec1e9;--spine-ink:#493878;--spine-size:24px}
+#zz-fullscreen .theme-story .spine-2{--spine-width:78px;--spine-paper:#ecebe1;--spine-ink:#169768;--spine-size:38px}
+#zz-fullscreen .theme-story .spine-2 strong{font-weight:400;letter-spacing:.04em}
+#zz-fullscreen .theme-story .spine-3{--spine-width:51px;--spine-paper:#212780;--spine-ink:#f4efdf;--spine-size:25px}
+#zz-fullscreen .theme-story .spine-4{--spine-width:58px;--spine-paper:#e5ec36;--spine-ink:#161915;--spine-size:36px;--lean:7deg;margin-left:8px;margin-right:22px}
+#zz-fullscreen .theme-story .spine-4 strong{font-weight:900}
+#zz-fullscreen .theme-story .spine-5{--spine-width:66px;--spine-paper:#f092bd;--spine-ink:#4b252e;--spine-size:24px}
+#zz-fullscreen .theme-story .shelf-plank{height:8px;background:#30322b;border-top:1px solid #727367;box-shadow:0 8px 12px #0009;margin:0}
+@media(max-width:760px){
+ #zz-fullscreen .theme-story .collection-scene{padding:0 8px 14px;margin:0 -8px}
+ #zz-fullscreen .theme-story .collection-meta{font-size:7px;letter-spacing:0;gap:5px}
+ #zz-fullscreen .theme-story .collection-objects{min-height:315px;padding:16px 3px 0;gap:1px}
+ #zz-fullscreen .theme-story .shelf-book{height:calc(var(--book-height)*.72);padding:9px 2px 8px;border-width:0;flex-shrink:1}
+ #zz-fullscreen .theme-story .shelf-book strong{font-size:clamp(12px,3.4vw,23px);letter-spacing:-.06em;margin-top:12px}
+ #zz-fullscreen .theme-story .spine-subtitle{font-size:7px;margin-top:10px;max-height:68px}
+ #zz-fullscreen .theme-story .spine-number{font-size:7px}
+ #zz-fullscreen .theme-story .shelf-book small{font-size:7px;writing-mode:vertical-rl}
+ #zz-fullscreen .theme-story .spine-4{margin-left:2px;margin-right:12px;--lean:4deg}
+}
