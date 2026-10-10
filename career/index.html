@@ -126,8 +126,8 @@
  const render=()=>{
  // Reference layout uses each graphic's center as a fraction of the board.
  const boardScale=Math.min(.85,(root.clientWidth-40)/1000);
- const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[.846,.86],contact:[.913,.85]};
- world.querySelectorAll('button[data-action]').forEach(el=>{const position=boardPositions[el.dataset.action];if(!position)return;el.style.setProperty('--board-left',((position[0]-.5)*root.clientWidth/boardScale-el.offsetWidth/2)+'px');el.style.setProperty('--board-top',((position[1]-.5)*root.clientHeight/boardScale-el.offsetHeight/2)+'px')});
+ const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[.846,.86],contact:[.913,.85],unicorn:[.72,.59]};
+ world.querySelectorAll('button[data-action],button[data-board-toy]').forEach(el=>{const position=boardPositions[el.dataset.action||el.dataset.boardToy];if(!position)return;el.style.setProperty('--board-left',((position[0]-.5)*root.clientWidth/boardScale-el.offsetWidth/2)+'px');el.style.setProperty('--board-top',((position[1]-.5)*root.clientHeight/boardScale-el.offsetHeight/2)+'px')});
  world.style.setProperty('--space-scale',z);world.style.setProperty('--pan-x',x+'px');world.style.setProperty('--pan-y',y+'px');world.style.transform=`translate(${x}px,${y}px) scale(${z})`};
  function enter(){entered=true;entry.inert=true;entry.classList.add('out');q('#zz-hint').textContent='DRAG TO ARRANGE · CLICK TO EXPLORE';q('#zz-location').textContent='HOME / DIRECTORY';render()}
  function open(title,html){window.ZooniiSEO?.opened(title);if(!entered)enter();returnFocus=document.activeElement;overlay.classList.add('open');document.documentElement.classList.add('viewing-space');root.scrollIntoView({behavior:'instant',block:'start'});q('#zz-paneltitle').textContent=title;const guest=document.getElementById('zz-message-section');if(body.contains(guest)){guest.hidden=true;document.body.append(guest)}body.innerHTML=html;q('#zz-nav').classList.remove('open');q('#zz-navbutton').setAttribute('aria-expanded','false');q('#zz-stage').inert=true;q('.top').inert=true;q('.bottom').inert=true;overlay.scrollTop=0;if(!moving)q('[data-action="close"]').focus({preventScroll:true})}
@@ -260,8 +260,9 @@
  overview.addEventListener('cancel',e=>{e.preventDefault();closeOverview()});
  overview.addEventListener('click',e=>{if(e.target===overview){const r=overview.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeOverview();return}if(e.target.closest('.overview-close')){closeOverview();return}const target=e.target.closest('[data-overview-action],[data-overview-project]');if(!target)return;closeOverview(()=>{current=null;activeFolder=null;const key=target.dataset.overviewAction;if(key){selectDock(key);if(key==='home'){close();root.scrollIntoView({behavior:reduced?'instant':'smooth'})}else action(key)}else{selectDock('files');travel('files',()=>project(target.dataset.overviewProject))}})});
 
+ const boardToy=document.createElement('button');boardToy.type='button';boardToy.className='unicorn-keychain';boardToy.dataset.boardToy='unicorn';boardToy.setAttribute('aria-label','유니콘 인형 키링 — 드래그해서 옮기기');boardToy.innerHTML='<img src="assets/unicorn-keychain-vintage.png" width="1080" height="1440" alt="빈티지 파스텔 톤의 유니콘 봉제 인형 키링" draggable="false">';world.append(boardToy);
  let objectDrag=null,suppressObjectClickUntil=0;
- const movable=world.querySelectorAll('button[data-action]');movable.forEach((el,i)=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0';el.style.setProperty('--float-duration',(i%2?6:5)+'s');el.style.setProperty('--float-lift',(i%2?-20:-15)+'px');el.style.setProperty('--float-delay',(i%2?1:0)+(Math.floor(i/2)*.3)+'s')});
+ const movable=world.querySelectorAll('button[data-action],button[data-board-toy]');movable.forEach((el,i)=>{el.classList.add('movable-object');el.dataset.moveX='0';el.dataset.moveY='0';el.style.setProperty('--float-duration',(i%2?6:5)+'s');el.style.setProperty('--float-lift',(i%2?-20:-15)+'px');el.style.setProperty('--float-delay',(i%2?1:0)+(Math.floor(i/2)*.3)+'s')});
  // Float only while the main board is visible; dragging uses independent offsets.
  new IntersectionObserver(entries=>{root.classList.toggle('board-visible',entries[0].isIntersecting)},{threshold:.15}).observe(root);
  const syncBoardVisibility=()=>root.classList.toggle('board-page-hidden',document.hidden);
@@ -606,6 +607,8 @@ html.overview-open{overflow:hidden}
 #zz-logo-entry .zip-package,#zz-logo-entry .zip-package:hover{width:min(94vw,780px);height:min(58svh,585px);padding:0;background:transparent;border:0;box-shadow:none}
 #zz-logo-entry .intro-title-image{display:block;width:50%;height:50%;object-fit:contain;user-select:none}
 #zz-logo-entry .falling-graphic img[src$="intro-horse.webp"]{clip-path:inset(2.7%)}
+#zz-fullscreen .unicorn-keychain{position:absolute;left:var(--board-left);top:var(--board-top);width:180px;padding:0;border:0;background:none;transform:rotate(8deg);touch-action:none}
+#zz-fullscreen .unicorn-keychain img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(4px 7px 3px #332d2940)}
 /* Main board composition matched to the supplied reference screenshot. */
 #zz-fullscreen .world{top:50%!important}
 #zz-fullscreen .world>button[data-action]{left:var(--board-left)!important;top:var(--board-top)!important}
