@@ -658,11 +658,11 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   // One shared gaze target prevents the eyes converging on the pointer.
   // Small source-pixel offsets keep the photographed iris nearly undeformed.
   let tx=0,ty=0;
-  if(tracking&&!reduce.matches){
+  if(tracking){
    const dx=(px-r.left)*1536/r.width-641.5;
    const dy=(py-r.top)*1024/r.height-454.5;
-   tx=Math.tanh(dx/500)*3;
-   ty=Math.tanh(dy/450)*.6;
+   tx=Math.tanh(dx/300)*8;
+   ty=Math.tanh(dy/350)*1.5;
   }
   let settling=false;
   patches.forEach((patch,index)=>{
@@ -676,8 +676,8 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
   });
   if(settling)frame=requestAnimationFrame(tick);
  }
- window.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'){tracking=false;schedule();return;}px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
- window.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){tracking=false;schedule();}},{passive:true});
+ window.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
+ window.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();},{passive:true});
  document.documentElement.addEventListener('pointerleave',()=>{tracking=false;schedule();});
  window.addEventListener('blur',()=>{tracking=false;schedule();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){tracking=false;if(frame)cancelAnimationFrame(frame);frame=0;}else schedule();});
