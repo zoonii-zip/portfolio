@@ -701,4 +701,22 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-fullscreen .face-collage.profile-artwork{overflow:visible;margin-bottom:12%;max-width:calc((100svh - 330px)*1.3)}
 #zz-fullscreen .profile-macbook{position:absolute;left:20%;top:74%;width:48%;height:auto;z-index:2;pointer-events:none;transform:rotate(-3deg);filter:drop-shadow(2px 5px 3px #302b2525)}
 @media(max-width:760px){#zz-fullscreen .face-collage.profile-artwork{max-width:min(100%,480px);margin-bottom:15%}}
+</style><style>
+/* All current-page header surfaces stay clear, including sticky states. */
+#zz-fullscreen .top,
+#zz-fullscreen .panelhead,
+#zz-fullscreen .top .wordmark,
+#zz-fullscreen .panelhead button[data-action="close"],
+#zz-fullscreen .panelhead button[data-action="close"]:hover,
+#zz-overview-button,
+#zz-overview-button:hover,
+#zz-weeks .weeks-toggle,
+#zz-weeks .weeks-toggle:hover{
+ background:transparent!important;
+ backdrop-filter:none!important;
+ -webkit-backdrop-filter:none!important;
+ box-shadow:none!important;
+ border-color:transparent!important;
+}
+#zz-weeks .weeks-toggle{color:#34372d}
 </style></body></html>
