@@ -1,0 +1,39 @@
+{
+  "tool": "Built-in image_gen",
+  "layout": {
+    "columns": 5,
+    "rows": 2,
+    "characters": [
+      "Z",
+      "o",
+      "o",
+      "n",
+      "i",
+      "i",
+      ".",
+      "z",
+      "i",
+      "p"
+    ]
+  },
+  "sources": [
+    {
+      "style": "produce",
+      "original": "/Users/zoonii/Downloads/zoonii01.png",
+      "asset": "produce.webp",
+      "prompt": "Edit target: the attached Zoonii.zip wordmark. Extract its TEN individual letters into ONE transparent sprite atlas. Preserve original vintage worn fruit-produce label stickers, blue sunrise Z, orange o, cream organic o, red n, yellow i with lemon dot, blue i with blue star dot, small orange fruit period, green leaf z, orange i with orange leaf dot, yellow palm p. Reconstruct only the tiny hidden overlap edges to make complete isolated objects. EXACT layout: a regular 5 column by 2 row grid on a wide 5:2 canvas, all ten equal cells. Top row left to right: Z, o, o, n, i. Bottom row: i, period dot, z, i, p. Each complete object centered in its own cell with generous transparent padding and no crossing cell boundaries. Keep dots of each i paired with its stem in the SAME cell. Letters must remain individually readable and match source textures/colors/artwork. No neighboring letter fragments, no extra characters, no labels, no grid, no background, no checkerboard, genuine transparent alpha. This is a website sprite sheet of isolated source assets, not a new composed wordmark. Every cell equal width and equal height. Please use a wide 2500 by 1000 composition."
+    },
+    {
+      "style": "puffy",
+      "original": "/Users/zoonii/Downloads/zoonii02.png",
+      "asset": "puffy.webp",
+      "prompt": "Edit target: the attached Zoonii.zip wordmark. Extract its TEN individual letters into ONE transparent sprite atlas. Preserve original glossy inflated soft 3D letters, spiky yellow Z, green o, pearl star-shaped o, pink n, yellow i with green dot, magenta i with magenta dot, pearl period, green spiky z, pink i with pink dot, yellow p. Reconstruct only the tiny hidden overlap edges to make complete isolated objects. EXACT layout: a regular 5 column by 2 row grid on a wide 5:2 canvas, all ten equal cells. Top row left to right: Z, o, o, n, i. Bottom row: i, period dot, z, i, p. Each complete object centered in its own cell with generous transparent padding and no crossing cell boundaries. Keep dots of each i paired with its stem in the SAME cell. Letters must remain individually readable and match source textures/colors/artwork. No neighboring letter fragments, no extra characters, no labels, no grid, no background, no checkerboard, genuine transparent alpha. This is a website sprite sheet of isolated source assets, not a new composed wordmark. Every cell equal width and equal height. Please use a wide 2500 by 1000 composition."
+    },
+    {
+      "style": "editorial",
+      "original": "/Users/zoonii/Downloads/zoonii03.png",
+      "asset": "editorial.webp",
+      "prompt": "Edit target: the attached Zoonii.zip wordmark. Extract its TEN individual letters into ONE transparent sprite atlas. Preserve original rough vintage ransom magazine paper collage letters, cream Z on red paper, black o on yellow, red o on blue, black n on peach, black i on cream, cream i on red, black period on yellow, black z on blue, black i on cream, cream p on red. Reconstruct only the tiny hidden overlap edges to make complete isolated objects. EXACT layout: a regular 5 column by 2 row grid on a wide 5:2 canvas, all ten equal cells. Top row left to right: Z, o, o, n, i. Bottom row: i, period dot, z, i, p. Each complete object centered in its own cell with generous transparent padding and no crossing cell boundaries. Keep dots of each i paired with its stem in the SAME cell. Letters must remain individually readable and match source textures/colors/artwork. No neighboring letter fragments, no extra characters, no labels, no grid, no background, no checkerboard, genuine transparent alpha. This is a website sprite sheet of isolated source assets, not a new composed wordmark. Every cell equal width and equal height. Please use a wide 2500 by 1000 composition."
+    }
+  ]
+}
