@@ -171,7 +171,8 @@
  root.addEventListener('click',e=>{const filter=e.target.closest('[data-career-filter]'),page=e.target.closest('[data-career-page]');if(filter){careerFilter=filter.dataset.careerFilter;careerPage=1;renderCareerIndex()}if(page){careerPage+=Number(page.dataset.careerPage);renderCareerIndex()}});
  function actionNow(a){if(a==='about'){open(menuLabels.about,`<div class="profile-layout"><div class="face-collage profile-artwork"><img class="zoonii-profile-art" src="assets/profile-collage-skin-clean.png" width="1536" height="1024" alt="하늘색 zoonii 로고, 데님 모자, 가위로 오린 눈과 입 사진, 어린 시절 주연의 사진으로 만든 콜라주"><svg class="profile-eye-layer" viewBox="0 0 1536 1024" aria-hidden="true"><defs><filter id="zz-eye-feather" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="4"/></filter><mask id="zz-left-photo" maskUnits="userSpaceOnUse" x="346" y="353" width="280" height="200"><ellipse cx="486" cy="453" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><mask id="zz-right-photo" maskUnits="userSpaceOnUse" x="657" y="356" width="280" height="200"><ellipse cx="797" cy="456" rx="101" ry="64" fill="white" filter="url(#zz-eye-feather)"/></mask><mask id="zz-mouth-photo" maskUnits="userSpaceOnUse" x="546" y="551" width="280" height="200"><ellipse cx="686" cy="651" rx="106" ry="63" fill="white" filter="url(#zz-eye-feather)"/></mask></defs><g mask="url(#zz-left-photo)"><image href="assets/profile-collage-skin-clean.png" width="1536" height="1024"/></g><g mask="url(#zz-right-photo)"><image href="assets/profile-collage-skin-clean.png" width="1536" height="1024"/></g><g mask="url(#zz-mouth-photo)"><image href="assets/profile-collage-skin-clean.png" width="1536" height="1024"/></g></svg><canvas class="profile-eye-canvas" width="1536" height="1024" aria-hidden="true"></canvas><img class="profile-macbook" src="assets/profile-macbook-stickers.png" alt="치아 요정과 목마 캐릭터 스티커를 붙인 실버 맥북" width="1562" height="1007"></div><div><span class="mono">PROFILE / 2013 — NOW</span><h2>김주연 / Zoonii</h2><h3 class="profile-statement">내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</h3><p class="profile-description">아직 말로만 존재하는 아이디어를 함께 구체화하고,<br>보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><p class="profile-expertise">UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행합니다.</p><button class="action" data-action="career">Career ↗</button><button class="action" data-action="contact">Contact ↗</button><nav class="profile-socials" aria-label="소셜 및 스토어 링크"><a href="https://www.behance.net/thingthingclub" target="_blank" rel="noopener noreferrer" aria-label="Behance (새 탭)" title="Behance"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><text x="3" y="23" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="currentColor" stroke="none">Bē</text></svg></a><a href="https://notefolio.net/thingthingclub" target="_blank" rel="noopener noreferrer" aria-label="Notefolio (새 탭)" title="Notefolio"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 25V7l16 18V7M8 7h4M20 25h4"/></svg></a><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (새 탭)" title="Instagram"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6"/><circle cx="16" cy="16" r="5"/><circle cx="23" cy="9" r="1" fill="currentColor" stroke="none"/></svg></a><a href="https://smartstore.naver.com/thingthingclub" target="_blank" rel="noopener noreferrer" aria-label="스마트스토어 (새 탭)" title="스마트스토어"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h20l2 17H4l2-17ZM11 11V8a5 5 0 0 1 10 0v3"/><path d="M12 23v-8l8 8v-8"/></svg></a></nav></div></div>`);return}if(a==='career'){careerFilter='all';careerPage=1;careerView();return}
  if(a==='guest'){open(menuLabels.guest,'');const guest=document.getElementById('zz-message-section');guest.hidden=false;body.append(guest);renderGuestWall();return}
- if(a==='club'){open(menuLabels.club,`<h2>${menuLabels.club}</h2><p>감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로.</p><h3>EXHIBITION / FAIR</h3><div class="teachrow">Seoul Illustration Fair V.15–V.18</div><div class="teachrow">Hong Kong Illustration & Creative Show V.5–V.6</div><div class="teachrow">Taipei Illustration Fair 2025</div><h3>SMARTSTORE / GOODS</h3><div class="goods-preview"><div><strong>액막이 키링</strong><small>상품 이미지 · 판매 링크 준비 중</small></div><div><strong>동전지갑</strong><small>상품 이미지 · 판매 링크 준비 중</small></div><div><strong>미니 노트</strong><small>상품 이미지 · 판매 링크 준비 중</small></div></div><button class="action" disabled>Shop Coming Soon</button><p class="mono">상품은 구성 예시입니다. 실제 판매 여부와 상품 URL을 제공받으면 연결합니다.</p>`);return}
+ if(a==='club'){const goods=[["사과 메모지", "13169446629", 1, 5, 3, 17, -9], ["체리온더탑 키링", "13169353108", 2, 28, 1, 14, 10], ["도파민러시 키링", "13169353107", 3, 48, 7, 13, -7], ["락스온더락 키링", "13169353106", 4, 78, 1, 14, 12], ["포니 코인 파우치", "13169140795", 5, 4, 38, 20, -8], ["레몬스퀴즈 파우치", "13168867196", 6, 65, 36, 17, 8], ["체리콜라 파우치", "13168867195", 7, 29, 34, 16, -6], ["THING 러그", "13139003039", 8, 43, 70, 25, -7], ["액막이 명태 토끼 키링", "13034533691", 9, 83, 47, 13, 8]];open(menuLabels.club,`<section class="club-collage" aria-label="띵띵클럽 상품 컬렉션"><div class="club-object-field">${goods.map(([name,id,n,x,y,w,r])=>`<a class="club-product club-product-${n}" href="https://smartstore.naver.com/thingthingclub/products/${id}" target="_blank" rel="noopener noreferrer" style="--x:${x}%;--y:${y}%;--w:${w}%;--turn:${r}deg" aria-label="${name} — 스마트스토어에서 보기"><img src="assets/club-products/product-${n}.png" alt="${name}" width="1024" height="1024"><span class="club-product-number">${n}</span><span class="club-product-name">${name} ↗</span></a>`).join('')}<div class="club-colophon"><h2>ThingThingClub!</h2><p>감정을 판매하는 식료품점.<br>그림에서 제품으로, 일상에 작은 위트를.</p><a class="club-shop-link" href="https://smartstore.naver.com/thingthingclub" target="_blank" rel="noopener noreferrer">Visit the shop ↗</a><div class="club-fairs"><h3>EXHIBITIONS & FAIRS</h3><p>Seoul Illustration Fair · V.15–V.18<br>Hong Kong Illustration & Creative Show · V.5–V.6<br>Taipei Illustration Fair · 2025</p></div></div></div></section>`);return}
+
  legacyAction(a)}
 
  let guestPaper='yellow';
@@ -893,5 +894,49 @@ html:has(#zz-body>#zz-message-section) #zz-fixed-links{display:none}
  #zz-fullscreen .career-table-wrap td:nth-child(3){order:3}
  #zz-fullscreen .career-table-wrap td:nth-child(3)::before{content:attr(data-label);display:block;font-size:12px;font-weight:600;color:#5a6252;margin-bottom:4px}
  #zz-fullscreen .career-paging{font-size:12px;flex-wrap:wrap}
+}
+</style>
+
+<style>
+#zz-fullscreen .overlay:has(.club-collage){background:#fff}
+#zz-fullscreen .panelbody:has(>.club-collage){max-width:1600px;padding:0 4vw 115px!important}
+#zz-fullscreen .club-collage{width:100%;color:#171916}
+#zz-fullscreen .club-object-field{position:relative;min-height:700px;height:calc(100svh - 230px)}
+#zz-fullscreen .club-product{position:absolute;left:var(--x);top:var(--y);width:var(--w);display:flex;align-items:center;flex-direction:column;text-decoration:none;color:#181a17;z-index:1;outline-offset:8px}
+#zz-fullscreen .club-product img{display:block;width:100%;height:auto;max-height:230px;object-fit:contain;transform:rotate(var(--turn));filter:drop-shadow(2px 4px 3px #17191615);transition:transform .25s}
+#zz-fullscreen .club-product:hover img,#zz-fullscreen .club-product:focus-visible img{transform:rotate(0) translateY(-7px)}
+#zz-fullscreen .club-product-number{font:13px/21px Arial,sans-serif;width:22px;height:22px;border:1px solid #333;border-radius:50%;text-align:center;margin-top:6px;background:#fff}
+#zz-fullscreen .club-product-name{position:absolute;top:calc(100% + 7px);font:12px/1.5 Arial,sans-serif;white-space:nowrap;padding:4px 8px;background:#fff;opacity:0;transition:opacity .2s;box-shadow:0 2px 8px #0001}
+#zz-fullscreen .club-product:hover,#zz-fullscreen .club-product:focus-visible{z-index:3}
+#zz-fullscreen .club-product:hover .club-product-name,#zz-fullscreen .club-product:focus-visible .club-product-name{opacity:1}
+#zz-fullscreen .club-colophon{position:absolute;left:2%;bottom:0;width:36%;z-index:2}
+#zz-fullscreen .club-colophon h2{font:italic 30px/1.2 Georgia,serif;text-decoration:underline;text-underline-offset:4px;letter-spacing:-.04em;margin:0 0 13px}
+#zz-fullscreen .club-colophon>p{font:14px/1.7 Arial,sans-serif;margin:0 0 10px}
+#zz-fullscreen .club-shop-link{font:13px/1.5 Arial,sans-serif;color:inherit;text-underline-offset:4px}
+#zz-fullscreen .club-fairs{margin-top:25px}
+#zz-fullscreen .club-fairs h3{font:10px/1.5 monospace;letter-spacing:.08em;margin:0 0 7px}
+#zz-fullscreen .club-fairs p{font:11px/1.8 Arial,sans-serif;margin:0;color:#55594e}
+@media(max-width:900px){#zz-fullscreen .club-object-field{min-height:760px}#zz-fullscreen .club-product img{max-height:190px}#zz-fullscreen .club-colophon{width:42%}#zz-fullscreen .club-colophon h2{font-size:26px}}
+@media(max-width:600px){
+ #zz-fullscreen .panelbody:has(>.club-collage){padding:10px 24px 130px!important}
+ #zz-fullscreen .club-object-field{height:auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:36px 24px;align-items:center}
+ #zz-fullscreen .club-product{position:relative;inset:auto;width:100%}
+ #zz-fullscreen .club-product img{height:160px;max-height:none}
+ #zz-fullscreen .club-product:nth-child(even){margin-top:30px}
+ #zz-fullscreen .club-product-name{position:static;opacity:1;white-space:normal;text-align:center;box-shadow:none;font-size:11px}
+ #zz-fullscreen .club-colophon{position:static;width:100%;grid-column:1/-1;margin:15px 0 0}
+ #zz-fullscreen .club-product-8 img{height:140px}
+}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .club-product img,#zz-fullscreen .club-product-name{transition:none}}
+</style>
+<style>
+@media(min-width:601px){
+ #zz-fullscreen .club-object-field{min-height:630px;height:max(630px,calc(100svh - 250px))}
+ #zz-fullscreen .club-product img{max-height:180px}
+ #zz-fullscreen .club-product-5{top:32%;width:18%}
+ #zz-fullscreen .club-product-5 img{max-height:155px}
+ #zz-fullscreen .club-product-8{top:65%;left:48%;width:24%}
+ #zz-fullscreen .club-product-8 img{max-height:170px}
+ #zz-fullscreen .club-colophon{width:40%}
 }
 </style>
