@@ -87,7 +87,7 @@
  const render=()=>{
  // Reference layout uses each graphic's center as a fraction of the board.
  const boardScale=Math.min(.85,(root.clientWidth-40)/1000);
- const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[.846,.86],contact:[.913,.85],unicorn:[.72,.59],orange:[.52,.23]};
+ const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[.846,.86],contact:[.913,.85],unicorn:[.72,.59],orange:[.255,.52]};
  world.querySelectorAll('button[data-action],button[data-board-toy],[data-board-sticker]').forEach(el=>{const position=boardPositions[el.dataset.action||el.dataset.boardToy||el.dataset.boardSticker];if(!position)return;el.style.setProperty('--board-left',((position[0]-.5)*root.clientWidth/boardScale-el.offsetWidth/2)+'px');el.style.setProperty('--board-top',((position[1]-.5)*root.clientHeight/boardScale-el.offsetHeight/2)+'px')});
  world.style.setProperty('--space-scale',z);world.style.setProperty('--pan-x',x+'px');world.style.setProperty('--pan-y',y+'px');world.style.transform=`translate(${x}px,${y}px) scale(${z})`};
  function enter(){entered=true;entry.inert=true;entry.classList.add('out');q('#zz-hint').textContent='DRAG TO ARRANGE · CLICK TO EXPLORE';q('#zz-location').textContent='HOME / DIRECTORY';render()}
@@ -802,7 +802,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-weeks .weeks-toggle:hover{background:#424b3c!important}
 #zz-overview-button:hover{background:#e8dfce!important}
 #zz-weeks .weeks-toggle:focus-visible,#zz-overview-button:focus-visible{outline:2px solid #b18436;outline-offset:3px}
-</style><link rel="stylesheet" href="intro-folder-roll.css"><link rel="stylesheet" href="intro-letter-pack.css?v=unique-large-2"><link rel="stylesheet" href="board-stickers.css?v=corner-curl-1"><script src="intro-folder-roll.js"></script><link rel="stylesheet" href="hanging-toy.css"><script src="hanging-toy.js"></script><style>
+</style><link rel="stylesheet" href="intro-folder-roll.css"><link rel="stylesheet" href="intro-letter-pack.css?v=unique-large-2"><link rel="stylesheet" href="board-stickers.css?v=soft-curl-2"><script src="intro-folder-roll.js"></script><link rel="stylesheet" href="hanging-toy.css"><script src="hanging-toy.js"></script><style>
 /* The composer is available for preview; posting remains disabled. */
 #zz-message-section .memo-coming-soon,#zz-message-section #zz-leave-note{display:none!important}
 #zz-message-section .guest-layout{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(280px,360px)!important;gap:28px;overflow:visible;align-items:start}
