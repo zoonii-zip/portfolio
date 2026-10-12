@@ -1,70 +1,68 @@
-/* Whole original logos, with a light die-cut edge and a close paper shadow. */
+/* The supplied artwork stays intact; only its small upper-left tip lifts. */
 #zz-fullscreen .board-logo-sticker {
   position: absolute;
   left: var(--board-left);
   top: var(--board-top);
   width: 210px;
-  pointer-events: none;
   user-select: none;
   transform: rotate(-9deg);
   z-index: 1;
+  filter: drop-shadow(0 1px 0 #fff9e9) drop-shadow(1px 2px 1px #35291c38);
 }
-#zz-fullscreen .board-logo-sticker[data-board-sticker="cloud"] {
-  width: 185px;
-  transform: rotate(8deg);
-}
-#zz-fullscreen .board-logo-sticker img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(2px 0 0 #fff9e9) drop-shadow(-2px 0 0 #fff9e9) drop-shadow(0 2px 0 #fff9e9) drop-shadow(0 -2px 0 #fff9e9) drop-shadow(2px 4px 2px #35291c40);
-}
-
-/* Fold the original printed corner back to show the paper underside. */
 #zz-fullscreen button.board-logo-sticker {
   pointer-events: auto;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: inherit;
   cursor: pointer;
   overflow: visible;
-  perspective: 600px;
+  perspective: 700px;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 #zz-fullscreen .board-logo-sticker img {
+  display: block;
+  width: 100%;
+  height: auto;
   pointer-events: none;
-  clip-path: polygon(0 0, 0 0, 100% 0, 100% 100%, 0 100%);
-  transition: clip-path 240ms ease, filter 240ms ease;
+  /* A fixed hinge avoids the old animated cutout/vanishing-corner effect. */
+  clip-path: polygon(0 28.7%, 22% 0, 100% 0, 100% 100%, 0 100%);
 }
 #zz-fullscreen .board-logo-sticker .sticker-curl {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, #fffdf2 3%, #f7edcf 12%, #b7aa8c 22%, #fff8e7 30%);
-  -webkit-mask: var(--sticker-art) center / 100% 100% no-repeat;
-  mask: var(--sticker-art) center / 100% 100% no-repeat;
-  clip-path: polygon(0 0, 22% 0, 0 28.7%);
+  background: var(--sticker-art) center / 100% 100% no-repeat;
+  clip-path: polygon(0 0, 22.3% 0, 0 29.1%);
   transform-origin: 11% 14.35%;
   transform: rotate3d(1, -1, 0, 0deg);
-  opacity: 0;
-  transition: transform 280ms cubic-bezier(.2,.7,.25,1), opacity 160ms ease;
+  transition: transform 480ms cubic-bezier(.22,.61,.36,1), filter 480ms ease;
 }
-#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) img {
-  clip-path: polygon(0 28.7%, 22% 0, 100% 0, 100% 100%, 0 100%);
+#zz-fullscreen .board-logo-sticker .sticker-curl::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #fff9e970, transparent 17%, #51321c20 23%, transparent 27%);
+  -webkit-mask: var(--sticker-art) center / 100% 100% no-repeat;
+  mask: var(--sticker-art) center / 100% 100% no-repeat;
+  opacity: 0;
+  transition: opacity 480ms ease;
 }
 #zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) .sticker-curl {
-  transform: rotate3d(1, -1, 0, 145deg);
-  opacity: 1;
+  transform: rotate3d(1, -1, 0, -36deg);
+  filter: drop-shadow(-1px -1px 0 #fff4dc) drop-shadow(2px 3px 2px #35291c30);
 }
+#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) .sticker-curl::after { opacity: 1; }
 #zz-fullscreen .board-logo-sticker:focus-visible { outline: 2px dashed #7f7055; outline-offset: 10px; }
 @media (hover: hover) {
-  #zz-fullscreen .board-logo-sticker:hover img { clip-path: polygon(0 28.7%, 22% 0, 100% 0, 100% 100%, 0 100%); }
-  #zz-fullscreen .board-logo-sticker:hover .sticker-curl { transform: rotate3d(1, -1, 0, 145deg); opacity: 1; }
+  #zz-fullscreen .board-logo-sticker:hover .sticker-curl {
+    transform: rotate3d(1, -1, 0, -36deg);
+    filter: drop-shadow(-1px -1px 0 #fff4dc) drop-shadow(2px 3px 2px #35291c30);
+  }
+  #zz-fullscreen .board-logo-sticker:hover .sticker-curl::after { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #zz-fullscreen .board-logo-sticker img,
-  #zz-fullscreen .board-logo-sticker .sticker-curl { transition: none; }
+  #zz-fullscreen .board-logo-sticker .sticker-curl,
+  #zz-fullscreen .board-logo-sticker .sticker-curl::after { transition: none; }
 }
