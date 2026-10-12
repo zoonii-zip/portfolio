@@ -1,0 +1,21 @@
+/* Whole original logos, with a light die-cut edge and a close paper shadow. */
+#zz-fullscreen .board-logo-sticker {
+  position: absolute;
+  left: var(--board-left);
+  top: var(--board-top);
+  width: 210px;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(-9deg);
+  z-index: 1;
+}
+#zz-fullscreen .board-logo-sticker[data-board-sticker="cloud"] {
+  width: 185px;
+  transform: rotate(8deg);
+}
+#zz-fullscreen .board-logo-sticker img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(2px 0 0 #fff9e9) drop-shadow(-2px 0 0 #fff9e9) drop-shadow(0 2px 0 #fff9e9) drop-shadow(0 -2px 0 #fff9e9) drop-shadow(2px 4px 2px #35291c40);
+}
