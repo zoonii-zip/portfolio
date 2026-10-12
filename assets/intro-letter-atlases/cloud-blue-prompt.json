@@ -1,0 +1,6 @@
+{
+  "tool": "Built-in image_gen",
+  "source": "/Users/zoonii/Downloads/제목_없는_아트워크 10.PNG",
+  "asset": "cloud-blue.webp",
+  "prompt": "Edit target: attached Zoonii Zip logo. Separate the original lettering into a TRANSPARENT sprite atlas preserving its fluffy white and pale cyan cloud letters with saturated blue rough outlines and blue halftone dots, cloud-shaped i dots. Reconstruct only tiny hidden overlap edges. EXACT grid: 5 columns, 2 rows, TEN equal square cells on a wide 5:2 canvas. Top row Z,o,o,n,i. Bottom row i,a small matching period dot,z,i,p. Source has nine letters; use its small decorative dots for the period. Keep each i's dot attached visually to its stem within SAME cell. Each complete letter centered within its own square, 12% safe transparent margins; NO touching, overlap, neighboring fragments or crossing cell boundaries. Preserve original hand-drawn contours, color, grain and distinctive eye/cloud features faithfully. No labels, no grid lines, no background or checkerboard. Genuine transparent alpha. One atlas, not a composed wordmark."
+}
