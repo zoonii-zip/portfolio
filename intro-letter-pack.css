@@ -69,3 +69,9 @@
   overflow: visible;
   pointer-events: none;
 }
+
+/* Keep characters larger than letter artwork during the initial folder sequence, too. */
+#zz-logo-entry .intro-character-piece { width: calc(clamp(65px, 9vw, 125px) * 1.65); }
+@media (max-width: 650px) {
+  #zz-logo-entry .intro-character-piece { width: calc(clamp(44px, 12vw, 70px) * 1.65); }
+}
