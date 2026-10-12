@@ -3,10 +3,8 @@
   const NS = 'http://www.w3.org/2000/svg';
   const art = [
     ['rabbit',1276,2031,149,391,1002,974],
-    ['lucky',1276,2031,171,1289,936,629],
     ['cat',1276,2031,90,582,1118,911],
     ['bear',1276,2031,42,440,1174,1030],
-    ['free-vibe',1276,2031,183,1400,909,540],
     ['horse',1992,2075,54,56,1851,1966],
     ['teeth',1181,1181,6,95,1168,1041],
     ['dopamine',827,1181,40,72,765,1045],
@@ -44,5 +42,5 @@
   }
   window.ZooniiIntroStickers={create,count:art.length};
   const pieces=document.querySelectorAll('#zz-logo-entry .intro-letter-piece');
-  art.forEach((_,i)=>pieces[i*2]?.replaceChildren(create(i)));
+  art.forEach((_,i)=>{const piece=pieces[i*2];if(piece){piece.replaceChildren(create(i));piece.classList.add('intro-character-piece')}});
 })();
