@@ -19,3 +19,52 @@
   height: auto;
   filter: drop-shadow(2px 0 0 #fff9e9) drop-shadow(-2px 0 0 #fff9e9) drop-shadow(0 2px 0 #fff9e9) drop-shadow(0 -2px 0 #fff9e9) drop-shadow(2px 4px 2px #35291c40);
 }
+
+/* Fold the original printed corner back to show the paper underside. */
+#zz-fullscreen button.board-logo-sticker {
+  pointer-events: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  overflow: visible;
+  perspective: 600px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#zz-fullscreen .board-logo-sticker img {
+  pointer-events: none;
+  clip-path: polygon(0 0, 0 0, 100% 0, 100% 100%, 0 100%);
+  transition: clip-path 240ms ease, filter 240ms ease;
+}
+#zz-fullscreen .board-logo-sticker .sticker-curl {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, #fffdf2 3%, #f7edcf 12%, #b7aa8c 22%, #fff8e7 30%);
+  -webkit-mask: var(--sticker-art) center / 100% 100% no-repeat;
+  mask: var(--sticker-art) center / 100% 100% no-repeat;
+  clip-path: polygon(0 0, 22% 0, 0 28.7%);
+  transform-origin: 11% 14.35%;
+  transform: rotate3d(1, -1, 0, 0deg);
+  opacity: 0;
+  transition: transform 280ms cubic-bezier(.2,.7,.25,1), opacity 160ms ease;
+}
+#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) img {
+  clip-path: polygon(0 28.7%, 22% 0, 100% 0, 100% 100%, 0 100%);
+}
+#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) .sticker-curl {
+  transform: rotate3d(1, -1, 0, 145deg);
+  opacity: 1;
+}
+#zz-fullscreen .board-logo-sticker:focus-visible { outline: 2px dashed #7f7055; outline-offset: 10px; }
+@media (hover: hover) {
+  #zz-fullscreen .board-logo-sticker:hover img { clip-path: polygon(0 28.7%, 22% 0, 100% 0, 100% 100%, 0 100%); }
+  #zz-fullscreen .board-logo-sticker:hover .sticker-curl { transform: rotate3d(1, -1, 0, 145deg); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #zz-fullscreen .board-logo-sticker img,
+  #zz-fullscreen .board-logo-sticker .sticker-curl { transition: none; }
+}
