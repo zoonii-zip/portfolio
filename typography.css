@@ -1,0 +1,28 @@
+/* New Cordial: Adobe web project qnc0bil. SUIT: https://sun.fo/suit/ (SIL OFL). */
+@font-face {
+  font-family: 'SUIT';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/SUIT-Variable.woff2') format('woff2');
+}
+:root {
+  --font-body: 'SUIT', 'Apple SD Gothic Neo', sans-serif;
+  --font-title: 'new-cordial', 'SUIT', sans-serif;
+}
+/* Existing components use font shorthands; unify the family without changing sizing. */
+:root body, :root body :where(*) {
+  font-family: var(--font-body) !important;
+}
+:root body :is(h1,h2,h3),
+:root body #zz-logo-entry .intro-copy [lang='en'],
+:root body #zz-overview .overview-label,
+:root body #zz-fullscreen .archive-tabs strong,
+:root body #zz-fullscreen .foldername {
+  font-family: var(--font-title) !important;
+  font-synthesis: none;
+}
+:root body #zz-logo-entry .intro-copy [lang='en'] {
+  font-weight: 400;
+  letter-spacing: -.015em;
+}
