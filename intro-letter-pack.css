@@ -61,3 +61,11 @@
 @media (prefers-reduced-motion: reduce) {
   #zz-logo-entry .intro-letter-piece { display: none; animation: none; }
 }
+
+#zz-logo-entry .intro-sticker-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
