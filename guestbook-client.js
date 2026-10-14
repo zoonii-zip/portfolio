@@ -10,6 +10,11 @@
     const challenge = document.createElement('div');
     challenge.className = 'guest-challenge';
     button.before(challenge);
+    const verificationStatus = document.createElement('p');
+    verificationStatus.className = 'guest-verification-status';
+    verificationStatus.setAttribute('role', 'status');
+    verificationStatus.hidden = true;
+    button.before(verificationStatus);
     const refresh = document.createElement('button');
     refresh.type = 'button'; refresh.textContent = '메모 새로고침'; refresh.className = 'guest-refresh';
     wall.before(refresh);
@@ -22,7 +27,7 @@
     } catch { /* Storage is optional; never store the guestbook itself locally. */ }
     const ready = Boolean(config.endpoint && config.turnstileSiteKey);
     const message = text => { status.textContent = text; };
-    function updateButton() { button.disabled = !ready || !token || busy; button.textContent = busy ? '붙이는 중…' : '메모 붙이기'; }
+    function updateButton() { verificationStatus.hidden = !token; verificationStatus.textContent = token ? '✓ 인증 성공' : ''; button.disabled = !ready || !token || busy; button.textContent = busy ? '붙이는 중…' : '메모 붙이기'; }
     function render() {
       wall.replaceChildren();
       wall.style.removeProperty('min-height');
@@ -94,7 +99,7 @@
     function mountChallenge() {
       if (!form.getClientRects().length || !window.turnstile || widget !== undefined) return;
       widget = window.turnstile.render(challenge, {
-        sitekey: config.turnstileSiteKey, action: 'guestbook', size: 'flexible',
+        sitekey: config.turnstileSiteKey, action: 'guestbook', size: 'flexible', appearance: 'interaction-only',
         callback: value => { token = value; updateButton(); },
         'expired-callback': () => { token = ''; updateButton(); },
         'error-callback': () => { token = ''; updateButton(); message('스팸 방지 확인을 불러오지 못했어요. 페이지를 새로고침해주세요.'); }
