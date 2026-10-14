@@ -7,7 +7,7 @@ import json, subprocess, xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
 class Page(HTMLParser):
  def __init__(self):
-  super().__init__();self.scripts=[];self.script=None;self.meta={};self.canon=[];self.images=[];self.links=[];self.titles=0;self.main=False
+  super().__init__();self.scripts=[];self.script=None;self.meta={};self.canon=[];self.images=[];self.links=[];self.titles=0;self.headings=0;self.main=False
  def handle_starttag(self,t,attrs):
   a=dict(attrs)
   if t=='script' and 'src' not in a:self.script=[a.get('type',''),'']
@@ -16,6 +16,7 @@ class Page(HTMLParser):
   if t=='img':self.images.append(a)
   if t=='a' and a.get('href','').startswith('/'):self.links.append(a['href'])
   if t=='title':self.titles+=1
+  if t=='h1':self.headings+=1
   if t=='main' and a.get('id')=='zz-readable':self.main=True
  def handle_data(self,d):
   if self.script is not None:self.script[1]+=d
@@ -26,6 +27,7 @@ origin='https://'+(ROOT/'CNAME').read_text().strip()
 for route,data in pages.items():
  file=ROOT/(route.strip('/')+'/index.html' if route!='/' else 'index.html');p=Page();p.feed(file.read_text())
  assert p.titles==1 and p.canon==[origin+route],route
+ assert p.headings==1,(route,'Expected exactly one static H1',p.headings)
  assert p.main and p.meta['description']==data['description'],route
  assert p.meta['og:url']==origin+route and p.meta['twitter:title']==data['title'],route
  assert ('noindex' not in p.meta['robots'])==data['index'],route
@@ -44,4 +46,5 @@ for f in ['seo.js','seo-pages.js']:
 urls=[e.text for e in ET.parse(ROOT/'sitemap.xml').findall('.//{*}loc')]
 assert set(urls)=={origin+route for route,data in pages.items() if data['index']}
 assert 'User-agent: OAI-SearchBot\nAllow: /' in (ROOT/'robots.txt').read_text()
+assert (ROOT/'favicon.ico').read_bytes()[:4]==bytes([0,0,1,0])
 print(f'PASS: {len(pages)} routes, {len(urls)} sitemap entries, metadata, JSON-LD, links, image alt and JavaScript syntax.')
