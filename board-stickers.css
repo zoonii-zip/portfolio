@@ -79,3 +79,30 @@
 #zz-fullscreen .board-logo-sticker.movable-object.object-held {
   cursor: grabbing !important;
 }
+
+/* Use the same original face-and-ZOONII collage as the profile page. */
+#zz-fullscreen .center.profile-sticker {
+  width: 350px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 12px;
+  align-items: center;
+  filter: drop-shadow(2px 5px 3px #35291c33);
+}
+#zz-fullscreen .profile-sticker .board-profile-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  clip-path: polygon(1% 1%, 98% 0, 100% 97%, 1% 100%);
+}
+#zz-fullscreen .profile-sticker .profile-open {
+  margin: 0;
+  padding: 5px 12px;
+  background: #f3eee3;
+  font-size: 11px;
+  letter-spacing: .06em;
+  transform: rotate(2deg);
+}
