@@ -19,7 +19,7 @@
   overflow: visible;
   perspective: 700px;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  touch-action: none;
 }
 #zz-fullscreen .board-logo-sticker img {
   display: block;
@@ -65,4 +65,17 @@
 @media (prefers-reduced-motion: reduce) {
   #zz-fullscreen .board-logo-sticker .sticker-curl,
   #zz-fullscreen .board-logo-sticker .sticker-curl::after { transition: none; }
+}
+
+/* Moving the sticker uses the board’s existing scale-aware drag offsets. */
+#zz-fullscreen .board-logo-sticker.movable-object {
+  animation: none;
+  transition: filter 180ms ease;
+  cursor: grab !important;
+}
+#zz-fullscreen .board-logo-sticker.movable-object:is(:hover,:focus-visible,.object-held) {
+  transform: rotate(-9deg);
+}
+#zz-fullscreen .board-logo-sticker.movable-object.object-held {
+  cursor: grabbing !important;
 }
