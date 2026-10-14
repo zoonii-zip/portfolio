@@ -1,6 +1,6 @@
 #zz-message-section .guest-wall{overflow-y:auto!important;overscroll-behavior:contain}
-#zz-message-section #zz-guestresult{display:grid!important;position:relative;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));align-content:start;gap:28px 20px;height:auto!important;padding:16px 8px;box-sizing:border-box}
-#zz-message-section .wall-note{position:relative!important;inset:auto!important;width:auto!important;min-width:0;min-height:150px;align-self:start;margin:0}
+#zz-message-section #zz-guestresult{display:grid!important;position:relative;grid-template-columns:repeat(auto-fill,min(220px,100%));justify-content:start;align-content:start;gap:28px 20px;height:auto!important;padding:16px 8px;box-sizing:border-box}
+#zz-message-section .wall-note{position:relative!important;inset:auto!important;width:auto!important;min-width:0;min-height:200px;align-self:start;margin:0}
 #zz-message-section .wall-note time{display:block;font:10px/1.8 monospace;color:#6b6250;margin-top:8px}
 #zz-message-section .guest-compose{overflow-y:auto!important}
 #zz-message-section #zz-guestform{flex:none;min-height:310px}
