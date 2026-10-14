@@ -61,7 +61,7 @@
       if (!entries.length) render();
       try {
         const data = await request(); entries = data.entries; loading = false; render();
-        message('최근 메모 100개를 보여드려요. 닉네임과 글은 누구나 볼 수 있어요.');
+        message('같은 브라우저에서 다시 쓰면 이전 메모가 교체돼요. 닉네임과 글은 공개돼요.');
       } catch {
         message('메모를 불러오지 못했어요. 새로고침을 눌러 다시 시도해주세요.');
         if (!entries.length) { wall.replaceChildren(); const p = document.createElement('p'); p.textContent = '메모 목록에 연결하지 못했어요.'; wall.append(p); }
@@ -83,7 +83,7 @@
         entries = [data.entry, ...entries.filter(e => e.id !== data.entry.id)].slice(0,100); render();
         form.elements.note.value = ''; document.querySelector('#zz-note-count').textContent = '0';
         document.querySelector('.guest-wall').scrollTop = 0;
-        message('메모를 붙였어요. 고마워요!');
+        message('새 메모를 붙였어요. 이 브라우저의 이전 메모는 새 내용으로 바뀌어요.');
       } catch (error) { message(error.message === 'Failed to fetch' || error.name === 'TimeoutError' ? '연결이 끊겼어요. 새로고침으로 등록 여부를 확인한 뒤 다시 시도해주세요.' : error.message); }
       finally {
         busy = false; token = ''; refresh.disabled = false;
