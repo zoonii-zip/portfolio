@@ -196,8 +196,7 @@
  legacyAction(a)}
 
  let guestPaper='yellow';
- const guestNotes=[];
- function renderGuestWall(){const wall=document.querySelector('#zz-guestresult');if(!wall)return;wall.innerHTML='';guestNotes.forEach((n,i)=>{const card=document.createElement('article');card.className='wall-note paper-'+n.paper;card.style.setProperty('--note-rotation',[-5,4,-2,6,2,-4][i%6]+'deg');const columns=Math.max(1,Math.floor(wall.clientWidth/250));const width=Math.min(220,wall.clientWidth-24);card.style.width=width+'px';card.style.left=((i%columns)*(wall.clientWidth/columns)+12+[0,9,-5,6][i%4])+'px';card.style.top=(Math.floor(i/columns)*245+20+[0,18,8,25][i%4])+'px';wall.style.minHeight=Math.max(450,(Math.floor(i/columns)+1)*245+60)+'px';const text=document.createElement('p');text.textContent=n.text;const name=document.createElement('small');name.textContent=n.name;card.append(text,name);wall.appendChild(card)})}
+ function renderGuestWall(){window.ZooniiGuestbook?.render()}
  document.addEventListener('click',e=>{const button=e.target.closest('[data-paper]');if(!button)return;guestPaper=button.dataset.paper;document.querySelectorAll('[data-paper]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelector('#zz-paper-preview').className='paper-preview paper-'+guestPaper});
  document.addEventListener('input',e=>{if(e.target.name!=='note'||e.target.form?.id!=='zz-guestform')return;e.target.setCustomValidity('');document.querySelector('#zz-note-count').textContent=e.target.value.length});
 
@@ -963,3 +962,7 @@ html:has(#zz-body>#zz-message-section) #zz-fixed-links{display:none}
  #zz-fullscreen .club-colophon{width:40%}
 }
 </style>
+
+<link rel="stylesheet" href="/guestbook.css">
+<script src="/guestbook-config.js"></script>
+<script src="/guestbook-client.js"></script>
