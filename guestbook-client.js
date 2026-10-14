@@ -55,7 +55,7 @@
       loading = true; refresh.disabled = true;
       if (!entries.length) render();
       try {
-        const data = await request(); entries = data.entries; render();
+        const data = await request(); entries = data.entries; loading = false; render();
         message('최근 메모 100개를 보여드려요. 닉네임과 글은 누구나 볼 수 있어요.');
       } catch {
         message('메모를 불러오지 못했어요. 새로고침을 눌러 다시 시도해주세요.');
