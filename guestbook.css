@@ -11,3 +11,5 @@
 #zz-message-section .guest-empty{font-size:14px;line-height:1.7;color:#615948}
 #zz-message-section .paper-preview label:has(textarea){flex:none}
 #zz-message-section .paper-preview textarea{flex:none;height:96px;min-height:80px}
+
+#zz-message-section .guest-verification-status{margin:0 0 10px;font:12px/1.5 Arial,sans-serif;color:#327344}
