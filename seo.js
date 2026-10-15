@@ -235,3 +235,19 @@
  new MutationObserver(enhance).observe(document.documentElement,{childList:true,subtree:true});
  enhance();
 })();
+
+/* Orange reference-TV skin: preserve the linked CRT gallery controls and project navigation. */
+(function(){
+ const css=`
+ #zz-fullscreen .theme-visual .zz-tv-shell{position:relative!important;width:min(820px,96%)!important;aspect-ratio:1964/1448!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent url('/assets/archive/orange-tv.svg') center/100% 100% no-repeat!important;box-shadow:none!important;transform:none!important;overflow:visible!important}
+ #zz-fullscreen .theme-visual .zz-tv-shell:before,#zz-fullscreen .theme-visual .zz-tv-shell:after{display:none!important}
+ #zz-fullscreen .theme-visual .zz-tv-screen{position:absolute!important;left:10%!important;top:17%!important;width:59%!important;height:63%!important;box-sizing:border-box!important;padding:4%!important;border:0!important;border-radius:14% / 11%!important;background:#929086!important;box-shadow:inset 0 0 38px #161b1b2b!important;transform:none!important;color:#1f241c!important;overflow:hidden!important}
+ #zz-fullscreen .theme-visual .zz-tv-screen:before{display:none!important}
+ #zz-fullscreen .theme-visual .zz-tv-screen:after{opacity:.15!important}
+ #zz-fullscreen .theme-visual .zz-tv-screen .zz-tv-logo{font:900 clamp(22px,4vw,62px)/1.1 Arial,sans-serif!important;letter-spacing:-.045em!important;color:#24221d!important}
+ #zz-fullscreen .theme-visual .zz-tv-screen small{color:#34312b!important;font-size:clamp(9px,1vw,13px)!important}
+ #zz-fullscreen .theme-visual .zz-tv-side,#zz-fullscreen .theme-visual .zz-tv-dial{display:none!important}
+ @media(max-width:650px){#zz-fullscreen .theme-visual .zz-tv-shell{width:100%!important}#zz-fullscreen .theme-visual .zz-tv-screen{left:10%!important;top:17%!important;width:59%!important;height:63%!important}#zz-fullscreen .theme-visual .zz-tv-screen .zz-tv-logo{font-size:clamp(15px,5vw,27px)!important}}
+ `;
+ const style=document.createElement('style');style.id='zz-orange-tv-styles';style.textContent=css;document.head.appendChild(style);
+})();
