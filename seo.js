@@ -212,3 +212,26 @@
 
 /* Retro-TV side knobs and speaker panel. */
 (function(){function mount(){const shell=document.querySelector('#zz-fullscreen .theme-visual .zz-tv-shell');if(!shell||shell.querySelector('.zz-tv-side'))return;const side=document.createElement('div');side.className='zz-tv-side';side.setAttribute('aria-hidden','true');side.innerHTML='<span class="zz-tv-brand">ZOONII</span><span class="zz-tv-knob"></span><span class="zz-tv-knob"></span><span class="zz-tv-vents"></span>';shell.appendChild(side)}new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});mount()})();
+
+/* Illustration archive: preserve real book spines and make each book open its project. */
+(function(){
+ const order=['illustration0','illustration1','illustration2','illustration3','illustration4','tongkeun'];
+ function enhance(){
+   const scene=document.querySelector('#zz-fullscreen .theme-story .collection-objects');
+   if(!scene||scene.dataset.linkedBooks==='1')return;
+   scene.dataset.linkedBooks='1';
+   scene.classList.add('zz-linked-bookshelf');
+   [...scene.querySelectorAll('.shelf-book')].forEach((book,i)=>{
+     const id=order[i];if(!id)return;
+     const link=document.createElement('a');
+     link.href='/projects/'+id+'/';
+     link.className=book.className;
+     link.setAttribute('aria-label',(book.querySelector('strong')?.textContent||'Illustration')+' 포트폴리오 보기');
+     link.innerHTML=book.innerHTML;
+     for(const attr of book.attributes)if(attr.name==='style')link.setAttribute('style',attr.value);
+     book.replaceWith(link);
+   });
+ }
+ new MutationObserver(enhance).observe(document.documentElement,{childList:true,subtree:true});
+ enhance();
+})();
