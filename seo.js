@@ -87,56 +87,119 @@
 })();
 
 
-/* Zoonii — full-screen marquee directory, isolated from Archive and site navigation. */
+/* Zoonii bento-style overview inspired by supplied reference. */
 (function(){
-  const css = `
-  #zz-overview{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;background:#f0bc88!important;color:#191712!important;box-shadow:none!important;transform:translateY(105%)!important;transition:transform .7s cubic-bezier(.76,0,.24,1)!important;overflow:hidden!important}
-  #zz-overview.visible{transform:translateY(0)!important}
-  #zz-overview .overview-curve{display:none!important}
-  #zz-overview::backdrop{background:#1d1b15aa!important}
-  #zz-overview .overview-content{height:100%!important;min-height:0!important;padding:0!important;background:#f0bc88!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
-  #zz-overview header{flex:0 0 auto!important;min-height:76px!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin:0!important;padding:14px clamp(18px,3.4vw,52px)!important}
-  #zz-overview header>div{display:flex;align-items:center;gap:22px}
-  #zz-overview header small{font:600 12px/1.3 Arial,sans-serif!important;letter-spacing:-.01em!important}
-  #zz-overview h2{font:bold 15px Arial,sans-serif!important;letter-spacing:0!important;margin:0!important}
-  #zz-overview .overview-close{border:1px solid #191712!important;border-radius:0!important;padding:10px 18px!important;font:600 12px Arial,sans-serif!important}
-  #zz-overview nav{display:flex!important;flex:1 0 auto!important;flex-direction:column!important;gap:0!important;margin:0!important;border-top:5px solid #191712!important}
-  #zz-overview nav button{display:flex!important;flex:1 0 auto!important;justify-content:center!important;align-items:center!important;position:relative!important;width:100%!important;min-height:clamp(65px,11vh,120px)!important;overflow:hidden!important;padding:8px 0!important;border:0!important;border-bottom:5px solid #191712!important;border-radius:0!important;color:#191712!important;background:transparent!important;isolation:isolate!important;text-align:center!important;transition:color .22s ease!important}
-  #zz-overview nav button:last-child{border-bottom:5px solid #191712!important}
-  #zz-overview .overview-arrow{display:none!important}
-  #zz-overview .overview-label{position:relative!important;z-index:2!important;display:block!important;max-width:96%;margin:0!important;padding:0 12px!important;font:900 clamp(37px,6.8vw,105px)/.98 Arial,Helvetica,sans-serif!important;letter-spacing:-.065em!important;text-transform:uppercase!important;white-space:nowrap!important;transform:none!important;transition:opacity .2s ease,transform .3s ease!important}
-  #zz-overview .zz-marquee{position:absolute;z-index:1;inset:0;display:flex;align-items:center;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .2s ease}
-  #zz-overview .zz-marquee-track{display:flex;align-items:center;width:max-content;white-space:nowrap;animation:zz-menu-marquee 11s linear infinite;animation-play-state:paused;will-change:transform}
-  #zz-overview .zz-marquee-track span{flex:none;padding-right:.5em;font:900 clamp(37px,6.8vw,105px)/.98 Arial,Helvetica,sans-serif;letter-spacing:-.065em;text-transform:uppercase}
-  #zz-overview nav button:is(:hover,:focus-visible){color:#191712!important;background:#f0bc88!important}
-  #zz-overview nav button:is(:hover,:focus-visible) .overview-label{opacity:0!important;transform:translateY(-10px)!important}
-  #zz-overview nav button:is(:hover,:focus-visible) .zz-marquee{opacity:1}
-  #zz-overview nav button:is(:hover,:focus-visible) .zz-marquee-track{animation-play-state:running}
-  #zz-overview button:focus-visible{outline:3px solid #191712!important;outline-offset:-8px!important}
-  @keyframes zz-menu-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @media(max-width:760px){#zz-overview header{min-height:66px!important;padding:12px 18px!important}#zz-overview header small{font-size:10px!important}#zz-overview nav button{min-height:70px!important;border-bottom-width:3px!important}#zz-overview nav{border-top-width:3px!important}#zz-overview .overview-label,#zz-overview .zz-marquee-track span{font-size:clamp(30px,8vw,58px)!important}}
-  @media(prefers-reduced-motion:reduce){#zz-overview .zz-marquee-track{animation:none!important}#zz-overview .zz-marquee{display:none!important}#zz-overview nav button:is(:hover,:focus-visible) .overview-label{opacity:1!important;transform:none!important}}
-  `;
-  const style=document.createElement('style');style.id='zz-marquee-directory-styles';style.textContent=css;
-  function setup(){
-    const dialog=document.getElementById('zz-overview');
-    if(!dialog||dialog.dataset.marqueeReady==='yes'||!dialog.querySelector('.overview-content nav'))return false;
-    dialog.dataset.marqueeReady='yes';
-    document.head.appendChild(style);
-    const buttons=[...dialog.querySelectorAll('nav [data-overview-action]')];
-    buttons.forEach(button=>{
-      const label=button.querySelector('.overview-label');if(!label)return;
-      const name=label.textContent.trim();
-      const marquee=document.createElement('span');marquee.className='zz-marquee';marquee.setAttribute('aria-hidden','true');
-      const track=document.createElement('span');track.className='zz-marquee-track';
-      // Two identical groups create a seamless horizontal loop without duplicated screen-reader labels.
-      for(let i=0;i<8;i++){const span=document.createElement('span');span.textContent=name+'  ✳  ';track.appendChild(span)}
-      marquee.appendChild(track);button.appendChild(marquee);
-    });
-    const header=dialog.querySelector('header small');
-    if(header)header.textContent='ZOONII.ZIP / EXPLORE';
-    return true;
-  }
-  const observer=new MutationObserver(()=>{if(setup())observer.disconnect()});
-  if(!setup())observer.observe(document.documentElement,{childList:true,subtree:true});
+ const css=String.raw`
+ #zz-overview{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;overflow:hidden!important;margin:0!important;padding:clamp(12px,2.3vw,30px)!important;border:0!important;background:#080808!important;box-shadow:none!important;color:#1f1f1f!important;transform:translateY(103%)!important;transition:transform .7s cubic-bezier(.76,0,.24,1)!important}
+ #zz-overview.visible{transform:translateY(0)!important}
+ #zz-overview::backdrop{background:#0009!important}
+ #zz-overview .overview-curve{display:none!important}
+ #zz-overview .overview-content{height:100%!important;padding:0!important;background:transparent!important;overflow:auto!important;overscroll-behavior:contain!important}
+ #zz-overview .zz-bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(6,minmax(96px,1fr));gap:2px;min-height:800px;height:100%;max-height:1100px;margin:0;overflow:hidden;border-radius:17px}
+ #zz-overview .zz-tile{position:relative;min-width:0;min-height:0;overflow:hidden;border-radius:15px;background:#f8f8f6;isolation:isolate;transform:translateY(18px);opacity:0;transition:transform .65s cubic-bezier(.2,.8,.2,1),opacity .6s ease,background .3s ease}
+ #zz-overview.visible .zz-tile{transform:translateY(0);opacity:1}
+ #zz-overview.visible .zz-tile:nth-child(2){transition-delay:.045s}
+ #zz-overview.visible .zz-tile:nth-child(3){transition-delay:.09s}
+ #zz-overview.visible .zz-tile:nth-child(4){transition-delay:.135s}
+ #zz-overview.visible .zz-tile:nth-child(5){transition-delay:.18s}
+ #zz-overview.visible .zz-tile:nth-child(6){transition-delay:.225s}
+ #zz-overview.visible .zz-tile:nth-child(7){transition-delay:.27s}
+ #zz-overview.visible .zz-tile:nth-child(8){transition-delay:.315s}
+ #zz-overview.visible .zz-tile:nth-child(9){transition-delay:.36s}
+ #zz-overview .zz-hero{grid-column:1/7;grid-row:1/5}
+ #zz-overview .zz-profile{grid-column:7/11;grid-row:1/3}
+ #zz-overview .zz-career{grid-column:11/13;grid-row:1/3}
+ #zz-overview .zz-archive{grid-column:7/11;grid-row:3/4}
+ #zz-overview .zz-guest{grid-column:11/13;grid-row:3/5}
+ #zz-overview .zz-club{grid-column:7/11;grid-row:4/5}
+ #zz-overview .zz-contact{grid-column:1/4;grid-row:5/7}
+ #zz-overview .zz-sticker{grid-column:4/8;grid-row:5/7}
+ #zz-overview .zz-art{grid-column:8/13;grid-row:5/7}
+ #zz-overview .zz-tile[data-link]{cursor:pointer}
+ #zz-overview .zz-tile[data-link]:is(:hover,:focus-within){background:#e9efdf}
+ #zz-overview .zz-tile .zz-card-link{position:absolute;z-index:10;inset:0;display:block!important;width:100%;height:100%;padding:0!important;margin:0!important;border:0!important;opacity:0;cursor:pointer}
+ #zz-overview .zz-tile .zz-card-link:focus-visible{opacity:1!important;outline:4px solid #83c553;outline-offset:-5px;background:transparent!important}
+ #zz-overview .zz-tile .zz-card-link .overview-label,#zz-overview .zz-tile .zz-card-link .overview-arrow{display:none!important}
+ #zz-overview .zz-tile img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+ #zz-overview .zz-tile:is(:hover,:focus-within) img{transform:scale(1.08) rotate(-2deg)}
+ #zz-overview .zz-hero{padding:clamp(20px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between}
+ #zz-overview .zz-hero-head{display:flex;justify-content:space-between;align-items:start;gap:12px;font:12px/1.4 monospace}
+ #zz-overview .zz-monogram{font:900 36px/.8 Arial,sans-serif;letter-spacing:-.11em}
+ #zz-overview .zz-hero-bottom h2{font:400 clamp(25px,3vw,52px)/1.02 'Courier New',monospace!important;letter-spacing:-.07em!important;max-width:660px;margin:0 0 30px!important}
+ #zz-overview .zz-hero-bottom p{font:12px/1.6 monospace;margin:0!important}
+ #zz-overview .zz-social{display:flex;gap:18px;margin-top:18px;font:11px monospace}
+ #zz-overview .zz-social a{position:relative;z-index:12;color:inherit;text-decoration:none}
+ #zz-overview .zz-social a:hover{text-decoration:underline}
+ #zz-overview .zz-profile img{position:absolute;inset:8% 13%;width:74%;height:84%;object-fit:contain}
+ #zz-overview .zz-career img{position:absolute;inset:5% 8%;width:84%;height:76%}
+ #zz-overview .zz-guest img{position:absolute;top:6%;left:11%;width:78%;height:65%}
+ #zz-overview .zz-club img{position:absolute;left:39%;top:8%;width:25%;height:90%}
+ #zz-overview .zz-contact img{position:absolute;inset:16%;width:68%;height:64%}
+ #zz-overview .zz-sticker img{position:absolute;inset:12%;width:76%;height:76%}
+ #zz-overview .zz-art img{position:absolute;inset:9%;width:82%;height:82%}
+ #zz-overview .zz-tile-title{position:absolute;left:18px;bottom:15px;z-index:3;padding:5px 9px;background:#f8f8f6e8;border-radius:4px;font:600 clamp(11px,1.15vw,15px)/1.3 Arial,sans-serif;letter-spacing:.01em;text-transform:uppercase}
+ #zz-overview .zz-tile:is(:hover,:focus-within) .zz-tile-title{background:#c5f695}
+ #zz-overview .zz-archive{display:flex;align-items:center;justify-content:center}
+ #zz-overview .zz-archive .zz-tile-title{position:static;background:transparent;font-size:clamp(22px,3vw,46px);letter-spacing:-.07em}
+ #zz-overview .zz-club .zz-tile-title{top:12px;bottom:auto}
+ #zz-overview .zz-menu-exit{position:fixed;top:clamp(12px,2.3vw,30px);right:clamp(12px,2.3vw,30px);z-index:50;transform:translate(24%,-24%);width:40px;height:40px;border:0!important;border-radius:50%!important;background:#c8ff8d!important;color:#111!important;font:28px/40px Arial!important;text-align:center!important;padding:0!important;cursor:pointer!important}
+ #zz-overview .zz-menu-exit:hover{background:#a8ed65!important;transform:translate(24%,-24%) rotate(90deg)}
+ #zz-overview .zz-tile:focus-within{outline:3px solid #83c553;outline-offset:-4px}
+ @media(max-width:850px){
+ #zz-overview{overflow-y:auto!important}
+ #zz-overview .zz-bento{height:auto;max-height:none;min-height:0;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(130px,auto);gap:4px;overflow:visible}
+ #zz-overview .zz-hero{grid-column:1/7;grid-row:auto;min-height:390px}
+ #zz-overview .zz-profile{grid-column:1/5;grid-row:auto;min-height:230px}
+ #zz-overview .zz-career{grid-column:5/7;grid-row:auto;min-height:230px}
+ #zz-overview .zz-archive{grid-column:1/5;grid-row:auto;min-height:115px}
+ #zz-overview .zz-guest{grid-column:5/7;grid-row:3/5}
+ #zz-overview .zz-club{grid-column:1/5;grid-row:auto;min-height:115px}
+ #zz-overview .zz-contact{grid-column:1/3;grid-row:auto;min-height:220px}
+ #zz-overview .zz-sticker{grid-column:3/7;grid-row:auto;min-height:220px}
+ #zz-overview .zz-art{grid-column:1/7;grid-row:auto;min-height:220px}
+ }
+ @media(max-width:480px){#zz-overview{padding:8px!important}#zz-overview .zz-hero{min-height:340px}#zz-overview .zz-profile,#zz-overview .zz-career{min-height:175px}#zz-overview .zz-tile-title{left:8px;bottom:8px;font-size:10px}#zz-overview .zz-hero-bottom h2{font-size:28px!important}#zz-overview .zz-menu-exit{top:8px;right:8px;transform:translate(16%,-16%)!important}}
+ @media(prefers-reduced-motion:reduce){#zz-overview .zz-tile,#zz-overview .zz-tile img{transition:none!important;animation:none!important;transform:none!important;opacity:1!important}}
+ `;
+ function setup(){
+ const dialog=document.getElementById('zz-overview');
+ if(!dialog||dialog.dataset.bentoReady||!dialog.querySelector('.overview-content nav'))return false;
+ dialog.dataset.bentoReady='true';
+ const old=document.getElementById('zz-marquee-directory-styles');if(old)old.remove();
+ const style=document.createElement('style');style.id='zz-bento-menu-styles';style.textContent=css;document.head.appendChild(style);
+ const content=dialog.querySelector('.overview-content');
+ const nav=content.querySelector('nav');
+ const buttons={};nav.querySelectorAll('[data-overview-action]').forEach(b=>buttons[b.dataset.overviewAction]=b);
+ const grid=document.createElement('div');grid.className='zz-bento';
+ const configs=[
+ ['hero','home','Home',''],
+ ['profile','about','Profile','/assets/profile-collage.webp'],
+ ['career','career','Career','/assets/intro-folders/02-denim-pink.webp'],
+ ['archive','files','Archive',''],
+ ['guest','guest','Guestbook','/assets/intro-stickers/cat.webp'],
+ ['club','club','ThingThingClub','/assets/thingthing-horse-glitter.png'],
+ ['contact','contact','Contact','/assets/intro-stickers/teeth.webp'],
+ ['sticker',null,'Illustration','/assets/intro-stickers/free-vibe.webp'],
+ ['art',null,'Selected Works','/assets/intro-folder-logo.png']
+ ];
+ configs.forEach(([klass,key,label,src])=>{
+ const tile=document.createElement('section');tile.className='zz-tile zz-'+klass;if(key)tile.dataset.link=key;
+ if(klass==='hero'){
+ tile.innerHTML='<div class="zz-hero-head"><strong class="zz-monogram">Z.</strong><span>ZOONII.ZIP<br>DESIGNER & ILLUSTRATOR</span></div><div class="zz-hero-bottom"><h2>HELLO: I AM ZOONII ✳<br>I MAKE THINGS<br>YOU CAN SEE, FEEL<br>AND USE.</h2><p>UI/UX · BRANDING · ILLUSTRATION</p><div class="zz-social"><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a><a href="mailto:hello@zoonii.zip">EMAIL ↗</a></div></div>';
+ }else{
+ if(src){const img=document.createElement('img');img.src=src;img.alt='';img.loading='lazy';tile.appendChild(img)}
+ const title=document.createElement('span');title.className='zz-tile-title';title.textContent=label;tile.appendChild(title);
+ }
+ if(key&&buttons[key]){
+ const button=buttons[key];button.classList.add('zz-card-link');button.setAttribute('aria-label',label);
+ tile.appendChild(button);
+ }
+ grid.appendChild(tile);
+ });
+ content.replaceChildren(grid);
+ const close=document.createElement('button');close.type='button';close.className='zz-menu-exit overview-close';close.textContent='+';close.setAttribute('aria-label','Close Menu');dialog.appendChild(close);
+ return true;
+ }
+ const observer=new MutationObserver(()=>{if(setup())observer.disconnect()});
+ if(!setup())observer.observe(document.documentElement,{childList:true,subtree:true});
 })();
