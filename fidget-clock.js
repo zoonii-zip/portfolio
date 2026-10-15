@@ -75,7 +75,7 @@
   const time=document.createElement('div');time.className='zz-clock-digital';time.setAttribute('aria-live','off');stage.append(time);
   const note=document.createElement('small');note.className='zz-clock-note';note.textContent='ILLUSTRATED MOMENTS · ASIA/SEOUL';stage.append(note);
   dialog.append(stage);document.body.append(dialog);
-  button.addEventListener('click',e=>{e.stopPropagation();if(!dialog.open)dialog.showModal();tick()});
+  button.style.pointerEvents='auto';button.style.zIndex='80';button.addEventListener('pointerdown',e=>{e.stopPropagation()});button.addEventListener('pointerup',e=>{e.stopPropagation()});button.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(!dialog.open){try{dialog.showModal()}catch(err){dialog.setAttribute('open','')}}tick()});
   head.querySelector('button').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
   tick();setInterval(tick,1000);
