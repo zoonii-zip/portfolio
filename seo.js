@@ -89,7 +89,7 @@
 
 /* Zoonii — full-screen marquee directory, isolated from Archive and site navigation. */
 (function(){
-  const css = \`
+  const css = `
   #zz-overview{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;background:#f0bc88!important;color:#191712!important;box-shadow:none!important;transform:translateY(105%)!important;transition:transform .7s cubic-bezier(.76,0,.24,1)!important;overflow:hidden!important}
   #zz-overview.visible{transform:translateY(0)!important}
   #zz-overview .overview-curve{display:none!important}
@@ -116,7 +116,7 @@
   @keyframes zz-menu-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(max-width:760px){#zz-overview header{min-height:66px!important;padding:12px 18px!important}#zz-overview header small{font-size:10px!important}#zz-overview nav button{min-height:70px!important;border-bottom-width:3px!important}#zz-overview nav{border-top-width:3px!important}#zz-overview .overview-label,#zz-overview .zz-marquee-track span{font-size:clamp(30px,8vw,58px)!important}}
   @media(prefers-reduced-motion:reduce){#zz-overview .zz-marquee-track{animation:none!important}#zz-overview .zz-marquee{display:none!important}#zz-overview nav button:is(:hover,:focus-visible) .overview-label{opacity:1!important;transform:none!important}}
-  \`;
+  `;
   const style=document.createElement('style');style.id='zz-marquee-directory-styles';style.textContent=css;
   function setup(){
     const dialog=document.getElementById('zz-overview');
