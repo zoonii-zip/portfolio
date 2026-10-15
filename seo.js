@@ -209,32 +209,29 @@
 
 (function(){const st=document.createElement('style');st.textContent="#zz-fullscreen .theme-product .collection-scene{background:#0b0b0d!important;color:#fff!important;border-radius:18px;overflow:hidden}#zz-fullscreen .theme-product .collection-objects.zz-float-web{display:block!important;position:relative!important;height:1700px!important;min-height:1700px!important;width:100%!important;overflow:hidden!important;padding:0!important}#zz-fullscreen .theme-product .zz-float-web .project-folder{position:absolute!important;left:var(--x)!important;top:var(--y)!important;width:34%!important;height:260px!important;margin:0!important;background:var(--bg)!important;border-radius:17px!important;box-shadow:0 18px 50px #000a!important;transform:translate3d(0,var(--scroll-y,0px),0) rotate(var(--angle))!important;will-change:transform;overflow:hidden!important;z-index:3!important}#zz-fullscreen .theme-product .zz-float-web .project-folder-art{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important;background:none!important;transform:none!important}#zz-fullscreen .theme-product .zz-float-web .project-folder-art img,#zz-fullscreen .theme-product .zz-float-web .folder-ink,#zz-fullscreen .theme-product .zz-float-web .folder-stamp{display:none!important}#zz-fullscreen .theme-product .zz-float-web .folder-brand{position:static!important;color:var(--fg)!important;font:900 clamp(27px,4vw,60px) Arial,sans-serif!important;text-align:center!important;transform:none!important}#zz-fullscreen .theme-product .zz-float-web .folder-caption{position:absolute!important;bottom:12px!important;left:16px!important;color:var(--fg)!important;opacity:1!important;transform:none!important}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(1){--x:12%;--y:70px;--angle:-14deg;--bg:#ebede9;--fg:#1a1c22}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(2){--x:55%;--y:305px;--angle:11deg;--bg:#273041;--fg:#fff}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(3){--x:7%;--y:665px;--angle:9deg;--bg:#c7d9e7;--fg:#101c23}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(4){--x:50%;--y:915px;--angle:-10deg;--bg:#d8ed72;--fg:#262b1d}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(5){--x:15%;--y:1280px;--angle:-8deg;--bg:#e9aa85;--fg:#31211c}@media(max-width:700px){#zz-fullscreen .theme-product .collection-objects.zz-float-web{height:1400px!important;min-height:1400px!important}#zz-fullscreen .theme-product .zz-float-web .project-folder{width:64%!important;height:190px!important}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(2){--x:33%;--y:300px}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(3){--x:4%;--y:540px}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(4){--x:33%;--y:795px}#zz-fullscreen .theme-product .zz-float-web .project-folder:nth-child(5){--x:12%;--y:1080px}}";document.head.append(st);let el=null,host=null,frame=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const factors=[-.38,.29,-.24,.35,-.3];function update(){frame=0;if(!el||!el.isConnected)return;const v=host===window?{top:0,height:innerHeight}:host.getBoundingClientRect();const r=el.getBoundingClientRect();const shift=Math.max(-600,Math.min(600,v.top+v.height/2-r.top-r.height/2));el.querySelectorAll('.project-folder').forEach((a,i)=>a.style.setProperty('--scroll-y',(reduced?0:Math.round(shift*factors[i%5]))+'px'))}function tick(){if(!frame)frame=requestAnimationFrame(update)}function mount(){const next=document.querySelector('#zz-fullscreen .theme-product .collection-objects');if(next===el)return;if(host)host.removeEventListener('scroll',tick);el=next;if(!el){host=null;return}el.classList.add('zz-float-web');host=el.closest('#zz-body')||el.closest('.panelbody')||window;host.addEventListener('scroll',tick,{passive:true});tick()}new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});window.addEventListener('resize',tick,{passive:true});mount()})();
 
-/* Illustration Archive: clickable vintage magazine covers; separate from other tabs. */
+
+/* Retro-TV side knobs and speaker panel. */
+(function(){function mount(){const shell=document.querySelector('#zz-fullscreen .theme-visual .zz-tv-shell');if(!shell||shell.querySelector('.zz-tv-side'))return;const side=document.createElement('div');side.className='zz-tv-side';side.setAttribute('aria-hidden','true');side.innerHTML='<span class="zz-tv-brand">ZOONII</span><span class="zz-tv-knob"></span><span class="zz-tv-knob"></span><span class="zz-tv-vents"></span>';shell.appendChild(side)}new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});mount()})();
+
+/* Illustration archive: preserve real book spines and make each book open its project. */
 (function(){
- const magazines=[
- {title:'UMBRO',symbol:'✳',accent:'#ee5d37',bg:'#f3e4bf'},
- {title:'KT Y × 오뚜기',symbol:'♥',accent:'#e1cb37',bg:'#41554b'},
- {title:'KONA I',symbol:'★',accent:'#4160ac',bg:'#f5c9ac'},
- {title:'KT Y × UNESCO',symbol:'◉',accent:'#a42d2c',bg:'#e8ddc1'},
- {title:'OK 읏맨',symbol:'☘',accent:'#247e64',bg:'#e3bdd2'},
- {title:'통큰런',symbol:'➜',accent:'#ed6b8d',bg:'#f5e7b4'}
- ];
- function mount(){
+ const order=['illustration0','illustration1','illustration2','illustration3','illustration4','tongkeun'];
+ function enhance(){
    const scene=document.querySelector('#zz-fullscreen .theme-story .collection-objects');
-   if(!scene||scene.dataset.magazineReady)return;
-   scene.dataset.magazineReady='true';scene.classList.add('zz-magazine-wall');
-   const items=['illustration0','illustration1','illustration2','illustration3','illustration4','tongkeun'];
-   scene.replaceChildren(...items.map((id,i)=>{
-     const data=magazines[i],a=document.createElement('a');
-     a.className='zz-magazine';a.href='/projects/'+id+'/';a.setAttribute('aria-label',data.title+' 포트폴리오 보기');
-     a.style.setProperty('--mag-bg',data.bg);a.style.setProperty('--mag-accent',data.accent);a.style.setProperty('--mag-rotate',[ '-5deg','4deg','-3deg','5deg','-4deg','3deg'][i]);
-     const head=document.createElement('strong');head.className='zz-mag-top';head.textContent=data.title;
-     const visual=document.createElement('span');visual.className='zz-mag-visual';visual.setAttribute('aria-hidden','true');visual.textContent=data.symbol;
-     const caption=document.createElement('span');caption.className='zz-mag-bottom';
-     const label=document.createElement('b');label.textContent='ZOONII / ILLUSTRATION';
-     const foot=document.createElement('small');foot.textContent=String(i+1).padStart(2,'0')+' / SELECTED WORK';
-     caption.append(label,foot);a.append(head,visual,caption);return a;
-   }));
+   if(!scene||scene.dataset.linkedBooks==='1')return;
+   scene.dataset.linkedBooks='1';
+   scene.classList.add('zz-linked-bookshelf');
+   [...scene.querySelectorAll('.shelf-book')].forEach((book,i)=>{
+     const id=order[i];if(!id)return;
+     const link=document.createElement('a');
+     link.href='/projects/'+id+'/';
+     link.className=book.className;
+     link.setAttribute('aria-label',(book.querySelector('strong')?.textContent||'Illustration')+' 포트폴리오 보기');
+     link.innerHTML=book.innerHTML;
+     for(const attr of book.attributes)if(attr.name==='style')link.setAttribute('style',attr.value);
+     book.replaceWith(link);
+   });
  }
- new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});mount();
+ new MutationObserver(enhance).observe(document.documentElement,{childList:true,subtree:true});
+ enhance();
 })();
