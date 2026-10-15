@@ -235,3 +235,6 @@
  new MutationObserver(enhance).observe(document.documentElement,{childList:true,subtree:true});
  enhance();
 })();
+
+/* Load the interactive Seoul-time fidget clock without changing site routing. */
+(function(){if(document.querySelector('script[data-zz-clock]'))return;const script=document.createElement('script');script.src='/fidget-clock.js?v=1';script.defer=true;script.dataset.zzClock='';document.head.append(script)})();
