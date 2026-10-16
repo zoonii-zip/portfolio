@@ -181,18 +181,6 @@
 #zz-fullscreen .archive-shell .archive-tabs button:hover{transform:translateX(-4px)!important}
 #zz-fullscreen .archive-shell #archive-panel{grid-column:2!important;grid-row:1!important;min-width:0!important;border-radius:0 5px 5px 5px!important}
 
-/* Restore shelf display and enhance the CRT from a flat bezel to a substantial retro cabinet. */
+/* Restore the illustration shelf display. */
 #zz-fullscreen .theme-story .shelf-plank{display:block!important}
 #zz-fullscreen .theme-story .collection-scene{background:#e1d4bb;border-radius:12px;padding-bottom:10px}
-#zz-fullscreen .theme-visual .zz-tv-shell{width:min(820px,95%)!important;aspect-ratio:1.54!important;padding:7% 19% 8% 6%!important;transform:rotate(-5deg)!important;border:0!important;border-radius:15% 20% 16% 14% / 16% 18% 19% 16%!important;background:linear-gradient(125deg,#c4a783 0%,#785b43 10%,#493a32 16%,#80634b 36%,#493729 72%,#241d1a 92%,#6d5741 100%)!important;box-shadow:inset 7px 7px 11px #ead2ad80,inset -16px -14px 18px #0b0908b5,3px 4px 0 #211811,26px 35px 30px #0009!important;overflow:visible!important}
-#zz-fullscreen .theme-visual .zz-tv-shell:after{content:''!important;position:absolute;left:23%!important;right:24%!important;bottom:-9%!important;height:10%!important;border-radius:5px 5px 38% 38%!important;background:linear-gradient(90deg,#302820,#70543a 17%,#3d2b22 85%,#1f1b18)!important;box-shadow:0 9px 2px #181413,0 17px 18px #000a!important;z-index:-1}
-#zz-fullscreen .theme-visual .zz-tv-screen{height:100%!important;border:clamp(10px,2vw,23px) solid #30291f!important;border-radius:39% / 35%!important;background:radial-gradient(ellipse at 46% 39%,#e4efab 0%,#d3e783 30%,#aabe59 76%,#6d7e40 100%)!important;box-shadow:inset 0 0 8px 9px #28321785,inset 0 0 33px 21px #18230f6e,0 0 2px 5px #9d8669,4px 6px 9px #1a140e!important;transform:perspective(900px) rotateY(-2deg)}
-#zz-fullscreen .theme-visual .zz-tv-screen:before{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;background:linear-gradient(134deg,#fff9 0%,#fff2 27%,transparent 38%,transparent 70%,#17220b20 100%)}
-#zz-fullscreen .theme-visual .zz-tv-screen .zz-tv-logo{position:relative;z-index:2;font-family:Georgia,serif!important;letter-spacing:-.055em!important;filter:drop-shadow(1px 2px 1px #2c3a1233)}
-#zz-fullscreen .theme-visual .zz-tv-side{position:absolute;top:14%;bottom:12%;right:3%;width:13%;display:flex;flex-direction:column;align-items:center;justify-content:space-between;z-index:4}
-#zz-fullscreen .theme-visual .zz-tv-brand{font:900 clamp(8px,1.25vw,13px) Georgia,serif;letter-spacing:.15em;color:#dcc2a1;text-shadow:0 2px #1f170f}
-#zz-fullscreen .theme-visual .zz-tv-knob{width:clamp(25px,4.5vw,55px);aspect-ratio:1;border-radius:50%;border:6px ridge #a89673;background:radial-gradient(circle at 33% 27%,#e2d1b1,#938267 40%,#443c33 77%);box-shadow:3px 5px 8px #1b110ca8,inset -2px -3px 3px #201a13}
-#zz-fullscreen .theme-visual .zz-tv-knob:after{content:'';display:block;width:3px;height:32%;background:#f7e4c4;margin:8% auto;transform:rotate(-35deg)}
-#zz-fullscreen .theme-visual .zz-tv-vents{width:80%;height:22%;border-radius:5px;background:repeating-linear-gradient(0deg,#150e0b 0 3px,#6b5844 3px 6px,#2e231c 6px 10px);box-shadow:inset 2px 3px 4px #100b08}
-#zz-fullscreen .theme-visual .zz-tv-dial{display:none!important}
-@media(max-width:650px){#zz-fullscreen .theme-visual .zz-tv-shell{padding:8% 19% 9% 5%!important}#zz-fullscreen .theme-visual .zz-tv-knob{width:20px;border-width:3px}#zz-fullscreen .theme-visual .zz-tv-brand{font-size:7px}#zz-fullscreen .theme-visual .zz-tv-screen{border-width:7px!important}}
