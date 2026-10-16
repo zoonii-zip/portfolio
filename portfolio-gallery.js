@@ -2,7 +2,7 @@
 (() => {
   function mount() {
     const target = document.querySelector('#zz-fullscreen .theme-product .collection-objects');
-    if (!target || target.dataset.portfolioReady) return;
+    if (!target || target.dataset.portfolioReady || target.querySelector('[data-gf-folder]')) return;
     const projects = [...target.querySelectorAll('.project-folder')].map(card => ({
       href: card.getAttribute('href'),
       name: card.querySelector('.folder-caption strong').textContent,

@@ -12,17 +12,19 @@
     if (!projects.length) return;
     target.dataset.brandReady = 'true';
     target.classList.add('brand-gallery');
-    target.innerHTML = `<header class="bg-heading"><span>IDENTITIES & PRINTED MATTER</span><h2>Made to leave<br> an impression.</h2><p>브랜드의 표정부터, 한 권의 흐름까지.</p></header><div class="bg-view"><div class="bg-television"><img src="/assets/archive/orange-tv.svg" alt="오렌지색 빈티지 텔레비전" width="360" height="270"><a class="bg-screen"><span class="bg-screen-channel"></span><strong></strong><span class="bg-screen-role"></span><span class="bg-screen-open">프로젝트 보기 ↗</span></a></div><div class="bg-view-caption"><span class="bg-on-air"><i></i> NOW SHOWING</span><span class="bg-current" aria-live="polite" aria-atomic="true"></span><div class="bg-controls"><button type="button" data-step="-1" aria-label="이전 브랜드 프로젝트">←</button><button type="button" data-step="1" aria-label="다음 브랜드 프로젝트">→</button></div></div></div><div class="bg-selector"><div class="bg-list-heading"><span>SELECTED WORK</span><span>01—05</span></div><div class="bg-projects" role="group" aria-label="브랜드·에디토리얼 프로젝트 선택"></div></div>`;
+    target.innerHTML = `<header class="bg-heading"><span>IDENTITIES & PRINTED MATTER</span><h2>Made to leave<br> an impression.</h2><p>브랜드의 표정부터, 한 권의 흐름까지.</p></header><div class="bg-view"><div class="bg-television"><img src="/assets/archive/orange-tv.svg" alt="오렌지색 빈티지 텔레비전" width="360" height="270"><a class="bg-screen"><span class="bg-screen-channel"></span><strong></strong><span class="bg-screen-role"></span><span class="bg-screen-open">프로젝트 보기 ↗</span></a></div><div class="bg-view-caption"><span class="bg-on-air"><i></i> NOW SHOWING</span><span class="bg-current" aria-live="polite" aria-atomic="true"></span><div class="bg-controls"><button type="button" data-step="-1" aria-label="이전 브랜드 프로젝트">←</button><button type="button" data-step="1" aria-label="다음 브랜드 프로젝트">→</button><button type="button" class="bg-all-toggle" data-show-all aria-expanded="false" aria-controls="bg-all-projects">전체보기</button></div></div><div class="bg-selector" id="bg-all-projects" hidden><div class="bg-projects" role="group" aria-label="브랜드·에디토리얼 프로젝트 전체"></div></div></div>`;
     const picker = target.querySelector('.bg-projects');
     projects.forEach((project, i) => {
       const button = document.createElement('button'); button.type = 'button';
+      button.style.setProperty('--bg-index', i);
       const number = document.createElement('span'); number.className = 'bg-number'; number.textContent = String(i + 1).padStart(2, '0');
       const text = document.createElement('span'); text.className = 'bg-project-name';
       const name = document.createElement('strong'); name.textContent = project.name;
       const role = document.createElement('small'); role.textContent = project.role + ' · ' + project.year;
       text.append(name, role);
-      const arrow = document.createElement('span'); arrow.className = 'bg-arrow'; arrow.textContent = '↗'; arrow.setAttribute('aria-hidden', 'true');
-      button.append(number, text, arrow); button.addEventListener('click', () => show(i)); picker.append(button);
+      button.append(number, text);
+      button.addEventListener('click', () => { show(i); setAllVisible(false); });
+      picker.append(button);
     });
     let selected = 0;
     function show(index) {
@@ -41,6 +43,16 @@
       }
     }
     target.querySelectorAll('[data-step]').forEach(button => button.addEventListener('click', () => show(selected + Number(button.dataset.step))));
+    function setAllVisible(visible) {
+      const selector = target.querySelector('.bg-selector');
+      const toggle = target.querySelector('[data-show-all]');
+      selector.hidden = !visible;
+      toggle.setAttribute('aria-expanded', String(visible));
+      toggle.textContent = visible ? '닫기' : '전체보기';
+    }
+    target.querySelector('[data-show-all]').addEventListener('click', () => {
+      setAllVisible(target.querySelector('[data-show-all]').getAttribute('aria-expanded') !== 'true');
+    });
     target.closest('.collection-scene').querySelector('.collection-footer').lastElementChild.textContent = '프로젝트 선택 후 TV 화면을 눌러 자세히 보기';
     show(0);
   }

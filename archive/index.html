@@ -154,6 +154,46 @@
  const replay=document.createElement('button');replay.type='button';replay.textContent='Replay ↻';intro.querySelector('.trail-tools').appendChild(replay);replay.addEventListener('click',()=>{if(!trailReady)enableTrail();else shower()});
  let archiveMode='STORY';
  const archiveLabels={STORY:'Illustration',PRODUCT:'Web / App',VISUAL:'Brand / Editorial'};
+ const gfExtraFiles={};
+ const escapeArchiveText=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+ function renderGlassFolderFiles(id,project,index){
+  const files=[{name:project.name,meta:project.role+' · '+project.period,href:'/projects/'+id+'/',art:index%5},...(gfExtraFiles[id]||[])];
+  return files.map((file,index)=>{
+   const slot=files.length<=1?0:(index/(files.length-1))*2-1;
+   const fileContent=`<span class="gf-file-art gf-file-art-${file.art??'blank'}" aria-hidden="true"></span><span class="gf-file-head"><strong>${escapeArchiveText(file.name)}</strong><small>${escapeArchiveText(file.meta||'')}</small></span>`;
+   const item=file.href?`<a class="gf-file" href="${escapeArchiveText(file.href)}" style="--gf-slot:${slot};--gf-depth:${files.length-index-1};z-index:${index+1}" aria-label="${escapeArchiveText(file.name)} 프로젝트 상세 보기">${fileContent}</a>`:`<div class="gf-file gf-file--added" style="--gf-slot:${slot};--gf-depth:${files.length-index-1};z-index:${index+1}">${fileContent}</div>`;
+   return `<div class="gf-file-slot" role="listitem">${item}</div>`;
+  }).join('');
+ }
+ function renderGlassFolder(rows){
+  return `<div class="gf-board">${rows.map(([id,project],index)=>{
+   const files=renderGlassFolderFiles(id,project,index);
+   const total=1+(gfExtraFiles[id]||[]).length;
+   const safeId=escapeArchiveText(id);
+   const ordinal=String(index+1).padStart(2,'0');
+   return `<section class="gf-folder" data-gf-folder data-gf-id="${safeId}" data-open="false" aria-label="${escapeArchiveText(project.name)} project folder">
+   <div class="gf-stage">
+    <div class="gf-back" aria-hidden="true"><img src="/assets/archive-folder-paper.png" alt=""><span class="gf-liquid"></span><span class="gf-back-label">WEB / APP · ${ordinal}</span></div>
+    <div class="gf-files" id="gf-files-${safeId}" data-gf-files role="list" aria-label="${escapeArchiveText(project.name)} project files" inert>${files}</div>
+    <div class="gf-front">
+     <div class="gf-tint" aria-hidden="true"></div><div class="gf-spec" aria-hidden="true"></div>
+     <button type="button" class="gf-toggle" data-gf-toggle aria-expanded="false" aria-controls="gf-files-${safeId}" aria-label="Open ${escapeArchiveText(project.name)}"></button>
+     <div class="gf-label"><strong>${escapeArchiveText(project.name)}</strong><span class="gf-count" data-gf-count>${total} ${total===1?'item':'items'}</span></div>
+    </div>
+    <button type="button" class="gf-add" data-gf-add aria-label="Add a file to ${escapeArchiveText(project.name)}" title="Add a file"><span aria-hidden="true">+</span></button>
+   </div>
+   <p class="gf-instruction">Click the folder to open · Select a project to view</p>
+  </section>`;
+  }).join('')}</div>`;
+ }
+ function setGlassFolderOpen(folder,isOpen){
+  if(!folder)return;
+  folder.dataset.open=String(isOpen);
+  const toggle=folder.querySelector('[data-gf-toggle]');
+  toggle.setAttribute('aria-expanded',String(isOpen));
+  toggle.setAttribute('aria-label',(isOpen?'Close ':'Open ')+folder.querySelector('.gf-label strong').textContent);
+  folder.querySelector('[data-gf-files]').inert=!isOpen;
+ }
  function archiveTabs(){return `<div class="archive-tabs" role="tablist" aria-orientation="vertical" aria-label="Archive categories">${[['STORY','Illustration'],['PRODUCT','Web / App Design'],['VISUAL','Branding / Editorial']].map(([key,label],i)=>`<button type="button" role="tab" id="archive-tab-${key}" aria-controls="archive-panel" aria-selected="${archiveMode===key}" tabindex="${archiveMode===key?0:-1}" data-archive-tab="${key}" class="${archiveMode===key?'selected':''}"><small>0${i+1}</small><strong>${archiveLabels[key]}</strong><span>${label}</span><i aria-hidden="true">↗</i></button>`).join('')}</div>`}
  function folderNow(mode){
   archiveMode=mode==='ALL'?'STORY':mode;activeFolder=archiveMode;current=null;
@@ -161,17 +201,42 @@
   const heading={STORY:'Stories on a shelf.',PRODUCT:'Projects on my desktop.',VISUAL:'Collected identities.'}[archiveMode];
   const desc={STORY:'서로 다른 이야기, 나란히 꽂아둔 그림들.',PRODUCT:'폴더마다 담아둔 웹과 앱의 경험. 하나씩 열어보세요.',VISUAL:'작은 명함부터 한 권의 책까지, 브랜드의 조각들.'}[archiveMode];
   const tones=['#244e43','#e66d38','#e7d997','#5365aa','#c84450','#708796'];
-  const cards=rows.map(([id,p],i)=>{
+    const cards=archiveMode==='PRODUCT'?renderGlassFolder(rows):rows.map(([id,p],i)=>{
    const num=String(i+1).padStart(2,'0');
    if(archiveMode==='STORY')return `<article class="shelf-book spine-${i}" style="--object-tone:${tones[i%6]};--book-height:${[350,325,365,395,342,370][i%6]}px" aria-label="${p.name}, ${p.period}, 상세 준비 중"><span class="spine-number">${num}</span><strong>${p.name}</strong><span class="spine-subtitle">${p.role}</span><small>${p.period}</small></article>`;
-   if(archiveMode==='PRODUCT'){const brand=[['COMES','#305fc6'],['Discovery','#242a30'],['Genie Labs','#2587aa'],['PASS','#e73246'],['$LUCK','#6751bc']][i];return `<a class="project-folder folder-${i}" href="/projects/${id}/" style="--folder-color:${brand[1]};--folder-rotation:${[-4,3,-2,2,-3][i]}deg" aria-label="${p.name} 프로젝트 보기"><span class="project-folder-art"><img src="assets/archive-folder-paper.png" alt="" width="1536" height="1024"><span class="folder-ink" aria-hidden="true"></span><span class="folder-brand">${brand[0]}</span><span class="folder-stamp">WEB / APP · ${num}</span></span><span class="folder-caption"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period}</small></span></a>`;}
-
    return `<article class="sample-tray" style="--object-tone:${tones[i%6]}"><div class="tray-materials ${i===4?'editorial-materials':''}" aria-hidden="true"><div class="sample-sheet"><small>${i===4?'ANNUAL REPORT':'IDENTITY STUDY'}</small><b>${i===4?'KISA':p.name}</b><span>●</span></div><div class="sample-card"><b>${p.name}</b><small>${i===4?'2022 / REPORT':'DESIGN / '+num}</small></div><div class="sample-swatch"></div></div><div class="object-label"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period} <em>상세 준비 중</em></small></div><span class="tray-index">${num}</span></article>`;
   }).join('');
   open(menuLabels.files,`<div class="archive-shell theme-${archiveMode.toLowerCase()}">${archiveTabs()}<section id="archive-panel" role="tabpanel" tabindex="0" aria-labelledby="archive-tab-${archiveMode}"><div class="collection-scene"><div class="collection-meta"><span>${archiveMode==='STORY'?'THE BOOKSHELF':archiveMode==='PRODUCT'?'THE DIGITAL DESK':'THE SAMPLE COLLECTION'}</span><span>${String(rows.length).padStart(2,'0')} PROJECTS</span></div><div class="collection-objects">${cards}</div>${archiveMode==='STORY'?'<div class="shelf-plank" aria-hidden="true"></div>':''}<footer class="collection-footer"><span>${archiveLabels[archiveMode]}</span><span>프로젝트 이미지 · 상세 준비 중</span></footer></div></section></div>`);
   q('[data-action="close"]').textContent='← Back to Home';window.ZooniiSEO?.archive(archiveMode);
  }
  function archiveEntrance(){folderNow('STORY')}
+ root.addEventListener('click',e=>{
+  const toggle=e.target.closest('[data-gf-toggle]');
+  if(toggle){setGlassFolderOpen(toggle.closest('[data-gf-folder]'),toggle.getAttribute('aria-expanded')!=='true');return}
+  const add=e.target.closest('[data-gf-add]');
+  if(!add)return;
+  const folder=add.closest('[data-gf-folder]');
+  const id=folder.dataset.gfId;
+  const project=projects[id];
+  gfExtraFiles[id]??=[];
+  gfExtraFiles[id].push({name:'Untitled '+(gfExtraFiles[id].length+1),meta:'Just now',art:'blank'});
+  const rows=Object.entries(projects).filter(([,item])=>item.mode==='PRODUCT');
+  folder.querySelector('[data-gf-files]').innerHTML=renderGlassFolderFiles(id,project,rows.findIndex(([key])=>key===id));
+  const total=1+gfExtraFiles[id].length;
+  folder.querySelector('[data-gf-count]').textContent=total+' '+(total===1?'item':'items');
+  setGlassFolderOpen(folder,true);
+ });
+ root.addEventListener('keydown',e=>{
+  const folder=root.querySelector('[data-gf-folder][data-open="true"]');
+  if(e.key!=='Escape'||!folder)return;
+  setGlassFolderOpen(folder,false);
+  folder.querySelector('[data-gf-toggle]').focus();
+ });
+ document.addEventListener('pointerdown',e=>{
+  root.querySelectorAll('[data-gf-folder][data-open="true"]').forEach(folder=>{
+   if(!folder.contains(e.target))setGlassFolderOpen(folder,false);
+  });
+ });
  root.addEventListener('keydown',e=>{const tab=e.target.closest('[data-archive-tab]');if(!tab)return;const keys=['STORY','PRODUCT','VISUAL'];let i=keys.indexOf(tab.dataset.archiveTab);if(e.key==='ArrowDown')i=(i+1)%3;else if(e.key==='ArrowUp')i=(i+2)%3;else if(e.key==='Home')i=0;else if(e.key==='End')i=2;else return;e.preventDefault();folderNow(keys[i]);q(`[data-archive-tab="${keys[i]}"]`).focus()});
  function legacyFolder(mode){activeFolder=mode;const titles={PRODUCT:'PRODUCT',STORY:'ILLUSTRATION',VISUAL:'BRAND & GRAPHIC',ALL:'ALL FILES'};const rows=Object.entries(projects).filter(([id,p])=>mode==='ALL'||p.mode===mode);open('zoonii.zip / '+titles[mode],`<span class="mono">DIRECTORY / ${rows.length} PROJECT FOLDERS</span><h2>${titles[mode]}</h2><div class="folder-grid">${rows.map(([id,p],i)=>`<button class="folder-item" data-project="${id}" disabled><span class="mono">${String(i+1).padStart(2,'0')} / 상세 준비 중</span><span class="foldername">${p.name}</span><small>${p.period}</small><small>${p.role}</small></button>`).join('')}</div>`);q('[data-action="close"]').textContent='← Back to Home'}
  function back(){if(current&&activeFolder){current=null;folder(activeFolder)}else{current=null;activeFolder=null;close()}}
@@ -786,7 +851,7 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 #zz-message-section .memo-coming-soon h3{font:600 clamp(20px,2.5vw,28px)/1.5 Arial,'Apple SD Gothic Neo',sans-serif;margin:16px 0 10px;letter-spacing:-.04em}
 #zz-message-section .memo-coming-soon p{font-size:16px;line-height:1.7;margin:0}
 #zz-message-section #zz-guestresult:empty{display:none}
-</style><link rel="stylesheet" href="archive-themes.css?v=desktop-folders-1"><style>
+</style><link rel="stylesheet" href="archive-themes.css?v=desktop-folders-2"><link rel="stylesheet" href="/archive-glass-folder.css?v=2"><style>
 #zz-logo-entry .intro-copy{max-width:calc(100% - 40px);text-align:center;line-height:1.6}
 #zz-logo-entry .intro-copy span{display:block;text-wrap:balance}
 #zz-logo-entry .intro-copy [lang="en"]{font-size:clamp(16px,2.2vw,24px);letter-spacing:-.025em}
@@ -980,8 +1045,8 @@ html:has(#zz-body>#zz-message-section) #zz-fixed-links{display:none}
 <script src="/guestbook-client.js"></script>
 <link rel="stylesheet" href="/portfolio-gallery.css?v=1">
 <script src="/portfolio-gallery.js?v=1"></script>
-<link rel="stylesheet" href="/brand-gallery.css?v=1">
-<script src="/brand-gallery.js?v=1"></script>
+<link rel="stylesheet" href="/brand-gallery.css?v=7">
+<script src="/brand-gallery.js?v=3"></script>
 
 <style>
 #zz-fullscreen #zz-form .contact-send{display:block;width:100%;min-height:52px;margin:24px 0 16px;padding:14px 24px;border:1px solid #282821;background:#282821;color:#fff8e8;font-size:16px;font-weight:600;text-align:center}
