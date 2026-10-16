@@ -129,7 +129,9 @@
  const render=()=>{
  // Reference layout uses each graphic's center as a fraction of the board.
  const boardScale=Math.min(.85,(root.clientWidth-40)/1000);
- const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[.846,.86],contact:[.913,.85],unicorn:[.72,.59],orange:[.255,.52]};
+ const contactX=Math.min(.913,1-(95*boardScale+24)/root.clientWidth);
+ const guestX=contactX-(190*boardScale+48)/root.clientWidth;
+ const boardPositions={files:[.255,.32],career:[.184,.705],about:[.51,.53],club:[.845,.23],guest:[guestX,.86],contact:[contactX,.85],unicorn:[.72,.59],orange:[.255,.52]};
  world.querySelectorAll('button[data-action],button[data-board-toy],[data-board-sticker]').forEach(el=>{const position=boardPositions[el.dataset.action||el.dataset.boardToy||el.dataset.boardSticker];if(!position)return;el.style.setProperty('--board-left',((position[0]-.5)*root.clientWidth/boardScale-el.offsetWidth/2)+'px');el.style.setProperty('--board-top',((position[1]-.5)*root.clientHeight/boardScale-el.offsetHeight/2)+'px')});
  world.style.setProperty('--space-scale',z);world.style.setProperty('--pan-x',x+'px');world.style.setProperty('--pan-y',y+'px');world.style.transform=`translate(${x}px,${y}px) scale(${z})`};
  function enter(){entered=true;entry.inert=true;entry.classList.add('out');q('#zz-hint').textContent='DRAG TO ARRANGE · CLICK TO EXPLORE';q('#zz-location').textContent='HOME / DIRECTORY';render()}
