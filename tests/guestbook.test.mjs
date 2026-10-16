@@ -43,3 +43,14 @@ test('upstream failures and missing configuration fail closed',async()=>{
  assert.equal((await createHandler({...env,TURNSTILE_SECRET_KEY:''})(req())).status,503);
  assert.equal((await createHandler(env,async()=>{throw Error('secret internal error')})(req())).status,502);
 });
+
+test('house artwork choice survives verified storage and response',async()=>{
+ let calls=0;
+ const h=createHandler(env,async(url,options)=>{
+ if(++calls===1)return json({success:true,hostname:'zoonii.zip',action:'guestbook'});
+ const body=JSON.parse(options.body);assert.equal(body.p_paper,'house');
+ return json([{id:'house-note',name:body.p_name,text:body.p_text,paper:body.p_paper}]);
+ });
+ const response=await h(req({...payload,paper:'house'}));
+ assert.equal(response.status,201);assert.equal((await response.json()).entry.paper,'house');assert.equal(calls,2);
+});

@@ -13,3 +13,12 @@
 #zz-message-section .paper-preview textarea{flex:none;height:96px;min-height:80px}
 
 #zz-message-section .guest-verification-status{margin:0 0 10px;font:12px/1.5 Arial,sans-serif;color:#327344}
+
+/* Original pink house memo artwork, with writing kept inside its yellow center. */
+#zz-message-section .paper-house { background:transparent url('assets/guestbook-house.png') center / 100% 100% no-repeat; color:#382711; border:0; box-shadow:none; }
+#zz-message-section .paper-choice.paper-house { grid-column:1 / -1; min-height:100px; background-size:contain; font-weight:700; }
+#zz-message-section .paper-choice.paper-house[aria-pressed=true] { outline:2px solid #f92692; outline-offset:3px; }
+#zz-message-section .paper-preview.paper-house { padding:40px 18% 32px; min-height:310px; }
+#zz-message-section .wall-note.paper-house { padding:38px 34px 30px; min-height:240px; }
+#zz-message-section .wall-note.paper-house::before,#zz-message-section .wall-note.paper-house::after { display:none; }
+#zz-message-section .wall-note.paper-house p { overflow-wrap:anywhere; }

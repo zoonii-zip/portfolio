@@ -38,7 +38,7 @@
       }
       entries.forEach((entry, index) => {
         const card = document.createElement('article');
-        card.className = 'wall-note paper-' + (['yellow','pink','lined','ticket'].includes(entry.paper) ? entry.paper : 'yellow');
+        card.className = 'wall-note paper-' + (['yellow','pink','lined','ticket','house'].includes(entry.paper) ? entry.paper : 'yellow');
         card.style.setProperty('--note-rotation', [-3,2,-1,3][index % 4] + 'deg');
         const text = document.createElement('p'); text.textContent = entry.text;
         const name = document.createElement('small'); name.textContent = entry.name;
