@@ -22,3 +22,19 @@
 #zz-message-section .wall-note.paper-house { padding:38px 34px 30px; min-height:240px; }
 #zz-message-section .wall-note.paper-house::before,#zz-message-section .wall-note.paper-house::after { display:none; }
 #zz-message-section .wall-note.paper-house p { overflow-wrap:anywhere; }
+
+/* Keep the supplied apple artwork intact, including its transparent edge. */
+#zz-message-section .paper-yellow{background:transparent url('assets/guestbook-apple.png') center / 100% 100% no-repeat;border:0;box-shadow:none;color:#513308}
+#zz-message-section .paper-choice.paper-yellow{min-height:100px;background-size:contain;padding-top:48px;font-weight:700}
+#zz-message-section .paper-choice.paper-yellow[aria-pressed=true]{outline:2px solid #e52b13;outline-offset:3px}
+#zz-message-section .paper-preview.paper-yellow{box-sizing:border-box;aspect-ratio:1;min-height:0;padding:39% 18% 14%;gap:0}
+#zz-message-section .paper-preview.paper-yellow label{margin-bottom:4px;font-size:10px}
+#zz-message-section .paper-preview.paper-yellow input{padding:3px 0;font-size:13px;line-height:1.4}
+#zz-message-section .paper-preview.paper-yellow textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
+#zz-message-section .wall-note.paper-yellow{height:220px;min-height:220px;padding:88px 38px 35px;display:flex;flex-direction:column}
+#zz-message-section .wall-note.paper-yellow::before,#zz-message-section .wall-note.paper-yellow::after{display:none}
+#zz-message-section .wall-note.paper-yellow p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
+#zz-message-section .wall-note.paper-yellow small{flex:none;font-size:10px}
+#zz-message-section .wall-note.paper-yellow time{flex:none;margin-top:2px;font-size:9px}
+#zz-message-section .paper-preview.paper-yellow small{text-align:center}
+#zz-message-section .wall-note.paper-yellow small,#zz-message-section .wall-note.paper-yellow time{text-align:center}
