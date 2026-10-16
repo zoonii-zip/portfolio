@@ -18,19 +18,3 @@
   font-weight: 400;
   letter-spacing: -.015em;
 }
-
-/* Kraash is scoped to the English intro sentence only. */
-@font-face {
-  font-family: 'Kraash';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('assets/fonts/Kraash.ttf') format('truetype');
-}
-:root body #zz-logo-entry .intro-copy [lang='en'] {
-  font-family: 'Kraash', var(--font-body) !important;
-  font-weight: 400;
-  font-synthesis: none;
-  letter-spacing: 0;
-  line-height: 1.5;
-}
