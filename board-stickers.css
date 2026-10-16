@@ -118,3 +118,7 @@
 .contact-art > .contact-ring-text { position:absolute; inset:0; animation:contact-text-orbit 12s linear infinite; transform-origin:50% 50%; }
 @keyframes contact-text-orbit { to { transform:rotate(360deg); } }
 @media(prefers-reduced-motion:reduce) { .contact-art > .contact-ring-text { animation:none; } }
+
+/* Larger Contact badge on the fidget board. */
+#zz-fullscreen .board-shortcut[data-action="contact"],
+#zz-fullscreen .board-shortcut[data-action="contact"] .dock-art { width:240px; }
