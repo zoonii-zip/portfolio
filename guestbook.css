@@ -39,23 +39,23 @@
 #zz-message-section .paper-preview.paper-yellow small{text-align:center}
 #zz-message-section .wall-note.paper-yellow small,#zz-message-section .wall-note.paper-yellow time{text-align:center}
 
-/* Original tooth and can memo artwork, replacing the pink and lined papers. */
+/* Original tooth and can memo artwork, replacing the pink and ticket papers; retain lined for existing entries. */
 #zz-message-section .paper-pink{background:transparent url('assets/guestbook-teeth.png') center / 100% 100% no-repeat;color:#123166;border:0;box-shadow:none}
-#zz-message-section .paper-lined{background:transparent url('assets/guestbook-dopamine.png') center / 100% 100% no-repeat;color:#282828;border:0;box-shadow:none}
-#zz-message-section .paper-choice.paper-pink,#zz-message-section .paper-choice.paper-lined{min-height:100px;background-size:contain;font-weight:700;box-shadow:none}
-#zz-message-section .paper-choice.paper-lined{padding-top:48px}
+#zz-message-section :is(.paper-lined,.paper-ticket){background:transparent url('assets/guestbook-dopamine.png') center / 100% 100% no-repeat;color:#282828;border:0;box-shadow:none}
+#zz-message-section .paper-choice.paper-pink,#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){min-height:100px;background-size:contain;font-weight:700;box-shadow:none}
+#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){padding-top:48px}
 #zz-message-section .paper-choice.paper-pink[aria-pressed=true]{outline:2px solid #183cfe;outline-offset:3px}
-#zz-message-section .paper-choice.paper-lined[aria-pressed=true]{outline:2px solid #ec4014;outline-offset:3px}
-#zz-message-section .paper-preview.paper-pink,#zz-message-section .paper-preview.paper-lined{box-sizing:border-box;min-height:0;gap:0}
+#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket)[aria-pressed=true]{outline:2px solid #ec4014;outline-offset:3px}
+#zz-message-section .paper-preview.paper-pink,#zz-message-section .paper-preview:is(.paper-lined,.paper-ticket){box-sizing:border-box;min-height:0;gap:0}
 #zz-message-section .paper-preview.paper-pink{aspect-ratio:1;padding:22% 27% 31% 29%}
-#zz-message-section .paper-preview.paper-lined{aspect-ratio:827 / 1181;padding:72% 24% 17%}
-#zz-message-section .paper-preview:is(.paper-pink,.paper-lined) label{margin-bottom:4px;font-size:10px}
-#zz-message-section .paper-preview:is(.paper-pink,.paper-lined) input{padding:3px 0;font-size:13px;line-height:1.4}
-#zz-message-section .paper-preview:is(.paper-pink,.paper-lined) textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
-#zz-message-section .paper-preview:is(.paper-pink,.paper-lined) small{text-align:center}
+#zz-message-section .paper-preview:is(.paper-lined,.paper-ticket){aspect-ratio:827 / 1181;padding:72% 24% 17%}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) label{margin-bottom:4px;font-size:10px}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) input{padding:3px 0;font-size:13px;line-height:1.4}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) small{text-align:center}
 #zz-message-section .wall-note.paper-pink{height:220px;min-height:220px;padding:46px 52px 76px 62px;display:flex;flex-direction:column}
-#zz-message-section .wall-note.paper-lined{height:314px;min-height:314px;padding:145px 49px 60px;display:flex;flex-direction:column}
-#zz-message-section .wall-note:is(.paper-pink,.paper-lined)::before,#zz-message-section .wall-note:is(.paper-pink,.paper-lined)::after{display:none}
-#zz-message-section .wall-note:is(.paper-pink,.paper-lined) p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
-#zz-message-section .wall-note:is(.paper-pink,.paper-lined) small{flex:none;font-size:10px;text-align:center}
-#zz-message-section .wall-note:is(.paper-pink,.paper-lined) time{flex:none;margin-top:2px;font-size:9px;text-align:center}
+#zz-message-section .wall-note:is(.paper-lined,.paper-ticket){height:314px;min-height:314px;padding:145px 49px 60px;display:flex;flex-direction:column}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket))::before,#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket))::after{display:none}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) small{flex:none;font-size:10px;text-align:center}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) time{flex:none;margin-top:2px;font-size:9px;text-align:center}
