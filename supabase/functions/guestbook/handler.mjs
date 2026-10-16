@@ -45,7 +45,7 @@ export function createHandler(env, fetcher = fetch) {
       if (!body || typeof body !== 'object') return reply({ error: '잘못된 요청이에요.' }, 400);
       const name = typeof body.name === 'string' ? body.name.trim() || '익명' : '익명';
       const text = typeof body.text === 'string' ? body.text.trim() : '';
-      if (name.length > 20 || !text || text.length > 160 || !['yellow','pink','lined','ticket'].includes(body.paper)
+      if (name.length > 20 || !text || text.length > 160 || !['yellow','pink','lined','ticket','house'].includes(body.paper)
         || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.visitor || '')
         || typeof body.token !== 'string' || !body.token || body.token.length > 2048) return reply({ error: '입력 내용과 스팸 방지 확인을 다시 확인해주세요.' }, 400);
       const verification = await fetcher('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
