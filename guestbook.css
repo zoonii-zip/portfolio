@@ -31,7 +31,7 @@
 #zz-message-section .paper-preview.paper-yellow label{margin-bottom:4px;font-size:10px}
 #zz-message-section .paper-preview.paper-yellow input{padding:3px 0;font-size:13px;line-height:1.4}
 #zz-message-section .paper-preview.paper-yellow textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
-#zz-message-section .wall-note.paper-yellow{height:220px;min-height:220px;padding:88px 38px 35px;display:flex;flex-direction:column}
+#zz-message-section .wall-note.paper-yellow{height:220px;min-height:220px;padding:88px 38px 50px;display:flex;flex-direction:column}
 #zz-message-section .wall-note.paper-yellow::before,#zz-message-section .wall-note.paper-yellow::after{display:none}
 #zz-message-section .wall-note.paper-yellow p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
 #zz-message-section .wall-note.paper-yellow small{flex:none;font-size:10px}
