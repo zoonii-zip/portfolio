@@ -839,7 +839,8 @@ html.viewing-space #zz-fullscreen .top .wordmark{pointer-events:auto}
 #zz-fullscreen .career-sticker.illustrated-menu{width:205px}
 #zz-fullscreen .illustrated-menu .board-menu-art{display:block;width:100%;height:auto;overflow:hidden;pointer-events:none;user-select:none}
 #zz-fullscreen .illustrated-menu:focus-visible{outline:3px dashed #282821;outline-offset:10px}
-</style></body></html>
+</style><svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none"><defs><filter id="board-vintage-print" x="-2%" y="-2%" width="104%" height="104%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".63" numOctaves="3" seed="18" result="paperGrain"/><feColorMatrix in="paperGrain" type="matrix" values="0 0 0 .20 0  0 0 0 .18 0  0 0 0 .14 0  0 0 0 0 1" result="fadedInk"/><feBlend in="SourceGraphic" in2="fadedInk" mode="screen" result="printed"/><feDisplacementMap in="printed" in2="paperGrain" scale=".65" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
+<style id="board-menu-vintage-texture">#zz-fullscreen .illustrated-menu .board-menu-art{filter:url(#board-vintage-print) saturate(.94)}</style></body></html>
 
 <style>
 #zz-fullscreen [data-action="club"].object.club-glitter{width:250px;padding:0;background:transparent;border:0;box-shadow:none;gap:5px;transform:rotate(7deg)}
