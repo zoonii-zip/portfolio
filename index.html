@@ -67,10 +67,10 @@
  <div class="viewportHint mono">FIDGET BOARD / WIREFRAME 3.0<br><br><span id="zz-location">ENTRY</span></div>
  <div class="view" id="zz-stage"><div class="world" id="zz-world">
   <div class="backtype">THINGS I MADE<br>+ THINGS THAT<br>MADE ME.</div>
-  <button class="center profile-sticker" data-action="about"><img class="board-profile-art" src="assets/board-profile-transparent.webp" width="1536" height="1024" alt="ZOONII 로고와 주연의 얼굴 사진 콜라주" draggable="false"><span class="profile-open">ZOONII / PROFILE ↗</span></button>
+  <button class="center profile-sticker illustrated-menu" data-action="about" aria-label="Profile — ZOONII 지구본 열기"><svg class="board-menu-art" viewBox="290 105 980 950" role="img" aria-label="Profile — ZOONII 지구본" xmlns="http://www.w3.org/2000/svg"><image href="assets/board-menu/profile.jpeg" width="1536" height="1152" /></svg></button>
   <button class="object club-sticker club-glitter" data-action="club" aria-label="ThingThingClub 열기"><img src="assets/thingthing-horse-glitter.png" width="1216" height="1280" alt="핑크와 청록 글리터 코팅의 띵띵클럽 목마 스티커" draggable="false"><span class="club-sticker-label">THINGTHING CLUB ↗</span></button>
-  <button class="object career-sticker" data-action="career"><span class="mono">CAREER.LOG / 2013 — NOW</span><span class="career-number">10+</span><span>YEARS OF MAKING</span><small>제품 · 브랜드 · 일러스트 · 교육<br>경력의 흐름을 펼쳐보기 ↗</small></button>
-  <button class="receipt-sticker" data-action="files"><span class="pin-tape"></span><strong>ZOONII ARCHIVE</strong><span class="mono">ITEM / FIELD / FILE</span><hr><span class="receipt-row">ILLUSTRATION <i>06</i></span><span class="receipt-row">WEB / APP <i>05</i></span><span class="receipt-row">BRAND / EDITORIAL <i>05</i></span><hr><span class="mono">16 SELECTED PROJECTS</span><strong class="barcode">|||| ||| |||||| || |||||</strong><small>OPEN ALL FILES ↗</small></button>
+  <button class="object career-sticker illustrated-menu" data-action="career" aria-label="Career — 손 그래픽 열기"><svg class="board-menu-art" viewBox="365 40 810 975" role="img" aria-label="Career — 손 그래픽" xmlns="http://www.w3.org/2000/svg"><image href="assets/board-menu/career.jpeg" width="1536" height="1152" /></svg></button>
+  <button class="receipt-sticker illustrated-menu" data-action="files" aria-label="Archive — 하트를 안은 곰 열기"><svg class="board-menu-art" viewBox="350 25 765 970" role="img" aria-label="Archive — 하트를 안은 곰" xmlns="http://www.w3.org/2000/svg"><image href="assets/board-menu/archive.jpeg" width="1536" height="1152" /></svg></button>
 
 
  </div></div>
@@ -832,6 +832,13 @@ html,body,body *,body *::before,body *::after,dialog::backdrop{cursor:pointer!im
 html.viewing-space #zz-fullscreen .top{position:fixed;top:16px;left:0;right:0;z-index:330;pointer-events:none}
 html.viewing-space #zz-fullscreen .top .wordmark{pointer-events:auto}
 @media(max-width:760px){html.viewing-space #zz-fullscreen .top{top:12px}}
+</style><style id="board-illustrated-menu">
+#zz-fullscreen button.illustrated-menu{padding:0!important;border:0!important;border-radius:0;background:transparent!important;box-shadow:none!important;clip-path:none;gap:0;display:block;overflow:visible;mix-blend-mode:multiply;filter:none}
+#zz-fullscreen .center.profile-sticker.illustrated-menu{width:300px}
+#zz-fullscreen .receipt-sticker.illustrated-menu{width:215px}
+#zz-fullscreen .career-sticker.illustrated-menu{width:205px}
+#zz-fullscreen .illustrated-menu .board-menu-art{display:block;width:100%;height:auto;overflow:hidden;pointer-events:none;user-select:none}
+#zz-fullscreen .illustrated-menu:focus-visible{outline:3px dashed #282821;outline-offset:10px}
 </style></body></html>
 
 <style>
