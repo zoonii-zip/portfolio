@@ -879,7 +879,7 @@ world.addEventListener('click',hide);window.addEventListener('blur',hide);window
 })();
 </script><style id="profile-transparent-background">
 #zz-fullscreen .face-collage.profile-artwork{background:transparent!important;mix-blend-mode:normal!important}
-#zz-fullscreen .profile-artwork .zoonii-profile-art{background:transparent!important}
+#zz-fullscreen .profile-artwork .zoonii-profile-art,#zz-fullscreen .profile-film-portrait{background:transparent!important;box-shadow:none!important}
 </style><script id="profile-transparent-background-script">
 (()=>{
 let result=null,pending=null;
@@ -891,7 +891,7 @@ for(let x=0;x<w;x++){visit(x);visit((h-1)*w+x)}for(let y=0;y<h;y++){visit(y*w);v
 while(head<tail){const i=queue[head++];p[i*4+3]=0;const x=i%w;if(x)visit(i-1);if(x<w-1)visit(i+1);if(i>=w)visit(i-w);if(i<w*(h-1))visit(i+w)}
 ctx.putImageData(data,0,0);result=c.toDataURL('image/png');resolve(result)}catch(e){reject(e)}};photo.onerror=reject;photo.src=src});return pending}
 function apply(){document.querySelectorAll('.profile-artwork .zoonii-profile-art:not([data-transparent-profile])').forEach(img=>{img.dataset.transparentProfile='pending';cutout('assets/profile-collage-skin-clean.png').then(url=>{img.src=url;img.dataset.transparentProfile='ready'}).catch(()=>{delete img.dataset.transparentProfile})})}
-new MutationObserver(apply).observe(document.querySelector('#zz-fullscreen .panelbody')||document.body,{childList:true,subtree:true});apply();
+new MutationObserver(apply).observe(document.body,{childList:true,subtree:true});apply();
 })();
 </script></body></html>
 
