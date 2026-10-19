@@ -3,7 +3,7 @@
  'use strict';
  const style=document.createElement('style');
  style.textContent=`
- #zz-fullscreen .zz-board-clock{position:absolute;left:var(--board-left);top:var(--board-top);width:310px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:transparent;cursor:pointer;z-index:13;transition:transform .22s ease}
+ #zz-fullscreen .zz-board-clock{position:absolute;left:var(--board-left);top:var(--board-top);width:340px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:transparent;cursor:pointer;z-index:13;transition:transform .22s ease}
  #zz-fullscreen .zz-board-clock:hover{transform:translateY(-5px) scale(1.04)}
  .zz-clock-face{position:relative;display:block;width:100%;aspect-ratio:1182 / 879}
  .zz-clock-ring{display:block;width:100%;height:100%;pointer-events:none}
