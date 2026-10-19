@@ -272,8 +272,8 @@
   guest:['Leave a note','assets/intro-stickers/lemon.webp'],
   contact:['Say hello','assets/contact-logo-white.png']
  };
- const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-labelledby','zz-overview-title');
- overview.innerHTML=`<div class="overview-content"><header><div><small>ZOONII.ZIP / DIRECTORY</small><h2 id="zz-overview-title">Explore.</h2></div><button type="button" class="overview-close" aria-label="Close Menu" autofocus>Close ×</button></header><nav aria-label="Main navigation">${Object.entries(menuLabels).map(([key,label])=>`<button type="button" data-overview-action="${key}" aria-label="${label}"><span class="overview-roll-window" aria-hidden="true"><span class="overview-roll-track"><span class="overview-label">${label}</span><span class="overview-label overview-label-hover">${label}</span></span></span><span class="overview-category" aria-hidden="true">${overviewPreviews[key][0]}</span><span class="overview-preview" aria-hidden="true"><img src="${overviewPreviews[key][1]}" alt="" width="240" height="160"><span></span></span></button>`).join('')}</nav><footer>TAKE A LOOK AROUND.<span>© ZOONII.ZIP</span></footer></div>`;
+ const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-label','전체 메뉴');
+ overview.innerHTML=`<div class="overview-content"><header><button type="button" class="overview-close" aria-label="Close Menu" autofocus>Close ×</button></header><nav aria-label="Main navigation">${Object.entries(menuLabels).map(([key,label])=>`<button type="button" data-overview-action="${key}" aria-label="${label}"><span class="overview-roll-window" aria-hidden="true"><span class="overview-roll-track"><span class="overview-label">${label}</span><span class="overview-label overview-label-hover">${label}</span></span></span><span class="overview-category" aria-hidden="true">${overviewPreviews[key][0]}</span><span class="overview-preview" aria-hidden="true"><img src="${overviewPreviews[key][1]}" alt="" width="240" height="160"><span></span></span></button>`).join('')}</nav><footer>TAKE A LOOK AROUND.<span>© ZOONII.ZIP</span></footer></div>`;
  document.body.append(overview);
  const overviewContent=overview.querySelector('.overview-content');
  let overviewClosing=false;
@@ -597,22 +597,21 @@ html.viewing-space #zz-global-dock,html.viewing-space #zz-fixed-links{bottom:var
 
 #zz-overview-button{position:fixed;right:28px;top:24px;z-index:320;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #bdb5a4;border-radius:24px;background:#f8f4e9;color:#34372d;font:12px Arial;cursor:pointer}
 #zz-overview-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
-html.overview-open{overflow:hidden}
+html.overview-open{overflow:hidden!important}
 #zz-overview{box-sizing:border-box;position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;padding:0;border:0;background:#faf9f6;color:#171717;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity .3s ease,transform .3s cubic-bezier(.76,0,.24,1);font-family:Arial,sans-serif}
 #zz-overview.visible{opacity:1;transform:none}
 #zz-overview::backdrop{background:#17171755}
-#zz-overview .overview-content{box-sizing:border-box;height:100%;padding:24px max(24px,calc((100vw - 1120px)/2)) 20px;overflow:auto;overscroll-behavior:contain}
-#zz-overview header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:16px}
-#zz-overview small,#zz-overview footer{font:10px monospace;letter-spacing:.12em;color:#737373}
-#zz-overview h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.06em;margin:12px 0 0}
+#zz-overview .overview-content{--overview-font-size:clamp(26px,min(6vw,8.4dvh),84px);box-sizing:border-box;display:flex;flex-direction:column;height:100%;padding:24px max(24px,calc((100vw - 1120px)/2)) 20px;overflow:auto;overscroll-behavior:contain}
+#zz-overview header{display:flex;flex-shrink:0;justify-content:flex-end;margin-bottom:12px}
+#zz-overview footer{flex-shrink:0;font:10px monospace;letter-spacing:.12em;color:#737373}
 #zz-overview button{cursor:pointer;color:inherit;font:inherit;background:none;border:0;text-align:left}
 #zz-overview .overview-close{padding:12px 18px;border:1px solid #d4d4d4;border-radius:24px;font-size:12px;white-space:nowrap}
 #zz-overview .overview-close:hover{background:#eee}
-#zz-overview nav{display:flex;flex-direction:column;margin-bottom:16px}
-#zz-overview nav button{--line-height:clamp(24px,5dvh,48px);position:relative;width:100%;padding:clamp(4px,1.2dvh,10px) 0;border-bottom:1px solid #dedede;isolation:isolate}
+#zz-overview nav{display:grid;grid-template-rows:repeat(7,minmax(0,1fr));flex:1;min-height:0;margin-bottom:12px}
+#zz-overview nav button{--line-height:calc(var(--overview-font-size)*1.1);position:relative;display:flex;align-items:center;min-height:0;width:100%;padding:0;border-bottom:1px solid #dedede;isolation:isolate}
 #zz-overview .overview-roll-window{display:block;height:var(--line-height);overflow:hidden;padding-right:8px}
 #zz-overview .overview-roll-track{display:block;transition:transform .5s cubic-bezier(.76,0,.24,1)}
-#zz-overview .overview-label{display:flex;align-items:center;height:var(--line-height);font-size:clamp(24px,min(4vw,4.5dvh),42px);font-weight:900;text-transform:uppercase;letter-spacing:-.055em;white-space:nowrap;line-height:1}
+#zz-overview .overview-label{display:flex;align-items:center;height:var(--line-height);font-size:var(--overview-font-size);font-weight:900;text-transform:uppercase;letter-spacing:-.055em;white-space:nowrap;line-height:1}
 #zz-overview .overview-label-hover{color:#3b82f6;font-style:italic}
 #zz-overview .overview-category{position:absolute;right:0;top:50%;translate:0 -50%;color:#a3a3a3;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;transition:opacity .3s}
 #zz-overview .overview-preview{pointer-events:none;position:absolute;right:0;top:50%;z-index:2;width:192px;height:128px;overflow:hidden;border-radius:8px;background:#eae8e3;box-shadow:0 20px 35px #0003;opacity:0;transform:translate(16px,-50%) scale(.95) rotate(3deg);transition:opacity .5s ease-out,transform .5s ease-out}
@@ -633,20 +632,16 @@ html.overview-open{overflow:hidden}
 }
 @media(max-width:760px){
  #zz-overview-button{right:14px;top:16px;padding:10px}#zz-overview-button span{display:none}
- #zz-overview .overview-content{padding:20px 20px 16px}
- #zz-overview header{margin-bottom:14px}
- #zz-overview nav button{--line-height:clamp(24px,5dvh,40px);padding:clamp(4px,1dvh,8px) 0}
- #zz-overview .overview-label{font-size:clamp(20px,min(6.3vw,4.5dvh),32px)}
+ #zz-overview .overview-content{--overview-font-size:clamp(28px,min(10vw,8.4dvh),64px);padding:16px 20px}
+ #zz-overview header{margin-bottom:8px}
  #zz-overview .overview-category,#zz-overview .overview-preview{display:none}
  #zz-overview nav button:active .overview-roll-track{transform:translateY(-50%)}
 }
 @media(max-height:500px){
- #zz-overview .overview-content{padding:12px 20px}
- #zz-overview header{margin-bottom:8px}
- #zz-overview h2{font-size:24px;margin-top:4px}
- #zz-overview nav{margin-bottom:10px}
- #zz-overview nav button{--line-height:22px;padding:3px 0}
- #zz-overview .overview-label{font-size:20px}
+ #zz-overview .overview-content{--overview-font-size:clamp(18px,min(6vw,8dvh),40px);padding:8px 20px}
+ #zz-overview header{margin-bottom:6px}
+ #zz-overview .overview-close{padding:7px 14px}
+ #zz-overview nav{margin-bottom:6px}
  #zz-overview .overview-preview{width:120px;height:80px}
 }
 @media(prefers-reduced-motion:reduce){#zz-overview,#zz-fixed-links{transition:none!important;transform:none!important}#zz-overview *{transition:none!important}}
