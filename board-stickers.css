@@ -133,12 +133,34 @@
   user-select:none;
 }
 
-/* Archive, Profile and Career: a matte paper back folds over the upper edge. */
+/* Each matte sticker folds inward from its own edge. */
 #zz-fullscreen #zz-world .board-peel {
   --peel-depth:0%;
   --peel-ease:650ms cubic-bezier(.22,.75,.24,1.08);
   overflow:visible;
   isolation:isolate;
+}
+/* Profile: left → right. Archive: right → left. Career: bottom → top. */
+#zz-fullscreen .board-peel[data-action="about"] {
+  --peel-hover-depth:28%;
+  --peel-front-clip:inset(0 0 0 var(--peel-depth));
+  --peel-back-clip:inset(0 calc(100% - var(--peel-depth)) 0 0);
+  --peel-back-transform:translateX(calc(-100% + var(--peel-depth) + var(--peel-depth))) scaleX(-1);
+  --peel-shadow:3px 0 2px #35291c38;
+}
+#zz-fullscreen .board-peel[data-action="files"] {
+  --peel-hover-depth:34%;
+  --peel-front-clip:inset(0 var(--peel-depth) 0 0);
+  --peel-back-clip:inset(0 0 0 calc(100% - var(--peel-depth)));
+  --peel-back-transform:translateX(calc(100% - var(--peel-depth) - var(--peel-depth))) scaleX(-1);
+  --peel-shadow:-3px 0 2px #35291c38;
+}
+#zz-fullscreen .board-peel[data-action="career"] {
+  --peel-hover-depth:22%;
+  --peel-front-clip:inset(0 0 var(--peel-depth) 0);
+  --peel-back-clip:inset(calc(100% - var(--peel-depth)) 0 0 0);
+  --peel-back-transform:translateY(calc(100% - var(--peel-depth) - var(--peel-depth))) scaleY(-1);
+  --peel-shadow:0 -3px 2px #35291c38;
 }
 /* Keep the existing coloured die-cut edge on the artwork, outside the keyboard outline. */
 #zz-fullscreen #zz-world button.illustrated-menu.board-peel { filter:none; }
@@ -153,7 +175,7 @@
 }
 #zz-fullscreen .board-peel-front {
   display:block;
-  clip-path:polygon(0 var(--peel-depth),100% var(--peel-depth),100% 100%,0 100%);
+  clip-path:var(--peel-front-clip);
   transition:clip-path var(--peel-ease);
 }
 #zz-fullscreen .board-peel-flap {
@@ -162,15 +184,15 @@
   z-index:1;
   overflow:clip;
   pointer-events:none;
-  filter:drop-shadow(0 3px 2px #35291c38);
+  filter:drop-shadow(var(--peel-shadow));
 }
 #zz-fullscreen .board-peel-back {
   display:block;
   position:absolute;
   inset:0;
   background:#e9e2d4;
-  clip-path:inset(0 0 calc(100% - var(--peel-depth)) 0);
-  transform:translateY(calc(-100% + var(--peel-depth) + var(--peel-depth))) scaleY(-1);
+  clip-path:var(--peel-back-clip);
+  transform:var(--peel-back-transform);
   transition:clip-path var(--peel-ease),transform var(--peel-ease);
 }
 #zz-fullscreen .board-peel-cutout {
@@ -178,10 +200,10 @@
   mask:var(--peel-art) center / 100% 100% no-repeat;
 }
 @media (hover:hover) {
-  #zz-fullscreen #zz-world .board-peel:hover { --peel-depth:18%; }
+  #zz-fullscreen #zz-world .board-peel:hover { --peel-depth:var(--peel-hover-depth); }
 }
-#zz-fullscreen #zz-world .board-peel:focus-visible { --peel-depth:18%; }
-#zz-fullscreen #zz-world .board-peel.object-held { --peel-depth:28%; }
+#zz-fullscreen #zz-world .board-peel:focus-visible { --peel-depth:var(--peel-hover-depth); }
+#zz-fullscreen #zz-world .board-peel.object-held { --peel-depth:calc(var(--peel-hover-depth) + 8%); }
 @media (prefers-reduced-motion:reduce) {
   #zz-fullscreen .board-peel-front,
   #zz-fullscreen .board-peel-back { transition:none; }
