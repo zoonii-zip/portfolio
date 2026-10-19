@@ -122,3 +122,67 @@
 /* Larger Contact badge on the fidget board. */
 #zz-fullscreen .board-shortcut[data-action="contact"],
 #zz-fullscreen .board-shortcut[data-action="contact"] .dock-art { width:240px; }
+
+/* The label stays flat; only the horse artwork receives the SVG sticker lighting. */
+#zz-fullscreen .club-glitter .club-sticker-art {
+  display:block;
+  width:100%;
+  height:auto;
+  overflow:visible;
+  pointer-events:none;
+  user-select:none;
+}
+
+/* Archive, Profile and Career: a matte paper back folds over the upper edge. */
+#zz-fullscreen #zz-world .board-peel {
+  --peel-depth:0%;
+  --peel-ease:650ms cubic-bezier(.22,.75,.24,1.08);
+  overflow:visible;
+  isolation:isolate;
+}
+/* Keep the existing coloured die-cut edge on the artwork, outside the keyboard outline. */
+#zz-fullscreen #zz-world button.illustrated-menu.board-peel { filter:none; }
+#zz-fullscreen .board-peel[data-action="about"] .board-peel-frame { filter:url(#board-profile-edge); }
+#zz-fullscreen .board-peel[data-action="files"] .board-peel-frame { filter:url(#board-archive-edge); }
+#zz-fullscreen .board-peel[data-action="career"] .board-peel-frame { filter:url(#board-career-edge); }
+#zz-fullscreen .board-peel-frame {
+  display:block;
+  position:relative;
+  width:100%;
+  pointer-events:none;
+}
+#zz-fullscreen .board-peel-front {
+  display:block;
+  clip-path:polygon(0 var(--peel-depth),100% var(--peel-depth),100% 100%,0 100%);
+  transition:clip-path var(--peel-ease);
+}
+#zz-fullscreen .board-peel-flap {
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:clip;
+  pointer-events:none;
+  filter:drop-shadow(0 3px 2px #35291c38);
+}
+#zz-fullscreen .board-peel-back {
+  display:block;
+  position:absolute;
+  inset:0;
+  background:#e9e2d4;
+  clip-path:inset(0 0 calc(100% - var(--peel-depth)) 0);
+  transform:translateY(calc(-100% + var(--peel-depth) + var(--peel-depth))) scaleY(-1);
+  transition:clip-path var(--peel-ease),transform var(--peel-ease);
+}
+#zz-fullscreen .board-peel-cutout {
+  -webkit-mask:var(--peel-art) center / 100% 100% no-repeat;
+  mask:var(--peel-art) center / 100% 100% no-repeat;
+}
+@media (hover:hover) {
+  #zz-fullscreen #zz-world .board-peel:hover { --peel-depth:18%; }
+}
+#zz-fullscreen #zz-world .board-peel:focus-visible { --peel-depth:18%; }
+#zz-fullscreen #zz-world .board-peel.object-held { --peel-depth:28%; }
+@media (prefers-reduced-motion:reduce) {
+  #zz-fullscreen .board-peel-front,
+  #zz-fullscreen .board-peel-back { transition:none; }
+}
