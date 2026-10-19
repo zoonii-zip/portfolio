@@ -1,4 +1,4 @@
-#zz-fullscreen .unicorn-keychain{isolation:isolate;overflow:visible}
+#zz-fullscreen .unicorn-keychain{width:230px;isolation:isolate;overflow:visible}
 #zz-fullscreen .unicorn-keychain img{
  transform-origin:49% 1%;
  transform:rotate(var(--toy-angle,0deg));
