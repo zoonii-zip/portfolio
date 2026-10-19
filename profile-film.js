@@ -1,0 +1,68 @@
+(() => {
+ 'use strict';
+ // Original footage: Downloads/돈의맛03.MP4, exported without audio for the background.
+ const film = { src: 'assets/profile-film/money-flavor-03.mp4', poster: 'assets/profile-film/money-flavor-03-poster.jpg' };
+ window.ZooniiProfile = {
+  hero() {
+   return `<section class="profile-film" aria-labelledby="profile-film-title">
+    <div class="profile-film-media" aria-hidden="true">${film.src ? `<video class="profile-film-video" src="${film.src}"${film.poster ? ` poster="${film.poster}"` : ''} muted loop playsinline preload="metadata" tabindex="-1"></video>` : ''}</div>
+    <div class="profile-film-shade" aria-hidden="true"></div>
+    <div class="profile-film-grain" aria-hidden="true"></div>
+    <div class="profile-film-content">
+     <h2 id="profile-film-title" class="profile-film-title" lang="en"><span>I bring my dreams</span><span>(and yours) to life.</span></h2>
+     <div class="profile-film-meta">
+      <p class="profile-film-name">Zoonii <span>김주연</span></p>
+      <p class="profile-film-disciplines" lang="en">UI/UX & Web Design<br>Illustration & Branding<br>Design Education</p>
+      <a class="profile-film-email" href="mailto:illu_junny@naver.com">illu_junny@<br>naver.com ↗</a>
+     </div>
+     <div class="profile-film-footer">
+      <span lang="en">Independent designer<br>& illustrator</span>
+      <p>내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</p>
+      <button type="button" class="profile-film-toggle"${film.src ? '' : ' hidden'} aria-label="배경 영상 재생">Play film ↗</button>
+     </div>
+    </div>
+   </section>`;
+  }
+ };
+
+ function start() {
+  const panel = document.getElementById('zz-overlay');
+  const body = document.getElementById('zz-body');
+  if (!panel || !body) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let video = null, toggle = null, userPaused = reduced.matches;
+  function label() {
+   if (!video || !toggle) return;
+   toggle.textContent = video.paused ? 'Play film ↗' : 'Pause film Ⅱ';
+   toggle.setAttribute('aria-label', video.paused ? '배경 영상 재생' : '배경 영상 일시 정지');
+  }
+  function sync() {
+   if (!video) return;
+   if (document.hidden || !panel.classList.contains('open') || userPaused) video.pause();
+   else video.play().catch(label);
+  }
+  function connect() {
+   const next = body.querySelector('.profile-film-video');
+   if (next === video) return;
+   video?.pause();
+   video = next;
+   toggle = body.querySelector('.profile-film-toggle');
+   if (!video) return;
+   userPaused = reduced.matches;
+   video.muted = true;
+   video.addEventListener('play', label);
+   video.addEventListener('pause', label);
+   video.addEventListener('error', () => { toggle.hidden = true; });
+   toggle.addEventListener('click', () => { userPaused = !video.paused; sync(); });
+   label();
+   sync();
+  }
+  new MutationObserver(connect).observe(body, { childList: true });
+  new MutationObserver(sync).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('visibilitychange', sync);
+  reduced.addEventListener('change', () => { userPaused = reduced.matches; sync(); });
+  connect();
+ }
+ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+ else start();
+})();
