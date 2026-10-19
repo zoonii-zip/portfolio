@@ -1,0 +1,17 @@
+/* Small tactile objects share the board's responsive coordinate system. */
+#zz-fullscreen .board-light-switch,#zz-fullscreen .board-star-toy{position:absolute;left:var(--board-left);top:var(--board-top);padding:0;border:0;touch-action:none;user-select:none;z-index:16}
+#zz-fullscreen .board-light-switch{width:156px;height:234px;background:transparent;box-shadow:none;transform:rotate(-8deg);transition:transform .12s ease;overflow:visible}
+#zz-fullscreen .board-light-switch .light-art{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
+#zz-fullscreen .board-light-switch:active{transform:translateY(2px) rotate(-8deg) scale(.97)}
+#zz-fullscreen .board-star-toy{width:160px;height:220px;background:transparent;overflow:visible;filter:drop-shadow(3px 7px 3px #34251c44)}
+#zz-fullscreen .board-star-toy svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+#zz-fullscreen .board-star-toy .star-face{fill:#ffd153;stroke:#88611f;stroke-width:3;stroke-linejoin:round}
+#zz-fullscreen .board-star-toy .star-coil{fill:none;stroke:#817c73;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+#zz-fullscreen .board-star-toy .star-coil-shine{fill:none;stroke:#e2ded1;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+#zz-fullscreen .board-light-switch:focus-visible,#zz-fullscreen .board-star-toy:focus-visible{outline:3px dashed #faedbd;outline-offset:8px}
+#zz-camera-plane #zz-stage::before{transition:filter .45s ease}
+#zz-fullscreen.board-night #zz-stage::before{filter:saturate(.35) brightness(.38)}
+#zz-fullscreen .world{transition:transform .68s cubic-bezier(.22,1,.36,1),filter .45s ease}
+#zz-fullscreen.board-night .world{filter:brightness(.83) saturate(.86) drop-shadow(0 5px 10px #121a2e45)}
+#zz-fullscreen.board-night .board-star-toy .star-face{fill:#ffe28a;filter:drop-shadow(0 0 9px #ffdc7480)}
+@media(prefers-reduced-motion:reduce){#zz-camera-plane #zz-stage::before,#zz-fullscreen .world,#zz-fullscreen .board-light-switch{transition:none}}
