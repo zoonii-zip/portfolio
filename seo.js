@@ -111,4 +111,4 @@
 })();
 
 /* Initialize Seoul-time clock after main world is ready. */
-(function(){if(document.querySelector('script[data-zz-clock]'))return;const s=document.createElement('script');s.src='/fidget-clock.js?v=graphic-ring-3';s.defer=true;s.dataset.zzClock='1';document.head.appendChild(s)})();
+(function(){if(document.querySelector('script[data-zz-clock]'))return;const s=document.createElement('script');s.src='/fidget-clock.js?v=board-only-clock-6';s.defer=true;s.dataset.zzClock='1';document.head.appendChild(s)})();
