@@ -1,7 +1,7 @@
 (() => {
  'use strict';
- // Original footage: Downloads/돈의맛03.MP4, exported without audio for the background.
- const film = { src: 'assets/profile-film/money-flavor-03.mp4', poster: 'assets/profile-film/money-flavor-03-poster.jpg' };
+ // Original footage, sampled to a 90 × 160 pixel grid and enlarged with hard edges.
+ const film = { src: 'assets/profile-film/money-flavor-03-pixel.mp4', poster: 'assets/profile-film/money-flavor-03-pixel-poster.jpg' };
  const socials = [
   ['Instagram', 'https://www.instagram.com/thingthingclub/'],
   ['YouTube', ''],
