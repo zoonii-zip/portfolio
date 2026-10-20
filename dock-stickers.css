@@ -21,7 +21,7 @@ html:has(#zz-fullscreen.board-night):not(.viewing-space) #zz-global-dock .dock-m
 @media(max-width:900px){html.viewing-space #zz-global-dock .dock-art{height:44px;max-width:54px}html.viewing-space #zz-global-dock{gap:0;padding:0 4px 4px}html.viewing-space #zz-global-dock .dock-mobile-label{font-size:8px}}
 
 /* A dedicated text-free atlas keeps the source board art unchanged. */
-#zz-global-dock .dock-icon{display:block;width:66px;height:66px;flex:0 0 auto;background-image:url("assets/navigation/board-icons.png");background-size:200% 200%;background-repeat:no-repeat;transition:transform .2s ease;pointer-events:none}
+#zz-global-dock .dock-icon{display:block;width:66px;height:66px;flex:0 0 auto;background-image:url("assets/navigation/board-icons.webp");background-size:200% 200%;background-repeat:no-repeat;transition:transform .2s ease;pointer-events:none}
 #zz-global-dock .dock-icon-about{background-position:0 0}
 #zz-global-dock .dock-icon-files{background-position:100% 0}
 #zz-global-dock .dock-icon-career{background-position:0 100%}

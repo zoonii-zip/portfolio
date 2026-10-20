@@ -15,7 +15,7 @@
 #zz-message-section .guest-verification-status{margin:0 0 10px;font:12px/1.5 Arial,sans-serif;color:#327344}
 
 /* Original pink house memo artwork, with writing kept inside its yellow center. */
-#zz-message-section .paper-house { background:transparent url('assets/guestbook-house.png') center / 100% 100% no-repeat; color:#382711; border:0; box-shadow:none; }
+#zz-message-section .paper-house { background:transparent url('assets/guestbook-house.webp') center / 100% 100% no-repeat; color:#382711; border:0; box-shadow:none; }
 #zz-message-section .paper-choice.paper-house { grid-column:1 / -1; min-height:100px; background-size:contain; font-weight:700; }
 #zz-message-section .paper-choice.paper-house[aria-pressed=true] { outline:2px solid #f92692; outline-offset:3px; }
 #zz-message-section .paper-preview.paper-house { padding:40px 18% 32px; min-height:310px; }
@@ -24,7 +24,7 @@
 #zz-message-section .wall-note.paper-house p { overflow-wrap:anywhere; }
 
 /* Keep the supplied apple artwork intact, including its transparent edge. */
-#zz-message-section .paper-yellow{background:transparent url('assets/guestbook-apple.png') center / 100% 100% no-repeat;border:0;box-shadow:none;color:#513308}
+#zz-message-section .paper-yellow{background:transparent url('assets/guestbook-apple.webp') center / 100% 100% no-repeat;border:0;box-shadow:none;color:#513308}
 #zz-message-section .paper-choice.paper-yellow{min-height:100px;background-size:contain;padding-top:48px;font-weight:700}
 #zz-message-section .paper-choice.paper-yellow[aria-pressed=true]{outline:2px solid #e52b13;outline-offset:3px}
 #zz-message-section .paper-preview.paper-yellow{box-sizing:border-box;aspect-ratio:1;min-height:0;padding:39% 18% 14%;gap:0}
@@ -40,8 +40,8 @@
 #zz-message-section .wall-note.paper-yellow small,#zz-message-section .wall-note.paper-yellow time{text-align:center}
 
 /* Original tooth and can memo artwork, replacing the pink and ticket papers; retain lined for existing entries. */
-#zz-message-section .paper-pink{background:transparent url('assets/guestbook-teeth.png') center / 100% 100% no-repeat;color:#123166;border:0;box-shadow:none}
-#zz-message-section :is(.paper-lined,.paper-ticket){background:transparent url('assets/guestbook-dopamine.png') center / 100% 100% no-repeat;color:#282828;border:0;box-shadow:none}
+#zz-message-section .paper-pink{background:transparent url('assets/guestbook-teeth.webp') center / 100% 100% no-repeat;color:#123166;border:0;box-shadow:none}
+#zz-message-section :is(.paper-lined,.paper-ticket){background:transparent url('assets/guestbook-dopamine.webp') center / 100% 100% no-repeat;color:#282828;border:0;box-shadow:none}
 #zz-message-section .paper-choice.paper-pink,#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){min-height:100px;background-size:contain;font-weight:700;box-shadow:none}
 #zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){padding-top:48px}
 #zz-message-section .paper-choice.paper-pink[aria-pressed=true]{outline:2px solid #183cfe;outline-offset:3px}

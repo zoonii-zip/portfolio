@@ -25,6 +25,6 @@
     });
     target.replaceChildren(...trays);
   }
-  new MutationObserver(mount).observe(document.documentElement, {childList: true, subtree: true});
+  new MutationObserver(mount).observe(document.getElementById('zz-body'), {childList: true, subtree: true});
   mount();
 })();

@@ -7,10 +7,11 @@ import json, subprocess, xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
 class Page(HTMLParser):
  def __init__(self):
-  super().__init__();self.scripts=[];self.script=None;self.meta={};self.canon=[];self.images=[];self.links=[];self.titles=0;self.headings=0;self.main=False
+  super().__init__();self.scripts=[];self.external_scripts=[];self.script=None;self.meta={};self.canon=[];self.images=[];self.links=[];self.titles=0;self.headings=0;self.main=False
  def handle_starttag(self,t,attrs):
   a=dict(attrs)
   if t=='script' and 'src' not in a:self.script=[a.get('type',''),'']
+  if t=='script' and 'src' in a:self.external_scripts.append(a['src'])
   if t=='meta':self.meta[a.get('name',a.get('property'))]=a.get('content')
   if t=='link' and a.get('rel')=='canonical':self.canon.append(a['href'])
   if t=='img':self.images.append(a)
@@ -24,6 +25,7 @@ class Page(HTMLParser):
   if t=='script' and self.script is not None:self.scripts.append(self.script);self.script=None
 pages=json.loads((ROOT/'seo-pages.js').read_text().split(' = ',1)[1].rstrip(';\n'))
 origin='https://'+(ROOT/'CNAME').read_text().strip()
+checked_scripts=set()
 for route,data in pages.items():
  file=ROOT/(route.strip('/')+'/index.html' if route!='/' else 'index.html');p=Page();p.feed(file.read_text())
  assert p.titles==1 and p.canon==[origin+route],route
@@ -35,6 +37,13 @@ for route,data in pages.items():
   assert 'alt' in image,(route,image)
   if not urlparse(image.get('src','')).scheme:assert (ROOT/image['src'].lstrip('/')).exists(),image
  for link in p.links:assert urlparse(link).path in pages,link
+ for src in p.external_scripts:
+  if urlparse(src).scheme:continue
+  file=ROOT/urlparse(src).path.lstrip('/')
+  assert file.is_file(),(route,src)
+  if file not in checked_scripts:
+   subprocess.run(['node','--check',str(file)],check=True)
+   checked_scripts.add(file)
  for kind,script in p.scripts:
   if kind=='application/ld+json':
    graph=json.loads(script);assert graph==data['schema']
