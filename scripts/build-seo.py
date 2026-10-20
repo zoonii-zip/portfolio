@@ -2,6 +2,7 @@
 """Rebuild static entry points from the current index.html; no third-party packages."""
 from pathlib import Path
 import re, json, html
+from asset_versions import version_html
 ROOT = Path(__file__).resolve().parents[1]
 esc = lambda x: html.escape(str(x), quote=True)
 def js(x): return json.dumps(x, ensure_ascii=False).replace('<', '\\u003c')
@@ -11,9 +12,12 @@ original = source
 for name in ['HEAD', 'CONTENT']:
  source = re.sub(r'<!-- SEO:'+name+r':START -->.*?<!-- SEO:'+name+r':END -->', '', source, flags=re.S)
 source = re.sub(r'<title>.*?</title>', '', source, count=1, flags=re.S)
-projects = json.loads(re.search(r'const projects=(.*?);\n', source).group(1))
-records = json.loads(re.search(r'const careerRecords=(.*?);', source).group(1))
-extras = json.loads(re.search(r'const careerExtras=(.*?);\n', source).group(1))
+# Runtime code is shared and cached; read it only to extract the source data.
+runtime_sources = [ROOT / path.lstrip('/') for path in re.findall(r'<script[^>]+src="(/scripts/runtime/[^"?]+)', source)]
+data_source = source + '\n' + '\n'.join(path.read_text() for path in runtime_sources)
+projects = json.loads(re.search(r'const projects=(.*?);\n', data_source).group(1))
+records = json.loads(re.search(r'const careerRecords=(.*?);', data_source).group(1))
+extras = json.loads(re.search(r'const careerExtras=(.*?);\n', data_source).group(1))
 origin = 'https://' + (ROOT/'CNAME').read_text().strip()
 person = {'@type':'Person','@id':origin+'/profile/#person','name':'김주연','alternateName':'Zoonii','url':origin+'/profile/','jobTitle':'Designer · Illustrator · Educator','description':'UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행하는 김주연 / Zoonii.','sameAs':['https://www.instagram.com/thingthingclub/'],'knowsAbout':['UI/UX Design','Illustration','Brand Design','Design Education']}
 labels={'STORY':('illustration','일러스트레이션'),'PRODUCT':('uiux','UI/UX · 웹 · 앱 디자인'),'VISUAL':('branding','브랜딩 · 편집 디자인')}
@@ -25,7 +29,7 @@ def add(path,title,desc,content,action='home',index=True,mode=None,work=None):
 nav='<nav aria-label="포트폴리오 페이지">'+''.join(f'<a href="{p}">{t}</a> ' for p,t in [('/','Home'),('/profile/','Profile'),('/archive/','Archive'),('/career/','Career')])+'</nav>'
 intro='김주연 / Zoonii의 UI/UX 디자인, 일러스트레이션, 브랜딩과 교육 작업을 소개하는 포트폴리오입니다.'
 add('/','Zoonii — 김주연 | 디자이너 · 일러스트레이터',intro,'<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>'+intro+'</p>'+nav)
-add('/profile/','Profile — 김주연 / Zoonii', '아이디어를 화면과 이미지로 만드는 디자이너 김주연 / Zoonii의 소개와 작업 분야.', '<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행합니다.</p><h2>내가 꿈꾸는 것, 당신이 꿈꾸는 것을 만듭니다.</h2><p>아직 말로만 존재하는 아이디어를 함께 구체화하고, 보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><img src="/assets/profile-collage-child-restored.png" width="1536" height="1024" alt="하늘색 zoonii 로고, 데님 모자, 어린 시절 사진으로 만든 김주연의 프로필 콜라주"><p><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></p>'+nav,'about')
+add('/profile/','Profile — 김주연 / Zoonii', '아이디어를 화면과 이미지로 만드는 디자이너 김주연 / Zoonii의 소개와 작업 분야.', '<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행합니다.</p><h2>내가 꿈꾸는 것, 당신이 꿈꾸는 것을 만듭니다.</h2><p>아직 말로만 존재하는 아이디어를 함께 구체화하고, 보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><img src="/assets/profile-collage-child-restored.webp" width="1536" height="1024" alt="하늘색 zoonii 로고, 데님 모자, 어린 시절 사진으로 만든 김주연의 프로필 콜라주"><p><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></p>'+nav,'about')
 def listing(mode=None):
  return '<ul>'+''.join(f'<li><a href="/projects/{esc(k)}/">{esc(p["name"])}</a> — {esc(p["role"])} · {esc(p["period"])}</li>' for k,p in projects.items() if mode is None or p['mode']==mode)+'</ul>'
 category_nav='<nav aria-label="작업 분야">'+''.join(f'<a href="/archive/{slug}/">{label}</a> ' for slug,label in labels.values())+'</nav>'
@@ -43,7 +47,7 @@ for key,p in projects.items():
  content=f'<article><h1>{esc(p["name"])}</h1><p>김주연 / Zoonii</p><dl><dt>분야</dt><dd>{labels[p["mode"]][1]}</dd><dt>작업</dt><dd>{esc(p["role"])}</dd><dt>기간</dt><dd>{esc(p["period"])}</dd></dl><p>{esc(p.get("description",p["role"]))}</p><p>프로젝트 이미지 · 상세 준비 중</p><a href="/archive/{labels[p["mode"]][0]}/">← Archive</a></article>'
  add(path,p['name']+' — Zoonii',desc,content,'project',index=False,work=work)
 # Hooks notify only after the existing UI actually changes, including keyboard navigation.
-if '/* SEO bridge */' not in source:
+if '/* SEO bridge */' not in data_source:
  needle="function open(title,html){"
  source=source.replace(needle,needle+"window.ZooniiSEO?.opened(title);",1)
  source=source.replace("selectDock('home');if(typeof after", "selectDock('home');window.ZooniiSEO?.publish('/');if(typeof after",1)
@@ -74,7 +78,7 @@ for path,page in pages.items():
  dest=ROOT/(path.strip('/')+'/index.html' if path!='/' else 'index.html')
  dest.parent.mkdir(parents=True,exist_ok=True)
  if path=='/' and (ROOT/'index.html').read_text()!=original: raise RuntimeError('index.html changed during build. Retry to preserve concurrent edits.')
- dest.write_text(output)
+ dest.write_text(version_html(output, ROOT))
 (ROOT/'seo-pages.js').write_text('/* Generated by scripts/build-seo.py. */\nwindow.ZooniiSEOPages = '+js(pages)+';\n')
 (ROOT/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('<url><loc>'+origin+path+'</loc></url>\n' for path,p in pages.items() if p['index'])+'</urlset>\n')
 (ROOT/'robots.txt').write_text('User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nSitemap: '+origin+'/sitemap.xml\n')

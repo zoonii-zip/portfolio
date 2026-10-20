@@ -62,6 +62,6 @@
     if (footer) footer.lastElementChild.textContent = '카드를 선택해 프로젝트 보기 ↗';
     select(0);
   }
-  new MutationObserver(mount).observe(document.documentElement, {childList: true, subtree: true});
+  new MutationObserver(mount).observe(document.getElementById('zz-body'), {childList: true, subtree: true});
   mount();
 })();

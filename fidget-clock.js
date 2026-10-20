@@ -39,15 +39,17 @@
    canvas.width=width;canvas.height=height;canvas.getContext('2d').drawImage(transparentRing,0,0);
   });
  };
- ringArtwork.src='/assets/clock/graphic-ring.png';
+ ringArtwork.src='/assets/clock/graphic-ring.webp';
  function face(){
   const el=document.createElement('span');el.className='zz-clock-face';
   const ring=document.createElement('canvas');ring.className='zz-clock-ring';ring.setAttribute('aria-hidden','true');ring.width=1182;ring.height=879;if(transparentRing.width===1182)ring.getContext('2d').drawImage(transparentRing,0,0);el.append(ring);
   ['hour','minute','second'].forEach(k=>{const hand=document.createElement('i');hand.className='zz-clock-hand '+k;hand.dataset.clockHand=k;el.append(hand)});
   const center=document.createElement('img');center.className='zz-clock-center-logo';center.src='/assets/clock/center-logo.png';center.alt='';center.draggable=false;el.append(center);return el;
  }
+ const clockFormat=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Seoul',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
  function tick(){
-  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Seoul',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+  if(document.hidden||document.documentElement.classList.contains('viewing-space'))return;
+  const parts=clockFormat.formatToParts(new Date());
   const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));
   const h=+v.hour,m=+v.minute,s=+v.second;
   document.querySelectorAll('[data-clock-hand]').forEach(el=>{

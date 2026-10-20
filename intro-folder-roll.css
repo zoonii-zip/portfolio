@@ -97,10 +97,21 @@
 }
 #zz-logo-entry .intro-copy [lang="en"] {font-size:clamp(26px,3.6vw,46px);line-height:1.18;letter-spacing:-.035em}
 #zz-logo-entry .intro-copy [lang="ko"] {margin-top:16px}
-#zz-logo-entry #zz-scrollboard {position:absolute;top:auto;bottom:8%;margin:0}
+#zz-logo-entry #zz-scrollboard {
+  position:absolute;top:auto;left:50%;transform:translateX(-50%);
+  bottom:calc(140px + env(safe-area-inset-bottom,0px));
+  display:grid;place-items:center;width:48px;height:52px;
+  margin:0;padding:6px;border:0;background:transparent;color:#c4beb3;
+  cursor:pointer;transition:color .2s;
+}
+#zz-logo-entry #zz-scrollboard svg {display:block;pointer-events:none}
+#zz-logo-entry #zz-scrollboard:hover {color:#fffdf5}
+#zz-logo-entry #zz-scrollboard:focus-visible {outline:2px solid #eee8dc;outline-offset:4px;border-radius:8px}
 @media(max-width:650px){
  #zz-logo-entry{--intro-folder-center:31%}
  #zz-logo-entry #zz-trail-hint{width:80vw;font-size:9px}
  #zz-logo-entry .intro-copy{top:calc(var(--intro-folder-center) + var(--intro-folder-half-height) + 72px)}
  #zz-logo-entry .trail-tools button{width:32px;height:32px;font-size:22px}
 }
+
+@media(max-width:650px){#zz-logo-entry #zz-scrollboard{bottom:calc(112px + env(safe-area-inset-bottom,0px))}}

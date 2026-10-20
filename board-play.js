@@ -7,7 +7,7 @@
  const light=document.createElement('button');
  light.type='button';light.className='board-light-switch';light.dataset.boardToy='light';
  light.setAttribute('role','switch');light.setAttribute('aria-checked','false');light.setAttribute('aria-label','밤 조명');
- light.innerHTML='<img class="light-art" src="assets/board-play/vintage-brass-switch-base.png" width="1024" height="1536" alt="" draggable="false"><img class="light-lever" src="assets/board-play/vintage-brass-switch.png" width="1024" height="1536" alt="" draggable="false">';
+ light.innerHTML='<img class="light-art" src="assets/board-play/vintage-brass-switch-base.webp" width="1024" height="1536" alt="" draggable="false"><img class="light-lever" src="assets/board-play/vintage-brass-switch.webp" width="1024" height="1536" alt="" draggable="false">';
  light.title='클릭해서 밤 조명으로 전환';
  light.addEventListener('click',()=>{
   const night=light.getAttribute('aria-checked')!=='true';
