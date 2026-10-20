@@ -31,3 +31,15 @@ html:has(#zz-fullscreen.board-night):not(.viewing-space) #zz-global-dock .dock-m
 @media(hover:none),(max-width:650px){#zz-global-dock .dock-icon{width:54px;height:54px}#zz-global-dock .dock-hover .dock-icon{transform:none}#zz-global-dock [data-dock="home"] .dock-art img{width:54px;height:46px}}
 @media(max-width:900px){html.viewing-space #zz-global-dock .dock-icon{width:44px;height:44px}html.viewing-space #zz-global-dock [data-dock="home"] .dock-art img{width:44px;height:38px}}
 @media(prefers-reduced-motion:reduce){#zz-global-dock .dock-icon{transition:none}}
+
+/* Highlight only the menu name, without moving the sticker or surrounding items. */
+#zz-global-dock button:is(:focus,:focus-visible) .dock-mobile-label{
+ background:#000;color:#fff!important;text-shadow:none!important;
+ box-shadow:0 0 0 4px #000;text-decoration:none;border-radius:0;
+}
+@media(hover:hover){
+ #zz-global-dock button:hover .dock-mobile-label{
+  background:#000;color:#fff!important;text-shadow:none!important;
+  box-shadow:0 0 0 4px #000;text-decoration:none;border-radius:0;
+ }
+}
