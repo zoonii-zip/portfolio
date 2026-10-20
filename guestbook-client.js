@@ -4,6 +4,55 @@
     const form = document.querySelector('#zz-guestform');
     const wall = document.querySelector('#zz-guestresult');
     if (!form || !wall) return;
+    const room = form.closest('.guest-room');
+    if (room && !room.querySelector('.guest-ribbons')) {
+      const ribbons = document.createElement('div');
+      ribbons.className = 'guest-ribbons';
+      const label = document.createElement('span');
+      label.className = 'guest-ribbon-label';
+      label.textContent = 'Have a Good Day:)';
+      ribbons.append(label);
+      for (let direction = 0; direction < 2; direction++) {
+        const ribbon = document.createElement('div');
+        ribbon.className = 'guest-ribbon' + (direction ? ' guest-ribbon-reverse' : '');
+        ribbon.setAttribute('aria-hidden', 'true');
+        const track = document.createElement('div');
+        track.className = 'guest-ribbon-track';
+        for (let copy = 0; copy < 2; copy++) {
+          const group = document.createElement('span');
+          group.className = 'guest-ribbon-group';
+          for (let repeat = 0; repeat < 8; repeat++) {
+            const word = document.createElement('span');
+            word.textContent = 'Have a Good Day:)';
+            group.append(word);
+          }
+          track.append(group);
+        }
+        ribbon.append(track);
+        ribbons.append(ribbon);
+      }
+      room.prepend(ribbons);
+    }
+    const compose = form.closest('.guest-compose');
+    const noteButton = document.getElementById('zz-leave-note');
+    const dialog = document.createElement('dialog');
+    dialog.className = 'guest-compose-dialog';
+    dialog.setAttribute('aria-labelledby', 'guest-compose-title');
+    dialog.innerHTML = '<div class="guest-dialog-heading"><h2 id="guest-compose-title">메모 남기기</h2><button type="button" class="guest-dialog-close" aria-label="작성창 닫기">×</button></div>';
+    room.append(dialog);
+    dialog.append(compose);
+    noteButton.hidden = false;
+    noteButton.setAttribute('aria-haspopup', 'dialog');
+    function openComposer() {
+      if (!dialog.open) dialog.showModal();
+    }
+    dialog.querySelector('.guest-dialog-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    dialog.addEventListener('close', () => noteButton.focus({ preventScroll: true }));
     const config = window.ZooniiGuestbookConfig || {};
     const button = form.querySelector('.guest-stick');
     const status = document.querySelector('#zz-guest-status');
@@ -48,7 +97,7 @@
         card.append(text, name, date); wall.append(card);
       });
     }
-    window.ZooniiGuestbook = { render };
+    window.ZooniiGuestbook = { render, openComposer };
     async function request(options) {
       const response = await fetch(config.endpoint, { ...options, signal: AbortSignal.timeout(15000) });
       const data = await response.json();
@@ -84,6 +133,7 @@
         form.elements.note.value = ''; document.querySelector('#zz-note-count').textContent = '0';
         document.querySelector('.guest-wall').scrollTop = 0;
         message('새 메모를 붙였어요. 이 브라우저의 이전 메모는 새 내용으로 바뀌어요.');
+        dialog.close();
       } catch (error) { message(error.message === 'Failed to fetch' || error.name === 'TimeoutError' ? '연결이 끊겼어요. 새로고침으로 등록 여부를 확인한 뒤 다시 시도해주세요.' : error.message); }
       finally {
         busy = false; token = ''; refresh.disabled = false;
