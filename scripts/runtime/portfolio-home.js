@@ -90,7 +90,7 @@
    return `<article class="sample-tray" style="--object-tone:${tones[i%6]}"><div class="tray-materials ${i===4?'editorial-materials':''}" aria-hidden="true"><div class="sample-sheet"><small>${i===4?'ANNUAL REPORT':'IDENTITY STUDY'}</small><b>${i===4?'KISA':p.name}</b><span>●</span></div><div class="sample-card"><b>${p.name}</b><small>${i===4?'2022 / REPORT':'DESIGN / '+num}</small></div><div class="sample-swatch"></div></div><div class="object-label"><strong>${p.name}</strong><span>${p.role}</span><small>${p.period} <em>상세 준비 중</em></small></div><span class="tray-index">${num}</span></article>`;
   }).join('');
   open(menuLabels.files,`<div class="archive-shell theme-${archiveMode.toLowerCase()}">${archiveTabs()}<section id="archive-panel" role="tabpanel" tabindex="0" aria-labelledby="archive-tab-${archiveMode}"><div class="collection-scene"><div class="collection-meta"><span>${archiveMode==='STORY'?'THE BOOKSHELF':archiveMode==='PRODUCT'?'THE DIGITAL DESK':'THE SAMPLE COLLECTION'}</span><span>${String(rows.length).padStart(2,'0')} PROJECTS</span></div><div class="collection-objects">${cards}</div>${archiveMode==='STORY'?'<div class="shelf-plank" aria-hidden="true"></div>':''}<footer class="collection-footer"><span>${archiveLabels[archiveMode]}</span><span>프로젝트 이미지 · 상세 준비 중</span></footer></div></section></div>`);
-  q('[data-action="close"]').textContent='← Back to Home';window.ZooniiSEO?.archive(archiveMode);
+  q('[data-action="close"]').textContent='← Back to Home';q('[data-action="close"]').setAttribute('aria-label','Back to Home');window.ZooniiSEO?.archive(archiveMode);
  }
  function archiveEntrance(){folderNow('STORY')}
  root.addEventListener('keydown',e=>{const tab=e.target.closest('[data-archive-tab]');if(!tab)return;const keys=['STORY','PRODUCT','VISUAL'];let i=keys.indexOf(tab.dataset.archiveTab);if(e.key==='ArrowDown')i=(i+1)%3;else if(e.key==='ArrowUp')i=(i+2)%3;else if(e.key==='Home')i=0;else if(e.key==='End')i=2;else return;e.preventDefault();folderNow(keys[i]);q(`[data-archive-tab="${keys[i]}"]`).focus()});
@@ -182,7 +182,7 @@
   if(moveTimer)clearTimeout(moveTimer);moving=false;root.classList.remove('travelling');clearCameraClone();
   current=null;activeFolder=null;
   if(page.action==='home'){close();return;}
-  if(page.action==='project'){travel('files',()=>open(page.title,page.content));selectDock('files');return;}
+  if(page.action==='project'){current='detail';activeFolder=page.mode||'STORY';archiveMode=activeFolder;travel('files',()=>{open(page.title,page.content);q('[data-action="close"]').textContent='← Back to Archive';q('[data-action="close"]').setAttribute('aria-label','Back to Archive')});selectDock('files');return;}
   if(page.action==='files'){travel('files',()=>folderNow(page.mode||'STORY'));selectDock('files');return;}
   action(page.action);selectDock(page.action);
  };

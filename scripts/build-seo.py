@@ -40,12 +40,46 @@ rows=''.join('<tr>'+''.join('<td>'+esc(r[i])+'</td>' for i in [0,2,3,5])+'</tr>'
 add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.','<h1>김주연 / Zoonii의 작업 이력</h1><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody>'+rows+'</tbody></table>'+extras,'career')
 for path,title,desc,action in [('/contact/','Contact','프로젝트와 협업, 강의 이야기를 들려주세요. 문의 양식으로 메시지를 보내거나 illu_junny@naver.com으로 연락해주세요.','contact'),('/guestbook/','Guestbook','메모 보드는 준비 중이에요.','guest'),('/thingthingclub/','ThingThingClub','감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로. 상품 이미지와 판매 링크는 준비 중입니다.','club')]:
  add(path,title+' — Zoonii',desc,'<h1>'+title+'</h1><p>'+desc+'</p>'+nav,action,index=False)
+# Reusable detail layouts: replace project copy and media without changing structure.
+case_templates = {
+ 'PRODUCT': {'label':'WEB / APP', 'intro':'사용자의 다음 행동이 자연스럽게 이어지는 화면을 만듭니다.', 'sections':[
+  ('01','Overview','프로젝트의 시작','서비스의 핵심 정보를 쉽게 이해하고 필요한 기능에 빠르게 도달하도록 정보 구조와 화면의 우선순위를 정리합니다.',['기존 화면 · 리서치 자료|16 / 10','정보 구조 · 사용자 흐름|16 / 10']),
+  ('02','Experience','흐름을 먼저, 화면은 그다음','진입부터 탐색, 핵심 행동까지의 여정을 연결합니다. 반복되는 요소는 일관된 규칙으로 정리하고 중요한 정보가 먼저 보이도록 설계합니다.',['주요 화면 01 · 진입|16 / 10','주요 화면 02 · 탐색|16 / 10']),
+  ('03','Interface','작은 화면에서도 같은 경험','다양한 화면 크기에서 읽기와 조작이 편하도록 레이아웃, 글자 크기, 버튼의 배치를 조정합니다.',['모바일 화면 01|9 / 16','모바일 화면 02|9 / 16','모바일 화면 03|9 / 16']),
+  ('04','Design system','일관성을 만드는 규칙','컬러, 타이포그래피, 컴포넌트를 정리해 서비스 전반에 같은 시각 언어를 적용합니다.',['UI 컴포넌트 · 디자인 시스템|16 / 9'])]},
+ 'STORY': {'label':'ILLUSTRATION','intro':'하나의 이야기에서 출발해, 오래 기억되는 장면으로.', 'sections':[
+  ('01','Concept','그림이 시작되는 이야기','프로젝트가 전하고 싶은 분위기와 메시지를 키워드로 정리합니다. 친근한 형태와 리듬감 있는 구성을 중심으로 그림의 방향을 잡습니다.',['무드보드 · 콘셉트 스케치|4 / 3','러프 · 컬러 스터디|4 / 3']),
+  ('02','Artwork','하나의 세계, 여러 개의 장면','공통된 색과 형태를 유지하면서 장면마다 다른 이야기를 담습니다. 각 이미지는 단독으로도, 시리즈로도 이어질 수 있도록 구성합니다.',['완성 작품 01|4 / 5','완성 작품 02|4 / 5']),
+  ('03','Details','가까이 들여다보기','작은 표정과 질감, 화면 곳곳의 디테일이 전체 분위기를 완성합니다. 그림의 개성이 드러나는 부분을 확대해 보여줍니다.',['디테일 01|1 / 1','디테일 02|1 / 1','디테일 03|1 / 1']),
+  ('04','In context','그림이 일상에 닿는 방식','완성된 그림이 제품과 인쇄물, 디지털 매체에 적용되는 모습을 소개합니다.',['제품 · 캠페인 적용 목업|16 / 9'])]},
+ 'VISUAL': {'label':'BRAND / EDITORIAL','intro':'브랜드의 생각을, 일관된 시각 언어로 정리합니다.', 'sections':[
+  ('01','Direction','브랜드를 읽는 첫인상','브랜드의 가치와 전달할 메시지를 정리하고, 이를 담아낼 시각적 방향을 설정합니다. 명료한 구조와 균형 있는 여백을 바탕으로 첫인상을 설계합니다.',['브랜드 키워드 · 무드보드|16 / 10']),
+  ('02','Visual identity','하나의 인상을 만드는 요소들','로고, 색상, 타이포그래피가 함께 작동하도록 기본 규칙을 정리합니다. 매체가 달라져도 같은 브랜드로 느껴지도록 연결합니다.',['로고 · 그래픽 시스템|1 / 1','컬러 · 타이포그래피|1 / 1']),
+  ('03','Editorial','정보에 리듬을 더하는 편집','정보의 위계와 읽는 순서를 바탕으로 그리드를 구성합니다. 이미지와 텍스트의 밀도를 조절해 펼침면마다 자연스러운 호흡을 만듭니다.',['표지 · 패키지 전개|4 / 3','내지 펼침면 01|4 / 3','내지 펼침면 02|4 / 3']),
+  ('04','Applications','여러 매체로 이어지는 브랜드','인쇄물과 패키지, 디지털 접점에 디자인 시스템을 적용한 모습을 소개합니다.',['인쇄물 · 브랜드 적용 목업|16 / 9'])]}
+}
+def case_box(spec, index):
+ label,ratio=spec.split('|')
+ return f'<figure class="case-media" style="--media-ratio:{ratio}"><span class="case-media-index">{index}</span><div><span class="case-media-cross" aria-hidden="true">+</span><figcaption>{esc(label)}</figcaption><small>IMAGE PLACEHOLDER · {ratio.replace(" / ", ":")}</small></div></figure>'
+def case_content(p):
+ template=case_templates[p['mode']]
+ slug,label=labels[p['mode']]
+ sections=''
+ for number,en,title,copy,media in template['sections']:
+  grid=''.join(case_box(item,f'{number}.{i+1}') for i,item in enumerate(media))
+  sections+=f'<section class="case-section"><div class="case-section-heading"><span>{number} / {en}</span><h2>{title}</h2><p>{copy}</p></div><div class="case-grid case-grid-{len(media)}">{grid}</div></section>'
+ return f'''<article class="project-case case-{p['mode'].lower()}">
+ <header class="case-header"><div class="case-eyebrow"><a href="/archive/{slug}/">← Archive</a><span>{template['label']} / SELECTED WORK</span></div><h1>{esc(p['name'])}</h1><p class="case-summary">{esc(p.get('description',p['role']))}</p><dl class="case-meta"><div><dt>CATEGORY</dt><dd>{label}</dd></div><div><dt>SCOPE</dt><dd>{esc(p['role'])}</dd></div><div><dt>PERIOD</dt><dd>{esc(p['period'])}</dd></div><div><dt>DESIGNER</dt><dd>김주연 / Zoonii</dd></div></dl></header>
+ {case_box('대표 이미지 · 프로젝트 키비주얼|16 / 9','COVER')}
+ <div class="case-intro"><span>ABOUT THE PROJECT</span><h2>{template['intro']}</h2><p class="case-draft">LAYOUT PREVIEW · 아래 설명은 구성을 확인하기 위한 샘플입니다. 실제 프로젝트 내용과 이미지로 교체할 예정입니다.</p></div>
+ {sections}<footer class="case-footer"><span>THANK YOU FOR WATCHING</span><a href="/archive/{slug}/">← Back to {template['label']}</a><small>김주연 / Zoonii</small></footer></article>'''
+
 for key,p in projects.items():
  path='/projects/'+key+'/'
  desc=p['name']+' — '+p.get('description',p['role'])+'. Zoonii의 '+labels[p['mode']][1]+' 프로젝트. 상세 준비 중입니다.'
  work={'@type':'CreativeWork','@id':origin+path+'#work','name':p['name'],'url':origin+path,'creator':{'@id':person['@id']},'description':p.get('description',p['role']),'genre':labels[p['mode']][1]}
- content=f'<article><h1>{esc(p["name"])}</h1><p>김주연 / Zoonii</p><dl><dt>분야</dt><dd>{labels[p["mode"]][1]}</dd><dt>작업</dt><dd>{esc(p["role"])}</dd><dt>기간</dt><dd>{esc(p["period"])}</dd></dl><p>{esc(p.get("description",p["role"]))}</p><p>프로젝트 이미지 · 상세 준비 중</p><a href="/archive/{labels[p["mode"]][0]}/">← Archive</a></article>'
- add(path,p['name']+' — Zoonii',desc,content,'project',index=False,work=work)
+ content=case_content(p)
+ add(path,p['name']+' — Zoonii',desc,content,'project',index=False,mode=p['mode'],work=work)
 # Hooks notify only after the existing UI actually changes, including keyboard navigation.
 if '/* SEO bridge */' not in data_source:
  needle="function open(title,html){"
