@@ -1,18 +1,43 @@
 (() => {
  'use strict';
- // Original footage, sampled to a 90 × 160 pixel grid and enlarged with hard edges.
- const film = { src: 'assets/profile-film/money-flavor-03-pixel.mp4', poster: 'assets/profile-film/money-flavor-03-pixel-poster.jpg' };
  const socials = [
   ['Instagram', 'https://www.instagram.com/thingthingclub/'],
   ['YouTube', ''],
   ['TikTok', '']
  ];
  window.ZooniiProfile = {
+  unfold(panel) {
+   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+   const page = panel.querySelector('.profile-film');
+   if (!page) return;
+   const duration = 1100;
+   const easing = 'cubic-bezier(.22,.75,.25,1)';
+   // The page itself unfolds, so the paper texture never swaps at the reveal.
+   panel.animate([
+    {offset:0, scale:'.14 .19', rotate:'-16deg', clipPath:'polygon(32% 9%,65% 0%,93% 27%,100% 64%,71% 95%,39% 100%,7% 76%,0% 36%)', filter:'brightness(.77)', borderRadius:'35%'},
+    {offset:.28, scale:'.42 .38', rotate:'7deg', clipPath:'polygon(15% 5%,79% 0%,98% 13%,100% 81%,87% 100%,17% 96%,0% 88%,5% 18%)', filter:'brightness(.88)', borderRadius:'14%'},
+    {offset:.64, scale:'.88 .74', rotate:'-2deg', clipPath:'polygon(3% 1%,96% 0%,100% 3%,99% 96%,97% 100%,3% 99%,0% 97%,1% 4%)', filter:'brightness(.97)', borderRadius:'2%'},
+    {offset:1, scale:'1 1', rotate:'0deg', clipPath:'polygon(0% 0%,100% 0%,100% 0%,100% 100%,100% 100%,0% 100%,0% 100%,0% 0%)', filter:'brightness(1)', borderRadius:'0%'}
+   ], {duration, easing});
+   const creases = document.createElement('div');
+   creases.className = 'profile-unfold-creases';
+   creases.setAttribute('aria-hidden', 'true');
+   page.append(creases);
+   const folds = creases.animate([
+    {opacity:1, transform:'scale(1.35) rotate(-8deg)'},
+    {offset:.5, opacity:.65, transform:'scale(1.08) rotate(2deg)'},
+    {opacity:0, transform:'scale(1) rotate(0deg)'}
+   ], {duration, easing});
+   folds.finished.then(() => creases.remove(), () => creases.remove());
+   page.querySelectorAll('.profile-film-content,.profile-film-socials').forEach(element => {
+    element.animate([{opacity:0, transform:'translateY(16px)'},{opacity:1, transform:'translateY(0)'}],
+     {duration:420, delay:650, easing:'ease-out', fill:'backwards'});
+   });
+   panel.querySelector('.panelhead')?.animate([{opacity:0},{opacity:1}],
+    {duration:250, delay:800, fill:'backwards'});
+  },
   hero(artwork = '') {
    return `<div class="profile-page"><section class="profile-film" aria-labelledby="profile-film-title">
-    <div class="profile-film-media" aria-hidden="true">${film.src ? `<video class="profile-film-video" src="${film.src}"${film.poster ? ` poster="${film.poster}"` : ''} muted loop playsinline preload="metadata" tabindex="-1"></video>` : ''}</div>
-    <div class="profile-film-shade" aria-hidden="true"></div>
-    <div class="profile-film-grain" aria-hidden="true"></div>
     <nav class="profile-film-socials" aria-label="소셜 채널">${socials.map(([name, url]) => url
      ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${name} <span aria-hidden="true">↗</span></a>`
      : `<button type="button" disabled aria-label="${name} 링크 준비 중">${name} <span aria-hidden="true">↗</span></button>`).join('')}</nav>
@@ -21,59 +46,17 @@
      <h2 id="profile-film-title" class="profile-film-title" lang="en"><span>I bring my dreams</span><span>(and yours) to life.</span></h2>
      <div class="profile-film-meta">
       <p class="profile-film-name">Zoonii <span>김주연</span></p>
-      <p class="profile-film-disciplines" lang="en">UI/UX & Web Design<br>Illustration & Branding<br>Design Education</p>
+      <p class="profile-film-disciplines" lang="en">Illustration & Branding<br>UI/UX & Web Design<br>Design Education</p>
       <a class="profile-film-email" href="mailto:illu_junny@naver.com">illu_junny@<br>naver.com ↗</a>
      </div>
      </div><div class="profile-film-portrait">${artwork}</div></div>
      <div class="profile-film-footer">
       <span lang="en">Independent designer<br>& illustrator</span>
       <p>내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</p>
-      <button type="button" class="profile-film-toggle"${film.src ? '' : ' hidden'} aria-label="배경 영상 재생">Play film ↗</button>
      </div>
     </div>
    </section></div>`;
   }
  };
 
- function start() {
-  const panel = document.getElementById('zz-overlay');
-  const body = document.getElementById('zz-body');
-  if (!panel || !body) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let video = null, toggle = null, userPaused = reduced.matches;
-  function label() {
-   if (!video || !toggle) return;
-   toggle.textContent = video.paused ? 'Play film ↗' : 'Pause film Ⅱ';
-   toggle.setAttribute('aria-label', video.paused ? '배경 영상 재생' : '배경 영상 일시 정지');
-  }
-  function sync() {
-   if (!video) return;
-   if (document.hidden || !panel.classList.contains('open') || userPaused) video.pause();
-   else video.play().catch(label);
-  }
-  function connect() {
-   const next = body.querySelector('.profile-film-video');
-   if (next === video) return;
-   video?.pause();
-   video = next;
-   toggle = body.querySelector('.profile-film-toggle');
-   if (!video) return;
-   userPaused = reduced.matches;
-   panel.scrollTop = 0;
-   video.muted = true;
-   video.addEventListener('play', label);
-   video.addEventListener('pause', label);
-   video.addEventListener('error', () => { toggle.hidden = true; });
-   toggle.addEventListener('click', () => { userPaused = !video.paused; sync(); });
-   label();
-   sync();
-  }
-  new MutationObserver(connect).observe(body, { childList: true });
-  new MutationObserver(sync).observe(panel, { attributes: true, attributeFilter: ['class'] });
-  document.addEventListener('visibilitychange', sync);
-  reduced.addEventListener('change', () => { userPaused = reduced.matches; sync(); });
-  connect();
- }
- if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
- else start();
 })();

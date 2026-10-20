@@ -1,6 +1,6 @@
-/* One profile screen, with the original footage filling the entire viewport. */
-#zz-fullscreen .overlay:has(.profile-page) { background:#111310; color:#f7f4e9; height:100dvh; overflow:hidden; }
-#zz-fullscreen .overlay:has(.profile-page) > .panelhead { color:#f7f4e9; position:absolute; inset:0 0 auto; pointer-events:none; }
+/* A cream paper backdrop for the profile collage. */
+#zz-fullscreen .overlay:has(.profile-page) { background:#eee8d8; color:#292b25; height:100dvh; overflow:hidden; }
+#zz-fullscreen .overlay:has(.profile-page) > .panelhead { color:#292b25; position:absolute; inset:0 0 auto; pointer-events:none; }
 #zz-fullscreen .overlay:has(.profile-page) > .panelhead button { pointer-events:auto; }
 #zz-fullscreen .panelbody:has(>.profile-page) { max-width:none; min-height:0; padding:0!important; }
 #zz-fullscreen .overlay:has(.profile-page) #zz-paneltitle { display:none; }
@@ -8,32 +8,14 @@
  position:relative; isolation:isolate; overflow:hidden;
  width:100%; margin:0;
  height:100svh; height:100dvh;
- color:#fffdf3; background:#303a31;
-}
-#zz-fullscreen .profile-film-media,
-#zz-fullscreen .profile-film-shade,
-#zz-fullscreen .profile-film-grain { position:absolute; inset:0; pointer-events:none; }
-#zz-fullscreen .profile-film-media { z-index:-3; background:linear-gradient(125deg,#515546,#273a32 52%,#434238); }
-#zz-fullscreen .profile-film-video {
- display:block; width:100%; height:100%; object-fit:cover; object-position:50% 48%;
- image-rendering:pixelated;
- filter:saturate(.57) sepia(.2) contrast(1.08) brightness(.76);
-}
-#zz-fullscreen .profile-film-shade {
- z-index:-2;
- background:linear-gradient(180deg,#07100b77,transparent 53%,#07100b80),linear-gradient(90deg,#17241940,#302b1a15);
- box-shadow:inset 0 0 160px #10160c30;
-}
-#zz-fullscreen .profile-film-grain {
- z-index:-1; opacity:.13; mix-blend-mode:soft-light;
- background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.8' filter='url(%23g)'/%3E%3C/svg%3E");
+ color:#292b25; background:linear-gradient(#fffdf5b8,#fffdf5b8),#eee8d8 url("/assets/profile-cream-paper.webp") center / cover no-repeat;
 }
 #zz-fullscreen .profile-film-content { display:flex; flex-direction:column; height:100%; padding:142px 6vw 126px; box-sizing:border-box; }
 #zz-fullscreen .profile-film-main { display:grid; grid-template-columns:1.5fr 1fr; align-items:center; gap:4vw; flex:1; min-height:0; }
 #zz-fullscreen .profile-film-copy { min-width:0; }
 #zz-fullscreen .profile-film h2.profile-film-title {
- margin:0; max-width:none; font-size:clamp(40px,5.5vw,100px);
- font-weight:400; line-height:.98; letter-spacing:-.065em;
+ margin:0; max-width:none; font-size:clamp(48px,6.5vw,116px);
+ font-weight:700; line-height:1.02; letter-spacing:-.06em;
 }
 #zz-fullscreen .profile-film-title span { display:block; }
 #zz-fullscreen .profile-film-meta { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; margin-top:32px; }
@@ -46,21 +28,19 @@
 #zz-fullscreen .profile-film-email:hover { text-decoration:underline; text-underline-offset:4px; }
 #zz-fullscreen .profile-film-footer { display:grid; grid-template-columns:1fr 1fr auto; gap:24px; align-items:end; padding-top:28px; font-size:12px; line-height:1.35; }
 #zz-fullscreen .profile-film .profile-film-footer p { margin:0; font-size:13px; line-height:1.5; }
-#zz-fullscreen .profile-film-toggle { color:inherit; border:0; border-bottom:1px solid #fffdf377; padding:8px 0; background:none; font-size:12px; cursor:pointer; }
-#zz-fullscreen .profile-film-toggle[hidden] { display:none; }
 #zz-fullscreen .profile-film :is(a,button):focus-visible { outline:2px solid currentColor; outline-offset:6px; }
 #zz-fullscreen .profile-film-socials { position:absolute; top:82px; right:6vw; display:flex; gap:8px; z-index:4; }
-#zz-fullscreen .profile-film-socials :is(a,button) { display:inline-flex; gap:18px; align-items:center; padding:10px 15px; border:1px solid #fffdf35c; border-radius:30px; background:#14201730; color:inherit; font-size:12px; text-decoration:none; }
-#zz-fullscreen .profile-film-socials a:hover { background:#fffdf3; color:#172017; }
+#zz-fullscreen .profile-film-socials :is(a,button) { display:inline-flex; gap:18px; align-items:center; padding:10px 15px; border:1px solid #292b254d; border-radius:30px; background:#fffdf330; color:inherit; font-size:12px; text-decoration:none; }
+#zz-fullscreen .profile-film-socials a:hover { background:#292b25; color:#fffdf3; }
 #zz-fullscreen .profile-film-socials button:disabled { opacity:.55; cursor:default; }
 #zz-fullscreen .profile-film-portrait { width:100%; max-width:480px; justify-self:end; box-sizing:border-box; padding:18px 10px 10px; background:#f2efe7; isolation:isolate; }
 #zz-fullscreen .profile-film .face-collage.profile-artwork { width:100%; max-width:none; height:auto; aspect-ratio:3/2; margin:0 0 12%; }
 html.viewing-space:has(#zz-overlay.open .profile-page) #zz-global-dock .dock-tooltip,
-html.viewing-space:has(#zz-overlay.open .profile-page) #zz-fixed-links .fixed-label { color:#f7f4e9; }
+html.viewing-space:has(#zz-overlay.open .profile-page) #zz-fixed-links .fixed-label { color:#292b25; }
 @media(max-width:760px) {
  #zz-fullscreen .profile-film-content { padding:124px 24px 108px; }
  #zz-fullscreen .profile-film-main { display:flex; flex-direction:column; align-items:stretch; justify-content:space-evenly; gap:14px; }
- #zz-fullscreen .profile-film h2.profile-film-title { font-size:clamp(30px,7.5vw,56px); letter-spacing:-.055em; line-height:1.06; }
+ #zz-fullscreen .profile-film h2.profile-film-title { font-size:clamp(34px,9vw,64px); letter-spacing:-.055em; line-height:1.06; }
  #zz-fullscreen .profile-film-meta { grid-template-columns:1fr auto; gap:10px 12px; margin-top:18px; }
  #zz-fullscreen .profile-film .profile-film-name { font-size:24px; }
  #zz-fullscreen .profile-film .profile-film-disciplines,#zz-fullscreen .profile-film-email { font-size:11px; }
@@ -68,23 +48,32 @@ html.viewing-space:has(#zz-overlay.open .profile-page) #zz-fixed-links .fixed-la
  #zz-fullscreen .profile-film-footer { grid-template-columns:1fr auto; font-size:10px; gap:18px; padding-top:16px; }
  #zz-fullscreen .profile-film-footer > span { display:none; }
  #zz-fullscreen .profile-film .profile-film-footer p { font-size:11px; text-align:left; }
- #zz-fullscreen .profile-film-toggle { font-size:10px; }
  #zz-fullscreen .profile-film-socials { top:76px; right:20px; gap:6px; }
  #zz-fullscreen .profile-film-socials :is(a,button) { font-size:10px; gap:10px; padding:8px 10px; }
 }
 @media(max-height:600px) and (min-width:761px) {
  #zz-fullscreen .profile-film-content { padding-top:110px; padding-bottom:100px; }
- #zz-fullscreen .profile-film h2.profile-film-title { font-size:min(5.5vw,10dvh); }
+ #zz-fullscreen .profile-film h2.profile-film-title { font-size:min(6.5vw,11dvh); }
  #zz-fullscreen .profile-film-meta { margin-top:18px; }
  #zz-fullscreen .profile-film-portrait { max-width:calc((100dvh - 250px)*1.1); }
  #zz-fullscreen .profile-film-footer { padding-top:18px; }
 }
 @media(max-height:700px) and (max-width:760px) {
  #zz-fullscreen .profile-film-content { padding:116px 20px 94px; }
- #zz-fullscreen .profile-film h2.profile-film-title { font-size:clamp(24px,7vw,30px); }
+ #zz-fullscreen .profile-film h2.profile-film-title { font-size:clamp(28px,8vw,36px); }
  #zz-fullscreen .profile-film-main { gap:8px; }
  #zz-fullscreen .profile-film-meta { margin-top:12px; gap:6px 10px; }
  #zz-fullscreen .profile-film .profile-film-name { font-size:20px; }
  #zz-fullscreen .profile-film .profile-film-disciplines,#zz-fullscreen .profile-film-email { font-size:10px; }
  #zz-fullscreen .profile-film-footer { padding-top:8px; }
 }
+
+/* Temporary fold shadows dissolve into the existing soft paper texture. */
+#zz-fullscreen .profile-unfold-creases {
+ position:absolute;inset:0;z-index:5;pointer-events:none;
+ background:
+  conic-gradient(from 20deg at 48% 44%,transparent 0deg,#66533b66 42deg,#fffbed99 44deg,transparent 85deg,#65533c55 132deg,#fffdf0aa 135deg,transparent 179deg,#6c583f66 222deg,#fffbed99 224deg,transparent 267deg,#66533b66 312deg,#fffbed99 314deg,transparent 360deg),
+  linear-gradient(24deg,transparent 46%,#58472e40 49.7%,#fffdf5bb 50.2%,transparent 54%),
+  linear-gradient(112deg,transparent 46%,#58472e40 49.7%,#fffdf5bb 50.2%,transparent 54%);
+}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .profile-unfold-creases{display:none}}

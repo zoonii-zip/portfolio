@@ -1,0 +1,4 @@
+Generated with the built-in image_gen tool.
+Asset: assets/profile-cream-paper.webp
+
+Use case: photorealistic-natural. Asset type: full-bleed website background texture, landscape 1536x1024. Primary request: softly crumpled warm cream paper that has been unfolded and flattened. Overhead orthographic close-up, paper fills every edge, no visible sheet edges or objects. Natural irregular intersecting wrinkles and subtle paper fibers, delicate soft shadows in folds, matte ivory cream palette around #eee8d8, soft diffuse daylight. Low contrast suitable behind dark website typography, but distinctly crumpled rather than smooth. No text, logos, marks, stains, borders or vignette.
