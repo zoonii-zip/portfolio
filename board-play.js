@@ -17,7 +17,7 @@
  const toy=document.createElement('button');
  toy.type='button';toy.className='board-star-toy';toy.dataset.boardToy='star';
  toy.setAttribute('aria-label','별 스프링 장난감 — 잡아당겼다 놓기, Enter로 튕기기');
- toy.innerHTML=`<svg viewBox="0 0 160 220" aria-hidden="true"><image class="star-base" href="assets/board-play/vintage-star-base.webp" x="22" y="167" width="138" height="46"/><path class="star-coil"/><path class="star-coil-shine"/><g class="star-head"><image class="star-face" href="assets/board-play/vintage-star-head.webp" x="-78" y="-72" width="156" height="156"/></g><text x="80" y="218" text-anchor="middle" fill="#4a4031" font-family="monospace" font-size="9" font-weight="bold">PULL & RELEASE</text></svg>`;
+ toy.innerHTML=`<svg viewBox="0 0 160 220" aria-hidden="true"><defs><clipPath id="zz-spring-star-head-cut"><path d="M300 90H950V590L917 590 695 543 550 710H300Z"/></clipPath></defs><svg class="star-base" x="22" y="167" width="138" height="46" viewBox="510 825 470 160"><image href="assets/board-play/juyeon-star-spring.webp" width="1448" height="1086"/></svg><path class="star-coil" style="stroke:#181818;stroke-width:7"/><path class="star-coil-shine" style="stroke:#8d8d8d;stroke-width:4"/><g class="star-head"><svg class="star-face" x="-78" y="-72" width="156" height="156" viewBox="300 90 640 640"><image href="assets/board-play/juyeon-star-spring.webp" width="1448" height="1086" clip-path="url(#zz-spring-star-head-cut)"/></svg></g><text x="80" y="218" text-anchor="middle" fill="#4a4031" font-family="monospace" font-size="9" font-weight="bold">PULL & RELEASE</text></svg>`;
  world.append(light,toy);world.dispatchEvent(new Event('board-object-added'));
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  let x=0,y=0,vx=0,vy=0,frame=0,last=0,drag=null,suppressClick=false;
@@ -28,7 +28,7 @@
   // A sampled helix keeps its rounded loops as the star stretches and bends it.
   let path='M92 190';
   for(let i=1;i<=96;i++){
-   const t=i/96,angle=t*Math.PI*6,envelope=Math.sin(Math.PI*t)**.35;
+   const t=i/96,angle=t*Math.PI*4,envelope=Math.sin(Math.PI*t)**.35;
    const px=92+dx*t+Math.sin(angle)*18*envelope;
    const py=190+dy*t+Math.cos(angle)*7*envelope;
    path+=` L${px.toFixed(2)} ${py.toFixed(2)}`;
