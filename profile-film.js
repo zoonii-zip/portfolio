@@ -37,25 +37,11 @@
     {duration:250, delay:800, fill:'backwards'});
   },
   hero(artwork = '') {
-   return `<div class="profile-page"><section class="profile-film" aria-labelledby="profile-film-title">
-    <nav class="profile-film-socials" aria-label="소셜 채널">${socials.map(([name, url]) => url
-     ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${name} <span aria-hidden="true">↗</span></a>`
-     : `<button type="button" disabled aria-label="${name} 링크 준비 중">${name} <span aria-hidden="true">↗</span></button>`).join('')}</nav>
-    <div class="profile-film-content">
-     <div class="profile-film-main"><div class="profile-film-copy">
-     <h2 id="profile-film-title" class="profile-film-title" lang="en"><span>I bring my dreams</span><span>(and yours) to life.</span></h2>
-     <div class="profile-film-meta">
-      <p class="profile-film-name">Zoonii <span>김주연</span></p>
-      <p class="profile-film-disciplines" lang="en">Illustration & Branding<br>UI/UX & Web Design<br>Design Education</p>
-      <a class="profile-film-email" href="mailto:illu_junny@naver.com">illu_junny@<br>naver.com ↗</a>
-     </div>
-     </div><div class="profile-film-portrait">${artwork}</div></div>
-     <div class="profile-film-footer">
-      <span lang="en">Independent designer<br>& illustrator</span>
-      <p>내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</p>
-     </div>
-    </div>
-   </section></div>`;
+   return `<div class="profile-page profile-stack"><div class="ps-layout">
+    <div class="ps-left"><nav class="ps-nav" aria-label="프로필 탐색"><a href="/" aria-label="홈">✳</a><div><span aria-current="page">Info −</span><a href="/career/">Career +</a><a href="/archive/">Archive +</a><a href="/contact/">Contact +</a></div></nav>
+    <section class="ps-intro ps-card" aria-labelledby="profile-stack-title"><div class="ps-intro-top"><img src="/assets/profile-collage-child-restored.webp" width="1536" height="1024" alt="김주연의 어린 시절 사진과 Zoonii 로고 콜라주"><span>DESIGNER<br>ILLUSTRATOR<br>EDUCATOR</span></div><p class="ps-eyebrow">HELLO, I'M ZOONII.</p><h2 id="profile-stack-title">내가 꿈꾸는 것,<br><em>당신이 꿈꾸는 것</em>을 만듭니다.</h2><p class="ps-name">김주연 <span>/ Zoonii</span></p><p class="ps-description">아직 말로만 존재하는 아이디어를 함께 구체화하고,<br>보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><div class="ps-tags"><span>Illustration</span><span>Branding</span><span>UI/UX & Web</span><span>Education</span></div><a class="ps-social" href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></section><div class="ps-foot"><span>Different mediums. Same thinking.</span><span>ZOONII.ZIP</span></div></div>
+    <nav class="ps-links" aria-label="더 알아보기"><a class="ps-card ps-link" href="/career/"><span class="ps-eyebrow">01 / THE JOURNEY</span><h3>Career <span>↗</span></h3><p>지금까지의 경험, 그리고 다음 방향.</p><div class="ps-career-art" aria-hidden="true"><span>PAST</span><b>↗</b><span>NEXT</span></div></a><a class="ps-card ps-link" href="/archive/"><span class="ps-eyebrow">02 / COLLECTED ALONG THE WAY</span><h3>Archive <span>↗</span></h3><p>만든 것, 적은 것, 남겨두고 싶은 것.</p><div class="ps-archive-art" aria-hidden="true"><span>ideas</span><span>works</span><span>things</span></div></a><a class="ps-card ps-link ps-contact" href="/contact/"><span class="ps-eyebrow">03 / SAY HELLO</span><h3>Contact <span>↗</span></h3><p>좋은 이야기는 작은 인사에서 시작되니까.</p><span class="ps-email">illu_junny@naver.com</span></a></nav>
+   </div></div>`;
   }
  };
 
