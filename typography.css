@@ -34,7 +34,7 @@
   font-family: var(--font-display-en) !important;
 }
 
-/* Site-wide desktop cursor: the Career artwork from the fidget board. */
+/* Site-wide desktop cursor: the navigation Career glove, pointing with its index finger. */
 @media (hover:hover) and (pointer:fine){
- html:root,html:root body,html:root body *,html:root body *::before,html:root body *::after,html:root dialog::backdrop{cursor:url('/assets/cursors/career.svg') 36 3,auto!important}
+ html:root,html:root body,html:root body *,html:root body *::before,html:root body *::after,html:root dialog::backdrop{cursor:url('/assets/cursors/career-pointer.png') 21 2,auto!important}
 }
