@@ -26,10 +26,10 @@
 #zz-fullscreen #zz-body .cs-timeline-dot:before{content:'';position:absolute;width:15px;height:15px;border-radius:50%;background:#34382d;top:-7px;left:0;box-shadow:0 0 0 8px var(--milestone-color)}
 #zz-fullscreen #zz-body .cs-milestone h3{font-size:clamp(24px,2.8vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.3;margin:17px 0}
 #zz-fullscreen #zz-body .cs-milestone p{font-size:14px;line-height:1.8;max-width:350px;word-break:keep-all;margin:0}
-#zz-fullscreen #zz-body .cs-nav{position:sticky;top:76px;z-index:12;display:flex;justify-content:center;gap:25px;padding:16px 20px;background:#f9f5ebf5;border-block:1px solid #292c2420;overflow-x:auto}
-#zz-fullscreen #zz-body .cs-nav a{flex:none;font-size:12px;color:#33392d;text-decoration:none;padding:4px 1px;white-space:nowrap}
-#zz-fullscreen #zz-body .cs-nav a[aria-current]{font-weight:800;text-decoration:underline;text-underline-offset:6px}
-#zz-fullscreen #zz-body .cs-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:#292d25;transform:scaleX(var(--cs-progress));transform-origin:left}
+#zz-fullscreen #zz-body .cs-nav{position:sticky;top:76px;z-index:12;display:flex;justify-content:flex-start;gap:30px;padding:17px 6vw;background:var(--cs-nav-paper,#f4c4a8);border:0;overflow-x:auto;transition:background-color .25s ease}
+#zz-fullscreen #zz-body .cs-nav a{display:flex;align-items:center;gap:7px;flex:none;font-size:11px;color:#33392d;text-decoration:none;padding:5px 0;white-space:nowrap;opacity:.55}
+#zz-fullscreen #zz-body .cs-nav a[aria-current]{font-weight:750;opacity:1}
+#zz-fullscreen #zz-body .cs-progress{position:absolute;bottom:0;left:0;right:0;height:1px;background:#292d2530;transform:scaleX(var(--cs-progress));transform-origin:left}
 #zz-fullscreen #zz-body .cs-chapter{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.3fr);gap:7vw;align-items:start;padding:90px 6vw 140px;background:var(--cs-paper);scroll-margin-top:150px;min-height:100dvh}
 #zz-fullscreen #zz-body .cs-chapter-heading{position:sticky;top:165px}
 #zz-fullscreen #zz-body .cs-chapter h3{font-size:clamp(30px,4vw,66px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin:24px 0;overflow-wrap:anywhere}
@@ -121,6 +121,64 @@
  #zz-fullscreen #zz-body .cs-scroll-hint{left:22px;bottom:105px;font-size:7px}
 }
 
+/* Resume detail: responsibility, work description, then the documented outcome. */
+#zz-fullscreen #zz-body .cs-record-role{display:block;font-size:11px;line-height:1.7;margin-top:8px;opacity:.7}
+#zz-fullscreen #zz-body .cs-task{margin-top:20px}
+#zz-fullscreen #zz-body .cs-task h4{font-size:14px;line-height:1.65;margin:0;font-weight:700;word-break:keep-all}
+#zz-fullscreen #zz-body .cs-task>p{margin:8px 0 0;opacity:.85}
+#zz-fullscreen #zz-body .cs-outcome{display:grid;grid-template-columns:28px 1fr;gap:10px;margin-top:12px;padding:14px 16px;border-radius:8px;background:#ffffff70}
+#zz-fullscreen #zz-body .cs-outcome>b{font-size:11px;line-height:1.8;padding-top:1px}
+#zz-fullscreen #zz-body .cs-outcome>p{margin:0;white-space:pre-line;opacity:1}
+#zz-fullscreen #zz-body .cs-facts{display:grid;grid-template-columns:1fr 1.2fr 1.3fr 1.2fr;gap:35px;padding:80px 5vw 100px;background:#f5f2eb}
+#zz-fullscreen #zz-body .cs-facts h3{font-family:var(--font-display-en)!important;display:inline-block;border:1px solid #24282070;border-radius:50%;font-size:20px;padding:12px 20px;margin:0 0 25px;font-weight:700}
+#zz-fullscreen #zz-body .cs-facts ul{list-style:none;padding:0;margin:0}
+#zz-fullscreen #zz-body .cs-facts li{font-size:12px;line-height:1.8;margin:0 0 20px;word-break:keep-all}
+#zz-fullscreen #zz-body .cs-facts dl{margin:0;font-size:12px;line-height:1.8}
+#zz-fullscreen #zz-body .cs-facts dt{font-weight:700;color:#284ac3}
+#zz-fullscreen #zz-body .cs-facts dd{margin:0 0 16px}
+#zz-fullscreen #zz-body .cs-education li{border-left:2px solid #284ac3;padding-left:12px}
+#zz-fullscreen #zz-body .cs-education :is(small,strong,span){display:block}
+#zz-fullscreen #zz-body .cs-education small{opacity:.65;font-size:10px;margin-bottom:5px}
+#zz-fullscreen #zz-body .cs-education strong{font-size:12px;font-weight:650}
+#zz-fullscreen #zz-body .cs-year{font-size:clamp(38px,4.7vw,70px)}
+#zz-fullscreen #zz-body .cs-milestone{padding-bottom:52px}
+#zz-fullscreen #zz-body .cs-milestone:after{content:'';position:absolute;bottom:0;left:0;right:0;height:24px;background:repeating-linear-gradient(90deg,#f5f2eb55 0 1px,transparent 1px 22px);border-bottom:1px solid #f5f2eb55}
+#zz-fullscreen #zz-body .cs-timeline-dot:before{width:11px;height:11px;top:-5px;outline:1px solid #f5f2eb80;outline-offset:6px}
+@media(max-width:1000px){#zz-fullscreen #zz-body .cs-facts{grid-template-columns:1fr 1fr;gap:35px}}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-facts{padding:50px 22px 65px;grid-template-columns:1fr;gap:25px}#zz-fullscreen #zz-body .cs-facts h3{font-size:19px;margin-bottom:20px}#zz-fullscreen #zz-body .cs-outcome{padding:12px;gap:7px}#zz-fullscreen #zz-body .cs-task h4{font-size:13px}}
+#zz-fullscreen #zz-body .cs-project-list{margin-top:18px;font-size:12px;line-height:1.8}
+#zz-fullscreen #zz-body .cs-project-list summary{cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+#zz-fullscreen #zz-body .cs-project-list ul{padding-left:18px;margin:16px 0 0}
+#zz-fullscreen #zz-body .cs-project-list li{margin-bottom:10px}
+#zz-fullscreen #zz-body .cs-teaching-dates{list-style:none;padding:0;margin:18px 0 0}
+#zz-fullscreen #zz-body .cs-teaching-dates li{display:grid;grid-template-columns:100px 1fr;gap:16px;padding:14px 0;border-top:1px solid #292d2525}
+#zz-fullscreen #zz-body .cs-teaching-dates li>span{font-size:11px;line-height:1.8}
+#zz-fullscreen #zz-body .cs-teaching-dates li>p{margin:0}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-teaching-dates li{grid-template-columns:1fr;gap:4px}}
+#zz-fullscreen #zz-body .cs-milestone:has(.cs-year-long){width:clamp(350px,48vw,660px)}
+#zz-fullscreen #zz-body .cs-year.cs-year-long{font-size:clamp(27px,3.5vw,52px)}
+#zz-fullscreen #zz-body .cs-milestone p{white-space:pre-line}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-milestone:has(.cs-year-long){width:90vw}#zz-fullscreen #zz-body .cs-year.cs-year-long{font-size:clamp(24px,6.5vw,40px)}}
+/* Resume summary follows the supplied two-column reference. */
+#zz-fullscreen #zz-body .cs-career-summary{display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,2fr);gap:7vw;padding:90px 6vw 110px;background:#faf9f5;color:#242424}
+#zz-fullscreen #zz-body .cs-summary-heading h2{font-size:26px;font-weight:750;margin:0 0 35px;letter-spacing:-.04em}
+#zz-fullscreen #zz-body .cs-summary-heading dl{margin:0}
+#zz-fullscreen #zz-body .cs-summary-heading dl>div{display:flex;gap:20px;align-items:baseline;margin-bottom:20px;font-size:15px}
+#zz-fullscreen #zz-body .cs-summary-heading dt{width:65px;color:#707070}
+#zz-fullscreen #zz-body .cs-summary-heading dd{margin:0;font-weight:750;white-space:nowrap}
+#zz-fullscreen #zz-body .cs-career-summary ol{list-style:none;margin:0;padding:0}
+#zz-fullscreen #zz-body .cs-career-summary li{margin:0 0 34px}
+#zz-fullscreen #zz-body .cs-career-summary li:last-child{margin:0}
+#zz-fullscreen #zz-body .cs-summary-role{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+#zz-fullscreen #zz-body .cs-summary-role h3{font-size:24px;font-weight:750;margin:0;letter-spacing:-.035em}
+#zz-fullscreen #zz-body .cs-summary-role>span{font-size:15px;color:#555;line-height:1.6}
+#zz-fullscreen #zz-body .cs-career-summary li>p{font-size:16px;line-height:1.7;font-weight:550;margin:10px 0 12px;white-space:pre-line;word-break:keep-all;color:#505050}
+#zz-fullscreen #zz-body .cs-summary-date{font-size:15px;color:#808080}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-career-summary{grid-template-columns:1fr;gap:35px;padding:55px 22px 80px}#zz-fullscreen #zz-body .cs-summary-heading h2{font-size:23px;margin-bottom:24px}#zz-fullscreen #zz-body .cs-summary-heading dl{display:flex;flex-wrap:wrap;gap:16px 24px}#zz-fullscreen #zz-body .cs-summary-heading dl>div{display:block;font-size:12px;margin:0}#zz-fullscreen #zz-body .cs-summary-heading dd{margin-top:5px}#zz-fullscreen #zz-body .cs-summary-role h3{font-size:21px}#zz-fullscreen #zz-body .cs-summary-role>span{font-size:12px}#zz-fullscreen #zz-body .cs-career-summary li>p{font-size:13px}#zz-fullscreen #zz-body .cs-summary-date{font-size:12px}}
+
+#zz-fullscreen #zz-body .cs-nav-number{font-size:9px;opacity:.65;font-variant-numeric:tabular-nums}
+#zz-fullscreen #zz-body .cs-nav a[aria-current] .cs-nav-number{opacity:1}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .cs-nav{transition:none}}
 /* One gesture advances one reading screen; touch and scrollbar snapping remain native. */
 #zz-fullscreen #zz-overlay:has(.cs-onepage){scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scroll-padding:0}
 #zz-fullscreen #zz-body .cs-onepage{position:relative}
@@ -141,3 +199,5 @@
 @media(prefers-reduced-motion:reduce){
  #zz-fullscreen #zz-overlay:has(.cs-onepage){scroll-snap-type:y proximity}
 }
+/* Keep focus/snap navigation inside the career panel, not the outer board. */
+#zz-fullscreen:has(.career-scroll){overflow:clip!important}
