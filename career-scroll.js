@@ -2,11 +2,11 @@
 (() => {
  'use strict';
  const chapters = [
-  ['illustration','ILLUSTRATION','그림으로 전하는 이야기.','#f4c4a8','#a34427','캐릭터부터 브랜드의 키비주얼까지, 기억에 남는 장면을 그립니다.'],
-  ['uiux','DIGITAL EXPERIENCES','화면에서 시작되는 경험.','#d8d2f0','#615297','웹과 앱, 제품의 흐름을 설계하고 사용자의 경험을 만듭니다.'],
-  ['branding','BRAND & PRINT','브랜드가 손에 닿을 때.','#f3e5a0','#80601a','로고, 패키지, 인쇄물까지 하나의 브랜드 언어로 연결합니다.'],
-  ['teaching','TEACHING','함께 배우고 만드는 시간.','#c7dfef','#356582','디자인과 도구를 나누며 새로운 시작을 함께합니다.'],
-  ['exhibition','EXHIBITIONS','작업실 밖에서 만난 장면들.','#d0dfc7','#456a40','전시와 페어, 라이브 페인팅으로 작업을 일상과 연결합니다.']
+  ['illustration','ILLUSTRATION','일러스트레이션'],
+  ['uiux','DIGITAL EXPERIENCES','UI/UX 디자인'],
+  ['branding','BRAND & PRINT','브랜딩·편집 디자인'],
+  ['teaching','TEACHING','강의'],
+  ['exhibition','EXHIBITIONS','전시·페어']
  ];
  const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  let cleanup = () => {};
@@ -74,10 +74,10 @@
    });
    const expanded=teaching.length?[...records.filter(record=>record[4]!=='teaching'),...teaching]:records;
    const all=[...expanded,['2025.08–2026.04',20250800,'COMES / 브랜드 디자인','기업 브랜드 관련 홍보물 및 웰컴키트 디자인','branding','BRANDING'],...exhibitions(extras)];
-   return `<article class="career-scroll"><header class="cs-hero" data-cs-chapter data-color="#f4f0e7"><div class="cs-hero-meta"><span class="cs-eyebrow">ZOONII — SELECTED JOURNEY</span><span class="cs-eyebrow">2013 — NOW</span></div><h2 class="cs-identity" aria-label="I am an illustrator, UI/UX designer, brand designer, and design educator."><span class="cs-identity-lead">I AM<span class="cs-dot">.</span></span> <span class="cs-parenthesis" aria-hidden="true">( <span class="cs-identity-word"><span class="cs-role-track">${['ILLUSTRATOR','UI/UX DESIGNER','BRAND DESIGNER','DESIGN EDUCATOR','ILLUSTRATOR'].map(role=>`<span class="cs-role">${role}</span>`).join('')}</span></span> )</span></h2><div class="cs-cover-statement" aria-hidden="true"><span>Making</span><span>things matter.</span></div><p>그림을 그리고, 경험을 설계하고,<br>배움을 나눕니다.</p><div class="cs-identity-tags">DESIGNER · ILLUSTRATOR · EDUCATOR <button type="button" class="cs-role-toggle" data-cs-role-toggle aria-label="직업명 롤링 일시정지" aria-pressed="false">Ⅱ</button></div><a class="cs-skip" href="#career-illustration" data-cs-link="illustration">분야별 경력 바로 보기 ↘</a><span class="cs-scroll-hint">SCROLL TO FOLLOW MY JOURNEY <span aria-hidden="true">↓</span></span></header>
+   return `<article class="career-scroll"><header class="cs-hero"><div class="cs-hero-meta"><span class="cs-eyebrow">02 / CAREER</span><span class="cs-eyebrow">ZOONII — SELECTED JOURNEY, 2013 — NOW</span></div><h2 class="cs-identity" aria-label="I am an illustrator, UI/UX designer, brand designer, and design educator."><span class="cs-identity-lead">I AM<span class="cs-dot">.</span></span><span class="cs-parenthesis" aria-hidden="true">(<span class="cs-identity-word"><span class="cs-role-track">${['ILLUSTRATOR','UI/UX DESIGNER','BRAND DESIGNER','DESIGN EDUCATOR','ILLUSTRATOR'].map(role=>`<span class="cs-role">${role}</span>`).join('')}</span></span>)</span></h2><div class="cs-cover-footer"><div class="cs-cover-statement">Making<br>things matter.</div><div class="cs-cover-caption"><p>그림을 그리고, 경험을 설계하고,<br>배움을 나눕니다.</p><div class="cs-identity-tags">DESIGNER · ILLUSTRATOR · EDUCATOR <button type="button" class="cs-role-toggle" data-cs-role-toggle aria-label="직업명 롤링 일시정지" aria-pressed="false">Ⅱ</button></div></div><a class="cs-skip" href="#career-illustration" data-cs-link="illustration">분야별 경력 바로 보기 ↘</a></div><span class="cs-scroll-hint">SCROLL TO FOLLOW MY JOURNEY <span aria-hidden="true">↓</span></span></header>
    <section class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 요약</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year}</span><div class="cs-timeline-dot" aria-hidden="true"></div><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>SCROLL ↓ <span aria-hidden="true">→</span></span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
-   ${careerSummary()}${background(extras)}<nav class="cs-nav" aria-label="경력 분야 바로가기">${chapters.map(([id],i)=>`<a href="#career-${id}" data-cs-link="${id}"><span class="cs-nav-number" aria-hidden="true">0${i+1}</span>${['Illustration','UI/UX','Branding','Teaching','Exhibitions'][i]}</a>`).join('')}<span class="cs-progress" aria-hidden="true"></span></nav>
-   ${chapters.map(([id,title,subtitle,color,ink,description],i)=>{
+   ${careerSummary()}${background(extras)}
+   ${chapters.map(([id,title,label],i)=>{
     const recordsForSection=all.filter(r=>r[4]===id).sort((a,b)=>b[1]-a[1]);
     const groupedSchools=id==='teaching'?['미림마이스터고등학교','항공대학교']:[];
     const rows=recordsForSection.flatMap(record=>{
@@ -85,7 +85,7 @@
      const schoolRecords=recordsForSection.filter(item=>item[2]===record[2]);
      return record===schoolRecords[0]?[[...record,schoolRecords]]:[];
     });
-    return `<section id="career-${id}" class="cs-chapter" data-cs-chapter data-color="${color}" style="--cs-paper:${color};--cs-accent:${ink}" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">0${i+1} / ${String(recordsForSection.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${['illustration','digital<br>experiences','brand<br>& print','teaching','exhibitions'][i]}</h3><p>${['일러스트레이션','UI/UX 디자인','브랜딩·편집 디자인','강의','전시·페어'][i]}</p><span class="cs-section-arrow" aria-hidden="true">↘</span></div><div class="cs-records"><table aria-label="${title} 경력"><thead><tr><th scope="col">기간</th><th scope="col">프로젝트 / 맡은 역할</th></tr></thead><tbody id="career-${id}-records">${rows.map((record,index)=>row(record,index,sourceDoc)).join('')}</tbody></table>${rows.length>6&&id!=='teaching'?`<button type="button" class="cs-more" data-cs-more data-count="${rows.length-6}" aria-expanded="false" aria-controls="career-${id}-records">추가 이력 ${rows.length-6}개 보기 +</button>`:''}</div></section>`;
+    return `<section id="career-${id}" class="cs-chapter" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">0${i+1} / ${String(recordsForSection.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${['illustration','digital<br>experiences','brand<br>& print','teaching','exhibitions'][i]}</h3><p>${label}</p></div><div class="cs-records"><table aria-label="${title} 경력"><thead><tr><th scope="col">기간</th><th scope="col">프로젝트 / 맡은 역할</th></tr></thead><tbody id="career-${id}-records">${rows.map((record,index)=>row(record,index,sourceDoc)).join('')}</tbody></table>${rows.length>6&&id!=='teaching'?`<button type="button" class="cs-more" data-cs-more data-count="${rows.length-6}" aria-expanded="false" aria-controls="career-${id}-records">추가 이력 ${rows.length-6}개 보기 +</button>`:''}</div></section>`;
    }).join('')}
    <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary>그 외 이력 보기 + · 학력 / 소속 / 수상</summary><div class="career-full">${extras}</div></details></footer></article>`;
   },
@@ -95,103 +95,37 @@
    const article=panel.querySelector('.career-scroll');
    if(!article)return;
    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-   const sections=[...article.querySelectorAll('[data-cs-chapter]')];
    const journey=article.querySelector('.cs-journey'),track=article.querySelector('.cs-timeline');
    const viewport=article.querySelector('.cs-timeline-window');
-   let frame=0,travel=0,stops=[],lockedUntil=0,lastWheel=0,wheelTotal=0,wheelConsumed=false;
-   article.classList.add('cs-onepage');
-   const markerLayer=document.createElement('div');
-   markerLayer.className='cs-snap-markers';markerLayer.setAttribute('aria-hidden','true');
-   article.append(markerLayer);
+   let frame=0,travel=0;
    const topOf=element=>panel.scrollTop+element.getBoundingClientRect().top-panel.getBoundingClientRect().top;
-   function buildStops(){
-    const max=Math.max(0,panel.scrollHeight-panel.clientHeight);
-    const page=Math.max(240,panel.clientHeight-280);
-    const list=[0];
-    const journeyStart=topOf(journey);
-    for(let i=0;i<milestones.length;i++)list.push(journeyStart+travel*i/Math.max(1,milestones.length-1));
-    article.querySelectorAll('.cs-career-summary,.cs-facts,.cs-chapter,.cs-end').forEach(section=>{
-     const start=topOf(section)-145;
-     const end=Math.max(start,topOf(section)+section.offsetHeight-panel.clientHeight+115);
-     list.push(start);
-     for(let y=start+page;y<end-30;y+=page)list.push(y);
-     if(end-start>40)list.push(end);
-    });
-    list.push(max);
-    stops=[...new Set(list.map(y=>Math.round(Math.max(0,Math.min(max,y)))))].sort((a,b)=>a-b).filter((y,i,a)=>!i||y-a[i-1]>30);
-    markerLayer.replaceChildren();
-    const origin=topOf(article);
-    stops.forEach(y=>{
-     const marker=document.createElement('span');marker.className='cs-snap-point';
-     marker.style.top=(y-origin)+'px';markerLayer.append(marker);
-    });
-   }
    function moveTo(top){
-    lockedUntil=performance.now()+(reduced.matches?120:750);
     panel.scrollTo({top,behavior:reduced.matches?'instant':'smooth'});
-   }
-   function step(direction){
-    const current=panel.scrollTop;
-    const target=direction>0?stops.find(y=>y>current+12):[...stops].reverse().find(y=>y<current-12);
-    if(target!==undefined)moveTo(target);
-   }
-   function wheel(event){
-    if(event.ctrlKey||event.metaKey||Math.abs(event.deltaX)>Math.abs(event.deltaY))return;
-    if(event.target.closest('textarea,input,select,[contenteditable="true"],.cs-nav'))return;
-    event.preventDefault();
-    const now=performance.now(),quiet=now-lastWheel>170;lastWheel=now;
-    if(quiet){wheelTotal=0;wheelConsumed=false;}
-    if(now<lockedUntil||wheelConsumed){wheelTotal=0;return;}
-    const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?panel.clientHeight:1);
-    if(wheelTotal*delta<0)wheelTotal=0;
-    wheelTotal+=delta;
-    if(Math.abs(wheelTotal)>=30){step(Math.sign(wheelTotal));wheelTotal=0;wheelConsumed=true;}
-   }
-   function key(event){
-    if(event.target.closest('input,textarea,select,button,a,summary,[contenteditable="true"]'))return;
-    const direction={ArrowDown:1,PageDown:1,ArrowUp:-1,PageUp:-1}[event.key]||(event.key===' '?(event.shiftKey?-1:1):0);
-    if(direction){event.preventDefault();if(performance.now()>=lockedUntil)step(direction);}
-    else if(event.key==='Home'||event.key==='End'){event.preventDefault();moveTo(event.key==='Home'?0:stops[stops.length-1]);}
    }
    function measure(){
     travel=Math.max(0,track.scrollWidth-viewport.clientWidth);
     journey.style.height=reduced.matches?'auto':`${panel.clientHeight+travel}px`;
-    buildStops();
     schedule();
    }
    function paint(){
     frame=0;
     if(!article.isConnected||!panel.classList.contains('open'))return;
-    const box=panel.getBoundingClientRect(),height=panel.clientHeight;
+    const box=panel.getBoundingClientRect();
     const journeyTop=journey.getBoundingClientRect().top-box.top;
     const journeyProgress=travel?Math.max(0,Math.min(1,-journeyTop/travel)):0;
     track.style.transform=reduced.matches?'none':`translate3d(${-journeyProgress*travel}px,0,0)`;
     article.querySelector('.cs-journey-count').textContent=`${String(Math.min(milestones.length,1+Math.round(journeyProgress*(milestones.length-1)))).padStart(2,'0')} / ${String(milestones.length).padStart(2,'0')}`;
-    let active=sections[0];
-    sections.forEach(section=>{
-     const rect=section.getBoundingClientRect();
-     if(rect.top-box.top<=height*.48)active=section;
 
-    });
-    panel.style.setProperty('--career-background',active.dataset.color);
-    article.querySelector('.cs-nav').style.setProperty('--cs-nav-paper',active.dataset.color);
-    article.querySelectorAll('[data-cs-link]').forEach(link=>{
-     if('career-'+link.dataset.csLink===active.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
-    });
-    const distance=Math.max(1,panel.scrollHeight-height);
-    article.style.setProperty('--cs-progress',String(Math.min(1,panel.scrollTop/distance)));
    }
    const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
    function click(event){
     const toggle=event.target.closest('[data-cs-role-toggle]');
     if(toggle){const paused=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(paused));toggle.setAttribute('aria-label',paused?'직업명 롤링 재생':'직업명 롤링 일시정지');toggle.textContent=paused?'▶':'Ⅱ';article.classList.toggle('cs-role-paused',paused);}
     const link=event.target.closest('[data-cs-link]');
-    if(link){event.preventDefault();const section=article.querySelector('#career-'+link.dataset.csLink);moveTo(Math.max(0,topOf(section)-145));}
+    if(link){event.preventDefault();const section=article.querySelector('#career-'+link.dataset.csLink);moveTo(Math.max(0,topOf(section)-100));}
     const button=event.target.closest('[data-cs-more]');
-    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=document.getElementById(button.getAttribute('aria-controls'));rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'추가 이력 접기 −':`추가 이력 ${button.dataset.count}개 보기 +`;buildStops();schedule();}
+    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=document.getElementById(button.getAttribute('aria-controls'));rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'추가 이력 접기 −':`추가 이력 ${button.dataset.count}개 보기 +`;schedule();}
    }
-   panel.addEventListener('wheel',wheel,{passive:false});
-   panel.addEventListener('keydown',key);
    panel.addEventListener('scroll',schedule,{passive:true});
    article.addEventListener('click',click);
    article.addEventListener('toggle',measure,true);
@@ -201,7 +135,7 @@
    const observer=new MutationObserver(()=>{if(!article.isConnected||!panel.classList.contains('open'))cleanup();});
    observer.observe(document.getElementById('zz-body'),{childList:true});
    observer.observe(panel,{attributes:true,attributeFilter:['class']});
-   cleanup=()=>{cancelAnimationFrame(frame);frame=0;observer.disconnect();panel.removeEventListener('scroll',schedule);panel.removeEventListener('wheel',wheel);panel.removeEventListener('keydown',key);markerLayer.remove();article.removeEventListener('click',click);article.removeEventListener('toggle',measure,true);window.removeEventListener('resize',measure);reduced.removeEventListener('change',measure);panel.style.removeProperty('--career-background');cleanup=()=>{};};
+   cleanup=()=>{cancelAnimationFrame(frame);frame=0;observer.disconnect();panel.removeEventListener('scroll',schedule);article.removeEventListener('click',click);article.removeEventListener('toggle',measure,true);window.removeEventListener('resize',measure);reduced.removeEventListener('change',measure);cleanup=()=>{};};
    measure();
    document.fonts.ready.then(()=>{if(article.isConnected)measure();});
    paint();
