@@ -201,3 +201,22 @@
 }
 /* Keep focus/snap navigation inside the career panel, not the outer board. */
 #zz-fullscreen:has(.career-scroll){overflow:clip!important}
+
+
+
+/* Original paper photograph, neutralized in CSS to retain each chapter's color. */
+#zz-fullscreen #zz-body :is(.cs-hero,.cs-journey,.cs-career-summary,.cs-facts,.cs-chapter,.cs-end,.cs-nav){isolation:isolate}
+#zz-fullscreen #zz-body :is(.cs-career-summary,.cs-facts,.cs-chapter,.cs-end){position:relative}
+#zz-fullscreen #zz-body :is(.cs-hero,.cs-journey,.cs-career-summary,.cs-facts,.cs-chapter,.cs-end,.cs-nav)::before{
+ content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:url('/assets/textures/career-paper.png') center/cover no-repeat;
+ filter:grayscale(1) brightness(1.8) contrast(1.25);mix-blend-mode:multiply;opacity:.24;
+}
+/* Keep the texture at screen scale while the horizontal timeline is pinned. */
+#zz-fullscreen #zz-body .cs-journey::before{display:none}
+#zz-fullscreen #zz-body .cs-journey-sticky{isolation:isolate}
+#zz-fullscreen #zz-body .cs-journey-sticky::before{
+ content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:url('/assets/textures/career-paper.png') center/cover no-repeat;
+ filter:grayscale(1) brightness(1.8) contrast(1.25);mix-blend-mode:multiply;opacity:.28;
+}
