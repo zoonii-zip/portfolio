@@ -120,3 +120,24 @@
  #zz-fullscreen #zz-body .cs-skip{left:22px;right:auto;bottom:135px;font-size:10px}
  #zz-fullscreen #zz-body .cs-scroll-hint{left:22px;bottom:105px;font-size:7px}
 }
+
+/* One gesture advances one reading screen; touch and scrollbar snapping remain native. */
+#zz-fullscreen #zz-overlay:has(.cs-onepage){scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scroll-padding:0}
+#zz-fullscreen #zz-body .cs-onepage{position:relative}
+#zz-fullscreen #zz-body .cs-snap-markers{position:absolute;inset:0;pointer-events:none}
+#zz-fullscreen #zz-body .cs-snap-point{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start;scroll-snap-stop:always;pointer-events:none}
+#zz-fullscreen #zz-body .cs-onepage .cs-hero{height:calc(100dvh - 128px);min-height:calc(100dvh - 128px);padding:85px 5vw 120px}
+#zz-fullscreen #zz-body .cs-onepage .cs-hero h2.cs-identity{font-size:clamp(64px,14dvh,170px)}
+#zz-fullscreen #zz-body .cs-onepage .cs-cover-statement{font-size:clamp(40px,9dvh,110px)}
+/* Intro Latin family, with SUIT supplying Korean glyphs. */
+#zz-fullscreen #zz-body .career-scroll,
+#zz-fullscreen #zz-body .career-scroll *{font-family:var(--font-display-en)!important}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-onepage .cs-hero{height:calc(100dvh - 116px);min-height:calc(100dvh - 116px);padding:85px 22px 155px}
+ #zz-fullscreen #zz-body .cs-onepage .cs-hero h2.cs-identity{font-size:clamp(64px,18vw,140px)}
+ #zz-fullscreen #zz-body .cs-onepage .cs-cover-statement{font-size:clamp(32px,10vw,70px)}
+ #zz-fullscreen #zz-body .cs-onepage .cs-chapter,#zz-fullscreen #zz-body .cs-onepage .cs-end{min-height:100dvh}
+}
+@media(prefers-reduced-motion:reduce){
+ #zz-fullscreen #zz-overlay:has(.cs-onepage){scroll-snap-type:y proximity}
+}
