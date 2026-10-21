@@ -60,15 +60,16 @@
    const topOf=element=>panel.scrollTop+element.getBoundingClientRect().top-panel.getBoundingClientRect().top;
    function buildStops(){
     const max=Math.max(0,panel.scrollHeight-panel.clientHeight);
-    const page=Math.max(240,panel.clientHeight-170);
+    const page=Math.max(240,panel.clientHeight-280);
     const list=[0];
     const journeyStart=topOf(journey);
     for(let i=0;i<6;i++)list.push(journeyStart+travel*i/5);
     article.querySelectorAll('.cs-chapter,.cs-end').forEach(section=>{
      const start=topOf(section)-145;
-     const end=start+section.offsetHeight;
+     const end=Math.max(start,topOf(section)+section.offsetHeight-panel.clientHeight+115);
      list.push(start);
-     for(let y=start+page;y<end-page*.55;y+=page)list.push(y);
+     for(let y=start+page;y<end-30;y+=page)list.push(y);
+     if(end-start>40)list.push(end);
     });
     list.push(max);
     stops=[...new Set(list.map(y=>Math.round(Math.max(0,Math.min(max,y)))))].sort((a,b)=>a-b).filter((y,i,a)=>!i||y-a[i-1]>30);
