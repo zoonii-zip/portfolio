@@ -104,7 +104,12 @@
   margin:0;padding:6px;border:0;background:transparent;color:#c4beb3;
   cursor:pointer;transition:color .2s;
 }
-#zz-logo-entry #zz-scrollboard svg {display:block;pointer-events:none}
+#zz-logo-entry #zz-scrollboard svg {display:block;pointer-events:none;animation:intro-scroll-float 2.6s ease-in-out infinite}
+@keyframes intro-scroll-float {
+  0%,100% {transform:translateY(-4px)}
+  50% {transform:translateY(5px)}
+}
+@media(prefers-reduced-motion:reduce){#zz-logo-entry #zz-scrollboard svg{animation:none}}
 #zz-logo-entry #zz-scrollboard:hover {color:#fffdf5}
 #zz-logo-entry #zz-scrollboard:focus-visible {outline:2px solid #eee8dc;outline-offset:4px;border-radius:8px}
 @media(max-width:650px){
