@@ -163,3 +163,21 @@
  #zz-fullscreen #zz-body .cs-timeline-window{overflow-x:auto}
  #zz-fullscreen #zz-body .cs-timeline{transform:none!important;will-change:auto}
 }
+
+/* Quiet reading: a fixed identity and a normal vertical timeline. */
+#zz-fullscreen #zz-body .cs-role-track{animation:none;transform:none}
+#zz-fullscreen #zz-body .cs-role-toggle{display:none}
+#zz-fullscreen #zz-body .cs-journey{height:auto!important}
+#zz-fullscreen #zz-body .cs-journey-sticky{position:relative;height:auto;padding:85px 0 95px;overflow:visible}
+#zz-fullscreen #zz-body .cs-journey-count{display:none}
+#zz-fullscreen #zz-body .cs-timeline-window{overflow:visible;margin:40px 0}
+#zz-fullscreen #zz-body .cs-timeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 5vw;width:auto;padding:0 5vw;transform:none!important;will-change:auto}
+#zz-fullscreen #zz-body .cs-milestone{width:auto;padding:0 0 15px}
+#zz-fullscreen #zz-body .cs-year{font-size:clamp(30px,3.5vw,48px)}
+#zz-fullscreen #zz-body .cs-timeline-dot{margin:20px 0}
+#zz-fullscreen #zz-body .cs-milestone h3{font-size:clamp(20px,2vw,28px);margin:15px 0}
+#zz-fullscreen #zz-body .cs-milestone p{max-width:none}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-journey-sticky{padding:55px 0 75px}
+ #zz-fullscreen #zz-body .cs-timeline{grid-template-columns:1fr;padding:0 22px;gap:30px}
+}

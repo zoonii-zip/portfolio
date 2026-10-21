@@ -1,36 +1,8 @@
 (() => {
  'use strict';
  window.ZooniiProfile = {
-  unfold(panel) {
-   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-   const page = panel.querySelector('.profile-stack');
-   if (!page) return;
-   const duration = 1100;
-   const easing = 'cubic-bezier(.22,.75,.25,1)';
-   // Preserve the board-to-profile unfold without a permanent paper texture.
-   panel.animate([
-    {offset:0, scale:'.14 .19', rotate:'-16deg', clipPath:'polygon(32% 9%,65% 0%,93% 27%,100% 64%,71% 95%,39% 100%,7% 76%,0% 36%)', filter:'brightness(.77)', borderRadius:'35%'},
-    {offset:.28, scale:'.42 .38', rotate:'7deg', clipPath:'polygon(15% 5%,79% 0%,98% 13%,100% 81%,87% 100%,17% 96%,0% 88%,5% 18%)', filter:'brightness(.88)', borderRadius:'14%'},
-    {offset:.64, scale:'.88 .74', rotate:'-2deg', clipPath:'polygon(3% 1%,96% 0%,100% 3%,99% 96%,97% 100%,3% 99%,0% 97%,1% 4%)', filter:'brightness(.97)', borderRadius:'2%'},
-    {offset:1, scale:'1 1', rotate:'0deg', clipPath:'polygon(0% 0%,100% 0%,100% 0%,100% 100%,100% 100%,0% 100%,0% 100%,0% 0%)', filter:'brightness(1)', borderRadius:'0%'}
-   ], {duration, easing});
-   const creases = document.createElement('div');
-   creases.className = 'profile-unfold-creases';
-   creases.setAttribute('aria-hidden', 'true');
-   page.append(creases);
-   const folds = creases.animate([
-    {opacity:1, transform:'scale(1.35) rotate(-8deg)'},
-    {offset:.5, opacity:.65, transform:'scale(1.08) rotate(2deg)'},
-    {opacity:0, transform:'scale(1) rotate(0deg)'}
-   ], {duration, easing});
-   folds.finished.then(() => creases.remove(), () => creases.remove());
-   page.querySelectorAll('.ps-intro,.ps-right').forEach(element => {
-    element.animate([{opacity:0, transform:'translateY(16px)'},{opacity:1, transform:'translateY(0)'}],
-     {duration:420, delay:650, easing:'ease-out', fill:'backwards'});
-   });
-   panel.querySelector('.panelhead')?.animate([{opacity:0},{opacity:1}],
-    {duration:250, delay:800, fill:'backwards'});
-  },
+  // Keep the public hook; profile content opens directly without a fold animation.
+  unfold() {},
   hero() {
    return `<article class="profile-page profile-stack"><div class="ps-layout">
     <div class="ps-left"><nav class="ps-nav" aria-label="프로필 탐색"><a class="ps-monogram" href="/" aria-label="홈">Z.</a><div><span aria-current="page">Info −</span><a href="/career/">Career +</a><a href="/archive/">Archive +</a><a href="/contact/">Contact +</a></div></nav>

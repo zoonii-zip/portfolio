@@ -74,8 +74,8 @@
    });
    const expanded=teaching.length?[...records.filter(record=>record[4]!=='teaching'),...teaching]:records;
    const all=[...expanded,['2025.08–2026.04',20250800,'COMES / 브랜드 디자인','기업 브랜드 관련 홍보물 및 웰컴키트 디자인','branding','BRANDING'],...exhibitions(extras)];
-   return `<article class="career-scroll"><header class="cs-hero"><div class="cs-hero-meta"><span class="cs-eyebrow">02 / CAREER</span><span class="cs-eyebrow">ZOONII — SELECTED JOURNEY, 2013 — NOW</span></div><h2 class="cs-identity" aria-label="I am an illustrator, UI/UX designer, brand designer, and design educator."><span class="cs-identity-lead">I AM<span class="cs-dot">.</span></span><span class="cs-parenthesis" aria-hidden="true">(<span class="cs-identity-word"><span class="cs-role-track">${['ILLUSTRATOR','UI/UX DESIGNER','BRAND DESIGNER','DESIGN EDUCATOR','ILLUSTRATOR'].map(role=>`<span class="cs-role">${role}</span>`).join('')}</span></span>)</span></h2><div class="cs-cover-footer"><div class="cs-cover-statement">Making<br>things matter.</div><div class="cs-cover-caption"><p>그림을 그리고, 경험을 설계하고,<br>배움을 나눕니다.</p><div class="cs-identity-tags">DESIGNER · ILLUSTRATOR · EDUCATOR <button type="button" class="cs-role-toggle" data-cs-role-toggle aria-label="직업명 롤링 일시정지" aria-pressed="false">Ⅱ</button></div></div><a class="cs-skip" href="#career-illustration" data-cs-link="illustration">분야별 경력 바로 보기 ↘</a></div><span class="cs-scroll-hint">SCROLL TO FOLLOW MY JOURNEY <span aria-hidden="true">↓</span></span></header>
-   <section class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 요약</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year}</span><div class="cs-timeline-dot" aria-hidden="true"></div><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>SCROLL ↓ <span aria-hidden="true">→</span></span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
+   return `<article class="career-scroll"><header class="cs-hero"><div class="cs-hero-meta"><span class="cs-eyebrow">02 / CAREER</span><span class="cs-eyebrow">ZOONII — SELECTED JOURNEY, 2013 — NOW</span></div><h2 class="cs-identity" aria-label="I am an illustrator, UI/UX designer, brand designer, and design educator."><span class="cs-identity-lead">I AM<span class="cs-dot">.</span></span><span class="cs-parenthesis" aria-hidden="true">(<span class="cs-identity-word"><span class="cs-role-track">${['ILLUSTRATOR','UI/UX DESIGNER','BRAND DESIGNER','DESIGN EDUCATOR','ILLUSTRATOR'].map(role=>`<span class="cs-role">${role}</span>`).join('')}</span></span>)</span></h2><div class="cs-cover-footer"><div class="cs-cover-statement">Making<br>things matter.</div><div class="cs-cover-caption"><p>그림을 그리고, 경험을 설계하고,<br>배움을 나눕니다.</p><div class="cs-identity-tags">DESIGNER · ILLUSTRATOR · EDUCATOR</div></div><a class="cs-skip" href="#career-illustration" data-cs-link="illustration">분야별 경력 바로 보기 ↘</a></div><span class="cs-scroll-hint">SCROLL TO FOLLOW MY JOURNEY <span aria-hidden="true">↓</span></span></header>
+   <section class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 요약</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year}</span><div class="cs-timeline-dot" aria-hidden="true"></div><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>2013 — NOW</span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
    ${careerSummary()}${background(extras)}
    ${chapters.map(([id,title,label],i)=>{
     const recordsForSection=all.filter(r=>r[4]===id).sort((a,b)=>b[1]-a[1]);
@@ -94,51 +94,20 @@
    const panel=document.getElementById('zz-overlay');
    const article=panel.querySelector('.career-scroll');
    if(!article)return;
-   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-   const journey=article.querySelector('.cs-journey'),track=article.querySelector('.cs-timeline');
-   const viewport=article.querySelector('.cs-timeline-window');
-   let frame=0,travel=0;
    const topOf=element=>panel.scrollTop+element.getBoundingClientRect().top-panel.getBoundingClientRect().top;
-   function moveTo(top){
-    panel.scrollTo({top,behavior:reduced.matches?'instant':'smooth'});
-   }
-   function measure(){
-    travel=Math.max(0,track.scrollWidth-viewport.clientWidth);
-    journey.style.height=reduced.matches?'auto':`${panel.clientHeight+travel}px`;
-    schedule();
-   }
-   function paint(){
-    frame=0;
-    if(!article.isConnected||!panel.classList.contains('open'))return;
-    const box=panel.getBoundingClientRect();
-    const journeyTop=journey.getBoundingClientRect().top-box.top;
-    const journeyProgress=travel?Math.max(0,Math.min(1,-journeyTop/travel)):0;
-    track.style.transform=reduced.matches?'none':`translate3d(${-journeyProgress*travel}px,0,0)`;
-    article.querySelector('.cs-journey-count').textContent=`${String(Math.min(milestones.length,1+Math.round(journeyProgress*(milestones.length-1)))).padStart(2,'0')} / ${String(milestones.length).padStart(2,'0')}`;
-
-   }
-   const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
+   // Timeline content is static; no pinned horizontal scroll or animation loop.
+   function moveTo(top){panel.scrollTo({top,behavior:'instant'});}
    function click(event){
-    const toggle=event.target.closest('[data-cs-role-toggle]');
-    if(toggle){const paused=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(paused));toggle.setAttribute('aria-label',paused?'직업명 롤링 재생':'직업명 롤링 일시정지');toggle.textContent=paused?'▶':'Ⅱ';article.classList.toggle('cs-role-paused',paused);}
     const link=event.target.closest('[data-cs-link]');
     if(link){event.preventDefault();const section=article.querySelector('#career-'+link.dataset.csLink);moveTo(Math.max(0,topOf(section)-100));}
     const button=event.target.closest('[data-cs-more]');
-    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=document.getElementById(button.getAttribute('aria-controls'));rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'추가 이력 접기 −':`추가 이력 ${button.dataset.count}개 보기 +`;schedule();}
+    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=document.getElementById(button.getAttribute('aria-controls'));rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'추가 이력 접기 −':`추가 이력 ${button.dataset.count}개 보기 +`;}
    }
-   panel.addEventListener('scroll',schedule,{passive:true});
    article.addEventListener('click',click);
-   article.addEventListener('toggle',measure,true);
-   window.addEventListener('resize',measure);
-   reduced.addEventListener('change',measure);
-   // Release listeners as soon as another page replaces Career.
    const observer=new MutationObserver(()=>{if(!article.isConnected||!panel.classList.contains('open'))cleanup();});
    observer.observe(document.getElementById('zz-body'),{childList:true});
    observer.observe(panel,{attributes:true,attributeFilter:['class']});
-   cleanup=()=>{cancelAnimationFrame(frame);frame=0;observer.disconnect();panel.removeEventListener('scroll',schedule);article.removeEventListener('click',click);article.removeEventListener('toggle',measure,true);window.removeEventListener('resize',measure);reduced.removeEventListener('change',measure);cleanup=()=>{};};
-   measure();
-   document.fonts.ready.then(()=>{if(article.isConnected)measure();});
-   paint();
+   cleanup=()=>{observer.disconnect();article.removeEventListener('click',click);cleanup=()=>{};};
   }
  };
 })();
