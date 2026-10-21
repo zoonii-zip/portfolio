@@ -106,4 +106,24 @@ html.viewing-space:has(#zz-overlay.open .profile-stack) :is(#zz-global-dock .doc
  #zz-fullscreen #zz-body .profile-stack h3{font-size:16px}
  #zz-fullscreen .ps-nav div :is(a,span){padding:7px;font-size:9px}
 }
+/* Widget motion uses transforms so the no-scroll card layout stays in place. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ #zz-fullscreen .profile-stack{--ps-spring:cubic-bezier(.22,1.35,.36,1)}
+ #zz-fullscreen :is(.ps-intro,.ps-link,.ps-contact){position:relative;transition:scale .5s var(--ps-spring),translate .5s var(--ps-spring),box-shadow .3s ease,background .2s ease}
+ #zz-fullscreen .ps-intro:is(:hover,:focus-within){z-index:2;scale:1.012;translate:0 -3px;box-shadow:0 12px 28px #2728240c}
+ #zz-fullscreen :is(.ps-link,.ps-contact):is(:hover,:focus-visible){z-index:2;scale:1.025;translate:0 -4px;box-shadow:0 14px 28px #27282414}
+ #zz-fullscreen :is(.ps-link-art img,.ps-intro-top img){transition:scale .6s var(--ps-spring),rotate .6s var(--ps-spring)}
+ #zz-fullscreen .ps-link:is(:hover,:focus-visible) .ps-career-art img{scale:1.09;rotate:-3deg}
+ #zz-fullscreen .ps-link:is(:hover,:focus-visible) .ps-archive-art img{scale:1.09;rotate:3deg}
+ #zz-fullscreen .ps-intro:is(:hover,:focus-within) .ps-intro-top img{scale:1.045;rotate:-2deg}
+ #zz-fullscreen .profile-stack h3 span{display:inline-block;transition:translate .4s var(--ps-spring)}
+ #zz-fullscreen :is(.ps-link,.ps-contact):is(:hover,:focus-visible) h3 span{translate:3px -3px}
+ #zz-fullscreen .ps-nav a{transition:scale .35s var(--ps-spring),translate .35s var(--ps-spring),background .2s ease}
+ #zz-fullscreen .ps-nav a:is(:hover,:focus-visible){scale:1.06;translate:0 -2px}
+ #zz-fullscreen :is(.ps-link,.ps-contact,.ps-nav a):active{scale:.98;translate:0 1px;transition-duration:.12s}
+}
+@media(hover:none) and (prefers-reduced-motion:no-preference){
+ #zz-fullscreen :is(.ps-link,.ps-contact,.ps-nav a){transition:scale .18s ease,background .2s ease}
+ #zz-fullscreen :is(.ps-link,.ps-contact,.ps-nav a):active{scale:.98}
+}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen .ps-link{transition:none}#zz-fullscreen .profile-unfold-creases{display:none}}
