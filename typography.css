@@ -18,3 +18,18 @@
   font-weight: 400;
   letter-spacing: -.015em;
 }
+
+/* Display titles only. Adobe Web Project must load sets-grotesk-l. */
+:root { --font-display-en: 'sets-grotesk-l', var(--font-body); }
+:root body :is(
+  #zz-logo-entry .intro-copy [lang='en'],
+  #zz-fullscreen .profile-film-title,
+  #zz-fullscreen .profile-film-title span,
+  #zz-fullscreen .cs-hero h2,
+  #zz-fullscreen .cs-hero h2 span,
+  #zz-fullscreen .cs-chapter h3,
+  #zz-fullscreen .cs-end h3,
+  #zz-fullscreen .cs-feature strong
+) {
+  font-family: var(--font-display-en) !important;
+}

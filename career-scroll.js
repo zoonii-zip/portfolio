@@ -21,24 +21,27 @@
   [...(fairs?.nextElementSibling?.querySelectorAll('li')||[])].forEach(li=>rows.push(['FAIR',0,li.textContent,'Thingthingclub · 일러스트레이션 페어 참여','exhibition','페어']));
   return rows;
  }
- function row(record,index) {
-  return `<details class="cs-record"${index>=4?' data-cs-extra hidden':''}><summary><span class="cs-date">${escape(record[0])}</span><strong>${escape(record[2])}</strong><span class="cs-record-plus" aria-hidden="true">+</span></summary><p>${escape(record[3])}</p></details>`;
- }
+ const milestones=[
+  ['2013—2018','디자인의 기반을 쌓다','솔트웨어','공공기관·대학·금융권의 포털과 업무 시스템 UI, HTML/CSS 퍼블리싱.','#d8d2f0'],
+  ['2019—2021','화면에서 경험으로','WEB & APP','메디팜소프트, 전주사랑상품권, KT PASS 등 웹·앱 프로젝트.','#c7dfef'],
+  ['2022—2023','브랜드의 영역으로','BRAND & GRAPHIC','Chimps Burger, Orangecity, Astar Corp. — 캐릭터에서 브랜드 아이덴티티까지.','#f3e5a0'],
+  ['2024','그림으로 이야기를 넓히다','KT Y · ADOBE','KT Y Artist Label 3기 디지털 굿즈와 Adobe Illustrator 캠페인.','#f4c4a8'],
+  ['2025','다양한 매체와 만나다','UMBRO · COMES','의류 그래픽 개발과 AI 기반 QA 솔루션 UI/UX. 그림과 제품을 오가다.','#d0dfc7'],
+  ['2026—NOW','계속 만들고, 나누다','STILL MAKING','침스버거 리뉴얼, 통큰런 키비주얼, 대학 디자인 교육으로 이어지는 작업.','#f4c4a8']
+ ];
+ function row(record,index){return `<tr${index>=6?' data-cs-extra hidden':''}><td>${escape(record[0])}</td><td><strong>${escape(record[2])}</strong><p>${escape(record[3])}</p></td></tr>`;}
  window.ZooniiCareer = {
   render(records,extras) {
    cleanup();
    const all=[...records,...exhibitions(extras)];
-   return `<article class="career-scroll"><header class="cs-hero" data-cs-chapter data-color="#f4f0e7"><span class="cs-eyebrow">CAREER / 2013 — NOW</span><h2>A DECADE<br>OF MAKING<span>.</span></h2><p>그림에서 브랜드로,<br class="cs-mobile-break"> 화면에서 경험으로.</p><span class="cs-stamp">STILL MAKING<br>2013 — NOW</span><div class="cs-featured">${[
-    ['UMBRO','Illustration & graphics','티셔츠 컬렉션 그래픽 개발','illustration0'],
-    ['KT Y','Brand storytelling','브랜드 협업 일러스트레이션','illustration3'],
-    ['COMES','UI/UX & product design','홈페이지 기획 · UI/UX 디자인','uiux0']
-   ].map(([name,role,description,id],i)=>`<a href="/projects/${id}/" class="cs-feature cs-feature-${i}"><span class="cs-eyebrow">SELECTED WORK / 0${i+1}</span><strong>${name}</strong><span>${role}</span><small>${description}</small><span class="cs-feature-arrow" aria-hidden="true">↗</span></a>`).join('')}</div><span class="cs-scroll-hint">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></span></header>
+   return `<article class="career-scroll"><header class="cs-hero" data-cs-chapter data-color="#f4f0e7"><div class="cs-hero-meta"><span class="cs-eyebrow">ZOONII — SELECTED JOURNEY</span><span class="cs-eyebrow">2013 — NOW</span></div><h2 class="cs-identity" aria-label="I am an illustrator, UI/UX designer, brand designer, and design educator."><span class="cs-identity-lead">I AM<span class="cs-dot">.</span></span> <span class="cs-parenthesis" aria-hidden="true">( <span class="cs-identity-word"><span class="cs-role-track">${['ILLUSTRATOR','UI/UX DESIGNER','BRAND DESIGNER','DESIGN EDUCATOR','ILLUSTRATOR'].map(role=>`<span class="cs-role">${role}</span>`).join('')}</span></span> )</span></h2><div class="cs-cover-statement" aria-hidden="true"><span>Making</span><span>things matter.</span></div><p>그림을 그리고, 경험을 설계하고,<br>배움을 나눕니다.</p><div class="cs-identity-tags">DESIGNER · ILLUSTRATOR · EDUCATOR <button type="button" class="cs-role-toggle" data-cs-role-toggle aria-label="직업명 롤링 일시정지" aria-pressed="false">Ⅱ</button></div><a class="cs-skip" href="#career-illustration" data-cs-link="illustration">분야별 경력 바로 보기 ↘</a><span class="cs-scroll-hint">SCROLL TO FOLLOW MY JOURNEY <span aria-hidden="true">↓</span></span></header>
+   <section class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">A JOURNEY OF MAKING / 경력의 흐름</span><span class="cs-journey-count">01 / 06</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year">${year}</span><div class="cs-timeline-dot" aria-hidden="true"></div><span class="cs-eyebrow">0${i+1} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>SCROLL ↓ <span aria-hidden="true">→</span></span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
    <nav class="cs-nav" aria-label="경력 분야 바로가기">${chapters.map(([id],i)=>`<a href="#career-${id}" data-cs-link="${id}">${['Illustration','UI/UX','Branding','Teaching','Exhibitions'][i]}</a>`).join('')}<span class="cs-progress" aria-hidden="true"></span></nav>
    ${chapters.map(([id,title,subtitle,color,ink,description],i)=>{
     const rows=all.filter(r=>r[4]===id).sort((a,b)=>b[1]-a[1]);
-    return `<section id="career-${id}" class="cs-chapter" data-cs-chapter data-color="${color}" style="--cs-paper:${color};--cs-accent:${ink}" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">CHAPTER 0${i+1} / ${String(rows.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${title}</h3><p>${subtitle}</p><span class="cs-description">${description}</span></div><svg class="cs-stroke" viewBox="0 0 240 700" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M160 0 C30 30 225 70 125 110 C15 155 220 185 155 235 C85 290 20 205 75 185 C160 150 225 320 125 370 C15 420 220 460 150 510 C50 580 230 610 120 700"/></svg><div class="cs-records" id="career-${id}-records">${rows.map(row).join('')}</div>${rows.length>4?`<button type="button" class="cs-more" data-cs-more aria-expanded="false" aria-controls="career-${id}-records">전체 ${rows.length}개 이력 보기 <span aria-hidden="true">↗</span></button>`:''}<span class="cs-chapter-number" aria-hidden="true">0${i+1}</span></section>`;
+    return `<section id="career-${id}" class="cs-chapter" data-cs-chapter data-color="${color}" style="--cs-paper:${color};--cs-accent:${ink}" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">0${i+1} / ${String(rows.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${title}</h3><p>${subtitle}</p><span class="cs-description">${description}</span><span class="cs-section-arrow" aria-hidden="true">↘</span></div><div class="cs-records"><table aria-label="${title} 경력"><thead><tr><th scope="col">기간</th><th scope="col">프로젝트 / 맡은 역할</th></tr></thead><tbody id="career-${id}-records">${rows.map(row).join('')}</tbody></table>${rows.length>6?`<button type="button" class="cs-more" data-cs-more data-count="${rows.length-6}" aria-expanded="false" aria-controls="career-${id}-records">추가 이력 ${rows.length-6}개 보기 +</button>`:''}</div></section>`;
    }).join('')}
-   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary>학력 · 소속 · 수상 및 전체 경력 자료</summary><div class="career-full">${extras}</div></details></footer></article>`;
+   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary>그 외 이력 보기 + · 학력 / 소속 / 수상</summary><div class="career-full">${extras}</div></details></footer></article>`;
   },
   mount() {
    cleanup();
@@ -47,17 +50,27 @@
    if(!article)return;
    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
    const sections=[...article.querySelectorAll('[data-cs-chapter]')];
-   let frame=0;
+   const journey=article.querySelector('.cs-journey'),track=article.querySelector('.cs-timeline');
+   const viewport=article.querySelector('.cs-timeline-window');
+   let frame=0,travel=0;
+   function measure(){
+    travel=Math.max(0,track.scrollWidth-viewport.clientWidth);
+    journey.style.height=reduced.matches?'auto':`${panel.clientHeight+travel}px`;
+    schedule();
+   }
    function paint(){
     frame=0;
     if(!article.isConnected||!panel.classList.contains('open'))return;
     const box=panel.getBoundingClientRect(),height=panel.clientHeight;
+    const journeyTop=journey.getBoundingClientRect().top-box.top;
+    const journeyProgress=travel?Math.max(0,Math.min(1,-journeyTop/travel)):0;
+    track.style.transform=reduced.matches?'none':`translate3d(${-journeyProgress*travel}px,0,0)`;
+    article.querySelector('.cs-journey-count').textContent=`0${Math.min(6,1+Math.floor(journeyProgress*6))} / 06`;
     let active=sections[0];
     sections.forEach(section=>{
      const rect=section.getBoundingClientRect();
      if(rect.top-box.top<=height*.48)active=section;
-     const progress=Math.max(0,Math.min(1,(height*.8-(rect.top-box.top))/(rect.height+height*.2)));
-     section.querySelector('path')?.style.setProperty('stroke-dashoffset', reduced.matches?'0':String(1-progress));
+
     });
     panel.style.setProperty('--career-background',active.dataset.color);
     article.querySelectorAll('[data-cs-link]').forEach(link=>{
@@ -68,21 +81,24 @@
    }
    const schedule=()=>{if(!frame)frame=requestAnimationFrame(paint);};
    function click(event){
+    const toggle=event.target.closest('[data-cs-role-toggle]');
+    if(toggle){const paused=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(paused));toggle.setAttribute('aria-label',paused?'직업명 롤링 재생':'직업명 롤링 일시정지');toggle.textContent=paused?'▶':'Ⅱ';article.classList.toggle('cs-role-paused',paused);}
     const link=event.target.closest('[data-cs-link]');
     if(link){event.preventDefault();const section=article.querySelector('#career-'+link.dataset.csLink);panel.scrollTo({top:panel.scrollTop+section.getBoundingClientRect().top-panel.getBoundingClientRect().top-150,behavior:reduced.matches?'instant':'smooth'});}
     const button=event.target.closest('[data-cs-more]');
-    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=button.previousElementSibling;rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'이력 접기 −':`전체 ${rows.children.length}개 이력 보기 ↗`;schedule();}
+    if(button){const expanded=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(expanded));const rows=document.getElementById(button.getAttribute('aria-controls'));rows.querySelectorAll('[data-cs-extra]').forEach(row=>row.hidden=!expanded);button.textContent=expanded?'추가 이력 접기 −':`추가 이력 ${button.dataset.count}개 보기 +`;schedule();}
    }
    panel.addEventListener('scroll',schedule,{passive:true});
    article.addEventListener('click',click);
    article.addEventListener('toggle',schedule,true);
-   window.addEventListener('resize',schedule);
-   reduced.addEventListener('change',schedule);
+   window.addEventListener('resize',measure);
+   reduced.addEventListener('change',measure);
    // Release listeners as soon as another page replaces Career.
    const observer=new MutationObserver(()=>{if(!article.isConnected||!panel.classList.contains('open'))cleanup();});
    observer.observe(document.getElementById('zz-body'),{childList:true});
    observer.observe(panel,{attributes:true,attributeFilter:['class']});
-   cleanup=()=>{cancelAnimationFrame(frame);frame=0;observer.disconnect();panel.removeEventListener('scroll',schedule);article.removeEventListener('click',click);article.removeEventListener('toggle',schedule,true);window.removeEventListener('resize',schedule);reduced.removeEventListener('change',schedule);panel.style.removeProperty('--career-background');cleanup=()=>{};};
+   cleanup=()=>{cancelAnimationFrame(frame);frame=0;observer.disconnect();panel.removeEventListener('scroll',schedule);article.removeEventListener('click',click);article.removeEventListener('toggle',schedule,true);window.removeEventListener('resize',measure);reduced.removeEventListener('change',measure);panel.style.removeProperty('--career-background');cleanup=()=>{};};
+   measure();
    paint();
   }
  };

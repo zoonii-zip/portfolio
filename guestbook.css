@@ -61,18 +61,17 @@
 #zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) time{flex:none;margin-top:2px;font-size:9px;text-align:center}
 
 /* Two equal track halves keep the greeting seamless without a JS animation loop. */
-#zz-message-section .guest-ribbons{position:relative;order:-1;flex:0 0 96px;margin:0 -28px 12px;overflow:hidden;isolation:isolate;pointer-events:none}
-#zz-message-section .guest-ribbon{position:absolute;left:-3%;top:28px;width:106%;overflow:hidden;background:#f6d546;color:#25281e;transform:rotate(2deg);padding:7px 0;border-block:1px solid #25281e38}
-#zz-message-section .guest-ribbon-reverse{top:31px;transform:rotate(-2deg);background:#ffe66c;box-shadow:0 3px 7px #29271c18}
-#zz-message-section .guest-ribbon-track{display:flex;width:max-content;white-space:nowrap;animation:guest-ribbon-travel 42s linear infinite}
-#zz-message-section .guest-ribbon-reverse .guest-ribbon-track{animation-direction:reverse}
-#zz-message-section .guest-ribbon-group{display:flex;flex:none}
-#zz-message-section .guest-ribbon-group>span{display:block;flex:none;padding-right:40px;font:800 clamp(18px,2vw,26px)/1.15 Arial,sans-serif;letter-spacing:-.04em;user-select:none}
-#zz-message-section .guest-ribbon-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-#zz-message-section .guest-ribbons~.guest-layout{flex:1;min-height:0;height:auto}
+body .guest-ribbons{position:relative;order:-1;flex:0 0 96px;margin:0 -28px 12px;overflow:hidden;isolation:isolate;pointer-events:none}
+body .guest-ribbon{position:absolute;left:-3%;top:28px;width:106%;overflow:hidden;background:#f6d546;color:#25281e;transform:rotate(2deg);padding:7px 0;border-block:1px solid #25281e38}
+body .guest-ribbon-reverse{top:31px;transform:rotate(-2deg);background:#ffe66c;box-shadow:0 3px 7px #29271c18}
+body .guest-ribbon-track{display:flex;width:max-content;white-space:nowrap;animation:guest-ribbon-travel 42s linear infinite}
+body .guest-ribbon-reverse .guest-ribbon-track{animation-direction:reverse}
+body .guest-ribbon-group{display:flex;flex:none}
+body .guest-ribbon-group>span{display:block;flex:none;padding-right:40px;font:800 clamp(18px,2vw,26px)/1.15 Arial,sans-serif;letter-spacing:-.04em;user-select:none}
+body .guest-ribbon-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @keyframes guest-ribbon-travel{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(max-width:760px){#zz-message-section .guest-ribbons{flex-basis:68px;margin:0 -14px 8px}#zz-message-section .guest-ribbon{top:13px;padding:5px 0;transform:rotate(3deg)}#zz-message-section .guest-ribbon-reverse{top:29px;transform:rotate(-3deg)}#zz-message-section .guest-ribbon-group>span{font-size:18px;padding-right:28px}}
-@media(prefers-reduced-motion:reduce){#zz-message-section .guest-ribbon-track{animation:none}}
+@media(max-width:760px){body .guest-ribbons{flex-basis:68px;margin:0 -14px 8px}body .guest-ribbon{top:13px;padding:5px 0;transform:rotate(3deg)}body .guest-ribbon-reverse{top:29px;transform:rotate(-3deg)}body .guest-ribbon-group>span{font-size:18px;padding-right:28px}}
+@media(prefers-reduced-motion:reduce){body .guest-ribbon-track{animation:none}}
 
 /* Read the wall first; writing is an explicit modal action. */
 #zz-message-section .guest-layout{display:block!important;grid-template-columns:none!important;position:relative}
@@ -98,3 +97,17 @@
 #zz-message-section .guest-compose-dialog .paper-preview.paper-pink{padding:66px 81px 93px 87px;height:300px;aspect-ratio:auto}
 #zz-message-section .guest-compose-dialog .paper-preview:is(.paper-lined,.paper-ticket){padding:216px 72px 51px;height:428px;aspect-ratio:auto}
 #zz-message-section .guest-compose-dialog .paper-preview.paper-house{padding:40px 54px 32px;min-height:310px}
+
+/* The page scrolls as one open board; the ribbon sits above the fixed dock. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){overflow-y:auto;overflow-x:hidden}
+#zz-fullscreen #zz-body:has(>#zz-message-section){height:auto;min-height:100dvh;overflow:visible}
+#zz-fullscreen #zz-body>#zz-message-section{height:auto!important;min-height:100dvh!important;overflow:visible;padding-bottom:var(--guest-bottom-clearance,240px)!important}
+#zz-message-section .guest-room{height:auto;min-height:calc(100dvh - 380px)}
+#zz-message-section .guest-layout,#zz-message-section .guest-wall{height:auto;min-height:0;max-height:none;overflow:visible!important}
+#zz-message-section #zz-guestresult{height:auto!important;max-height:none;overflow:visible;padding:30px 8px 40px}
+#zz-message-section .wall-note{height:auto!important;overflow:visible}
+#zz-message-section .wall-note p{overflow:visible!important;flex:none;overflow-wrap:anywhere}
+#zz-message-section .guest-room>#zz-leave-note{top:calc(50dvh - 128px)}
+body .guest-ribbons{display:none;position:fixed;z-index:9999;left:0;right:0;bottom:var(--guest-ribbon-bottom,130px);height:96px;margin:0;flex:none}
+html.viewing-space:has(#zz-body>#zz-message-section) body .guest-ribbons{display:block}
+@media(max-width:760px){body .guest-ribbons{height:68px;margin:0}#zz-message-section .guest-room>#zz-leave-note{top:calc(50dvh - 114px)}}

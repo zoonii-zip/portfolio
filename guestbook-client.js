@@ -5,7 +5,7 @@
     const wall = document.querySelector('#zz-guestresult');
     if (!form || !wall) return;
     const room = form.closest('.guest-room');
-    if (room && !room.querySelector('.guest-ribbons')) {
+    if (room && !document.querySelector('.guest-ribbons')) {
       const ribbons = document.createElement('div');
       ribbons.className = 'guest-ribbons';
       const label = document.createElement('span');
@@ -31,7 +31,18 @@
         ribbon.append(track);
         ribbons.append(ribbon);
       }
-      room.prepend(ribbons);
+      document.body.append(ribbons);
+      const dock = document.getElementById('zz-global-dock');
+      function placeRibbons() {
+        if (!dock) return;
+        const clearance = Math.max(0, window.innerHeight - dock.getBoundingClientRect().top) + 8;
+        document.documentElement.style.setProperty('--guest-ribbon-bottom', clearance + 'px');
+        document.documentElement.style.setProperty('--guest-bottom-clearance', (clearance + ribbons.offsetHeight + 24) + 'px');
+      }
+      if (dock) new ResizeObserver(placeRibbons).observe(dock);
+      window.addEventListener('resize', placeRibbons);
+      new MutationObserver(placeRibbons).observe(document.getElementById('zz-body'), { childList: true });
+      placeRibbons();
     }
     const compose = form.closest('.guest-compose');
     const noteButton = document.getElementById('zz-leave-note');
