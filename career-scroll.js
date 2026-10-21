@@ -52,7 +52,7 @@
    const sections=[...article.querySelectorAll('[data-cs-chapter]')];
    const journey=article.querySelector('.cs-journey'),track=article.querySelector('.cs-timeline');
    const viewport=article.querySelector('.cs-timeline-window');
-   let frame=0,travel=0,stops=[],lockedUntil=0,lastWheel=0,wheelTotal=0;
+   let frame=0,travel=0,stops=[],lockedUntil=0,lastWheel=0,wheelTotal=0,wheelConsumed=false;
    article.classList.add('cs-onepage');
    const markerLayer=document.createElement('div');
    markerLayer.className='cs-snap-markers';markerLayer.setAttribute('aria-hidden','true');
@@ -94,12 +94,12 @@
     if(event.target.closest('textarea,input,select,[contenteditable="true"],.cs-nav'))return;
     event.preventDefault();
     const now=performance.now(),quiet=now-lastWheel>170;lastWheel=now;
-    if(now<lockedUntil){wheelTotal=0;return;}
-    if(quiet)wheelTotal=0;
+    if(quiet){wheelTotal=0;wheelConsumed=false;}
+    if(now<lockedUntil||wheelConsumed){wheelTotal=0;return;}
     const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?panel.clientHeight:1);
     if(wheelTotal*delta<0)wheelTotal=0;
     wheelTotal+=delta;
-    if(Math.abs(wheelTotal)>=30){step(Math.sign(wheelTotal));wheelTotal=0;}
+    if(Math.abs(wheelTotal)>=30){step(Math.sign(wheelTotal));wheelTotal=0;wheelConsumed=true;}
    }
    function key(event){
     if(event.target.closest('input,textarea,select,button,a,summary,[contenteditable="true"]'))return;
