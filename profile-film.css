@@ -29,7 +29,7 @@
 #zz-fullscreen .profile-stack .ps-description{font-size:12px;line-height:1.75;color:#777971;margin:0;word-break:keep-all}
 #zz-fullscreen .ps-tags{display:flex;flex-wrap:wrap;gap:5px;margin:18px 0}
 #zz-fullscreen .ps-tags span{font-size:9px;line-height:1.4;background:#f1f1ef;border-radius:16px;padding:6px 9px}
-#zz-fullscreen .ps-social{font-size:10px;line-height:1.5;border-top:1px solid #ededeb;padding-top:12px}
+#zz-fullscreen .ps-social{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:10px;line-height:1.5;border-top:1px solid #ededeb;padding-top:12px}
 #zz-fullscreen .ps-foot{display:flex;justify-content:space-between;gap:15px;font-size:8px;line-height:1.4;color:#777971;padding:0 7px}
 #zz-fullscreen .ps-right{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:0;padding-bottom:21px}
 #zz-fullscreen .ps-links{padding:9px;display:grid;grid-template-rows:1fr 1fr;gap:8px;min-height:0}
