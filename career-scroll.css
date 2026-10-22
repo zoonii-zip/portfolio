@@ -181,3 +181,213 @@
  #zz-fullscreen #zz-body .cs-journey-sticky{padding:55px 0 75px}
  #zz-fullscreen #zz-body .cs-timeline{grid-template-columns:1fr;padding:0 22px;gap:30px}
 }
+
+/* Full-bleed career spreads; navigation floats above instead of masking the edges. */
+#zz-fullscreen:has(#zz-overlay.open .career-scroll)::after{display:none}
+#zz-fullscreen #zz-overlay:has(.career-scroll)>.panelhead{position:absolute;inset:0 0 auto;background:transparent!important;pointer-events:none;z-index:10}
+#zz-fullscreen #zz-overlay:has(.career-scroll)>.panelhead button{pointer-events:auto}
+#zz-fullscreen #zz-overlay:has(.career-scroll) #zz-paneltitle{display:none}
+#zz-fullscreen #zz-body .cs-hero{min-height:100dvh;padding:130px 5vw 140px}
+#zz-fullscreen #zz-body .cs-hero-meta{border-top:0}
+#zz-fullscreen #zz-body .cs-scroll-hint{bottom:110px}
+#zz-fullscreen #zz-body .cs-journey.cs-rolling{height:var(--journey-height)!important}
+#zz-fullscreen #zz-body .cs-rolling .cs-journey-sticky{position:sticky;top:0;height:100dvh;padding:130px 0 135px;overflow:hidden;justify-content:space-between}
+#zz-fullscreen #zz-body .cs-rolling .cs-journey-count{display:block;font-variant-numeric:tabular-nums}
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-window{position:relative;flex:1;min-height:0;margin:24px 0;overflow:hidden;perspective:1100px;mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline{display:block;position:relative;width:100%;height:100%;padding:0;transform:none!important}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:15px 7vw;width:100%;backface-visibility:hidden;will-change:transform,opacity}
+#zz-fullscreen #zz-body .cs-rolling .cs-year{font-size:clamp(34px,min(7vw,9dvh),110px);line-height:1.15;letter-spacing:-.055em}
+#zz-fullscreen #zz-body .cs-rolling .cs-year-long{font-size:clamp(28px,min(6vw,8dvh),92px)}
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-dot{width:48px;flex-shrink:0;margin:24px 0}
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-dot:before{left:calc(50% - 4px)}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone h3{font-size:clamp(22px,min(4vw,5dvh),54px);line-height:1.35;margin:14px 0;word-break:keep-all}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone p{max-width:650px;font-size:clamp(12px,1.4vw,18px);line-height:1.7}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-hero{padding:115px 22px 125px}
+ #zz-fullscreen #zz-body .cs-scroll-hint{bottom:100px}
+ #zz-fullscreen #zz-body .cs-rolling .cs-journey-sticky{padding:115px 0 115px}
+ #zz-fullscreen #zz-body .cs-rolling .cs-milestone{padding:12px 22px}
+}
+@media(max-height:650px){
+ #zz-fullscreen #zz-body .cs-rolling .cs-journey-sticky{padding-top:95px;padding-bottom:90px}
+ #zz-fullscreen #zz-body .cs-rolling .cs-timeline-window{margin:12px 0}
+ #zz-fullscreen #zz-body .cs-rolling .cs-timeline-dot{margin:12px 0}
+ #zz-fullscreen #zz-body .cs-rolling .cs-milestone h3{font-size:22px;margin:8px 0}
+}
+
+/* Identity collage: real imagery and bold, readable profession labels. */
+#zz-fullscreen #zz-body .cs-hero{padding-top:110px;padding-bottom:125px;gap:16px}
+#zz-fullscreen #zz-body .cs-identity-collage{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:1.2fr 1fr .9fr;gap:clamp(10px,1.3vw,22px);width:100%;max-width:1440px;margin:auto;min-height:360px;height:clamp(360px,52dvh,660px);flex:1}
+#zz-fullscreen #zz-body .cs-am{grid-column:span 5;display:flex;align-items:center;font-family:var(--font-display-en)!important;font-size:clamp(68px,10.8vw,176px);font-weight:800;letter-spacing:-.075em;line-height:1;margin:0;white-space:nowrap}
+#zz-fullscreen #zz-body .cs-am span{color:#304bff}
+#zz-fullscreen #zz-body :is(.cs-photo,.cs-work){min-height:0;margin:0;overflow:hidden;border-radius:clamp(16px,2vw,32px);background:#dedbcf}
+#zz-fullscreen #zz-body .cs-photo{grid-column:span 5}
+#zz-fullscreen #zz-body .cs-work{grid-column:span 4}
+#zz-fullscreen #zz-body :is(.cs-photo,.cs-work) img{display:block;width:100%;height:100%;object-fit:cover}
+#zz-fullscreen #zz-body .cs-photo img{object-position:50% 38%}
+#zz-fullscreen #zz-body .cs-work img{object-position:50% 51%}
+#zz-fullscreen #zz-body .cs-flower{grid-column:span 2;display:grid;place-items:center;color:#20211f;background:#dcff55;clip-path:polygon(35% 0,50% 16%,65% 0,69% 24%,94% 16%,84% 42%,100% 50%,84% 60%,94% 84%,69% 77%,65% 100%,50% 84%,35% 100%,30% 77%,6% 84%,16% 60%,0 50%,16% 42%,6% 16%,30% 24%);font-size:clamp(40px,7vw,100px);line-height:1}
+#zz-fullscreen #zz-body .cs-job{display:flex;align-items:center;justify-content:center;gap:3vw;text-align:center;font-family:var(--font-display-en)!important;font-weight:650;font-size:clamp(26px,4.1vw,66px);letter-spacing:-.045em;line-height:1.12;padding:12px 20px;white-space:nowrap}
+#zz-fullscreen #zz-body .cs-job-illustrator{grid-column:span 8;background:#304bff;color:white;border-radius:999px;font-size:clamp(38px,6.3vw,98px)}
+#zz-fullscreen #zz-body .cs-job-graphic{grid-column:span 7;background:#d844f0;color:#211126;border-radius:20px 20px 5px 20px}
+#zz-fullscreen #zz-body .cs-job-web{grid-column:span 5;background:#dcff55;color:#20211f;clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%);padding-inline:26px}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{padding-top:16px;gap:20px;flex:none}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-statement{font-size:clamp(24px,2.5vw,38px)}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-caption>p{font-size:12px;margin-bottom:6px}
+#zz-fullscreen #zz-body .cs-hero .cs-scroll-hint{bottom:95px}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-hero{padding:100px 22px 125px;gap:14px}
+ #zz-fullscreen #zz-body .cs-identity-collage{min-height:320px;height:46dvh;flex:none;gap:10px;grid-template-rows:1.3fr 1fr 1fr}
+ #zz-fullscreen #zz-body .cs-am{grid-column:span 6;font-size:clamp(58px,13vw,98px)}
+ #zz-fullscreen #zz-body .cs-photo{grid-column:span 6}
+ #zz-fullscreen #zz-body .cs-flower{display:none}
+ #zz-fullscreen #zz-body .cs-job{padding:10px 8px;font-size:clamp(18px,3.9vw,29px)}
+ #zz-fullscreen #zz-body .cs-job-illustrator{font-size:clamp(28px,6.8vw,50px)}
+ #zz-fullscreen #zz-body .cs-job-web{padding-inline:16px;font-size:clamp(17px,3.6vw,27px)}
+ #zz-fullscreen #zz-body .cs-job-graphic{border-radius:14px 14px 4px 14px}
+ #zz-fullscreen #zz-body .cs-hero .cs-cover-footer{gap:12px 16px}
+}
+@media(max-height:720px) and (min-width:761px){
+ #zz-fullscreen #zz-body .cs-identity-collage{min-height:285px;height:46dvh}
+ #zz-fullscreen #zz-body .cs-hero{padding-top:100px}
+}
+
+/* One identity at a time: fixed I AM beside an automatically rolling image/label pair. */
+#zz-fullscreen #zz-body .cs-identity-reel{display:flex;align-items:center;gap:3vw;position:relative;flex:1;min-height:320px;width:100%;margin:auto}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-am{flex:none;font-size:clamp(64px,12vw,190px)}
+#zz-fullscreen #zz-body .cs-reel-window{flex:1;min-width:0;height:clamp(140px,22vw,290px);overflow:hidden;border-radius:24px}
+#zz-fullscreen #zz-body .cs-reel-track{height:100%;animation:cs-identity-roll 12s infinite cubic-bezier(.65,0,.35,1)}
+#zz-fullscreen #zz-body .cs-reel-slide{display:flex;align-items:center;gap:16px;height:100%;padding:10px 0}
+#zz-fullscreen #zz-body .cs-reel-photo{flex:0 0 31%;height:100%;margin:0;border-radius:24px;overflow:hidden;background:#dedbcf}
+#zz-fullscreen #zz-body .cs-reel-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-job{flex:1;min-width:0;height:74%;font-size:clamp(24px,3.1vw,52px);white-space:normal;line-height:1.12;padding:14px 18px;letter-spacing:-.035em}
+#zz-fullscreen #zz-body .cs-reel-toggle{position:absolute;right:0;bottom:16px;width:32px;height:32px;border:1px solid #20211f50;border-radius:50%;font-size:12px;padding:0;display:grid;place-items:center}
+#zz-fullscreen #zz-body .is-paused .cs-reel-track{animation-play-state:paused}
+@keyframes cs-identity-roll{0%,25%{transform:translateY(0)}33.333%,58.333%{transform:translateY(-100%)}66.666%,91.666%{transform:translateY(-200%)}100%{transform:translateY(-300%)}}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-identity-reel{gap:14px;min-height:300px}
+ #zz-fullscreen #zz-body .cs-identity-reel .cs-am{font-size:clamp(46px,11vw,82px)}
+ #zz-fullscreen #zz-body .cs-reel-window{height:clamp(150px,28vw,215px);border-radius:16px}
+ #zz-fullscreen #zz-body .cs-reel-slide{gap:9px}
+ #zz-fullscreen #zz-body .cs-reel-photo{flex-basis:34%;border-radius:16px}
+ #zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(18px,3.5vw,27px);padding:12px 9px}
+}
+@media(max-width:480px){
+ #zz-fullscreen #zz-body .cs-identity-reel{flex-wrap:wrap;align-content:center;gap:20px;min-height:370px}
+ #zz-fullscreen #zz-body .cs-identity-reel .cs-am{font-size:70px;width:100%}
+ #zz-fullscreen #zz-body .cs-reel-window{height:180px;flex-basis:100%}
+ #zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:27px}
+}
+@media(prefers-reduced-motion:reduce){
+ #zz-fullscreen #zz-body .cs-reel-track{animation:none}
+ #zz-fullscreen #zz-body .cs-reel-toggle{display:none}
+}
+
+/* A single slot alternates between photographs and profession labels. */
+#zz-fullscreen #zz-body .cs-reel-slide{justify-content:center}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-reel-photo{flex:1;height:100%;width:100%}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-job{height:100%;font-size:clamp(32px,5vw,80px)}
+#zz-fullscreen #zz-body .cs-reel-track{animation-name:cs-single-roll;animation-duration:20s}
+@keyframes cs-single-roll{0%,15%{transform:translateY(0)}20%,35%{transform:translateY(-100%)}40%,55%{transform:translateY(-200%)}60%,75%{transform:translateY(-300%)}80%,95%{transform:translateY(-400%)}100%{transform:translateY(-500%)}}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(29px,5.8vw,44px)}}
+
+/* Align the reel with the visible capitals of I AM. */
+#zz-fullscreen #zz-body .cs-identity-reel{--identity-size:clamp(64px,12vw,190px)}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-am{font-size:var(--identity-size);line-height:1}
+#zz-fullscreen #zz-body .cs-reel-window{height:calc(var(--identity-size)*.76);border-radius:16px}
+#zz-fullscreen #zz-body .cs-reel-slide{padding:0}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-job{height:100%;font-size:clamp(32px,5.3vw,84px);padding:0 20px;white-space:nowrap}
+#zz-fullscreen #zz-body .cs-reel-photo{border-radius:16px}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-identity-reel{--identity-size:clamp(46px,11vw,82px)}
+ #zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(22px,4.7vw,36px);padding:0 12px}
+}
+@media(max-width:480px){
+ #zz-fullscreen #zz-body .cs-identity-reel{--identity-size:70px}
+ #zz-fullscreen #zz-body .cs-reel-window{height:calc(var(--identity-size)*.76)}
+ #zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(24px,7vw,33px)}
+}
+#zz-fullscreen #zz-body .cs-reel-photo img{object-position:50% 32%}
+
+/* Slightly taller reel, looser English spacing, shared vertical center. */
+#zz-fullscreen #zz-body .cs-identity-reel{align-items:center}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-am{align-self:center;align-items:center;letter-spacing:-.045em;line-height:1}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{align-self:center;height:calc(var(--identity-size)*.9)}
+#zz-fullscreen #zz-body .cs-reel-slide{align-items:center}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-job{align-items:center;letter-spacing:0;line-height:1}
+
+/* Break after I AM and center both lines. */
+#zz-fullscreen #zz-body .cs-identity-reel{flex-direction:column;flex-wrap:nowrap;justify-content:center;align-items:center;gap:24px}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-am{width:auto;justify-content:center;flex:none;margin:0}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{flex:none;width:min(100%,900px);height:calc(var(--identity-size)*.9)}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-identity-reel{gap:20px}}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{width:min(78%,720px)}
+@media(max-width:480px){#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{width:92%}}
+
+/* Keep adjacent milestones in view as dimmed context. */
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-window{overflow:hidden;mask-image:linear-gradient(transparent,#000 4%,#000 96%,transparent);perspective:none;margin:12px 0}
+#zz-fullscreen #zz-body .cs-rolling .cs-year{letter-spacing:.005em;font-variant-numeric:tabular-nums;font-size:clamp(32px,min(6vw,7dvh),86px);line-height:1.25}
+#zz-fullscreen #zz-body .cs-rolling .cs-year-long{font-size:clamp(26px,min(5vw,6dvh),72px);letter-spacing:.005em}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone{padding:0 5vw}
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-dot{margin:18px 0}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone h3{margin:16px 0;font-size:clamp(21px,min(3.5vw,4dvh),42px)}
+@media(max-width:480px){
+ #zz-fullscreen #zz-body .cs-rolling .cs-year-long{font-size:clamp(22px,6.4vw,30px)}
+ #zz-fullscreen #zz-body .cs-rolling .cs-timeline-dot{margin:12px 0}
+}
+
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone{transition:transform .55s cubic-bezier(.22,.75,.25,1),opacity .55s ease}
+
+/* Give the identity reel a little more vertical room. */
+#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{height:calc(var(--identity-size)*1.05)}
+
+/* Horizontal timeline reel, with dimmed neighbours on either side. */
+#zz-fullscreen #zz-body .cs-rolling .cs-timeline-window{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone{inset:0 16%;width:68%;padding:0 2vw}
+#zz-fullscreen #zz-body .cs-rolling .cs-year{font-size:clamp(28px,min(5vw,7dvh),76px)}
+#zz-fullscreen #zz-body .cs-rolling .cs-year-long{font-size:clamp(22px,min(4vw,6dvh),62px)}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-rolling .cs-milestone{inset:0 12%;width:76%;padding:0 12px}
+ #zz-fullscreen #zz-body .cs-rolling .cs-year-long{font-size:clamp(20px,4.8vw,36px)}
+ #zz-fullscreen #zz-body .cs-rolling .cs-milestone h3{font-size:clamp(20px,3.5vw,28px)}
+}
+
+/* Centered closing caption below the identity reel. */
+#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:0;padding:0;gap:14px}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-statement{font-size:clamp(26px,3vw,44px);line-height:1.2;letter-spacing:-.025em}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-caption>p{font-size:clamp(12px,1.3vw,17px);line-height:1.7;margin:0;word-break:keep-all}
+#zz-fullscreen #zz-body .cs-scroll-next{display:grid;place-items:center;width:48px;height:50px;margin:2px 0 0;padding:5px;border:0;background:none;color:inherit;cursor:pointer}
+#zz-fullscreen #zz-body .cs-scroll-next svg{display:block;animation:intro-scroll-float 2.6s ease-in-out infinite;pointer-events:none}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .cs-scroll-next svg{animation:none}}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{transform:translateY(-28px)}
+
+/* Separate the date from the three-line milestone description. */
+#zz-fullscreen #zz-body .cs-rolling .cs-year{display:block;margin-bottom:clamp(36px,6dvh,64px)}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone h3{margin:10px 0 8px}
+#zz-fullscreen #zz-body .cs-rolling .cs-milestone p{margin:0}
+
+/* Additional history: compact dated rows with clear section hierarchy. */
+#zz-fullscreen #zz-body .cs-background .cs-extra-list{overflow:visible;max-width:none;margin-top:28px}
+#zz-fullscreen #zz-body .cs-extra-section{display:grid;grid-template-columns:minmax(130px,.65fr) minmax(0,2fr);gap:5vw;padding:36px 0;border-top:1px solid #20211f25}
+#zz-fullscreen #zz-body .cs-extra-section>h2{font-size:22px;line-height:1.4;margin:0;font-weight:650;letter-spacing:-.035em}
+#zz-fullscreen #zz-body .cs-extra-content{min-width:0}
+#zz-fullscreen #zz-body .cs-extra-content h3{font-family:inherit!important;font-size:16px;line-height:1.6;letter-spacing:-.02em;color:#20211f;margin:32px 0 12px;font-weight:650}
+#zz-fullscreen #zz-body .cs-extra-content h3:first-child{margin-top:0}
+#zz-fullscreen #zz-body .cs-extra-content>p{font-size:13px;color:#63645f;line-height:1.8;margin:0 0 20px;word-break:keep-all}
+#zz-fullscreen #zz-body .cs-extra-content ul{list-style:none;padding:0;margin:0}
+#zz-fullscreen #zz-body .cs-extra-content li{padding:17px 0;margin:0;border-bottom:1px solid #20211f18;font-size:13px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
+#zz-fullscreen #zz-body .cs-extra-content li:first-child{padding-top:0}
+#zz-fullscreen #zz-body .cs-extra-content li:last-child{border-bottom:0}
+#zz-fullscreen #zz-body .cs-extra-records>li,#zz-fullscreen #zz-body .cs-extra-items>li:has(.cs-extra-date){display:grid;grid-template-columns:145px minmax(0,1fr);gap:20px}
+#zz-fullscreen #zz-body .cs-extra-date{font-size:11px;line-height:1.8;color:#2549db;font-variant-numeric:tabular-nums;letter-spacing:.015em;padding-top:2px}
+#zz-fullscreen #zz-body .cs-extra-records strong{display:block;font-size:14px;font-weight:650;line-height:1.6;color:#20211f}
+#zz-fullscreen #zz-body .cs-extra-records p{font-size:12px;line-height:1.8;color:#63645f;margin:5px 0 0}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-extra-section{grid-template-columns:1fr;gap:22px;padding:28px 0}
+ #zz-fullscreen #zz-body .cs-extra-section>h2{font-size:20px}
+ #zz-fullscreen #zz-body .cs-extra-records>li,#zz-fullscreen #zz-body .cs-extra-items>li:has(.cs-extra-date){grid-template-columns:1fr;gap:5px}
+ #zz-fullscreen #zz-body .cs-extra-content h3{font-size:15px}
+}
+
+#zz-fullscreen #zz-body .cs-extra-section{display:block}
+#zz-fullscreen #zz-body .cs-extra-content>ul+ul,#zz-fullscreen #zz-body .cs-extra-content>ul+p{margin-top:28px}

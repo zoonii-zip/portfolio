@@ -136,3 +136,8 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-ticket-caption{display:none}
  #zz-fullscreen .pp-ticket-stub{padding:4px}
 }
+
+/* Vintage footage sits behind the existing printed-label composition. */
+#zz-fullscreen .pp-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;background:#a8a18b}
+#zz-fullscreen .pp-backdrop :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+#zz-fullscreen .pp-backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#f4eadb26,#eee6d824 60%,#e9e3d866)}
