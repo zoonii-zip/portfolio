@@ -5,8 +5,7 @@
   unfold() {},
   hero() {
    return `<article class="profile-page profile-poster" aria-labelledby="profile-poster-title">
-    <img class="pp-portrait" src="/assets/profile-portrait.webp" width="2268" height="4032" alt="거울 앞에서 찍은 김주연의 사진" fetchpriority="high">
-    <div class="pp-photo-finish" aria-hidden="true"></div>
+    
     <div class="pp-labels">
      <header class="pp-sticker pp-name">
       <span class="pp-micro">HELLO, MY NAME IS</span>

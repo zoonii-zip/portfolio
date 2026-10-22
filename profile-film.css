@@ -1,15 +1,12 @@
-/* A personal photograph with readable, printed profile labels. */
+/* Printed profile labels on a plain background. */
 #zz-fullscreen:has(.profile-poster){overflow:clip!important}
-#zz-fullscreen #zz-overlay:has(.profile-poster){height:100dvh;overflow:clip!important;background:#5b5248;color:#181a17}
-#zz-fullscreen .overlay:has(.profile-poster)>.panelhead{position:absolute;inset:0 0 auto;background:transparent;backdrop-filter:none;color:#fff;pointer-events:none}
+#zz-fullscreen #zz-overlay:has(.profile-poster){height:100dvh;overflow:clip!important;background:#efede6;color:#181a17}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead{position:absolute;inset:0 0 auto;background:transparent;backdrop-filter:none;color:#181a17;pointer-events:none}
 #zz-fullscreen .overlay:has(.profile-poster)>.panelhead button{pointer-events:auto}
 #zz-fullscreen .overlay:has(.profile-poster) #zz-paneltitle{display:none}
 #zz-fullscreen #zz-body:has(>.profile-poster){max-width:none;min-height:0;padding:0!important}
-#zz-fullscreen #zz-body .profile-poster{position:relative;isolation:isolate;box-sizing:border-box;height:100dvh;overflow:clip;background:#5b5248;color:#181a17}
+#zz-fullscreen #zz-body .profile-poster{position:relative;isolation:isolate;box-sizing:border-box;height:100dvh;overflow:clip;background:#efede6;color:#181a17}
 #zz-fullscreen .profile-poster *{box-sizing:border-box}
-#zz-fullscreen .pp-portrait{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:45% 34%;filter:saturate(.78) sepia(.12) contrast(1.04)}
-#zz-fullscreen .pp-photo-finish{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#20190f30,transparent 24%,transparent 78%,#20190f40)}
-#zz-fullscreen .pp-photo-finish::after{content:"";position:absolute;inset:0;background:url('/assets/textures/career-paper.png') repeat;background-size:460px;opacity:.12;mix-blend-mode:soft-light}
 #zz-fullscreen .pp-labels{--u:clamp(.7px,.115dvh,1px);position:absolute;inset:110px 5vw 130px;max-width:1440px;margin:auto}
 #zz-fullscreen .profile-poster :is(h2,h3,p){margin:0}
 #zz-fullscreen .profile-poster a{color:inherit;text-decoration:none}
@@ -53,16 +50,13 @@
  #zz-fullscreen a.pp-sticker:hover{box-shadow:1px 3px 3px #211b1544,4px 9px 18px #211b1538}
  #zz-fullscreen .pp-connect a:hover{text-decoration:underline;text-underline-offset:3px}
 }
-html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .dock-tooltip,#zz-fixed-links .fixed-label){color:#fff;text-shadow:0 1px 5px #0009}
-@media(min-width:1500px){#zz-fullscreen .pp-portrait{object-position:45% 35%}}
+html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .dock-tooltip,#zz-fixed-links .fixed-label){color:#181a17;text-shadow:none}
 @media(max-width:1000px) and (min-width:761px){
- #zz-fullscreen .pp-portrait{object-position:39% 36%}
  #zz-fullscreen .pp-labels{inset-inline:4vw}
  #zz-fullscreen .pp-name{right:3%}
  #zz-fullscreen .pp-ingredients{right:2%}
 }
 @media(max-width:760px){
- #zz-fullscreen .pp-portrait{object-position:100% 43%}
  #zz-fullscreen .pp-labels{--u:clamp(.7px,.1dvh,.88px);inset:105px 18px 105px}
  #zz-fullscreen .pp-name{top:0;right:0;width:calc(225 * var(--u));padding:calc(10 * var(--u)) calc(14 * var(--u))}
  #zz-fullscreen #zz-body .pp-name h2{font-size:calc(50 * var(--u))}
@@ -141,7 +135,4 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-ticket p{font-size:8px}
  #zz-fullscreen .pp-ticket-caption{display:none}
  #zz-fullscreen .pp-ticket-stub{padding:4px}
-}
-@media(max-width:360px){
- #zz-fullscreen .pp-portrait{width:115%;height:115%;left:-15%;top:-5%}
 }
