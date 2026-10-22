@@ -359,7 +359,7 @@
 #zz-fullscreen #zz-body .cs-scroll-next{display:grid;place-items:center;width:48px;height:50px;margin:2px 0 0;padding:5px;border:0;background:none;color:inherit;cursor:pointer}
 #zz-fullscreen #zz-body .cs-scroll-next svg{display:block;animation:intro-scroll-float 2.6s ease-in-out infinite;pointer-events:none}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .cs-scroll-next svg{animation:none}}
-#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{transform:translateY(-28px)}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{transform:translateY(-8px)}
 
 /* Separate the date from the three-line milestone description. */
 #zz-fullscreen #zz-body .cs-rolling .cs-year{display:block;margin-bottom:clamp(36px,6dvh,64px)}
