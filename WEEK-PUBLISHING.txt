@@ -50,3 +50,9 @@ Google Analytics 4 유지
 - 공통 week-navigation.js / .css만 최신 버전 목록을 공유합니다.
 - 1주차와 2주차 보존 파일은 이후 수정하지 않습니다.
 - index.html과 일반 경로는 계속 data-week="working" 상태로 개발합니다.
+
+2주차 요청 수정 — 2026-10-23
+- 사용자 요청으로 Abilities / Education / Activities / License를 커리어에서 프로필로 이동합니다.
+- 커리어 상단 롤링의 얼굴 사진을 제거하고 그래픽과 직업명 롤링을 유지합니다.
+- 이 요청에 한해 `python3 scripts/snapshot-week.py --refresh`로 2주차를 갱신합니다.
+- 1주차는 그대로 보존하며, 이후 2주차 갱신도 명시적인 요청이 있을 때만 진행합니다.

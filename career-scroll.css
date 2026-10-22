@@ -287,8 +287,8 @@
 #zz-fullscreen #zz-body .cs-reel-slide{justify-content:center}
 #zz-fullscreen #zz-body .cs-reel-slide .cs-reel-photo{flex:1;height:100%;width:100%}
 #zz-fullscreen #zz-body .cs-reel-slide .cs-job{height:100%;font-size:clamp(32px,5vw,80px)}
-#zz-fullscreen #zz-body .cs-reel-track{animation-name:cs-single-roll;animation-duration:20s}
-@keyframes cs-single-roll{0%,15%{transform:translateY(0)}20%,35%{transform:translateY(-100%)}40%,55%{transform:translateY(-200%)}60%,75%{transform:translateY(-300%)}80%,95%{transform:translateY(-400%)}100%{transform:translateY(-500%)}}
+#zz-fullscreen #zz-body .cs-reel-track{animation-name:cs-single-roll;animation-duration:16s}
+@keyframes cs-single-roll{0%,20%{transform:translateY(0)}25%,45%{transform:translateY(-100%)}50%,70%{transform:translateY(-200%)}75%,95%{transform:translateY(-300%)}100%{transform:translateY(-400%)}}
 @media(max-width:760px){#zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(29px,5.8vw,44px)}}
 
 /* Align the reel with the visible capitals of I AM. */
