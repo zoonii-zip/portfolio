@@ -391,3 +391,7 @@
 
 #zz-fullscreen #zz-body .cs-extra-section{display:block}
 #zz-fullscreen #zz-body .cs-extra-content>ul+ul,#zz-fullscreen #zz-body .cs-extra-content>ul+p{margin-top:28px}
+
+/* Restore the section title at left and its history list at right. */
+#zz-fullscreen #zz-body .cs-extra-section{display:grid;grid-template-columns:minmax(130px,.65fr) minmax(0,2fr);gap:5vw}
+@media(max-width:760px){#zz-fullscreen #zz-body .cs-extra-section{grid-template-columns:1fr;gap:22px}}
