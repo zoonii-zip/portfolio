@@ -70,6 +70,13 @@
     "EDUCATION",
     "디지털디자인 전공 수석 졸업",
     "#c7dfef"
+  ],
+  [
+    "2013.11—2018.11",
+    "솔트웨어",
+    "CAREER",
+    "디자인·퍼블리싱 대리 · 공공기관·대학·금융 포털 UI 디자인 및 HTML/CSS 퍼블리싱",
+    "#d8d2f0"
   ]
 ];
  // Role, work and outcomes transcribed from the supplied resume (pages 2–3).
@@ -170,7 +177,7 @@
     </div>
     <button class="cs-reel-toggle" type="button" aria-label="직업 소개 롤링 일시정지" aria-pressed="false">Ⅱ</button>
    </div><div class="cs-cover-footer"><div class="cs-cover-statement">Making things matter.</div><div class="cs-cover-caption"><p>그림을 그리고, 경험을 설계하고, 배움을 나눕니다.</p></div><button class="cs-scroll-next" type="button" data-cs-link="timeline" aria-label="타임라인으로 스크롤"><svg viewBox="0 0 32 44" width="28" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="20" height="29" rx="10"/><path d="M16 8v7M11 36l5 5 5-5"/></svg></button></div></header>
-   <section id="career-timeline" class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 · 최신순</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year.replace(/—/g,' — ')}</span><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>NOW → 2018</span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
+   <section id="career-timeline" class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 · 최신순</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year.replace(/—/g,' — ')}</span><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>NOW → 2013</span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
    ${careerSummary()}${background(extras)}
    ${chapters.map(([id,title,label],i)=>{
     const recordsForSection=all.filter(r=>r[4]===id).sort((a,b)=>b[1]-a[1]);
