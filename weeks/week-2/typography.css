@@ -1,0 +1,40 @@
+/* SUIT: https://sun.fo/suit/ (SIL OFL). */
+@font-face {
+  font-family: 'SUIT';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/SUIT-Variable.woff2') format('woff2');
+}
+:root {
+  --font-body: 'SUIT', 'Apple SD Gothic Neo', sans-serif;
+  --font-title: var(--font-body);
+}
+/* Existing components use font shorthands; unify the family without changing sizing. */
+:root body, :root body :where(*) {
+  font-family: var(--font-body) !important;
+}
+:root body #zz-logo-entry .intro-copy [lang='en'] {
+  font-weight: 400;
+  letter-spacing: -.015em;
+}
+
+/* Display titles only. Adobe Web Project must load sets-grotesk-l. */
+:root { --font-display-en: 'sets-grotesk-l', var(--font-body); }
+:root body :is(
+  #zz-logo-entry .intro-copy [lang='en'],
+  #zz-fullscreen .profile-film-title,
+  #zz-fullscreen .profile-film-title span,
+  #zz-fullscreen .cs-hero h2,
+  #zz-fullscreen .cs-hero h2 span,
+  #zz-fullscreen .cs-chapter h3,
+  #zz-fullscreen .cs-end h3,
+  #zz-fullscreen .cs-feature strong
+) {
+  font-family: var(--font-display-en) !important;
+}
+
+/* Site-wide desktop cursor: the navigation Career glove, pointing with its index finger. */
+@media (hover:hover) and (pointer:fine){
+ html:root,html:root body,html:root body *,html:root body *::before,html:root body *::after,html:root dialog::backdrop{cursor:url('/weeks/week-2/assets/cursors/career-pointer.png') 21 2,auto!important}
+}
