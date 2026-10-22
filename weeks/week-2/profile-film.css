@@ -1,0 +1,171 @@
+/* Printed profile labels on a plain background. */
+#zz-fullscreen:has(.profile-poster){overflow:clip!important}
+#zz-fullscreen #zz-overlay:has(.profile-poster){height:100dvh;overflow:clip!important;background:#efede6;color:#181a17}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead{position:absolute;inset:0 0 auto;background:transparent;backdrop-filter:none;color:#181a17;pointer-events:none}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead button{pointer-events:auto}
+#zz-fullscreen .overlay:has(.profile-poster) #zz-paneltitle{display:none}
+#zz-fullscreen #zz-body:has(>.profile-poster){max-width:none;min-height:0;padding:0!important}
+#zz-fullscreen #zz-body .profile-poster{position:relative;isolation:isolate;box-sizing:border-box;height:100dvh;overflow:clip;background:#efede6;color:#181a17}
+#zz-fullscreen .profile-poster *{box-sizing:border-box}
+#zz-fullscreen .pp-labels{--u:clamp(.7px,.115dvh,1px);position:absolute;inset:110px 5vw 130px;max-width:1440px;margin:auto}
+#zz-fullscreen .profile-poster :is(h2,h3,p){margin:0}
+#zz-fullscreen .profile-poster a{color:inherit;text-decoration:none}
+#zz-fullscreen .pp-sticker{position:absolute;box-shadow:1px 2px 2px #211b1533,3px 7px 15px #211b1524;transform:rotate(var(--tilt,0deg));transform-origin:center;background:#f4f0dd}
+#zz-fullscreen .pp-sticker::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background:url('/weeks/week-2/assets/textures/career-paper.png') repeat;background-size:300px;mix-blend-mode:multiply}
+#zz-fullscreen .profile-poster .pp-micro{display:block;font-size:calc(10 * var(--u));font-weight:700;letter-spacing:.065em;line-height:1.25}
+#zz-fullscreen .pp-name{--tilt:-3deg;top:0;right:8%;width:calc(282 * var(--u));padding:calc(12 * var(--u)) calc(18 * var(--u));background:#e5ef38;border:1px solid #25281555}
+#zz-fullscreen #zz-body .pp-name h2{font-size:calc(65 * var(--u));line-height:.95;letter-spacing:-.07em;font-weight:850;margin:calc(5 * var(--u)) 0 calc(6 * var(--u))}
+#zz-fullscreen .pp-name h2 span{display:block;font-size:calc(13 * var(--u));line-height:1.4;letter-spacing:.01em;font-weight:700;margin-top:calc(7 * var(--u))}
+#zz-fullscreen .pp-name-rule{display:block;border-top:2px solid currentColor}
+#zz-fullscreen .pp-statement{--tilt:2deg;top:25%;right:1%;width:calc(342 * var(--u));background:#d93425;color:#fff9e8;padding:calc(15 * var(--u)) calc(18 * var(--u));border:1px solid #a92920}
+#zz-fullscreen .pp-statement p[lang=en]{font-size:calc(25 * var(--u));line-height:1.04;letter-spacing:-.035em;font-weight:800}
+#zz-fullscreen .pp-statement p[lang=ko]{font-size:calc(12 * var(--u));line-height:1.5;margin-top:calc(9 * var(--u));font-weight:550}
+#zz-fullscreen .pp-ingredients{--tilt:-2deg;right:7%;bottom:23%;width:calc(308 * var(--u));padding:calc(13 * var(--u));border:1px solid #24251e}
+#zz-fullscreen .pp-label-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:calc(7 * var(--u));border-bottom:calc(6 * var(--u)) solid #20221d}
+#zz-fullscreen #zz-body .pp-label-heading h3{font-size:calc(37 * var(--u));font-weight:900;letter-spacing:-.065em;line-height:1}
+#zz-fullscreen .pp-label-heading .pp-micro{font-size:calc(8 * var(--u));text-align:right;line-height:1.5}
+#zz-fullscreen .pp-ingredients ul{list-style:none;padding:0;margin:0}
+#zz-fullscreen .pp-ingredients li{display:flex;justify-content:space-between;gap:6px;padding:calc(7 * var(--u)) 0;border-bottom:1px solid #24251e66;line-height:1.2}
+#zz-fullscreen .pp-ingredients li span:first-child{font-size:calc(15 * var(--u));font-weight:750;letter-spacing:-.02em}
+#zz-fullscreen .pp-ingredients li span:last-child{font-size:calc(10 * var(--u));align-self:center}
+#zz-fullscreen .pp-label-footer{display:flex;justify-content:space-between;gap:8px;font-size:calc(10 * var(--u));font-weight:650;padding-top:calc(10 * var(--u))}
+#zz-fullscreen .pp-label-footer span{font-weight:800}
+#zz-fullscreen .pp-ticket{--tilt:-5deg;bottom:0;left:0;width:calc(325 * var(--u));display:flex;border:1px solid #b8b4a7;background:#f3f0e4}
+#zz-fullscreen .pp-ticket-main{flex:1;min-width:0;padding:calc(17 * var(--u))}
+#zz-fullscreen .pp-ticket .pp-micro{font-size:calc(8 * var(--u))}
+#zz-fullscreen #zz-body .pp-ticket h3{font-size:calc(34 * var(--u));line-height:1;font-weight:850;letter-spacing:-.07em;margin:calc(10 * var(--u)) 0}
+#zz-fullscreen .pp-ticket p{font-size:calc(12 * var(--u));line-height:1.5}
+#zz-fullscreen .pp-barcode{display:block;height:calc(31 * var(--u));margin:calc(15 * var(--u)) 0 calc(4 * var(--u));background:repeating-linear-gradient(90deg,#22251e 0 2px,transparent 2px 4px,#22251e 4px 5px,transparent 5px 8px,#22251e 8px 12px,transparent 12px 14px,#22251e 14px 15px,transparent 15px 19px);opacity:.9}
+#zz-fullscreen .pp-ticket-caption{font-size:calc(7 * var(--u));letter-spacing:.025em;line-height:1.3;display:block}
+#zz-fullscreen .pp-ticket-stub{border-left:1px dashed #33372b99;padding:calc(10 * var(--u));writing-mode:vertical-rl;display:flex;justify-content:space-between;align-items:center;font-size:calc(9 * var(--u));letter-spacing:.1em}
+#zz-fullscreen .pp-ticket-stub strong{font-size:calc(16 * var(--u));letter-spacing:-.02em}
+#zz-fullscreen .pp-connect{--tilt:3deg;bottom:0;right:0;width:calc(306 * var(--u));padding:calc(13 * var(--u)) calc(17 * var(--u));background:#8bd6df;border:1px solid #3b7980}
+#zz-fullscreen .pp-contact{display:flex;justify-content:space-between;align-items:center;font-size:calc(25 * var(--u));font-weight:850;letter-spacing:-.04em;line-height:.98}
+#zz-fullscreen .pp-contact-arrow{font-size:calc(46 * var(--u));font-weight:450}
+#zz-fullscreen .pp-email{display:inline-block;font-size:calc(11 * var(--u));line-height:1.5;margin-top:calc(7 * var(--u))}
+#zz-fullscreen .pp-connect nav a{white-space:nowrap}
+#zz-fullscreen .pp-connect nav{display:flex;gap:calc(20 * var(--u));border-top:1px solid #24525988;margin-top:calc(8 * var(--u));padding-top:calc(8 * var(--u));font-size:calc(12 * var(--u));line-height:1.4;font-weight:750}
+#zz-fullscreen .profile-poster a:focus-visible{outline:3px solid #132de7;outline-offset:5px}
+@media(hover:hover){
+ #zz-fullscreen a.pp-sticker:hover{box-shadow:1px 3px 3px #211b1544,4px 9px 18px #211b1538}
+ #zz-fullscreen .pp-connect a:hover{text-decoration:underline;text-underline-offset:3px}
+}
+html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .dock-tooltip,#zz-fixed-links .fixed-label){color:#181a17;text-shadow:none}
+@media(max-width:1000px) and (min-width:761px){
+ #zz-fullscreen .pp-labels{inset-inline:4vw}
+ #zz-fullscreen .pp-name{right:3%}
+ #zz-fullscreen .pp-ingredients{right:2%}
+}
+@media(max-width:760px){
+ #zz-fullscreen .pp-labels{--u:clamp(.7px,.1dvh,.88px);inset:105px 18px 105px}
+ #zz-fullscreen .pp-name{top:0;right:0;width:calc(225 * var(--u));padding:calc(10 * var(--u)) calc(14 * var(--u))}
+ #zz-fullscreen #zz-body .pp-name h2{font-size:calc(50 * var(--u))}
+ #zz-fullscreen .pp-name h2 span{font-size:calc(11 * var(--u))}
+ #zz-fullscreen .pp-statement{top:22%;right:-3px;width:calc(210 * var(--u));padding:calc(12 * var(--u))}
+ #zz-fullscreen .pp-statement p[lang=en]{font-size:calc(22 * var(--u));line-height:1.05}
+ #zz-fullscreen .pp-statement p[lang=ko]{font-size:calc(10.5 * var(--u));margin-top:calc(8 * var(--u));line-height:1.5;word-break:keep-all}
+ #zz-fullscreen .pp-ingredients{right:1%;bottom:25%;width:calc(220 * var(--u));padding:calc(10 * var(--u))}
+ #zz-fullscreen #zz-body .pp-label-heading h3{font-size:calc(31 * var(--u))}
+ #zz-fullscreen .pp-label-heading .pp-micro{font-size:calc(6 * var(--u))}
+ #zz-fullscreen .pp-ingredients li{padding:calc(6 * var(--u)) 0;gap:3px}
+ #zz-fullscreen .pp-ingredients li span:first-child{font-size:12px}
+ #zz-fullscreen .pp-ingredients li span:last-child{font-size:9px}
+ #zz-fullscreen .pp-label-footer{font-size:calc(8.5 * var(--u));padding-top:calc(8 * var(--u))}
+ #zz-fullscreen .pp-ticket{left:0;bottom:2%;width:47%;max-width:calc(240 * var(--u))}
+ #zz-fullscreen .pp-ticket-main{padding:calc(12 * var(--u));padding-right:calc(8 * var(--u))}
+ #zz-fullscreen .pp-ticket .pp-micro{font-size:calc(7 * var(--u))}
+ #zz-fullscreen #zz-body .pp-ticket h3{font-size:calc(24 * var(--u));margin:calc(8 * var(--u)) 0}
+ #zz-fullscreen .pp-ticket p{font-size:10px;line-height:1.5}
+ #zz-fullscreen .pp-barcode{height:calc(25 * var(--u));margin-top:calc(10 * var(--u))}
+ #zz-fullscreen .pp-ticket-caption{font-size:calc(6 * var(--u))}
+ #zz-fullscreen .pp-ticket-stub{font-size:calc(7 * var(--u));padding:calc(7 * var(--u));letter-spacing:0}
+ #zz-fullscreen .pp-ticket-stub strong{font-size:calc(13 * var(--u))}
+ #zz-fullscreen .pp-connect{right:0;bottom:0;width:47%;max-width:calc(235 * var(--u));padding:calc(11 * var(--u))}
+ #zz-fullscreen .pp-contact{font-size:calc(21 * var(--u))}
+ #zz-fullscreen .pp-contact-arrow{font-size:calc(32 * var(--u))}
+ #zz-fullscreen .pp-email{font-size:10px;letter-spacing:-.025em}
+ #zz-fullscreen .pp-connect nav{gap:8px;justify-content:space-between;font-size:11px}
+}
+@media(max-height:650px) and (min-width:761px){
+ #zz-fullscreen .pp-labels{inset-block:100px 95px;--u:.7px}
+ #zz-fullscreen .pp-name{right:0}
+ #zz-fullscreen .pp-statement{right:28%;top:0}
+ #zz-fullscreen .pp-ingredients{bottom:0;right:26%}
+ #zz-fullscreen .pp-connect{bottom:0;right:0}
+}
+@media(max-width:760px) and (max-height:690px){
+ #zz-fullscreen .pp-labels{inset-block:94px 94px;--u:.7px}
+ #zz-fullscreen .pp-statement{top:22%;width:150px}
+ #zz-fullscreen .pp-statement p[lang=en]{font-size:15px}
+ #zz-fullscreen .pp-statement p[lang=ko]{font-size:8px;margin-top:5px}
+ #zz-fullscreen .pp-ingredients{bottom:24%;width:154px}
+ #zz-fullscreen .pp-ticket{bottom:0}
+ #zz-fullscreen .pp-ticket-main{padding:8px}
+ #zz-fullscreen .pp-ticket p{font-size:8px}
+ #zz-fullscreen .pp-ticket-stub{padding:5px}
+}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .profile-poster *{animation:none;transition:none}}
+/* Compact labels keep every destination visible on short phones. */
+@media(max-width:760px) and (max-height:620px){
+ #zz-fullscreen .pp-labels{inset:88px 12px 85px}
+ #zz-fullscreen .pp-name{right:0;width:145px;padding:7px 10px}
+ #zz-fullscreen #zz-body .pp-name h2{font-size:30px;margin:3px 0 4px}
+ #zz-fullscreen .pp-name h2 span{font-size:9px;margin-top:4px}
+ #zz-fullscreen .pp-name .pp-micro{font-size:7px}
+ #zz-fullscreen .pp-statement{top:83px;right:0;width:145px;padding:9px}
+ #zz-fullscreen .pp-statement p[lang=en]{display:none}
+ #zz-fullscreen .pp-statement p[lang=ko]{font-size:9px;line-height:1.5;margin:0}
+ #zz-fullscreen .pp-ingredients{top:137px;bottom:auto;right:0;width:145px;padding:8px}
+ #zz-fullscreen #zz-body .pp-label-heading h3{font-size:23px}
+ #zz-fullscreen .pp-label-heading{padding-bottom:4px;border-bottom-width:3px}
+ #zz-fullscreen .pp-label-heading .pp-micro{display:none}
+ #zz-fullscreen .pp-ingredients li{padding:4px 0}
+ #zz-fullscreen .pp-ingredients li span:first-child{font-size:11px}
+ #zz-fullscreen .pp-ingredients li span:last-child{font-size:7px}
+ #zz-fullscreen .pp-label-footer{font-size:7px;padding-top:7px}
+ #zz-fullscreen .pp-connect{width:145px;padding:8px}
+ #zz-fullscreen .pp-contact{font-size:14px}
+ #zz-fullscreen .pp-contact-arrow{font-size:24px}
+ #zz-fullscreen .pp-email{font-size:9px}
+ #zz-fullscreen .pp-connect nav{font-size:10px;gap:4px;padding-top:5px;margin-top:5px}
+ #zz-fullscreen .pp-ticket{width:44%}
+ #zz-fullscreen .pp-ticket-main{padding:8px}
+ #zz-fullscreen #zz-body .pp-ticket h3{font-size:18px}
+ #zz-fullscreen .pp-ticket .pp-micro{font-size:6px}
+ #zz-fullscreen .pp-ticket p{font-size:8px}
+ #zz-fullscreen .pp-ticket-caption{display:none}
+ #zz-fullscreen .pp-ticket-stub{padding:4px}
+}
+
+/* Reference-inspired printed labels; preserve the existing copy and hierarchy. */
+#zz-fullscreen .pp-sticker::after{border-radius:inherit}
+#zz-fullscreen .pp-name{border:4px double #faf4df;border-radius:50%;background:#293fbd;color:#faf4df;text-align:center;outline:1px solid #293fbd;padding-inline:calc(22 * var(--u))}
+#zz-fullscreen #zz-body .pp-name h2{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.075em}
+#zz-fullscreen .pp-name-rule{width:65%;margin:auto;border-top-width:1px}
+#zz-fullscreen .pp-statement{border:4px double #fff3da;outline:1px solid #bd3025;border-radius:16px 3px 16px 3px;background:#dc3d30}
+#zz-fullscreen .pp-statement p[lang=en]{font-family:Impact,'Arial Narrow','Helvetica Neue',sans-serif!important;font-weight:900;letter-spacing:.005em}
+#zz-fullscreen .pp-ingredients{border:4px double #244b36;background:#e4eedc;color:#244b36}
+#zz-fullscreen .pp-label-heading{border-bottom-color:#244b36}
+#zz-fullscreen #zz-body .pp-label-heading h3{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.06em}
+#zz-fullscreen .pp-ingredients li span:first-child{font-family:'Courier New',monospace!important;font-weight:700;letter-spacing:-.055em}
+#zz-fullscreen .pp-label-footer>span{background:#244b36;color:#f8f4df;padding:2px 5px}
+#zz-fullscreen .pp-ticket{background:#f9da69;border:3px double #695327;color:#352b1f;border-radius:3px 12px 12px 3px}
+#zz-fullscreen #zz-body .pp-ticket h3{font-family:Impact,'Arial Narrow','Helvetica Neue',sans-serif!important;font-weight:900;letter-spacing:-.025em}
+#zz-fullscreen .pp-ticket :is(.pp-micro,.pp-ticket-caption){font-family:'Courier New',monospace!important}
+#zz-fullscreen .pp-ticket-stub{background:#352b1f;color:#fff3c6;border-radius:0 8px 8px 0;border-left:2px dashed #f9da69}
+#zz-fullscreen .pp-ticket-stub strong{font-family:Georgia,'Times New Roman',serif!important;font-style:italic}
+#zz-fullscreen .pp-connect{background:#f8cbd9;color:#9b2d39;border:4px double #9b2d39;border-radius:14px 3px 14px 3px}
+#zz-fullscreen .pp-contact>span:first-child{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.065em}
+#zz-fullscreen .pp-connect nav{border-top-color:#9b2d3977}
+#zz-fullscreen .pp-connect nav a{font-family:'Courier New',monospace!important;font-weight:700;letter-spacing:-.07em}
+@media(max-width:760px){
+ #zz-fullscreen .pp-name{padding-inline:calc(14 * var(--u))}
+ #zz-fullscreen .pp-name>.pp-micro{font-size:calc(8 * var(--u))}
+ #zz-fullscreen .pp-ingredients li span:first-child{font-size:11px;letter-spacing:-.075em}
+ #zz-fullscreen .pp-connect nav{font-size:10px;gap:5px}
+}
+
+/* Vintage footage sits behind the existing printed-label composition. */
+#zz-fullscreen .pp-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;background:#a8a18b}
+#zz-fullscreen .pp-backdrop :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+#zz-fullscreen .pp-backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#f4eadb26,#eee6d824 60%,#e9e3d866)}

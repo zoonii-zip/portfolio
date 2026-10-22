@@ -1,0 +1,41 @@
+/* Project papers collected in pressed stainless-steel trays. */
+#zz-fullscreen #zz-body:has(.brand-gallery){padding:28px 4vw 100px!important;max-width:1600px}
+#zz-fullscreen .theme-visual #archive-panel{background:#eeeae2;padding:28px!important}
+#zz-fullscreen .theme-visual .collection-objects.brand-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 24px;padding:20px 0 32px;align-items:start;min-height:0}
+#zz-fullscreen .brand-tray{position:relative;display:block;aspect-ratio:400/520;color:#252923;text-decoration:none;isolation:isolate;filter:drop-shadow(3px 9px 5px #282d3030);transition:transform .25s,filter .25s}
+#zz-fullscreen .brand-tray:hover{transform:translateY(-5px) rotate(-1deg);filter:drop-shadow(5px 14px 7px #282d3038)}
+#zz-fullscreen .brand-tray:focus-visible{outline:2px solid #333;outline-offset:5px;border-radius:28px}
+#zz-fullscreen .brand-tray-metal{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#zz-fullscreen .brand-paper{position:absolute;inset:18% 18% 15%;display:flex;flex-direction:column;gap:10px;padding:20px 15px 14px;background:linear-gradient(105deg,#fffef9,#f2f0e7);box-shadow:2px 4px 6px #242a3040;transform:rotate(-2deg);border:1px solid #fff9}
+#zz-fullscreen .brand-tray:nth-child(even) .brand-paper{transform:rotate(2deg)}
+#zz-fullscreen .brand-paper-kicker{font:8px/1.4 monospace;letter-spacing:.12em;border-bottom:1px solid #242a3030;padding-bottom:10px}
+#zz-fullscreen .brand-paper strong{font:600 clamp(18px,2vw,28px)/1.18 Arial,'Apple SD Gothic Neo',sans-serif;letter-spacing:-.05em;overflow-wrap:anywhere}
+#zz-fullscreen .brand-paper-role{font:11px/1.55 Arial,'Apple SD Gothic Neo',sans-serif;color:#64655e}
+#zz-fullscreen .brand-paper-mark{flex:1;min-height:25px;display:flex;align-items:center;justify-content:center;font:italic clamp(34px,5vw,72px)/1 Georgia,serif;color:var(--object-tone);border-bottom:1px solid #242a3020}
+#zz-fullscreen .brand-paper-meta{display:flex;justify-content:space-between;gap:8px;font:9px/1.5 monospace;color:#66685f}
+#zz-fullscreen .brand-paper-status{font:9px/1.5 Arial,sans-serif;color:#85867b}
+#zz-fullscreen .brand-clip{position:absolute;z-index:2;left:calc(50% - 17px);top:13%;width:34px;height:27px;border-radius:2px;background:linear-gradient(100deg,#101316,#34383b 48%,#111519);box-shadow:1px 3px 2px #0005;border-bottom:2px solid #717779}
+#zz-fullscreen .brand-clip:before,#zz-fullscreen .brand-clip:after{content:'';position:absolute;left:8px;top:-22px;width:17px;height:29px;border:2px solid #bcc2c4;border-radius:9px 9px 3px 3px;transform:perspective(35px) rotateX(-20deg);box-shadow:1px 0 1px #333}
+#zz-fullscreen .brand-clip:after{top:3px;height:24px;border-color:#a4abad;transform:perspective(35px) rotateX(25deg)}
+@media(max-width:1100px){#zz-fullscreen .theme-visual .collection-objects.brand-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body:has(.brand-gallery){padding:22px 14px 100px!important}
+ #zz-fullscreen .archive-shell.theme-visual{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto}
+ #zz-fullscreen .theme-visual .archive-tabs{position:static;grid-column:1;grid-row:1;flex-direction:row;flex-wrap:wrap;margin:0 0 12px}
+ #zz-fullscreen .theme-visual #archive-panel{grid-column:1;grid-row:2;padding:18px!important}
+ #zz-fullscreen .theme-visual .collection-objects.brand-gallery{gap:24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+ #zz-fullscreen .brand-tray{width:100%;max-width:360px;justify-self:center}
+ #zz-fullscreen .brand-paper strong{font-size:24px}
+ #zz-fullscreen .brand-paper-mark{font-size:60px}
+ #zz-fullscreen .theme-visual .collection-footer{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .brand-tray{transition:none}#zz-fullscreen .brand-tray:hover{transform:none}}
+
+#zz-fullscreen .archive-shell .archive-tabs{gap:6px!important}
+#zz-fullscreen .archive-shell .archive-tabs button,
+#zz-fullscreen .archive-shell .archive-tabs button.selected,
+#zz-fullscreen .archive-shell .archive-tabs button:hover{min-height:0!important;padding:12px 8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#777568!important;transform:none!important}
+#zz-fullscreen .archive-shell .archive-tabs button.selected{color:#292c26!important;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+#zz-fullscreen .archive-shell .archive-tabs small,#zz-fullscreen .archive-shell .archive-tabs span,#zz-fullscreen .archive-shell .archive-tabs i{display:none!important}
+#zz-fullscreen .archive-shell .archive-tabs strong{max-width:none!important;font:500 14px/1.3 Arial,'Apple SD Gothic Neo',sans-serif!important;white-space:nowrap}
+@media(max-width:760px){#zz-fullscreen .archive-shell .archive-tabs{gap:10px!important}#zz-fullscreen .archive-shell .archive-tabs button{flex:0 1 auto!important;padding:10px 4px!important}#zz-fullscreen .archive-shell .archive-tabs strong{font-size:12px!important}}

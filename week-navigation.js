@@ -7,7 +7,7 @@
   const weeks = [
     { number: 'working', label: 'In Progress', path: 'index.html' },
     { number: 1, path: 'weeks/week-1.html' },
-    { number: 2, path: null },
+    { number: 2, path: 'weeks/week-2.html' },
     { number: 3, path: null },
     { number: 4, path: null },
   ];
