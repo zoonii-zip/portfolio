@@ -133,7 +133,7 @@
   [...doc.body.children].forEach(el=>{
    if(el.tagName==='H2'){
     if(sectionOpen)result+='</div></section>';
-    result+=`<section class="cs-extra-section" aria-label="${escape(el.textContent.replace(/^\d+\.\s*/,''))}"><div class="cs-extra-content">`;
+    result+=`<section class="cs-extra-section"><h2>${escape(el.textContent.replace(/^\d+\.\s*/,''))}</h2><div class="cs-extra-content">`;
     sectionOpen=true;
    }else if(el.tagName!=='H3')result+=el.outerHTML;
   });
