@@ -137,6 +137,34 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-ticket-stub{padding:4px}
 }
 
+/* Reference-inspired printed labels; preserve the existing copy and hierarchy. */
+#zz-fullscreen .pp-sticker::after{border-radius:inherit}
+#zz-fullscreen .pp-name{border:4px double #faf4df;border-radius:50%;background:#293fbd;color:#faf4df;text-align:center;outline:1px solid #293fbd;padding-inline:calc(22 * var(--u))}
+#zz-fullscreen #zz-body .pp-name h2{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.075em}
+#zz-fullscreen .pp-name-rule{width:65%;margin:auto;border-top-width:1px}
+#zz-fullscreen .pp-statement{border:4px double #fff3da;outline:1px solid #bd3025;border-radius:16px 3px 16px 3px;background:#dc3d30}
+#zz-fullscreen .pp-statement p[lang=en]{font-family:Impact,'Arial Narrow','Helvetica Neue',sans-serif!important;font-weight:900;letter-spacing:.005em}
+#zz-fullscreen .pp-ingredients{border:4px double #244b36;background:#e4eedc;color:#244b36}
+#zz-fullscreen .pp-label-heading{border-bottom-color:#244b36}
+#zz-fullscreen #zz-body .pp-label-heading h3{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.06em}
+#zz-fullscreen .pp-ingredients li span:first-child{font-family:'Courier New',monospace!important;font-weight:700;letter-spacing:-.055em}
+#zz-fullscreen .pp-label-footer>span{background:#244b36;color:#f8f4df;padding:2px 5px}
+#zz-fullscreen .pp-ticket{background:#f9da69;border:3px double #695327;color:#352b1f;border-radius:3px 12px 12px 3px}
+#zz-fullscreen #zz-body .pp-ticket h3{font-family:Impact,'Arial Narrow','Helvetica Neue',sans-serif!important;font-weight:900;letter-spacing:-.025em}
+#zz-fullscreen .pp-ticket :is(.pp-micro,.pp-ticket-caption){font-family:'Courier New',monospace!important}
+#zz-fullscreen .pp-ticket-stub{background:#352b1f;color:#fff3c6;border-radius:0 8px 8px 0;border-left:2px dashed #f9da69}
+#zz-fullscreen .pp-ticket-stub strong{font-family:Georgia,'Times New Roman',serif!important;font-style:italic}
+#zz-fullscreen .pp-connect{background:#f8cbd9;color:#9b2d39;border:4px double #9b2d39;border-radius:14px 3px 14px 3px}
+#zz-fullscreen .pp-contact>span:first-child{font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:700;letter-spacing:-.065em}
+#zz-fullscreen .pp-connect nav{border-top-color:#9b2d3977}
+#zz-fullscreen .pp-connect nav a{font-family:'Courier New',monospace!important;font-weight:700;letter-spacing:-.07em}
+@media(max-width:760px){
+ #zz-fullscreen .pp-name{padding-inline:calc(14 * var(--u))}
+ #zz-fullscreen .pp-name>.pp-micro{font-size:calc(8 * var(--u))}
+ #zz-fullscreen .pp-ingredients li span:first-child{font-size:11px;letter-spacing:-.075em}
+ #zz-fullscreen .pp-connect nav{font-size:10px;gap:5px}
+}
+
 /* Vintage footage sits behind the existing printed-label composition. */
 #zz-fullscreen .pp-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;background:#a8a18b}
 #zz-fullscreen .pp-backdrop :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center}
