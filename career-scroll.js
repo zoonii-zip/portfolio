@@ -189,7 +189,7 @@
     });
     return `<section id="career-${id}" class="cs-chapter" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">0${i+1} / ${String(recordsForSection.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${['illustration','digital<br>experiences','brand<br>& print','teaching','exhibitions'][i]}</h3><p>${label}</p></div><div class="cs-records"><table aria-label="${title} 경력"><thead><tr><th scope="col">기간</th><th scope="col">프로젝트 / 맡은 역할</th></tr></thead><tbody id="career-${id}-records">${rows.map((record,index)=>row(record,index,sourceDoc)).join('')}</tbody></table>${rows.length>6&&id!=='teaching'?`<button type="button" class="cs-more" data-cs-more data-count="${rows.length-6}" aria-expanded="false" aria-controls="career-${id}-records">추가 이력 ${rows.length-6}개 보기 +</button>`:''}</div></section>`;
    }).join('')}
-   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary>그 외 이력 보기 + · 학력 / 소속 / 수상</summary><div class="career-full cs-extra-list">${extraList(extras)}</div></details></footer></article>`;
+   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary><span class="cs-background-label"><strong>그 외 경력 더보기</strong><small>학력 · 소속 · 수상</small></span><span class="cs-background-icon" aria-hidden="true">+</span></summary><div class="career-full cs-extra-list">${extraList(extras)}</div></details></footer></article>`;
   },
   mount() {
    cleanup();
