@@ -170,9 +170,9 @@
     <h2 class="cs-am">I AM<span>.</span></h2>
     <div class="cs-reel-window" aria-label="Illustrator, Graphic designer, Web designer">
      <div class="cs-reel-track" aria-hidden="true">${[
-      ['image','portrait'], ['role','Illustrator','illustrator'],
+      ['image','portrait-7662'], ['role','Illustrator','illustrator'],
       ['image','icecream'], ['role','Graphic designer','graphic'],
-      ['role','Web designer','web'], ['image','portrait']
+      ['role','Web designer','web'], ['image','portrait-7662']
      ].map(([type,value,style])=>`<div class="cs-reel-slide">${type==='image'?`<figure class="cs-reel-photo"><img src="/assets/career-hero/${value}.jpg" alt=""></figure>`:`<div class="cs-job cs-job-${style}">${value}</div>`}</div>`).join('')}</div>
     </div>
     <button class="cs-reel-toggle" type="button" aria-label="직업 소개 롤링 일시정지" aria-pressed="false">Ⅱ</button>
