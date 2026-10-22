@@ -4,7 +4,9 @@
   // The portfolio runtime calls this hook when entering from the board.
   unfold() {},
   hero() {
+   const motion = !matchMedia('(prefers-reduced-motion: reduce)').matches;
    return `<article class="profile-page profile-poster" aria-labelledby="profile-poster-title">
+    <div class="pp-backdrop" aria-hidden="true">${motion ? '<video autoplay muted loop playsinline preload="metadata" poster="/assets/profile-video/poster.jpg"><source src="/assets/profile-video/vintage-slow.mp4" type="video/mp4"></video>' : '<img src="/assets/profile-video/poster.jpg" alt="">'}</div>
     
     <div class="pp-labels">
      <header class="pp-sticker pp-name">
