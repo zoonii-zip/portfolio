@@ -113,6 +113,11 @@
  }
  function extraList(extras){
   const doc=new DOMParser().parseFromString(extras,'text/html');
+  [...doc.querySelectorAll('h2')].filter(heading=>/학력|수상·자격/.test(heading.textContent)).forEach(heading=>{
+   let node=heading.nextElementSibling;
+   while(node&&node.tagName!=='H2'){const next=node.nextElementSibling;node.remove();node=next;}
+   heading.remove();
+  });
   doc.querySelectorAll('table').forEach(table=>{
    const list=doc.createElement('ul');list.className='cs-extra-records';
    [...table.querySelectorAll('tbody tr')].forEach(row=>{
@@ -146,14 +151,6 @@
   });
   return result+(sectionOpen?'</div></section>':'');
  }
- function background(extras){
-  const doc=new DOMParser().parseFromString(extras,'text/html');
-  const sections=[...doc.querySelectorAll('h2')];
-  function section(title){const heading=sections.find(el=>el.textContent.includes(title));let html='';for(let el=heading?.nextElementSibling;el&&el.tagName!=='H2';el=el.nextElementSibling)html+=el.outerHTML;return html;}
-  const educationDoc=new DOMParser().parseFromString(section('학력'),'text/html');
-  const education=[...educationDoc.querySelectorAll('tbody tr')].map(tr=>{const c=[...tr.cells].map(el=>el.textContent);return `<li><small>${escape(c[0])}</small><strong>${escape(c[1].replace('한국공학대학교(KPU, 현 한국공학대학교)','한국공학대학교(KPU)'))}</strong><span>${escape(c[2])} · ${escape(c[3])}</span></li>`;}).join('');
-  return `<section class="cs-facts" aria-label="역량과 배경"><div><h3>Abilities</h3><dl><dt>Graphics</dt><dd>Photoshop & Illustrator</dd><dt>UI·UX</dt><dd>XD & Figma</dd><dt>Web</dt><dd>HTML & CSS & Javascript</dd><dt>Illust</dt><dd>Procreate</dd></dl></div><div><h3>Education</h3><ul class="cs-education">${education}</ul></div><div><h3>Activities</h3><ul><li>노트폴리오 포트폴리오 부문 뷰수 토탈 10만뷰 달성</li><li>라우드소싱 레트로 부문 컬렉션 업로드 작품</li><li>대국민 기후변화대응 인포그래픽 부문 최우수상</li><li>솔트웨어 소프트웨어사업본부 우수사원 수상</li></ul></div><div><h3>License</h3><ul><li>2021.07 · MTA HTML5 Application Development Fundamentals</li><li>2015.01 · 웹표준고급 교육 수료(HTML5/웹표준)</li><li>2013.08.16 · Adobe Certified Associate — Photoshop CS6</li><li>2011.04–09 · MOS Excel, PowerPoint</li></ul></div></section>`;
- }
  window.ZooniiCareer = {
   render(records,extras) {
    cleanup();
@@ -170,15 +167,15 @@
     <h2 class="cs-am">I AM<span>.</span></h2>
     <div class="cs-reel-window" aria-label="Illustrator, Graphic designer, Web designer">
      <div class="cs-reel-track" aria-hidden="true">${[
-      ['image','portrait'], ['role','Illustrator','illustrator'],
+      ['role','Illustrator','illustrator'],
       ['image','icecream'], ['role','Graphic designer','graphic'],
-      ['role','Web designer','web'], ['image','portrait']
+      ['role','Web designer','web'], ['role','Illustrator','illustrator']
      ].map(([type,value,style])=>`<div class="cs-reel-slide">${type==='image'?`<figure class="cs-reel-photo"><img src="/weeks/week-2/assets/career-hero/${value}.jpg" alt=""></figure>`:`<div class="cs-job cs-job-${style}">${value}</div>`}</div>`).join('')}</div>
     </div>
     <button class="cs-reel-toggle" type="button" aria-label="직업 소개 롤링 일시정지" aria-pressed="false">Ⅱ</button>
    </div><div class="cs-cover-footer"><div class="cs-cover-statement">Making things matter.</div><div class="cs-cover-caption"><p>그림을 그리고, 경험을 설계하고, 배움을 나눕니다.</p></div><button class="cs-scroll-next" type="button" data-cs-link="timeline" aria-label="타임라인으로 스크롤"><svg viewBox="0 0 32 44" width="28" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="20" height="29" rx="10"/weeks/week-2/><path d="M16 8v7M11 36l5 5 5-5"/weeks/week-2/></svg></button></div></header>
    <section id="career-timeline" class="cs-journey" aria-label="경력 요약 타임라인"><div class="cs-journey-sticky"><div class="cs-journey-top"><span class="cs-eyebrow">MY TIMELINE / 주요 이력 · 최신순</span><span class="cs-journey-count">01 / ${String(milestones.length).padStart(2,'0')}</span></div><div class="cs-timeline-window"><ol class="cs-timeline">${milestones.map(([year,title,name,description,color],i)=>`<li class="cs-milestone" style="--milestone-color:${color}"><span class="cs-year${year.length>10?' cs-year-long':''}">${year.replace(/—/g,' — ')}</span><span class="cs-eyebrow">${String(i+1).padStart(2,'0')} / ${name}</span><h3>${title}</h3><p>${description}</p></li>`).join('')}</ol></div><div class="cs-journey-bottom"><span>NOW → 2013</span><a href="#career-illustration" data-cs-link="illustration">전체 경력 보기 ↘</a></div></div></section>
-   ${careerSummary()}${background(extras)}
+   ${careerSummary()}
    ${chapters.map(([id,title,label],i)=>{
     const recordsForSection=all.filter(r=>r[4]===id).sort((a,b)=>b[1]-a[1]);
     const groupedSchools=id==='teaching'?['미림마이스터고등학교','항공대학교']:[];
@@ -189,7 +186,7 @@
     });
     return `<section id="career-${id}" class="cs-chapter" aria-labelledby="career-${id}-title"><div class="cs-chapter-heading"><span class="cs-eyebrow">0${i+1} / ${String(recordsForSection.length).padStart(2,'0')} RECORDS</span><h3 id="career-${id}-title">${['illustration','digital<br>experiences','brand<br>& print','teaching','exhibitions'][i]}</h3><p>${label}</p></div><div class="cs-records"><table aria-label="${title} 경력"><thead><tr><th scope="col">기간</th><th scope="col">프로젝트 / 맡은 역할</th></tr></thead><tbody id="career-${id}-records">${rows.map((record,index)=>row(record,index,sourceDoc)).join('')}</tbody></table>${rows.length>6&&id!=='teaching'?`<button type="button" class="cs-more" data-cs-more data-count="${rows.length-6}" aria-expanded="false" aria-controls="career-${id}-records">추가 이력 ${rows.length-6}개 보기 +</button>`:''}</div></section>`;
    }).join('')}
-   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/weeks/week-2/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary>그 외 이력 보기 + · 학력 / 소속 / 수상</summary><div class="career-full cs-extra-list">${extraList(extras)}</div></details></footer></article>`;
+   <footer class="cs-end"><span class="cs-eyebrow">THE NEXT CHAPTER</span><h3>More things<br>to make.</h3><a href="/weeks/week-2/contact/">다음 이야기를 함께 만들어요 ↗</a><details class="cs-background"><summary><span class="cs-background-label"><strong>그 외 경력 더보기</strong><small>소속 · 수행 프로젝트 · 강의 · 전시</small></span><span class="cs-background-icon" aria-hidden="true">+</span></summary><div class="career-full cs-extra-list">${extraList(extras)}</div></details></footer></article>`;
   },
   mount() {
    cleanup();

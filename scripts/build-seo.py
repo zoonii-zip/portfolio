@@ -30,6 +30,15 @@ nav='<nav aria-label="포트폴리오 페이지">'+''.join(f'<a href="{p}">{t}</
 intro='김주연 / Zoonii의 UI/UX 디자인, 일러스트레이션, 브랜딩과 교육 작업을 소개하는 포트폴리오입니다.'
 add('/','Zoonii — 김주연 | 디자이너 · 일러스트레이터',intro,'<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>'+intro+'</p>'+nav)
 add('/profile/','Profile — 김주연 / Zoonii', '아이디어를 화면과 이미지로 만드는 디자이너 김주연 / Zoonii의 소개와 작업 분야.', '<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행합니다.</p><h2>내가 꿈꾸는 것, 당신이 꿈꾸는 것을 만듭니다.</h2><p>아직 말로만 존재하는 아이디어를 함께 구체화하고, 보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><p><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></p>'+nav,'about')
+# The interactive profile and its readable page use the same background facts.
+profile_source = ROOT/'profile-film.js'
+if profile_source.exists():
+ match = re.search(r'const profileFacts = (.*?);\n', profile_source.read_text())
+ if match:
+  facts = json.loads(match[1])
+  for section in facts.values():
+   items=''.join('<li>'+('<small>'+esc(item[2])+'</small> · ' if len(item)>2 else '')+'<strong>'+esc(item[0])+'</strong><p>'+esc(item[1])+'</p></li>' for item in section['items'])
+   pages['/profile/']['content']+='<section><h2>'+esc(section['title'])+'</h2><ul>'+items+'</ul></section>'
 def listing(mode=None):
  return '<ul>'+''.join(f'<li><a href="/projects/{esc(k)}/">{esc(p["name"])}</a> — {esc(p["role"])} · {esc(p["period"])}</li>' for k,p in projects.items() if mode is None or p['mode']==mode)+'</ul>'
 category_nav='<nav aria-label="작업 분야">'+''.join(f'<a href="/archive/{slug}/">{label}</a> ' for slug,label in labels.values())+'</nav>'
@@ -37,7 +46,8 @@ add('/archive/','Archive — Zoonii의 디자인 · 일러스트레이션 작업
 for mode,(slug,label) in labels.items():
  add('/archive/'+slug+'/',label+' — Zoonii',f'김주연 / Zoonii의 {label} 프로젝트 목록과 작업 역할.','<h1>'+label+'</h1>'+category_nav+listing(mode)+'<p>프로젝트 이미지 · 상세 준비 중</p>','files',mode=mode)
 rows=''.join('<tr>'+''.join('<td>'+esc(r[i])+'</td>' for i in [0,2,3,5])+'</tr>' for r in records if r[4] not in ['teaching','exhibition'])
-add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.','<h1>김주연 / Zoonii의 작업 이력</h1><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody>'+rows+'</tbody></table>'+extras,'career')
+career_extras = re.sub(r'<h2>[^<]*(?:학력|수상·자격)[^<]*</h2>.*?(?=<h2>|$)', '', extras, flags=re.S)
+add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.','<h1>김주연 / Zoonii의 작업 이력</h1><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody>'+rows+'</tbody></table>'+career_extras,'career')
 for path,title,desc,action in [('/contact/','Contact','프로젝트와 협업, 강의 이야기를 들려주세요. 문의 양식으로 메시지를 보내거나 illu_junny@naver.com으로 연락해주세요.','contact'),('/guestbook/','Guestbook','메모 보드는 준비 중이에요.','guest'),('/thingthingclub/','ThingThingClub','감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로. 상품 이미지와 판매 링크는 준비 중입니다.','club')]:
  add(path,title+' — Zoonii',desc,'<h1>'+title+'</h1><p>'+desc+'</p>'+nav,action,index=False)
 # Reusable detail layouts: replace project copy and media without changing structure.

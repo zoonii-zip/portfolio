@@ -1,10 +1,13 @@
 """Freeze the current static site and its local assets for a weekly release."""
 from pathlib import Path
-import re, shutil, subprocess
+import argparse, re, shutil, subprocess
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--refresh',action='store_true',help='Update Week 2 only when explicitly requested by the site owner.')
+args=parser.parse_args()
 root=Path(__file__).resolve().parents[1]
 prefix='/weeks/week-2/'
 dest=root/'weeks/week-2'
-if dest.exists(): raise SystemExit('Snapshot already exists; do not overwrite published weeks.')
+if dest.exists() and not args.refresh: raise SystemExit('Snapshot already exists; use --refresh only for an explicitly requested Week 2 update.')
 files=subprocess.check_output(['git','ls-files'],cwd=root,text=True).splitlines()
 for name in files:
  p=Path(name)
