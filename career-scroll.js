@@ -10,6 +10,15 @@
  ];
  const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const dateKey = value => Number((String(value).match(/\d{4}(?:\.\d{2})?/)?.[0]||'0').replace('.','').padEnd(8,'0'));
+ const fairHistory = [
+  ['2025.12.05–12.07','Taipei Illustration Fair 2025'],
+  ['2024.12.26–12.29','Seoul Illustration Fair V.18'],
+  ['2024.07.04–07.07','Seoul Illustration Fair V.17'],
+  ['2023.12.21–12.24','Seoul Illustration Fair V.16'],
+  ['2023.11.25–11.26','Hong Kong Illustration & Creative Show V.6'],
+  ['2023.07.06–07.09','Seoul Illustration Fair V.15'],
+  ['2023.06.24–06.25','Hong Kong Illustration & Creative Show V.5']
+ ];
  let cleanup = () => {};
  function exhibitions(extras) {
   const doc = new DOMParser().parseFromString(extras,'text/html');
@@ -18,12 +27,7 @@
    const cells=[...tr.cells].map(c=>c.textContent);
    return [cells[0],dateKey(cells[0]),cells[1],cells[2],'exhibition','전시'];
   });
-  const fairs=[...doc.querySelectorAll('h3')].find(h=>h.textContent.includes('페어'));
-  [...(fairs?.nextElementSibling?.querySelectorAll('li')||[])].forEach(li=>{
-   const text=li.textContent.trim();
-   const match=text.match(/^(\d{4}\.\d{2}\.\d{2}(?:[–—-]\d{2}\.\d{2})?)\s*·\s*(.+)$/);
-   const period=match?.[1]||'FAIR';
-   const title=match?.[2]||text;
+  fairHistory.forEach(([period,title])=>{
    rows.push([period,30000000+dateKey(period),title,'Thingthingclub · 일러스트레이션 페어 참여','exhibition','페어']);
   });
   return rows;
@@ -117,6 +121,13 @@
    while(node&&node.tagName!=='H2'){const next=node.nextElementSibling;node.remove();node=next;}
    heading.remove();
   });
+  const fairHeading=[...doc.querySelectorAll('h3')].find(heading=>heading.textContent.includes('페어'));
+  const exhibitionHeading=[...doc.querySelectorAll('h3')].find(heading=>heading.textContent.includes('전시·라이브'));
+  const fairList=fairHeading?.nextElementSibling;
+  if(fairHeading&&fairList?.tagName==='UL'){
+   fairList.innerHTML=fairHistory.map(([period,title])=>`<li>${escape(period)} · ${escape(title)}</li>`).join('');
+   if(exhibitionHeading)exhibitionHeading.before(fairHeading,fairList);
+  }
   doc.querySelectorAll('table').forEach(table=>{
    const list=doc.createElement('ul');list.className='cs-extra-records';
    [...table.querySelectorAll('tbody tr')].forEach(row=>{
@@ -132,7 +143,7 @@
    [...list.children].forEach(li=>{
     const text=li.textContent.trim();
     const trailing=text.match(/^(.*?)\s*\((\d{4}[^)]*)\)$/);
-    const leading=text.match(/^(\d{4}(?:\.\d{2})?)\s+(.*)$/);
+    const leading=text.match(/^(\d{4}\.\d{2}(?:\.\d{2})?(?:[–—-]\d{2}(?:\.\d{2})?)?)\s*(?:·\s*)?(.+)$/);
     if(trailing||leading){
      const date=trailing?trailing[2]:leading[1];
      const title=trailing?trailing[1]:leading[2];
