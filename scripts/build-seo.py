@@ -19,7 +19,7 @@ projects = json.loads(re.search(r'const projects=(.*?);\n', data_source).group(1
 records = json.loads(re.search(r'const careerRecords=(.*?);', data_source).group(1))
 extras = json.loads(re.search(r'const careerExtras=(.*?);\n', data_source).group(1))
 origin = 'https://' + (ROOT/'CNAME').read_text().strip()
-person = {'@type':'Person','@id':origin+'/profile/#person','name':'김주연','alternateName':'Zoonii','url':origin+'/profile/','jobTitle':'Designer · Illustrator · Educator','description':'UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행하는 김주연 / Zoonii.','sameAs':['https://www.instagram.com/thingthingclub/'],'knowsAbout':['UI/UX Design','Illustration','Brand Design','Design Education']}
+person = {'@type':'Person','@id':origin+'/profile/#person','name':'김주연','alternateName':'Zoonii','url':origin+'/profile/','jobTitle':'Illustrator · Experience Maker · Educator','description':'그림을 그리고, 경험을 설계하고, 아이디어를 실제의 모습으로 만드는 김주연 / Zoonii.','sameAs':['https://www.instagram.com/thingthingclub/'],'knowsAbout':['Illustration','UI/UX Design','Brand Design','Creative Coding','Design Education']}
 labels={'STORY':('illustration','일러스트레이션'),'PRODUCT':('uiux','UI/UX · 웹 · 앱 디자인'),'VISUAL':('branding','브랜딩 · 편집 디자인')}
 pages={}
 def add(path,title,desc,content,action='home',index=True,mode=None,work=None):
@@ -27,9 +27,9 @@ def add(path,title,desc,content,action='home',index=True,mode=None,work=None):
  if work: graph.append(work)
  pages[path]={'title':title,'description':desc,'content':content,'action':action,'index':index,'mode':mode,'schema':{'@context':'https://schema.org','@graph':graph}}
 nav='<nav aria-label="포트폴리오 페이지">'+''.join(f'<a href="{p}">{t}</a> ' for p,t in [('/','Home'),('/profile/','Profile'),('/archive/','Archive'),('/career/','Career')])+'</nav>'
-intro='김주연 / Zoonii의 UI/UX 디자인, 일러스트레이션, 브랜딩과 교육 작업을 소개하는 포트폴리오입니다.'
-add('/','Zoonii — 김주연 | 디자이너 · 일러스트레이터',intro,'<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>'+intro+'</p>'+nav)
-add('/profile/','Profile — 김주연 / Zoonii', '아이디어를 화면과 이미지로 만드는 디자이너 김주연 / Zoonii의 소개와 작업 분야.', '<h1>김주연 / Zoonii</h1><p>Designer · Illustrator · Educator</p><p>UI/UX · 웹·앱 디자인, 일러스트레이션, 브랜딩과 편집 디자인을 작업하고 디자인 교육을 진행합니다.</p><h2>내가 꿈꾸는 것, 당신이 꿈꾸는 것을 만듭니다.</h2><p>아직 말로만 존재하는 아이디어를 함께 구체화하고, 보고 만지고 사용할 수 있는 모습으로 만듭니다.</p><p><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></p>'+nav,'about')
+intro='그림을 그리고, 경험을 설계하고, 아이디어를 실제의 모습으로 만드는 김주연 / Zoonii의 포트폴리오입니다.'
+add('/','Zoonii — 김주연 | Illustrator · Experience Maker',intro,'<h1>김주연 / Zoonii</h1><p>Illustrator · Experience Maker · Educator</p><p>'+intro+'</p>'+nav)
+add('/profile/','Profile — 김주연 / Zoonii', '일러스트레이션과 UI/UX, 브랜딩과 구현을 연결해 아이디어를 실제의 모습으로 만드는 김주연 / Zoonii.', '<h1>김주연 / Zoonii</h1><p>Illustrator · Experience Maker · Educator</p><h2>그림을 그리고, 경험을 설계하고, 손으로 만드는 사람.</h2><p>일러스트레이션·UI/UX·브랜딩·구현을 나누지 않고, 하나의 아이디어가 사람에게 닿는 모습을 만듭니다.</p><p><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram · @thingthingclub ↗</a></p>'+nav,'about')
 # The interactive profile and its readable page use the same background facts.
 profile_source = ROOT/'profile-film.js'
 if profile_source.exists():

@@ -180,6 +180,7 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
 #zz-fullscreen .pp-facts-heading{flex:none;display:flex;flex-direction:column;gap:10px;padding-bottom:20px}
 #zz-fullscreen .pp-facts-heading>span{font-size:10px;letter-spacing:.12em;color:#6a705e;line-height:1.4}
 #zz-fullscreen #zz-body .pp-facts-heading h3{font-size:clamp(24px,2.6vw,40px);font-weight:750;line-height:1.25;letter-spacing:-.055em;margin:0}
+#zz-fullscreen .pp-facts-heading>p{max-width:620px;font-size:13px;line-height:1.75;color:#555c50;word-break:keep-all}
 #zz-fullscreen .pp-facts-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;flex:none;border-bottom:2px solid #2a4330;padding-bottom:7px}
 #zz-fullscreen .pp-facts-tabs button{font-size:clamp(11px,1.05vw,15px);font-weight:650;letter-spacing:-.025em;line-height:1.4;padding:10px 5px;background:transparent;color:#51574c;border:0;border-radius:3px;white-space:nowrap;cursor:pointer}
 #zz-fullscreen .pp-facts-tabs button[aria-selected=true]{background:#284a35;color:#fffbed}
@@ -216,6 +217,7 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-facts-heading{padding-bottom:10px;gap:3px}
  #zz-fullscreen .pp-facts-heading>span{font-size:8px}
  #zz-fullscreen #zz-body .pp-facts-heading h3{font-size:22px}
+ #zz-fullscreen .pp-facts-heading>p{font-size:10px;line-height:1.55}
  #zz-fullscreen .pp-facts-tabs{gap:2px;padding-bottom:5px}
  #zz-fullscreen .pp-facts-tabs button{font-size:11px;padding:8px 3px}
  #zz-fullscreen .pp-facts-content [role=tabpanel]{padding-top:12px}
@@ -241,6 +243,7 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-with-facts .pp-statement p[lang=ko]{font-size:10px;margin:0}
  #zz-fullscreen .pp-facts{padding:11px}
  #zz-fullscreen .pp-facts-heading>span{display:none}
+ #zz-fullscreen .pp-facts-heading>p{display:none}
  #zz-fullscreen #zz-body .pp-facts-heading h3{font-size:19px}
  #zz-fullscreen .pp-facts-heading{padding-bottom:7px}
  #zz-fullscreen .pp-facts-tabs button{padding-block:6px}
