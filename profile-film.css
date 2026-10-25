@@ -57,7 +57,7 @@
 #zz-fullscreen .pp-fact-list a{text-decoration:underline;text-decoration-color:#a9aba5;text-underline-offset:3px}
 #zz-fullscreen .pp-tags{position:relative;z-index:2;display:flex;gap:9px;flex-wrap:wrap;flex:none;margin-top:auto;padding-top:10px}
 #zz-fullscreen .pp-tags span{padding:6px 12px;border-radius:999px;background:#e9e9e5;color:#454842;font:700 clamp(11px,.82vw,13px)/1.1 Arial,sans-serif}
-#zz-fullscreen .pp-career-sticker{position:absolute;z-index:8;right:-5.5%;bottom:17%;width:clamp(88px,8vw,130px);padding:0;border:0;background:transparent;filter:drop-shadow(2px 4px 2px #20251e4a);transform:rotate(12deg);cursor:pointer;transition:transform .18s ease}
+#zz-fullscreen .pp-career-sticker{position:absolute;z-index:8;right:-5.5%;bottom:17%;width:clamp(100px,9.2vw,150px);padding:0;border:0;background:transparent;filter:drop-shadow(2px 4px 2px #20251e4a);transform:rotate(12deg);cursor:pointer;transition:transform .18s ease}
 #zz-fullscreen .pp-career-sticker img{display:block;width:100%;height:auto;pointer-events:none}
 #zz-fullscreen .pp-career-sticker:hover{transform:rotate(8deg) scale(1.06)}
 #zz-fullscreen .pp-career-sticker:focus-visible{outline:3px solid #13bfdc;outline-offset:5px}
