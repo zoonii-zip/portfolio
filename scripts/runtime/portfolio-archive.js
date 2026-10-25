@@ -203,14 +203,15 @@
  document.querySelectorAll('#zz-fixed-links button').forEach(source=>{const item=source.cloneNode(true);item.dataset.action=item.dataset.fixed;delete item.dataset.fixed;item.className='board-shortcut';if(item.dataset.action==='guest')item.querySelector('.dock-art').innerHTML='<img src="assets/board-guestbook.webp" width="2578" height="2409" alt="" draggable="false" style="display:block;width:100%;height:auto">';item.querySelector('.dock-tooltip').remove();world.append(item)});
  const overviewButton=document.createElement('button');overviewButton.id='zz-overview-button';overviewButton.type='button';overviewButton.setAttribute('aria-label','Menu');overviewButton.setAttribute('aria-haspopup','dialog');overviewButton.setAttribute('aria-expanded','false');overviewButton.setAttribute('aria-controls','zz-overview');overviewButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></svg><span>Menu</span>';document.body.append(overviewButton);
  const overviewPreviews={
-  home:['Start here','assets/intro-background.webp'],
-  about:['About me','assets/profile-collage.webp'],
+  home:['Start here','assets/board-stickers/orange-eyes.webp'],
+  about:['About me','assets/board-profile-transparent.webp'],
   career:['Experience','assets/board-menu/career-cutout.webp'],
-  files:['Selected work','assets/archive-folder-paper.webp'],
-  club:['Objects & shop','assets/club-products/product-8.webp'],
-  guest:['Leave a note','assets/intro-stickers/lemon.webp'],
-  contact:['Say hello','assets/contact-logo-white.png']
+  files:['Selected work','assets/board-menu/archive-cutout.webp'],
+  club:['Objects & shop','assets/thingthing-horse-glitter.webp'],
+  guest:['Leave a note','assets/board-guest-fabric.webp'],
+  contact:['Say hello','assets/board-contact-fabric.webp']
  };
+ const overviewGraphicStyle=document.createElement('style');overviewGraphicStyle.textContent='@media (min-width:681px){#zz-overview .overview-preview{width:clamp(150px,18vw,280px);height:clamp(120px,22vh,220px);overflow:visible;border-radius:0;background:transparent;box-shadow:none}#zz-overview .overview-preview img{width:100%;height:100%;object-fit:contain!important;padding:0!important;filter:none!important}#zz-overview .overview-preview>span{display:none}}';document.head.append(overviewGraphicStyle);
  const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-label','전체 메뉴');
  overview.innerHTML=`<div class="overview-content"><header><button type="button" class="overview-close" aria-label="Close Menu" autofocus>Close ×</button></header><nav aria-label="Main navigation">${Object.entries(menuLabels).map(([key,label])=>`<button type="button" data-overview-action="${key}" aria-label="${label}"><span class="overview-roll-window" aria-hidden="true"><span class="overview-roll-track"><span class="overview-label">${label}</span><span class="overview-label overview-label-hover">${label}</span></span></span><span class="overview-category" aria-hidden="true">${overviewPreviews[key][0]}</span><span class="overview-preview" aria-hidden="true"><img src="${overviewPreviews[key][1]}" alt="" width="240" height="160"><span></span></span></button>`).join('')}</nav><footer>TAKE A LOOK AROUND.<span>© ZOONII.ZIP</span></footer></div>`;
  document.body.append(overview);
