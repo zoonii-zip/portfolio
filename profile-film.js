@@ -36,7 +36,7 @@
        <img class="pp-collage" src="/assets/board-profile-transparent.webp" width="1536" height="1024" alt="하늘색 Zoonii 로고와 김주연의 얼굴, 어린 시절 사진을 조합한 콜라주">
        <canvas class="profile-eye-canvas" width="1536" height="1024" aria-hidden="true"></canvas>
       </div>
-      <img class="pp-laptop" src="/assets/profile-macbook-stickers.webp" width="1562" height="1007" alt="캐릭터 스티커를 붙인 실버 맥북">
+      <img class="pp-laptop" src="/assets/profile-macbook-stickers.webp?v=nostars-20261026" width="1562" height="1007" alt="캐릭터 스티커를 붙인 실버 맥북">
       <section class="pp-connect" aria-label="연락처와 소셜 채널">
        <a class="pp-contact" href="/contact/"><span>LET’S MAKE<br>SOMETHING.</span><span class="pp-contact-arrow" aria-hidden="true">↗</span></a>
        <a class="pp-email" href="mailto:illu_junny@naver.com">illu_junny@naver.com</a>
