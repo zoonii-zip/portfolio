@@ -17,7 +17,7 @@
 /* Left collage. The canvas reuses the existing pointer-following eye renderer. */
 #zz-fullscreen .pp-visual{position:relative;width:100%;padding-bottom:13%;align-self:center;transform:translateY(-10px)}
 #zz-fullscreen .pp-collage-stage{position:relative;width:100%;aspect-ratio:3/2}
-#zz-fullscreen .pp-collage{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;background:#f7f0e4}
+#zz-fullscreen .pp-collage{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:transparent}
 #zz-fullscreen .pp-visual .profile-eye-canvas{position:absolute;z-index:2;inset:0 auto auto 0;display:block;width:100%;height:auto;aspect-ratio:3/2;pointer-events:none}
 #zz-fullscreen .pp-laptop{position:absolute;z-index:3;left:20%;top:73%;width:48%;height:auto;pointer-events:none;filter:drop-shadow(1px 5px 3px #25282042)}
 #zz-fullscreen .pp-connect{position:absolute;z-index:4;right:-5%;bottom:0;width:min(48%,330px);padding:15px 20px 12px;transform:rotate(3deg);background:#efc1d0;color:#9a2b3a;border:4px double #a72b3c;border-radius:2px 14px 14px 2px;box-shadow:2px 5px 8px #1e211d33}
@@ -34,10 +34,8 @@
 #zz-fullscreen #zz-body .pp-intro h1{font-size:clamp(35px,3.05vw,55px);font-weight:800;line-height:1.04;letter-spacing:-.065em}
 #zz-fullscreen .pp-intro h1 span{font-weight:500}
 #zz-fullscreen .pp-intro p{margin-top:14px;font-size:clamp(19px,1.78vw,31px);font-weight:620;line-height:1.45;letter-spacing:-.055em;word-break:keep-all}
-#zz-fullscreen .pp-name{position:absolute;z-index:5;right:-1%;top:-2%;width:clamp(220px,17vw,300px);padding:15px 24px 18px;transform:rotate(16deg);background:#2949c8;color:#f7f3df;border:4px double #f7f3df;border-radius:48% 52% 46% 54%/52% 44% 56% 48%;outline:1px solid #2949c8;text-align:center;box-shadow:2px 5px 9px #21251f33}
-#zz-fullscreen .pp-name small{display:block;font:700 9px/1.3 Arial,sans-serif;letter-spacing:.12em}
-#zz-fullscreen .pp-name strong{display:block;margin:6px 0 2px;font:italic 700 clamp(42px,4vw,66px)/.82 Georgia,'Times New Roman',serif;letter-spacing:-.08em}
-#zz-fullscreen .pp-name span{font:700 10px/1.3 Arial,sans-serif;letter-spacing:.03em}
+#zz-fullscreen .pp-name{position:absolute;z-index:5;right:-1%;top:-2%;width:clamp(220px,17vw,300px);background:transparent;filter:drop-shadow(2px 5px 5px #21251f33);pointer-events:none}
+#zz-fullscreen .pp-name img{display:block;width:100%;height:auto}
 #zz-fullscreen .pp-facts{min-width:0}
 #zz-fullscreen .pp-facts-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 18px}
 #zz-fullscreen .pp-facts-tabs button{min-width:0;padding:12px 8px;border:0;border-radius:999px;background:transparent;color:#51554c;font-size:clamp(12px,1vw,15px);font-weight:650;line-height:1.25;cursor:pointer;transition:background .18s,color .18s}
@@ -62,7 +60,7 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
 
 @media(max-width:1180px){
  #zz-fullscreen .pp-shell{width:calc(100vw - 7vw);grid-template-columns:minmax(0,.9fr) minmax(470px,1.1fr);gap:42px;padding-top:140px}
- #zz-fullscreen .pp-name{right:0;top:1%;width:210px;transform:rotate(12deg)}
+ #zz-fullscreen .pp-name{right:0;top:1%;width:210px}
  #zz-fullscreen .pp-intro{padding-right:200px}
  #zz-fullscreen .pp-facts-content{padding:20px 22px}
  #zz-fullscreen .pp-fact-list{gap:11px 24px}

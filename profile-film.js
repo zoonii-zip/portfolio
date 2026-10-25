@@ -32,7 +32,7 @@
     <div class="pp-shell">
      <section class="pp-visual" aria-label="Zoonii 콜라주">
       <div class="pp-collage-stage profile-artwork">
-       <img class="pp-collage" src="/assets/profile-collage-skin-clean.webp" width="1536" height="1024" alt="하늘색 Zoonii 로고와 김주연의 얼굴, 어린 시절 사진을 조합한 콜라주">
+       <img class="pp-collage" src="/assets/board-profile-transparent.webp" width="1536" height="1024" alt="하늘색 Zoonii 로고와 김주연의 얼굴, 어린 시절 사진을 조합한 콜라주">
        <canvas class="profile-eye-canvas" width="1536" height="1024" aria-hidden="true"></canvas>
       </div>
       <img class="pp-laptop" src="/assets/profile-macbook-stickers.webp" width="1562" height="1007" alt="캐릭터 스티커를 붙인 실버 맥북">
@@ -47,7 +47,7 @@
        <h1 id="profile-poster-title">김주연 <span>Zoonii</span></h1>
        <p>내가 꿈꾸는 것, 당신이 꿈꾸는 것을<br>그리고 설계하고 만듭니다.</p>
       </header>
-      <div class="pp-name" aria-hidden="true"><small>HELLO, MY NAME IS</small><strong>Zoonii</strong><span>김주연 / KIM JUYEON</span></div>
+      <div class="pp-name" aria-hidden="true"><img src="/assets/profile-name-tag.png" width="330" height="228" alt=""></div>
       ${profileNotes()}
      </section>
     </div>
