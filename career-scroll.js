@@ -58,6 +58,13 @@
     "#f3e5a0"
   ],
   [
+    "2019.03—2023.02",
+    "국민대학교 디자인대학원",
+    "EDUCATION",
+    "일러스트레이션 전공 · 졸업",
+    "#bde9e4"
+  ],
+  [
     "2013.11—2018.11",
     "솔트웨어",
     "CAREER",
@@ -89,6 +96,15 @@
  }
  function extraList(extras){
   const doc=new DOMParser().parseFromString(extras,'text/html');
+  // Saltware already has a dedicated career record and project disclosure above.
+  // Remove its repeated summary and project block from the supplementary history.
+  doc.querySelectorAll('tr').forEach(row=>{if(row.textContent.includes('솔트웨어'))row.remove();});
+  const saltwareHeading=[...doc.querySelectorAll('h3')].find(heading=>heading.textContent.startsWith('솔트웨어 /'));
+  if(saltwareHeading){
+   let node=saltwareHeading.nextElementSibling;
+   while(node&&!/^H[23]$/.test(node.tagName)){const next=node.nextElementSibling;node.remove();node=next;}
+   saltwareHeading.remove();
+  }
   [...doc.querySelectorAll('h2')].filter(heading=>/학력|수상·자격/.test(heading.textContent)).forEach(heading=>{
    let node=heading.nextElementSibling;
    while(node&&node.tagName!=='H2'){const next=node.nextElementSibling;node.remove();node=next;}
