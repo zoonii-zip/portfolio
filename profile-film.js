@@ -5,7 +5,7 @@
  function profileNotes() {
   return `<section class="pp-facts" aria-label="역량과 배경">
    <div class="pp-facts-tabs" role="tablist" aria-label="프로필 상세 정보">${Object.entries(profileFacts).map(([key,section],i)=>`<button type="button" role="tab" id="pp-tab-${key}" aria-controls="pp-panel-${key}" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${section.title}</button>`).join('')}</div>
-   <div class="pp-facts-content"><div class="pp-tags" aria-label="전문 분야"><span>Illustration</span><span>Branding</span><span>UI/UX & Web</span><span>Education</span></div>${Object.entries(profileFacts).map(([key,section],i)=>`<section role="tabpanel" id="pp-panel-${key}" aria-labelledby="pp-tab-${key}" tabindex="0"${i?' hidden':''}><ul class="pp-fact-list pp-fact-${key}">${section.items.map(([title,detail,date,url])=>`<li>${date?`<small>${escape(date)}</small>`:''}<strong>${escape(title)}</strong><p>${url?`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(detail)} · 바로가기 ↗</a>`:escape(detail)}</p></li>`).join('')}</ul></section>`).join('')}</div>
+   <div class="pp-facts-content">${Object.entries(profileFacts).map(([key,section],i)=>`<section role="tabpanel" id="pp-panel-${key}" aria-labelledby="pp-tab-${key}" tabindex="0"${i?' hidden':''}><ul class="pp-fact-list pp-fact-${key}">${section.items.map(([title,detail,date,url])=>`<li>${date?`<small>${escape(date)}</small>`:''}<strong>${escape(title)}</strong><p>${url?`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(detail)} · 바로가기 ↗</a>`:escape(detail)}</p></li>`).join('')}</ul></section>`).join('')}<div class="pp-tags" aria-label="전문 분야"><span>Illustration</span><span>Branding</span><span>UI/UX & Web</span><span>Education</span></div></div>
   </section>`;
  }
  function selectFact(tab,focus=false) {
@@ -15,6 +15,7 @@
   if(focus)tab.focus();
  }
  document.addEventListener('click',event=>{const tab=event.target.closest('.pp-facts [role="tab"]');if(tab)selectFact(tab);});
+ document.addEventListener('click',event=>{if(!event.target.closest('[data-profile-career]'))return;const career=document.querySelector('#zz-global-dock [data-dock="career"]');career?career.click():location.assign('/career/');});
  document.addEventListener('keydown',event=>{
   const tab=event.target.closest('.pp-facts [role="tab"]');
   if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
@@ -49,6 +50,7 @@
       </header>
       <div class="pp-name" aria-hidden="true"><img src="/assets/profile-name-tag.png" width="330" height="228" alt=""></div>
       ${profileNotes()}
+      <button class="pp-career-sticker" type="button" data-profile-career aria-label="커리어 페이지로 이동"><img src="/assets/board-menu/career-cutout.webp" width="1448" height="1086" alt="Career"></button>
      </section>
     </div>
    </article>`;
