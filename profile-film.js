@@ -1,9 +1,9 @@
 (() => {
  'use strict';
- const profileFacts = {"abilities": {"title": "Abilities", "label": "할 수 있는 일", "items": [["Graphics", "Photoshop & Illustrator"], ["UI·UX", "XD & Figma"], ["Web", "HTML & CSS & Javascript"], ["Illust", "Procreate"], ["AI 프로토타이핑", "바이브 코딩 · AI를 활용한 UI 구현"], ["디자인–개발 연동", "Figma MCP"], ["협업·버전 관리", "GitHub"], ["디자인 교육", "Figma · HTML/CSS · AI 활용 강의"]]}, "education": {"title": "Education", "label": "배워온 것들", "items": [["국민대학교 디자인대학원", "일러스트레이션 · 졸업", "2019.03–2023.02"], ["한국공학대학교(KPU)", "디지털디자인 · 졸업", "2015.03–2018.02"], ["미림마이스터고등학교", "뉴미디어디자인 · 졸업", "2012.03–2014.02"]]}, "activities": {"title": "Activities", "label": "활동과 수상", "items": [["노트폴리오", "포트폴리오 부문 뷰수 토탈 10만뷰 달성"], ["라우드소싱", "레트로 부문 컬렉션 업로드 작품"], ["대국민 기후변화대응 공모전", "인포그래픽 부문 최우수상"], ["솔트웨어", "소프트웨어사업본부 우수사원 수상"]]}, "license": {"title": "License", "label": "자격과 교육 이수", "items": [["MTA", "HTML5 Application Development Fundamentals", "2021.07"], ["웹표준고급 교육 수료", "HTML5 / 웹표준", "2015.01"], ["Adobe Certified Associate", "Photoshop CS6", "2013.08.16"], ["MOS", "Excel, PowerPoint", "2011.04–09"]]}};
+ const profileFacts = {"making":{"title":"Making","label":"나는 이런 일을 합니다","items":[["그림을 그립니다","캐릭터와 키비주얼, 일상에 남는 일러스트레이션"],["경험을 설계합니다","복잡한 서비스를 이해하기 쉬운 흐름과 화면으로"],["모습을 만듭니다","아이디어에 브랜드와 그래픽의 성격을 부여합니다"],["직접 실험합니다","코드와 AI로 동작하는 프로토타입을 만듭니다"]]},"proof":{"title":"Proof","label":"숫자로 보는 여정","items":[["12년+","디지털 경험과 비주얼을 만들어온 시간"],["UI/UX · BRAND · ILLUST","한 직함보다 문제에 맞는 방식으로 일합니다"],["100K+","노트폴리오 포트폴리오 누적 조회"],["DESIGN ↔ BUILD","기획과 디자인에서 구현 실험까지"]]},"background":{"title":"Background","label":"배우고 나눈 것들","items":[["국민대학교 디자인대학원","일러스트레이션 · 졸업","2019.03–2023.02"],["한국공학대학교","디지털디자인 · 수석 졸업","2015.03–2018.02"],["디자인 교육","Figma · HTML/CSS · AI 활용 강의","2021–NOW"]]},"tools":{"title":"Tools","label":"생각을 형태로 만드는 도구","items":[["Visual","Illustrator · Photoshop · Procreate"],["Product","Figma · prototyping · design system"],["Build","HTML · CSS · JavaScript · GitHub"],["AI workflow","AI prototyping · Figma MCP"]]}};
  const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function profileNotes() {
-  return `<section class="pp-facts" aria-label="역량과 배경"><header class="pp-facts-heading"><span>PROFILE NOTES / 01–04</span><h3>나를 이루는 것들.</h3></header>
+  return `<section class="pp-facts" aria-label="역량과 배경"><header class="pp-facts-heading"><span>PROFILE NOTES / 01–04</span><h3>그림을 그리고,<br>경험을 설계하고,<br>손으로 만드는 사람.</h3><p>일러스트레이션·UI/UX·브랜딩·구현을 나누지 않고, 하나의 아이디어가 사람에게 닿는 모습을 만듭니다.</p></header>
    <div class="pp-facts-tabs" role="tablist" aria-label="프로필 상세 정보">${Object.entries(profileFacts).map(([key,section],i)=>`<button type="button" role="tab" id="pp-tab-${key}" aria-controls="pp-panel-${key}" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${section.title}</button>`).join('')}</div>
    <div class="pp-facts-content">${Object.entries(profileFacts).map(([key,section],i)=>`<section role="tabpanel" id="pp-panel-${key}" aria-labelledby="pp-tab-${key}" tabindex="0"${i?' hidden':''}><h4>${section.label}</h4><ul class="pp-fact-list pp-fact-${key}">${section.items.map(([title,detail,date])=>`<li>${date?`<small>${escape(date)}</small>`:''}<strong>${escape(title)}</strong><p>${escape(detail)}</p></li>`).join('')}</ul></section>`).join('')}</div>
    <nav class="pp-facts-footer" aria-label="작업과 경력"><a href="/archive/">Archive · 작업 보기 ↗</a><a href="/career/">Career · 전체 경력 ↗</a></nav></section>`;
@@ -38,8 +38,8 @@
       <span class="pp-name-rule" aria-hidden="true"></span>
      </header>
      <section class="pp-sticker pp-statement" aria-label="소개">
-      <p lang="en">My dreams.<br>Your dreams. Made real.</p>
-      <p lang="ko">내가 꿈꾸는 것,<br>당신이 꿈꾸는 것을 만듭니다.</p>
+      <p lang="en">Draw.<br>Design. Make.</p>
+      <p lang="ko">그림과 경험 사이,<br>아이디어를 실제의 모습으로.</p>
      </section>
      <section class="pp-sticker pp-connect" aria-label="연락처와 소셜 채널">
       <a class="pp-contact" href="/contact/"><span>LET’S MAKE<br>SOMETHING.</span><span class="pp-contact-arrow" aria-hidden="true">↗</span></a>
