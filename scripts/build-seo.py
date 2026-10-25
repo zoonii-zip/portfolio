@@ -37,7 +37,7 @@ if profile_source.exists():
  if match:
   facts = json.loads(match[1])
   for section in facts.values():
-   items=''.join('<li>'+('<small>'+esc(item[2])+'</small> · ' if len(item)>2 else '')+'<strong>'+esc(item[0])+'</strong><p>'+esc(item[1])+'</p></li>' for item in section['items'])
+   items=''.join('<li>'+('<small>'+esc(item[2])+'</small> · ' if len(item)>2 and item[2] else '')+'<strong>'+esc(item[0])+'</strong><p>'+('<a href="'+esc(item[3])+'" target="_blank" rel="noopener noreferrer">'+esc(item[1])+' · 바로가기 ↗</a>' if len(item)>3 and item[3] else esc(item[1]))+'</p></li>' for item in section['items'])
    pages['/profile/']['content']+='<section><h2>'+esc(section['title'])+'</h2><ul>'+items+'</ul></section>'
 def listing(mode=None):
  return '<ul>'+''.join(f'<li><a href="/projects/{esc(k)}/">{esc(p["name"])}</a> — {esc(p["role"])} · {esc(p["period"])}</li>' for k,p in projects.items() if mode is None or p['mode']==mode)+'</ul>'
