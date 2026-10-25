@@ -9,9 +9,9 @@
 #zz-fullscreen .profile-poster *{box-sizing:border-box}
 #zz-fullscreen .profile-poster :is(h1,h2,h3,p){margin:0}
 #zz-fullscreen .profile-poster a{color:inherit;text-decoration:none}
-#zz-fullscreen .pp-backdrop{position:absolute;inset:0;z-index:-2;background:#9fa399;pointer-events:none}
-#zz-fullscreen .pp-backdrop :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center 63%;filter:saturate(.58) contrast(.78) brightness(1.13)}
-#zz-fullscreen .pp-backdrop::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 17%,#f1f4ec8f 0 18%,#dfe3da4c 42%,#30372f55 100%),linear-gradient(180deg,#eff2ea2e,#454c445c)}
+#zz-fullscreen .pp-backdrop{position:absolute;inset:0;z-index:-2;background:#b2b6ad;pointer-events:none}
+#zz-fullscreen .pp-backdrop :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center 63%;filter:saturate(.86) contrast(.9) brightness(1.18)}
+#zz-fullscreen .pp-backdrop::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 17%,#fffdf3a3 0 18%,#edf0e65c 44%,#68706724 100%),linear-gradient(180deg,#fff8e933,#60685f2b)}
 #zz-fullscreen .pp-shell{width:min(1600px,calc(100vw - 9vw));height:100%;margin:auto;padding:clamp(150px,19vh,205px) 0 clamp(92px,10vh,112px);display:grid;grid-template-columns:minmax(0,.94fr) minmax(520px,1fr);gap:clamp(54px,6vw,108px);align-items:center}
 
 /* Left collage. The canvas reuses the existing pointer-following eye renderer. */
