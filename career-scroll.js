@@ -9,16 +9,23 @@
   ['exhibition','EXHIBITIONS','전시·페어']
  ];
  const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const dateKey = value => Number((String(value).match(/\d{4}(?:\.\d{2})?/)?.[0]||'0').replace('.','').padEnd(8,'0'));
  let cleanup = () => {};
  function exhibitions(extras) {
   const doc = new DOMParser().parseFromString(extras,'text/html');
   const heading = [...doc.querySelectorAll('h3')].find(h => h.textContent.includes('전시·라이브'));
   const rows = [...(heading?.nextElementSibling?.querySelectorAll('tbody tr') || [])].map(tr => {
    const cells=[...tr.cells].map(c=>c.textContent);
-   return [cells[0],Number((cells[0].match(/\d{4}(?:\.\d{2})?/)?.[0]||'0').replace('.','').padEnd(6,'0')),cells[1],cells[2],'exhibition','전시'];
+   return [cells[0],dateKey(cells[0]),cells[1],cells[2],'exhibition','전시'];
   });
   const fairs=[...doc.querySelectorAll('h3')].find(h=>h.textContent.includes('페어'));
-  [...(fairs?.nextElementSibling?.querySelectorAll('li')||[])].forEach(li=>rows.push(['FAIR',0,li.textContent,'Thingthingclub · 일러스트레이션 페어 참여','exhibition','페어']));
+  [...(fairs?.nextElementSibling?.querySelectorAll('li')||[])].forEach(li=>{
+   const text=li.textContent.trim();
+   const match=text.match(/^(\d{4}\.\d{2}\.\d{2}(?:[–—-]\d{2}\.\d{2})?)\s*·\s*(.+)$/);
+   const period=match?.[1]||'FAIR';
+   const title=match?.[2]||text;
+   rows.push([period,30000000+dateKey(period),title,'Thingthingclub · 일러스트레이션 페어 참여','exhibition','페어']);
+  });
   return rows;
  }
  const milestones=[
