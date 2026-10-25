@@ -16,8 +16,7 @@
 
 /* Left collage. The canvas reuses the existing pointer-following eye renderer. */
 #zz-fullscreen .pp-visual{position:relative;width:100%;padding-bottom:13%;align-self:center;transform:translateY(-10px)}
-#zz-fullscreen .pp-collage-stage{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;background:#f7f3e9;box-shadow:0 7px 18px #20251e1a}
-#zz-fullscreen .pp-collage-stage::before{content:"";position:absolute;z-index:0;inset:0;background:url('/assets/textures/career-paper.png') repeat;background-size:320px;mix-blend-mode:multiply;opacity:.055;pointer-events:none}
+#zz-fullscreen .pp-collage-stage{position:relative;width:100%;aspect-ratio:3/2;background:transparent}
 #zz-fullscreen .pp-collage{position:relative;z-index:1;display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:transparent}
 #zz-fullscreen .pp-visual .profile-eye-canvas{position:absolute;z-index:2;inset:0 auto auto 0;display:block;width:100%;height:auto;aspect-ratio:3/2;pointer-events:none}
 #zz-fullscreen .pp-laptop{position:absolute;z-index:3;left:20%;top:73%;width:48%;height:auto;pointer-events:none;filter:drop-shadow(1px 5px 3px #25282042)}
@@ -41,7 +40,7 @@
 #zz-fullscreen .pp-facts::before{content:"";position:absolute;z-index:-1;inset:0;background:url('/assets/textures/career-paper.png') repeat;background-size:320px;mix-blend-mode:multiply;opacity:.075;pointer-events:none}
 #zz-fullscreen .pp-facts::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(110deg,#fff8,#fff0 45%,#c9c2af10);pointer-events:none}
 #zz-fullscreen .pp-facts-tabs{position:relative;z-index:4;display:flex;align-items:center;justify-content:flex-start;gap:clamp(13px,1.8vw,28px);flex:none;margin:0 0 14px;padding:0 0 6px}
-#zz-fullscreen .pp-facts-tabs button{position:relative;min-width:0;padding:2px 0 3px;border:0;background:transparent;color:#aaa8a0;font:700 clamp(12px,1vw,15px)/1.2 Arial,'Apple SD Gothic Neo',sans-serif;cursor:pointer;transition:color .18s}
+#zz-fullscreen .pp-facts-tabs button{position:relative;min-width:0;padding:2px 0 3px;border:0;background:transparent;color:#aaa8a0;font:700 clamp(14px,1.15vw,18px)/1.2 Arial,'Apple SD Gothic Neo',sans-serif;cursor:pointer;transition:color .18s}
 #zz-fullscreen .pp-facts-tabs button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#171815;transform:scaleX(0);transform-origin:left;transition:transform .18s}
 #zz-fullscreen .pp-facts-tabs button[aria-selected=true]{color:#11130f}
 #zz-fullscreen .pp-facts-tabs button[aria-selected=true]::after{transform:scaleX(1)}
@@ -95,7 +94,7 @@ html.viewing-space:has(#zz-overlay.open .profile-poster) :is(#zz-global-dock .do
  #zz-fullscreen .pp-name span{font-size:6px}
  #zz-fullscreen .pp-facts{flex:1;width:100%;height:auto;min-width:0;min-height:0;padding:14px 15px 13px;display:flex;flex-direction:column}
  #zz-fullscreen .pp-facts-tabs{flex:none;width:100%;gap:12px;margin-bottom:10px;padding-bottom:6px}
- #zz-fullscreen .pp-facts-tabs button{min-width:0;padding:4px 2px;font-size:8px;white-space:nowrap;overflow:hidden}
+ #zz-fullscreen .pp-facts-tabs button{min-width:0;padding:4px 2px;font-size:9px;white-space:nowrap;overflow:hidden}
  #zz-fullscreen .pp-facts-tabs button::after{bottom:0;height:2px}
  #zz-fullscreen .pp-facts-content{flex:1;height:auto;min-height:0}
  #zz-fullscreen .pp-fact-list{gap:8px 13px}
