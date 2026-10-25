@@ -47,6 +47,9 @@ for mode,(slug,label) in labels.items():
  add('/archive/'+slug+'/',label+' — Zoonii',f'김주연 / Zoonii의 {label} 프로젝트 목록과 작업 역할.','<h1>'+label+'</h1>'+category_nav+listing(mode)+'<p>프로젝트 이미지 · 상세 준비 중</p>','files',mode=mode)
 rows=''.join('<tr>'+''.join('<td>'+esc(r[i])+'</td>' for i in [0,2,3,5])+'</tr>' for r in records if r[4] not in ['teaching','exhibition'])
 career_extras = re.sub(r'<h2>[^<]*(?:학력|수상·자격)[^<]*</h2>.*?(?=<h2>|$)', '', extras, flags=re.S)
+career_extras = career_extras.replace('<li>Seoul Illustration Fair V.15–V.18</li>', '<li>2024.12.26–12.29 · Seoul Illustration Fair V.18</li><li>2024.07.04–07.07 · Seoul Illustration Fair V.17</li><li>2023.12.21–12.24 · Seoul Illustration Fair V.16</li><li>2023.07.06–07.09 · Seoul Illustration Fair V.15</li>')
+career_extras = career_extras.replace('<li>Hong Kong Illustration &amp; Creative Show V.5–V.6</li>', '<li>2023.11.25–11.26 · Hong Kong Illustration &amp; Creative Show V.6</li><li>2023.06.24–06.25 · Hong Kong Illustration &amp; Creative Show V.5</li>')
+career_extras = career_extras.replace('<li>Taipei Illustration Fair 2025</li>', '<li>2025.12.05–12.07 · Taipei Illustration Fair 2025</li>')
 add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.','<h1>김주연 / Zoonii의 작업 이력</h1><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody>'+rows+'</tbody></table>'+career_extras,'career')
 for path,title,desc,action in [('/contact/','Contact','프로젝트와 협업, 강의 이야기를 들려주세요. 문의 양식으로 메시지를 보내거나 illu_junny@naver.com으로 연락해주세요.','contact'),('/guestbook/','Guestbook','메모 보드는 준비 중이에요.','guest'),('/thingthingclub/','ThingThingClub','감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로. 상품 이미지와 판매 링크는 준비 중입니다.','club')]:
  add(path,title+' — Zoonii',desc,'<h1>'+title+'</h1><p>'+desc+'</p>'+nav,action,index=False)
