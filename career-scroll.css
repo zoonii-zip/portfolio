@@ -359,8 +359,7 @@
 #zz-fullscreen #zz-body .cs-scroll-next{display:grid;place-items:center;width:48px;height:50px;margin:2px 0 0;padding:5px;border:0;background:none;color:inherit;cursor:pointer}
 #zz-fullscreen #zz-body .cs-scroll-next svg{display:block;animation:intro-scroll-float 2.6s ease-in-out infinite;pointer-events:none}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .cs-scroll-next svg{animation:none}}
-#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{transform:translateY(clamp(-100px,-10vh,-60px))}
-@media(max-width:760px){#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{transform:translateY(-34px)}}
+
 
 /* Separate the date from the three-line milestone description. */
 #zz-fullscreen #zz-body .cs-rolling .cs-year{display:block;margin-bottom:clamp(36px,6dvh,64px)}
@@ -408,3 +407,23 @@
 #zz-fullscreen #zz-body .cs-background[open] .cs-background-icon{transform:rotate(45deg)}
 #zz-fullscreen #zz-body .cs-background>summary:focus-visible{outline:2px solid var(--cs-blue);outline-offset:5px}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .cs-background>summary,#zz-fullscreen #zz-body .cs-background-icon{transition:none}}
+
+/* Compact cover: reserve real space for the reel and caption at every viewport. */
+#zz-fullscreen #zz-body .cs-hero{padding:90px max(22px,5vw) 105px;gap:clamp(24px,4dvh,40px)}
+#zz-fullscreen #zz-body .cs-identity-reel{--identity-size:clamp(64px,min(9vw,16dvh),136px);flex:1 0 auto;min-height:0;margin:0;gap:clamp(16px,3dvh,28px);padding:16px 0}
+#zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{width:min(100%,560px);height:calc(var(--identity-size)*.82);border-radius:14px}
+#zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(22px,min(4.4vw,6dvh),48px);padding:0 16px;line-height:1.15}
+#zz-fullscreen #zz-body .cs-reel-toggle{right:0;bottom:0;width:28px;height:28px}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-footer{flex:none;gap:12px;transform:none}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-statement{font-size:clamp(24px,2.4vw,34px)}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-caption{max-width:540px}
+#zz-fullscreen #zz-body .cs-hero .cs-cover-caption>p{font-size:clamp(12px,1.1vw,15px)}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .cs-hero{padding-top:90px;padding-bottom:100px;gap:24px}
+ #zz-fullscreen #zz-body .cs-identity-reel{--identity-size:clamp(60px,min(15vw,14dvh),100px)}
+ #zz-fullscreen #zz-body .cs-identity-reel .cs-reel-window{width:min(100%,420px);height:calc(var(--identity-size)*.9)}
+ #zz-fullscreen #zz-body .cs-reel-slide .cs-job{font-size:clamp(20px,5.2vw,34px);padding-inline:12px}
+}
+@media(max-height:600px) and (min-width:761px){
+ #zz-fullscreen #zz-body .cs-hero{padding-top:75px;padding-bottom:85px;gap:18px}
+}

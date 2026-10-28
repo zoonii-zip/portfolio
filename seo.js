@@ -102,6 +102,9 @@
      link.className=book.className;
      link.setAttribute('aria-label',(book.querySelector('strong')?.textContent||'Illustration')+' 포트폴리오 보기');
      link.innerHTML=book.innerHTML;
+     // The spine itself is the link; remove the earlier SEO overlay anchor.
+     link.querySelectorAll('.seo-project-link').forEach(anchor=>anchor.remove());
+     link.setAttribute('aria-haspopup','dialog');
      for(const attr of book.attributes)if(attr.name==='style')link.setAttribute('style',attr.value);
      book.replaceWith(link);
    });
