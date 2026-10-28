@@ -1,0 +1,40 @@
+/* One page per collection. Only the overlay scrolls; no inset gallery panels. */
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell){--archive-page:#f3eadb;background:var(--archive-page);overflow-x:clip!important;overflow-y:auto!important;scroll-snap-type:none}
+#zz-fullscreen #zz-overlay.overlay:has(.theme-product){--archive-page:#fff}
+#zz-fullscreen #zz-overlay.overlay:has(.theme-visual){--archive-page:#eeeae2}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell)>.panelhead{position:absolute;inset:0 0 auto;background:transparent!important;border:0;backdrop-filter:none;pointer-events:none}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell)>.panelhead button{pointer-events:auto}
+#zz-fullscreen #zz-body.panelbody:has(>.archive-shell){position:relative;inset:auto;width:100%;max-width:none;height:auto;min-height:100svh;margin:0;padding:0!important;overflow:visible}
+#zz-fullscreen #zz-body .archive-shell{display:flex;flex-direction:column;gap:44px;width:100%;height:auto;min-height:100svh;margin:0;padding:120px clamp(20px,4vw,80px) 160px;box-sizing:border-box;background:transparent}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs{position:relative!important;top:auto!important;align-self:center!important;display:flex;flex-direction:row!important;flex-wrap:wrap;justify-content:center;gap:clamp(16px,3vw,48px)!important;width:100%;margin:0!important;padding:0!important;background:transparent}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button{flex:0 1 auto!important;min-height:44px!important;padding:12px 4px!important;text-align:center}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:14px!important}
+#zz-fullscreen #zz-body .archive-shell #archive-panel{width:100%;height:auto;min-height:0;padding:0!important;border:0;border-radius:0!important;box-shadow:none;background:transparent;overflow:visible}
+#zz-fullscreen #zz-body .archive-cover{text-align:center;padding:0 0 48px}
+#zz-fullscreen #zz-body .archive-cover h2{font-family:var(--font-display-en);font-size:clamp(36px,5.2vw,80px);font-weight:650;line-height:1.1;letter-spacing:-.045em;margin:0 0 18px}
+#zz-fullscreen #zz-body .archive-cover p{font-size:clamp(13px,1.1vw,16px);line-height:1.7;word-break:keep-all;color:#62645b;max-width:680px;margin:0 auto}
+#zz-fullscreen #zz-body .archive-shell .collection-scene{display:flex;flex-direction:column;height:auto;min-height:0;margin:0;padding:0;border-radius:0;background:transparent;color:#292c26;overflow:visible}
+#zz-fullscreen #zz-body .archive-shell .collection-meta{display:flex;flex:none;padding:0 0 24px;border:0;color:#62645b;font-size:10px}
+#zz-fullscreen #zz-body .archive-shell .collection-footer{display:flex;flex:none;padding:24px 0 0;color:#62645b;font-size:10px}
+
+/* The bookshelf sits directly on the page, with room for every spine. */
+#zz-fullscreen #zz-body .theme-story .collection-objects{flex:none;height:auto;min-height:440px;padding:28px 20px 0;overflow:visible;background:none}
+#zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:clamp(54px,6vw,100px);height:calc(var(--book-height)*1.15)}
+#zz-fullscreen #zz-body .theme-story .shelf-plank{width:100%;margin:0;height:8px}
+
+/* Brand identities share the page with no surrounding cards. */
+#zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px clamp(24px,4vw,64px);height:auto;min-height:0;padding:36px 0;overflow:visible}
+
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .archive-shell{gap:32px;padding:126px 20px 140px}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs{gap:16px!important;flex-wrap:nowrap}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:12px!important}
+ #zz-fullscreen #zz-body .archive-cover{padding-bottom:32px}
+ #zz-fullscreen #zz-body .archive-shell .collection-meta,#zz-fullscreen #zz-body .archive-shell .collection-footer{font-size:9px;gap:12px;flex-wrap:wrap}
+ #zz-fullscreen #zz-body .theme-story .collection-objects{min-height:330px;padding:24px 0 0}
+ #zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:var(--spine-width,64px);height:calc(var(--book-height)*.82)}
+ #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{gap:28px 20px;padding:16px 0}
+}
