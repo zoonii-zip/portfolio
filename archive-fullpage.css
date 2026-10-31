@@ -38,3 +38,15 @@
  #zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:var(--spine-width,64px);height:calc(var(--book-height)*.82)}
  #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{gap:28px 20px;padding:16px 0}
 }
+
+/* Illustration spines arrive in sequence and lift on hover or keyboard focus. */
+#zz-fullscreen #zz-body .theme-story .shelf-book{text-decoration:none;animation:illustration-arrive .6s both;transition:transform .3s ease,box-shadow .3s ease}
+#zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(2){animation-delay:.06s}
+#zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(3){animation-delay:.12s}
+#zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(4){animation-delay:.18s}
+#zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(5){animation-delay:.24s}
+#zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(6){animation-delay:.30s}
+#zz-fullscreen #zz-body .theme-story .shelf-book:is(:hover,:focus-visible){transform:translateY(-16px) rotate(-3deg);box-shadow:inset 2px 0 2px #fff6,10px 12px 12px #0003;z-index:2}
+#zz-fullscreen #zz-body .theme-story .shelf-book:focus-visible{outline:3px solid #5146b8;outline-offset:4px}
+@keyframes illustration-arrive{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .theme-story .shelf-book{animation:none;transition:none}#zz-fullscreen #zz-body .theme-story .shelf-book:is(:hover,:focus-visible){transform:rotate(var(--lean,0deg))}}
