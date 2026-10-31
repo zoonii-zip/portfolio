@@ -1,26 +1,20 @@
-/* Unframed brand names, with generous space for future original logo assets. */
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell .brand-gallery){--archive-page:#faf9f5}
-#zz-fullscreen #zz-body .theme-visual .archive-cover{text-align:left;padding:20px 0 24px}
-#zz-fullscreen #zz-body .theme-visual .archive-cover h2{font-size:clamp(34px,4.2vw,64px);font-weight:500}
-#zz-fullscreen #zz-body .theme-visual .archive-cover p{max-width:none;margin:0;color:#72756b}
-#zz-fullscreen #zz-body .theme-visual .collection-meta{border-bottom:1px solid #dcded5;padding-bottom:20px}
-#zz-fullscreen #zz-body .brand-logo{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;min-width:0;min-height:210px;padding:32px 16px;text-decoration:none;text-align:center;color:#272a24}
-#zz-fullscreen #zz-body .brand-wordmark{display:block;font-family:var(--font-display-en),var(--font-body-ko),sans-serif!important;font-size:clamp(30px,3.4vw,52px);line-height:1.25;font-weight:600;letter-spacing:-.065em;transition:transform .2s ease}
-#zz-fullscreen #zz-body .brand-logo--serif .brand-wordmark{font-family:Georgia,'AppleMyungjo',serif!important;font-style:italic;font-weight:400;letter-spacing:-.045em}
-#zz-fullscreen #zz-body .brand-logo--spaced .brand-wordmark{font-size:clamp(28px,3.2vw,48px);letter-spacing:.16em;font-weight:500}
-#zz-fullscreen #zz-body .brand-logo-meta{font-size:11px;line-height:1.6;color:#7c8073}
-#zz-fullscreen #zz-body .brand-logo-arrow{position:absolute;right:18px;bottom:26px;font-size:18px;opacity:0;translate:-5px 5px;transition:opacity .2s ease,translate .2s ease}
-#zz-fullscreen #zz-body .brand-logo:is(:hover,:focus-visible) .brand-wordmark{transform:translateY(-5px)}
-#zz-fullscreen #zz-body .brand-logo:is(:hover,:focus-visible) .brand-logo-arrow{opacity:1;translate:0 0}
-#zz-fullscreen #zz-body .brand-logo:focus-visible{outline:2px solid #555e45;outline-offset:4px}
-@media(max-width:760px){
- #zz-fullscreen #zz-body .brand-logo{min-height:160px;padding:24px 8px;gap:18px}
- #zz-fullscreen #zz-body .brand-wordmark{font-size:clamp(23px,5vw,34px)}
- #zz-fullscreen #zz-body .brand-logo--spaced .brand-wordmark{font-size:clamp(22px,5vw,32px)}
- #zz-fullscreen #zz-body .brand-logo-meta{font-size:10px}
- #zz-fullscreen #zz-body .brand-logo-arrow{font-size:14px;right:8px;bottom:12px;opacity:.65;translate:0 0}
-}
-@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .brand-wordmark,#zz-fullscreen #zz-body .brand-logo-arrow{transition:none}}
+/* Perforated project stamps; actual logos can replace the typographic covers. */
+#zz-fullscreen #zz-body .brand-stamp{display:block;position:relative;min-width:0;color:#252621;text-decoration:none;filter:drop-shadow(0 3px 1px #28282122);transition:transform .25s ease,filter .25s ease}
+#zz-fullscreen #zz-body .stamp-paper{display:flex;flex-direction:column;min-height:330px;padding:22px;background:#fffdf5;mask:radial-gradient(circle at 6px 6px,transparent 4px,#000 4.6px) -6px -6px/12px 12px,linear-gradient(#000 0 0) center/calc(100% - 12px) calc(100% - 12px) no-repeat;mask-composite:add}
+#zz-fullscreen #zz-body .stamp-top,#zz-fullscreen #zz-body .stamp-bottom{display:flex;justify-content:space-between;gap:8px;font:9px/1.5 monospace;letter-spacing:.04em}
+#zz-fullscreen #zz-body .stamp-year{font-size:15px;font-weight:bold}
+#zz-fullscreen #zz-body .stamp-art{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;min-height:170px;margin:12px 0 16px;padding:20px;background:var(--stamp-tone);border:1px solid #25262125;text-align:center}
+#zz-fullscreen #zz-body .stamp-art strong{color:#252621;z-index:1;font:650 clamp(25px,3vw,42px)/1.2 Georgia,'Apple SD Gothic Neo',serif;letter-spacing:-.06em;word-break:keep-all}
+#zz-fullscreen #zz-body .stamp-orbit{position:absolute;width:125px;height:125px;border:1px solid #fff9;border-radius:50%;box-shadow:0 0 0 20px #ffffff22,0 0 0 40px #ffffff22;transform:translate(50px,35px)}
+#zz-fullscreen #zz-body .stamp-caption{display:flex;flex-direction:column;gap:7px;flex:1}
+#zz-fullscreen #zz-body .stamp-caption strong{font-size:17px;line-height:1.35}
+#zz-fullscreen #zz-body .stamp-caption>span{font-size:12px;line-height:1.7;word-break:keep-all}
+#zz-fullscreen #zz-body .stamp-bottom{margin-top:18px;padding-top:10px;border-top:1px solid #25262130;color:#62645b}
+#zz-fullscreen #zz-body .brand-stamp:is(:hover,:focus-visible){transform:translateY(-8px) rotate(-2deg);filter:drop-shadow(2px 12px 8px #28282122)}
+#zz-fullscreen #zz-body .brand-stamp:focus-visible{outline:2px solid #343cbe;outline-offset:5px}
+@media(max-width:760px){#zz-fullscreen #zz-body .stamp-paper{padding:16px;min-height:300px}#zz-fullscreen #zz-body .stamp-art{min-height:135px;padding:12px}#zz-fullscreen #zz-body .stamp-top{font-size:7px}#zz-fullscreen #zz-body .stamp-caption strong{font-size:15px}#zz-fullscreen #zz-body .stamp-caption>span{font-size:11px}}
+@media(max-width:420px){#zz-fullscreen #zz-body .archive-shell.theme-visual .collection-objects.brand-gallery{grid-template-columns:minmax(0,1fr);max-width:300px;margin:0 auto}}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .brand-stamp{transition:none}#zz-fullscreen #zz-body .brand-stamp:is(:hover,:focus-visible){transform:none}}
 
 #zz-fullscreen .archive-shell .archive-tabs{gap:6px!important}
 #zz-fullscreen .archive-shell .archive-tabs button,
