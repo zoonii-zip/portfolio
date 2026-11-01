@@ -1,44 +1,53 @@
-/* One page per collection. Only the overlay scrolls; no inset gallery panels. */
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell){--archive-page:#f3eadb;background:var(--archive-page);overflow-x:clip!important;overflow-y:auto!important;scroll-snap-type:none}
-#zz-fullscreen #zz-overlay.overlay:has(.theme-product){--archive-page:#fff}
-#zz-fullscreen #zz-overlay.overlay:has(.theme-visual){--archive-page:#eeeae2}
+/* A persistent left index and an edge-to-edge project canvas. */
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell){--archive-page:#eae8e5;background:var(--archive-page);overflow-x:hidden!important;overflow-y:auto!important;scroll-snap-type:none}
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell)>.panelhead{position:absolute;inset:0 0 auto;background:transparent!important;border:0;backdrop-filter:none;pointer-events:none}
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell)>.panelhead button{pointer-events:auto}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell)>.panelhead #zz-paneltitle{display:none}
 #zz-fullscreen #zz-body.panelbody:has(>.archive-shell){position:relative;inset:auto;width:100%;max-width:none;height:auto;min-height:100svh;margin:0;padding:0!important;overflow:visible}
-#zz-fullscreen #zz-body .archive-shell{display:flex;flex-direction:column;gap:44px;width:100%;height:auto;min-height:100svh;margin:0;padding:120px clamp(20px,4vw,80px) 160px;box-sizing:border-box;background:transparent}
-#zz-fullscreen #zz-body .archive-shell .archive-tabs{position:relative!important;top:auto!important;align-self:center!important;display:flex;flex-direction:row!important;flex-wrap:wrap;justify-content:center;gap:clamp(16px,3vw,48px)!important;width:100%;margin:0!important;padding:0!important;background:transparent}
-#zz-fullscreen #zz-body .archive-shell .archive-tabs button{flex:0 1 auto!important;min-height:44px!important;padding:12px 4px!important;text-align:center}
-#zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:14px!important}
-#zz-fullscreen #zz-body .archive-shell #archive-panel{width:100%;height:auto;min-height:0;padding:0!important;border:0;border-radius:0!important;box-shadow:none;background:transparent;overflow:visible}
-#zz-fullscreen #zz-body .archive-cover{text-align:center;padding:0 0 48px}
-#zz-fullscreen #zz-body .archive-cover h2{font-family:var(--font-display-en);font-size:clamp(36px,5.2vw,80px);font-weight:650;line-height:1.1;letter-spacing:-.045em;margin:0 0 18px}
-#zz-fullscreen #zz-body .archive-cover p{font-size:clamp(13px,1.1vw,16px);line-height:1.7;word-break:keep-all;color:#62645b;max-width:680px;margin:0 auto}
-#zz-fullscreen #zz-body .archive-shell .collection-scene{display:flex;flex-direction:column;height:auto;min-height:0;margin:0;padding:0;border-radius:0;background:transparent;color:#292c26;overflow:visible}
-#zz-fullscreen #zz-body .archive-shell .collection-meta{display:flex;flex:none;padding:0 0 24px;border:0;color:#62645b;font-size:10px}
-#zz-fullscreen #zz-body .archive-shell .collection-footer{display:flex;flex:none;padding:24px 0 0;color:#62645b;font-size:10px}
-
-/* The bookshelf sits directly on the page, with room for every spine. */
-#zz-fullscreen #zz-body .theme-story .collection-objects{flex:none;height:auto;min-height:440px;padding:28px 20px 0;overflow:visible;background:none}
-#zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:clamp(54px,6vw,100px);height:calc(var(--book-height)*1.15)}
+#zz-fullscreen #zz-body .archive-shell,#zz-fullscreen #zz-body .archive-shell.theme-product:has(.digital-ribbon){display:grid;grid-template-columns:220px minmax(0,1fr)!important;grid-template-rows:auto!important;align-items:start;gap:36px;width:100%;height:auto;min-height:100svh;margin:0;padding:120px 40px 48px;box-sizing:border-box;background:transparent}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs{position:sticky!important;top:120px!important;align-self:start!important;display:flex;flex-direction:column!important;flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;gap:22px!important;width:100%;grid-column:1!important;grid-row:1!important;margin:0!important;padding:0!important;background:transparent}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button{flex:none!important;min-height:44px!important;padding:4px 0!important;text-align:left;white-space:normal;background:transparent!important;border:0!important;box-shadow:none!important;color:#292c26!important;opacity:.55;text-decoration:none!important;transition:opacity .2s}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button:is(.selected,:hover,:focus-visible){opacity:1}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:6px}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs strong{display:block;font-size:28px!important;line-height:1.15!important;white-space:normal!important;max-width:100%!important}
+#zz-fullscreen #zz-body .archive-tabs [data-archive-tab="STORY"] strong{font-family:'Source Sans 3',sans-serif!important;font-weight:950!important;letter-spacing:-1px}
+#zz-fullscreen #zz-body .archive-tabs [data-archive-tab="PRODUCT"] strong{font-family:Impact,'Arial Narrow',sans-serif!important;font-weight:800!important;letter-spacing:-1px}
+#zz-fullscreen #zz-body .archive-tabs [data-archive-tab="VISUAL"] strong{font-family:'Comic Sans MS','Bradley Hand',cursive!important;font-weight:400!important;font-size:25px!important;white-space:pre-line!important}
+#zz-fullscreen #zz-body .archive-shell #archive-panel{grid-column:2!important;grid-row:1!important;min-width:0;width:100%;height:auto;min-height:calc(100svh - 168px);padding:0!important;border:0;border-radius:0!important;box-shadow:none;background:transparent;overflow:visible}
+#zz-fullscreen #zz-body .archive-shell :is(.archive-cover,.collection-meta,.collection-footer,.dr-copy){display:none!important}
+#zz-fullscreen #zz-body .archive-shell .collection-scene{display:flex;flex-direction:column;height:auto;min-height:calc(100svh - 168px);margin:0;padding:0;border-radius:0;background:transparent;color:#292c26;overflow:visible}
+#zz-fullscreen #zz-body .theme-story .collection-scene{justify-content:center}
+#zz-fullscreen #zz-body .theme-story .collection-objects{flex:none;height:auto;min-height:440px;padding:28px 12px 0;overflow:visible;background:none}
+#zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:clamp(48px,5.5vw,100px);height:calc(var(--book-height)*1.15)}
 #zz-fullscreen #zz-body .theme-story .shelf-plank{width:100%;margin:0;height:8px}
-
-/* Brand identities share the page with no surrounding cards. */
-#zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px clamp(24px,4vw,64px);height:auto;min-height:0;padding:36px 0;overflow:visible}
-
-@media(max-width:760px){
- #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+#zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;height:auto;min-height:0;padding:0;overflow:visible}
+#zz-fullscreen #zz-body .theme-product:has(.digital-ribbon) .archive-tabs button{color:#f5f4ed!important}
+#zz-fullscreen #zz-body .dr-hero{height:calc(100svh - 240px);min-height:540px}
+#zz-fullscreen #zz-body .dr-project{width:clamp(110px,13vw,220px)}
+html:has(#zz-overlay.open .archive-shell) :is(#zz-global-dock,#zz-fixed-links){display:none!important}
+@media(max-width:1100px){
+ #zz-fullscreen #zz-body .archive-shell,#zz-fullscreen #zz-body .archive-shell.theme-product:has(.digital-ribbon){grid-template-columns:170px minmax(0,1fr)!important;gap:24px;padding:116px 24px 36px}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:25px!important}
+ #zz-fullscreen #zz-body .archive-tabs [data-archive-tab="VISUAL"] strong{font-size:22px!important}
+ #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
 }
-@media(max-width:760px){
- #zz-fullscreen #zz-body .archive-shell{gap:32px;padding:126px 20px 140px}
- #zz-fullscreen #zz-body .archive-shell .archive-tabs{gap:16px!important;flex-wrap:nowrap}
- #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:12px!important}
- #zz-fullscreen #zz-body .archive-cover{padding-bottom:32px}
- #zz-fullscreen #zz-body .archive-shell .collection-meta,#zz-fullscreen #zz-body .archive-shell .collection-footer{font-size:9px;gap:12px;flex-wrap:wrap}
- #zz-fullscreen #zz-body .theme-story .collection-objects{min-height:330px;padding:24px 0 0}
- #zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:var(--spine-width,64px);height:calc(var(--book-height)*.82)}
- #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{gap:28px 20px;padding:16px 0}
+@media(max-width:700px){
+ #zz-fullscreen #zz-body .archive-shell,#zz-fullscreen #zz-body .archive-shell.theme-product:has(.digital-ribbon){grid-template-columns:112px minmax(0,1fr)!important;gap:18px;padding:110px 16px 32px}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs{top:110px!important;gap:22px!important}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:18px!important;letter-spacing:-.5px}
+ #zz-fullscreen #zz-body .archive-tabs [data-archive-tab="VISUAL"] strong{font-size:18px!important}
+ #zz-fullscreen #zz-body .theme-story .collection-objects{min-height:300px;padding:20px 2px 0;gap:1px}
+ #zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:var(--spine-width,64px);height:calc(var(--book-height)*.7)}
+ #zz-fullscreen #zz-body .theme-story .shelf-book strong{font-size:clamp(12px,2.7vw,20px)}
+ #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{grid-template-columns:minmax(0,1fr);gap:24px}
+ #zz-fullscreen #zz-body .dr-hero{height:auto;min-height:0}
+ #zz-fullscreen #zz-body .dr-stage{position:relative;inset:auto;padding:0}
+ #zz-fullscreen #zz-body .dr-trail{position:relative;inset:auto;display:grid;grid-template-columns:1fr;gap:72px;padding:60px 12px 30px}
+ #zz-fullscreen #zz-body .dr-project{position:relative;left:auto;top:auto;width:80%;max-width:180px;justify-self:center;transform:perspective(900px) rotateY(-28deg) rotateX(5deg) rotateZ(-8deg)}
+ #zz-fullscreen #zz-body .dr-sheet-notes{transform:translate(22px,-30px)}
+ #zz-fullscreen #zz-body .dr-current{position:relative;right:auto;bottom:auto;width:100%;margin:20px 0;min-height:60px}
+ #zz-fullscreen #zz-body .dr-index{grid-template-columns:1fr;gap:0}
 }
-
 /* Illustration spines arrive in sequence and lift on hover or keyboard focus. */
 #zz-fullscreen #zz-body .theme-story .shelf-book{text-decoration:none;animation:illustration-arrive .6s both;transition:transform .3s ease,box-shadow .3s ease}
 #zz-fullscreen #zz-body .theme-story .shelf-book:nth-child(2){animation-delay:.06s}
@@ -50,3 +59,5 @@
 #zz-fullscreen #zz-body .theme-story .shelf-book:focus-visible{outline:3px solid #5146b8;outline-offset:4px}
 @keyframes illustration-arrive{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .theme-story .shelf-book{animation:none;transition:none}#zz-fullscreen #zz-body .theme-story .shelf-book:is(:hover,:focus-visible){transform:rotate(var(--lean,0deg))}}
+
+#zz-fullscreen #zz-body .dr-current{width:min(300px,70%)}
