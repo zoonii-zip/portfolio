@@ -1,5 +1,5 @@
 /* Flat folders follow the reference's lower-left to upper-right sequence. */
-#zz-fullscreen #zz-body .theme-product .collection-objects.flat-folders{display:block;width:100%;height:auto;min-height:0;padding:0;overflow:visible;color:#282a25}
+#zz-fullscreen #zz-body .theme-product .collection-objects.flat-folders{display:block;width:100%;height:auto;min-height:0;padding:0;overflow:visible;color:#f5f4ed}
 #zz-fullscreen #zz-body .ff-stage{position:relative;width:100%;height:clamp(440px,65svh,750px);isolation:isolate}
 #zz-fullscreen #zz-body .ff-project{position:absolute;left:calc(3% + var(--i)*18%);top:calc(70% - var(--i)*14%);width:24%;max-width:300px;min-width:100px;aspect-ratio:1.3;color:#272b28;text-decoration:none;z-index:calc(5 - var(--i));transform:translateY(-50%);transition:transform .35s cubic-bezier(.2,.7,.2,1),filter .35s;filter:drop-shadow(0 3px 2px #0001);outline-offset:7px}
 #zz-fullscreen #zz-body .ff-project.is-active{z-index:12;transform:translateY(-50%) scale(1.13);filter:drop-shadow(0 8px 6px #0002)}
@@ -11,13 +11,13 @@
 #zz-fullscreen #zz-body .ff-label strong{font:600 clamp(9px,1vw,14px)/1.25 var(--font-body),sans-serif!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:inherit}
 #zz-fullscreen #zz-body .ff-label>span{font-size:13px}
 #zz-fullscreen #zz-body .ff-number{position:absolute;left:9%;top:3%;font:8px/1 monospace;color:#444a40}
-#zz-fullscreen #zz-body .ff-project:focus-visible,#zz-fullscreen #zz-body .ff-index a:focus-visible{outline:2px solid #5349b5}
-#zz-fullscreen #zz-body .ff-current{display:flex;align-items:flex-start;gap:20px;max-width:100%;padding:22px 0;border-bottom:1px solid #252a2525}
-#zz-fullscreen #zz-body .ff-current>span{font:10px/1.8 monospace;color:#72766b;flex:none}
-#zz-fullscreen #zz-body .ff-current strong{display:block;font-size:17px;line-height:1.5;color:#282a25}
-#zz-fullscreen #zz-body .ff-current small{display:block;font-size:12px;line-height:1.7;margin-top:5px;color:#6b7065}
+#zz-fullscreen #zz-body .ff-project:focus-visible,#zz-fullscreen #zz-body .ff-index a:focus-visible{outline:2px solid #b6adff}
+#zz-fullscreen #zz-body .ff-current{display:flex;align-items:flex-start;gap:20px;max-width:100%;padding:22px 0;border-bottom:1px solid #ffffff30}
+#zz-fullscreen #zz-body .ff-current>span{font:10px/1.8 monospace;color:#aaa;flex:none}
+#zz-fullscreen #zz-body .ff-current strong{display:block;font-size:17px;line-height:1.5;color:#f5f4ed}
+#zz-fullscreen #zz-body .ff-current small{display:block;font-size:12px;line-height:1.7;margin-top:5px;color:#b5b5b5}
 #zz-fullscreen #zz-body .ff-index{display:flex;flex-wrap:wrap;gap:10px 24px;padding-top:20px}
-#zz-fullscreen #zz-body .ff-index a{font-size:11px;line-height:1.6;color:#73776d;padding:8px 0;text-decoration:none}
-#zz-fullscreen #zz-body .ff-index a.is-active{color:#242922;text-decoration:underline;text-underline-offset:5px}
+#zz-fullscreen #zz-body .ff-index a{font-size:11px;line-height:1.6;color:#aaa;padding:8px 0;text-decoration:none}
+#zz-fullscreen #zz-body .ff-index a.is-active{color:#fff;text-decoration:underline;text-underline-offset:5px}
 @media(max-width:700px){#zz-fullscreen #zz-body .ff-stage{height:590px}#zz-fullscreen #zz-body .ff-project{width:70%;max-width:210px;left:calc(5% + var(--i)*5%);top:calc(80% - var(--i)*17%)}#zz-fullscreen #zz-body .ff-project.is-active{transform:translateY(-50%) scale(1.05)}#zz-fullscreen #zz-body .ff-label strong{font-size:10px}#zz-fullscreen #zz-body .ff-current{gap:10px;flex-wrap:wrap}#zz-fullscreen #zz-body .ff-index{flex-direction:column;gap:0}}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .ff-project{transition:none}}
