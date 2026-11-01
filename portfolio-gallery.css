@@ -12,10 +12,10 @@
 #zz-fullscreen #zz-body .ff-label>span{font-size:13px}
 #zz-fullscreen #zz-body .ff-number{position:absolute;left:9%;top:3%;font:8px/1 monospace;color:#444a40}
 #zz-fullscreen #zz-body .ff-project:focus-visible,#zz-fullscreen #zz-body .ff-index a:focus-visible{outline:2px solid #b6adff}
-#zz-fullscreen #zz-body .ff-current{position:absolute;right:2%;top:0;display:flex;gap:16px;width:min(380px,60%);padding:0;pointer-events:none;z-index:20}
+#zz-fullscreen #zz-body .ff-current{position:absolute;left:0;top:0;display:flex;gap:16px;width:min(380px,60%);padding:0;pointer-events:none;z-index:20}
 #zz-fullscreen #zz-body .ff-current>span{font:10px/1.8 monospace;color:#999;flex:none;padding-top:4px}
 #zz-fullscreen #zz-body .ff-current strong{display:block;font-size:20px;line-height:1.4;color:#f5f4ed}
 #zz-fullscreen #zz-body .ff-current time{display:block;font:11px/1.6 monospace;color:#999;margin-top:8px}
 #zz-fullscreen #zz-body .ff-current small{display:block;font-size:13px;line-height:1.7;margin-top:12px;color:#c0c0c0;word-break:keep-all}
-@media(max-width:700px){#zz-fullscreen #zz-body .ff-stage{height:750px}#zz-fullscreen #zz-body .ff-project{width:70%;max-width:210px;left:calc(5% + var(--i)*5%);top:calc(82% - var(--i)*11%)}#zz-fullscreen #zz-body .ff-project.is-active{transform:translateY(-50%) scale(1.05)}#zz-fullscreen #zz-body .ff-label strong{font-size:10px}#zz-fullscreen #zz-body .ff-current{right:0;width:100%;gap:8px}.ff-current strong{font-size:17px}#zz-fullscreen #zz-body .ff-index{flex-direction:column;gap:0}}
+@media(max-width:700px){#zz-fullscreen #zz-body .ff-stage{height:750px}#zz-fullscreen #zz-body .ff-project{width:70%;max-width:210px;left:calc(5% + var(--i)*5%);top:calc(82% - var(--i)*11%)}#zz-fullscreen #zz-body .ff-project.is-active{transform:translateY(-50%) scale(1.05)}#zz-fullscreen #zz-body .ff-label strong{font-size:10px}#zz-fullscreen #zz-body .ff-current{width:100%;gap:8px}.ff-current strong{font-size:17px}#zz-fullscreen #zz-body .ff-index{flex-direction:column;gap:0}}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .ff-project{transition:none}}
