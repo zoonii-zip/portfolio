@@ -17,9 +17,9 @@
     }
     projects.forEach((p,i)=>{
       const link=document.createElement('a');link.href=p.href;link.className='ff-project';link.style.setProperty('--i',i);link.style.setProperty('--tone',tones[i%tones.length]);link.setAttribute('aria-label',p.name+' 포트폴리오 열기');link.setAttribute('aria-haspopup','dialog');
-      link.innerHTML='<span class="ff-tab"></span><span class="ff-body"><span class="ff-image"><img alt="" width="1080" height="608"></span><span class="ff-label"><strong></strong><span aria-hidden="true">↗</span></span></span><span class="ff-number"></span>';
+      link.innerHTML='<span class="ff-tab"></span><span class="ff-body"><span class="ff-image"><img alt="" width="1080" height="608"></span></span><span class="ff-number"></span>';
       link.querySelector('img').src='/assets/web-projects/'+p.href.split('/').filter(Boolean).pop()+'.svg';
-      link.querySelector('strong').textContent=p.name;link.querySelector('.ff-number').textContent=String(i+1).padStart(2,'0');
+      link.querySelector('.ff-number').textContent=String(i+1).padStart(2,'0');
       link.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')select(i)});link.addEventListener('focus',()=>select(i));stage.append(link);
     });
     select(2);
