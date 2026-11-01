@@ -115,7 +115,7 @@
   toggle.setAttribute('aria-label',(isOpen?'Close ':'Open ')+folder.querySelector('.gf-label strong').textContent);
   folder.querySelector('[data-gf-files]').inert=!isOpen;
  }
- function archiveTabs(){return `<div class="archive-tabs" role="tablist" aria-orientation="horizontal" aria-label="Archive categories">${[['STORY','Illustration'],['PRODUCT','Web / App Design'],['VISUAL','Branding / Editorial']].map(([key,label],i)=>`<button type="button" role="tab" id="archive-tab-${key}" aria-controls="archive-panel" aria-selected="${archiveMode===key}" tabindex="${archiveMode===key?0:-1}" data-archive-tab="${key}" class="${archiveMode===key?'selected':''}"><small>0${i+1}</small><strong>${archiveLabels[key]}</strong><span>${label}</span><i aria-hidden="true">↗</i></button>`).join('')}</div>`}
+ function archiveTabs(){return `<div class="archive-tabs" role="tablist" aria-orientation="vertical" aria-label="Archive categories">${[['STORY','Illustration'],['PRODUCT','Web / App Design'],['VISUAL','Branding / Editorial']].map(([key,label],i)=>`<button type="button" role="tab" id="archive-tab-${key}" aria-controls="archive-panel" aria-selected="${archiveMode===key}" tabindex="${archiveMode===key?0:-1}" data-archive-tab="${key}" class="${archiveMode===key?'selected':''}"><small>0${i+1}</small><strong>${key==='VISUAL'?'Branding<br>&Editorial':key==='PRODUCT'?'Web/App':'illustration'}</strong><span>${label}</span><i aria-hidden="true">↗</i></button>`).join('')}</div>`}
  function folderNow(mode){
   archiveMode=mode==='ALL'?'STORY':mode;activeFolder=archiveMode;current=null;
   const rows=Object.entries(projects).filter(([id,p])=>p.mode===archiveMode);
