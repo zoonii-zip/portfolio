@@ -12,7 +12,7 @@
 #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{display:block;font-size:28px!important;line-height:1.15!important;white-space:normal!important;max-width:100%!important}
 #zz-fullscreen #zz-body .archive-tabs [data-archive-tab="STORY"] strong{font-family:'Source Sans 3',sans-serif!important;font-weight:950!important;letter-spacing:-1px}
 #zz-fullscreen #zz-body .archive-tabs [data-archive-tab="PRODUCT"] strong{font-family:Impact,'Arial Narrow',sans-serif!important;font-weight:800!important;letter-spacing:-1px}
-#zz-fullscreen #zz-body .archive-tabs [data-archive-tab="VISUAL"] strong{font-family:'Comic Sans MS','Bradley Hand',cursive!important;font-weight:400!important;font-size:25px!important;white-space:pre-line!important}
+#zz-fullscreen #zz-body .archive-tabs [data-archive-tab="VISUAL"] strong{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;font-style:italic;font-size:27px!important;line-height:1.08!important;letter-spacing:-1px;white-space:pre-line!important}
 #zz-fullscreen #zz-body .archive-shell #archive-panel{grid-column:2!important;grid-row:1!important;min-width:0;width:100%;height:auto;min-height:calc(100svh - 168px);padding:0!important;border:0;border-radius:0!important;box-shadow:none;background:transparent;overflow:visible}
 #zz-fullscreen #zz-body .archive-shell :is(.archive-cover,.collection-meta,.collection-footer,.dr-copy){display:none!important}
 #zz-fullscreen #zz-body .archive-shell .collection-scene{display:flex;flex-direction:column;height:auto;min-height:calc(100svh - 168px);margin:0;padding:0;border-radius:0;background:transparent;color:#292c26;overflow:visible}
