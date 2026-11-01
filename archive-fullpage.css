@@ -61,3 +61,8 @@ html:has(#zz-overlay.open .archive-shell) :is(#zz-global-dock,#zz-fixed-links){d
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .theme-story .shelf-book{animation:none;transition:none}#zz-fullscreen #zz-body .theme-story .shelf-book:is(:hover,:focus-visible){transform:rotate(var(--lean,0deg))}}
 
 #zz-fullscreen #zz-body .dr-current{width:min(300px,70%)}
+
+/* Web/App uses a black canvas with readable navigation. */
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){--archive-page:#000;color:#f5f4ed}
+#zz-fullscreen #zz-body .archive-shell.theme-product .archive-tabs button{color:#f5f4ed!important}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product)>.panelhead button{color:#f5f4ed;border-color:#ffffff40}
