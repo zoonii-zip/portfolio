@@ -9,18 +9,33 @@
     target.dataset.booksReady = 'true';
     target.classList.add('illustration-shelf');
     target.setAttribute('aria-label','일러스트레이션 책 컬렉션');
-    const items = sources.map((source,i) => {
-      const title = source.querySelector('strong').textContent;
-      const year = source.querySelector('small').textContent;
-      const role = source.querySelector('.spine-subtitle').textContent;
-      const href = source.getAttribute('href');
+    const projects = sources.map(source => ({
+      title: source.querySelector('strong').textContent,
+      period: source.querySelector('small').textContent,
+      description: source.dataset.description || source.querySelector('.spine-subtitle').textContent,
+      href: source.getAttribute('href'),
+      image: source.dataset.cover
+    }));
+    const scene = target.closest('.collection-scene');
+    const info = document.createElement('div');
+    info.className = 'ib-current';
+    info.setAttribute('aria-live','polite');
+    info.setAttribute('aria-atomic','true');
+    info.innerHTML = '<span></span><div><strong></strong><time></time><small></small></div>';
+    scene.prepend(info);
+    const scroll = document.createElement('div');
+    scroll.className = 'ib-scroll';
+    target.before(scroll);
+    scroll.append(target);
+    const items = projects.map((project,i) => {
+      const {title, period: year, href} = project;
       const item = document.createElement('div');
       item.className = 'ib-item';
       item.style.setProperty('--book-color',palette[i % palette.length][0]);
       item.style.setProperty('--book-ink',palette[i % palette.length][1]);
       item.style.setProperty('--height',[90,100,84,96,88,94][i % 6]+'%');
       item.style.setProperty('--tilt',[-3,0,3,-2,0,2][i % 6]+'deg');
-      item.innerHTML = '<button type="button" class="ib-spine" aria-expanded="false"><span class="ib-number"></span><strong></strong><small></small></button><a class="ib-cover" aria-haspopup="dialog" tabindex="-1"><span class="ib-cover-top"><span>ZOONII / ILLUSTRATION</span><small></small></span><strong></strong><span class="ib-art" aria-hidden="true"><i></i><i></i><i></i></span><span class="ib-caption"></span><span class="ib-open">작품 펼쳐보기 ↗</span></a>';
+      item.innerHTML = '<button type="button" class="ib-spine" aria-expanded="false"><span class="ib-number"></span><strong></strong><small></small></button><a class="ib-cover" aria-haspopup="dialog" tabindex="-1"><img alt="" width="600" height="800" draggable="false"></a>';
       const trigger = item.querySelector('button');
       const cover = item.querySelector('a');
       const id = 'illustration-cover-'+i;
@@ -31,12 +46,15 @@
       trigger.querySelector('strong').textContent = title;
       trigger.querySelector('small').textContent = year;
       trigger.querySelector('.ib-number').textContent = String(i+1).padStart(2,'0');
-      cover.querySelector('strong').textContent = title;
-      cover.querySelector('small').textContent = year;
-      cover.querySelector('.ib-caption').textContent = role;
+      cover.querySelector('img').src = project.image;
       return item;
     });
     function select(index) {
+      const project = projects[index];
+      info.querySelector('span').textContent = String(index+1).padStart(2,'0')+' / '+String(projects.length).padStart(2,'0');
+      info.querySelector('strong').textContent = project.title;
+      info.querySelector('time').textContent = project.period;
+      info.querySelector('small').textContent = project.description;
       items.forEach((item,i)=>{
         const active = i === index;
         item.classList.toggle('is-selected',active);
@@ -56,7 +74,7 @@
         else if(e.key==='Home')index=0;
         else if(e.key==='End')index=items.length-1;
         else return;
-        e.preventDefault();items[index].querySelector('button').focus();
+        e.preventDefault();items[index].querySelector('button').focus({preventScroll:true});
       });
     });
     target.replaceChildren(...items);

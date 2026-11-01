@@ -105,7 +105,7 @@
      // The spine itself is the link; remove the earlier SEO overlay anchor.
      link.querySelectorAll('.seo-project-link').forEach(anchor=>anchor.remove());
      link.setAttribute('aria-haspopup','dialog');
-     for(const attr of book.attributes)if(attr.name==='style')link.setAttribute('style',attr.value);
+     for(const attr of book.attributes)if(attr.name==='style'||attr.name.startsWith('data-'))link.setAttribute(attr.name,attr.value);
      book.replaceWith(link);
    });
  }
