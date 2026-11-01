@@ -19,7 +19,7 @@
 #zz-fullscreen #zz-body .theme-story .collection-scene{justify-content:center}
 #zz-fullscreen #zz-body .theme-story .collection-objects{flex:none;height:auto;min-height:440px;padding:28px 12px 0;overflow:visible;background:none}
 #zz-fullscreen #zz-body .theme-story .shelf-book{flex-basis:clamp(48px,5.5vw,100px);height:calc(var(--book-height)*1.15)}
-#zz-fullscreen #zz-body .theme-story .shelf-plank{width:100%;margin:0;height:8px}
+#zz-fullscreen #zz-body .theme-story .shelf-plank{display:none!important}
 #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;height:auto;min-height:0;padding:0;overflow:visible}
 #zz-fullscreen #zz-body .theme-product:has(.digital-ribbon) .archive-tabs button{color:#f5f4ed!important}
 #zz-fullscreen #zz-body .dr-hero{height:calc(100svh - 240px);min-height:540px}
@@ -66,3 +66,6 @@ html:has(#zz-overlay.open .archive-shell) :is(#zz-global-dock,#zz-fixed-links){d
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){--archive-page:#000;color:#f5f4ed}
 #zz-fullscreen #zz-body .archive-shell.theme-product .archive-tabs button{color:#f5f4ed!important}
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product)>.panelhead button{color:#f5f4ed;border-color:#ffffff40}
+
+/* Match the lemon background of the Figma profile wireframe. */
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){--archive-page:#fffd89}
