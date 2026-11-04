@@ -367,10 +367,10 @@ html.viewing-space #zz-global-dock,html.viewing-space #zz-fixed-links{bottom:var
 #zz-overview-button{position:fixed;right:28px;top:24px;z-index:320;display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid #bdb5a4;border-radius:24px;background:#f8f4e9;color:#34372d;font:12px Arial;cursor:pointer}
 #zz-overview-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
 html.overview-open{overflow:hidden!important}
-#zz-overview{box-sizing:border-box;position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;padding:0;border:0;background:#faf9f6;color:#171717;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity .3s ease,transform .3s cubic-bezier(.76,0,.24,1);font-family:Arial,sans-serif}
+#zz-overview{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:min(760px,calc(100% - 32px));max-width:none;height:100dvh;max-height:none;padding:0;border:0;background:#faf9f6;color:#171717;overflow:hidden;box-shadow:-16px 0 48px #17171720;opacity:0;transform:translateX(40px);transition:opacity .3s ease,transform .3s cubic-bezier(.76,0,.24,1);font-family:Arial,sans-serif}
 #zz-overview.visible{opacity:1;transform:none}
 #zz-overview::backdrop{background:#17171755}
-#zz-overview .overview-content{--overview-font-size:clamp(26px,min(6vw,8.4dvh),84px);box-sizing:border-box;display:flex;flex-direction:column;height:100%;padding:24px max(24px,calc((100vw - 1120px)/2)) 20px;overflow:auto;overscroll-behavior:contain}
+#zz-overview .overview-content{--overview-font-size:clamp(26px,min(6vw,7dvh),56px);box-sizing:border-box;display:flex;flex-direction:column;height:100%;padding:24px 32px 20px;overflow:auto;overscroll-behavior:contain}
 #zz-overview header{display:flex;flex-shrink:0;justify-content:flex-end;margin-bottom:12px}
 #zz-overview footer{flex-shrink:0;font:10px monospace;letter-spacing:.12em;color:#737373}
 #zz-overview button{cursor:pointer;color:inherit;font:inherit;background:none;border:0;text-align:left}
@@ -401,7 +401,7 @@ html.overview-open{overflow:hidden!important}
 }
 @media(max-width:760px){
  #zz-overview-button{right:14px;top:16px;padding:10px}#zz-overview-button span{display:none}
- #zz-overview .overview-content{--overview-font-size:clamp(28px,min(10vw,8.4dvh),64px);padding:16px 20px}
+ #zz-overview .overview-content{--overview-font-size:clamp(22px,min(7.5vw,7dvh),44px);padding:16px 20px}
  #zz-overview header{margin-bottom:8px}
  #zz-overview .overview-category,#zz-overview .overview-preview{display:none}
  #zz-overview nav button:active .overview-roll-track{transform:translateY(-50%)}
