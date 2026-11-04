@@ -1,59 +1,147 @@
-(() => {
- 'use strict';
- const profileFacts = {"abilities":{"title":"Abilities","label":"할 수 있는 일","items":[["Graphics","Photoshop & Illustrator"],["UI · UX","Figma"],["Web","HTML & CSS & Javascript"],["Illustration","Procreate"],["AI 프로토타이핑","바이브 코딩 · AI를 활용한 UI 구현"],["디자인–개발 연동","Figma MCP"],["협업 · 버전 관리","GitHub"],["디자인 교육","Figma · HTML/CSS · AI 활용 강의"]]},"education":{"title":"Education","label":"배워온 것들","items":[["국민대학교 디자인대학원","일러스트레이션 · 최우수 졸업","2019.03–2023.02"],["한국공학대학교(KPU)","디지털디자인 · 수석 졸업","2015.03–2018.02"],["미림마이스터고등학교","뉴미디어디자인 · 졸업","2012.03–2014.02"]]},"activities":{"title":"Activities","label":"활동과 수상","items":[["노트폴리오","포트폴리오 누적 조회 101.7K",null,"https://notefolio.net/zoonii_studio/244219"],["라우드소싱","레트로 부문 컬렉션 업로드 작품"],["대국민 기후변화대응 공모전","인포그래픽 부문 최우수상","2018.07"],["솔트웨어","소프트웨어사업본부 우수사원 수상","2017.01"]]},"license":{"title":"License","label":"자격과 교육 이수","items":[["MTA","HTML5 Application Development Fundamentals","2021.07"],["웹표준 고급 교육 수료","HTML5 / 웹표준","2015.01"],["Adobe Certified Associate","Photoshop CS6","2013.08.16"],["MOS","Excel · PowerPoint","2011.04–09"]]}};
- const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- function profileNotes() {
-  return `<section class="pp-facts" aria-label="역량과 배경">
-   <div class="pp-facts-tabs" role="tablist" aria-label="프로필 상세 정보">${Object.entries(profileFacts).map(([key,section],i)=>`<button type="button" role="tab" id="pp-tab-${key}" aria-controls="pp-panel-${key}" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${section.title}</button>`).join('')}</div>
-   <div class="pp-facts-content">${Object.entries(profileFacts).map(([key,section],i)=>`<section role="tabpanel" id="pp-panel-${key}" aria-labelledby="pp-tab-${key}" tabindex="0"${i?' hidden':''}><ul class="pp-fact-list pp-fact-${key}">${section.items.map(([title,detail,date,url])=>`<li>${date?`<small>${escape(date)}</small>`:''}<strong>${escape(title)}</strong><p>${url?`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(detail)} · 바로가기 ↗</a>`:escape(detail)}</p></li>`).join('')}</ul></section>`).join('')}<div class="pp-tags" aria-label="전문 분야"><span>Illustration</span><span>Branding</span><span>UI/UX & Web</span><span>Education</span></div></div>
-  </section>`;
- }
- function selectFact(tab,focus=false) {
-  const facts=tab.closest('.pp-facts');
-  facts.querySelectorAll('[role="tab"]').forEach(button=>{const active=button===tab;button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});
-  facts.querySelectorAll('[role="tabpanel"]').forEach(panel=>{panel.hidden=panel.id!==tab.getAttribute('aria-controls');if(!panel.hidden)panel.scrollTop=0;});
-  if(focus)tab.focus();
- }
- document.addEventListener('click',event=>{const tab=event.target.closest('.pp-facts [role="tab"]');if(tab)selectFact(tab);});
- document.addEventListener('click',event=>{if(!event.target.closest('[data-profile-career]'))return;const career=document.querySelector('#zz-global-dock [data-dock="career"]');career?career.click():location.assign('/career/');});
- document.addEventListener('keydown',event=>{
-  const tab=event.target.closest('.pp-facts [role="tab"]');
-  if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-  event.preventDefault();
-  const tabs=[...tab.closest('[role="tablist"]').querySelectorAll('[role="tab"]')];
-  const index=tabs.indexOf(tab),next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
-  selectFact(tabs[next],true);
- });
- window.ZooniiProfile = {
-  unfold() {},
-  hero() {
-   const motion = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-   return `<article class="profile-page profile-poster" aria-labelledby="profile-poster-title">
-    <div class="pp-backdrop" aria-hidden="true">${motion ? '<video autoplay muted loop playsinline preload="metadata" poster="/assets/profile-video/poster.jpg"><source src="/assets/profile-video/vintage-slow.mp4" type="video/mp4"></video>' : '<img src="/assets/profile-video/poster.jpg" alt="">'}</div>
-    <div class="pp-shell">
-     <section class="pp-visual" aria-label="Zoonii 콜라주">
-      <div class="pp-collage-stage profile-artwork">
-       <img class="pp-collage" src="/assets/board-profile-transparent.webp" width="1536" height="1024" alt="하늘색 Zoonii 로고와 김주연의 얼굴, 어린 시절 사진을 조합한 콜라주">
-       <canvas class="profile-eye-canvas" width="1536" height="1024" aria-hidden="true"></canvas>
-      </div>
-      <img class="pp-laptop" src="/assets/profile-macbook-stickers.webp?v=nostars-20261026" width="1562" height="1007" alt="캐릭터 스티커를 붙인 실버 맥북">
-      <section class="pp-connect" aria-label="연락처와 소셜 채널">
-       <a class="pp-contact" href="/contact/"><span>LET’S MAKE<br>SOMETHING.</span><span class="pp-contact-arrow" aria-hidden="true">↗</span></a>
-       <a class="pp-email" href="mailto:illu_junny@naver.com">illu_junny@naver.com</a>
-       <nav aria-label="소셜 채널"><a href="https://www.instagram.com/thingthingclub/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.youtube.com/@Thingthingclub" target="_blank" rel="noopener noreferrer">YouTube ↗</a></nav>
-      </section>
-     </section>
-     <section class="pp-info">
-      <header class="pp-intro">
-       <h1 id="profile-poster-title">김주연 <span>Zoonii</span></h1>
-       <p>내가 꿈꾸는 것, 당신이 꿈꾸는 것을<br>그리고 설계하고 만듭니다.</p>
-      </header>
-      <div class="pp-name" aria-hidden="true"><img src="/assets/profile-name-tag.png" width="330" height="228" alt=""></div>
-      ${profileNotes()}
-      <button class="pp-career-sticker" type="button" data-profile-career aria-label="커리어 페이지로 이동"><img src="/assets/board-menu/career-cutout.webp" width="1448" height="1086" alt="Career"></button>
-     </section>
-    </div>
-   </article>`;
-  }
+(()=>{
+'use strict';
+function mountProfileEyes(art) {
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const photo=new Image();
+ const states=new WeakMap();
+ const canvas=document.createElement('canvas');canvas.width=1536;canvas.height=1024;
+ const output=[...art.querySelectorAll('canvas')];
+ const crops=[{x:382,y:346,w:250,h:208},{x:680,y:365,w:252,h:192}];
+ const abort=new AbortController();
+ let disposed=false;
+
+ let ready=false,frame=0,px=0,py=0,tracking=false,lastFrame=0;
+ // Translate the photographed iris rigidly over a sclera backing.
+ // The opening mask keeps eyelids, lashes and the paper cutout stationary.
+ const eyes=[
+  {x:486,y:453,rx:28,ry:26,opening:'M 432 458 C 443 439 465 424 486 426 C 511 426 534 443 548 465 C 534 478 507 482 483 479 C 459 478 442 469 432 458 Z'},
+  {x:797,y:456,rx:28,ry:26,opening:'M 756 465 C 767 443 782 428 797 429 C 819 429 845 444 862 465 C 842 479 822 483 798 481 C 778 480 766 473 756 465 Z'}
+ ];
+ const width=160,height=96;
+ const source=document.createElement('canvas');
+ source.width=1536;source.height=1024;
+ const sourceContext=source.getContext('2d',{willReadFrequently:true});
+ let patches=[];
+ function schedule(){if(!disposed&&!frame)frame=requestAnimationFrame(tick);}
+ photo.onload=()=>{
+  if(!sourceContext)return;
+  sourceContext.drawImage(photo,0,0,1536,1024);
+  patches=eyes.map(eye=>{
+   const left=eye.x-width/2,top=eye.y-height/2;
+   const original=sourceContext.getImageData(left,top,width,height);
+   const opening=new Path2D(eye.opening);
+   const inside=new Uint8Array(width*height),weight=new Float32Array(width*height);
+   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    inside[y*width+x]=sourceContext.isPointInPath(opening,left+x+.5,top+y+.5)?1:0;
+   }
+   const edge=[];
+   for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
+    const i=y*width+x;
+    if(inside[i]&&(!inside[i-1]||!inside[i+1]||!inside[i-width]||!inside[i+width]))edge.push([x,y]);
+   }
+   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    const i=y*width+x;if(!inside[i])continue;
+    let distance=24;
+    for(const [ex,ey] of edge)distance=Math.min(distance,Math.hypot(x-ex,y-ey));
+    const t=Math.max(0,Math.min(1,(distance-1)/3));
+    weight[i]=t*t*(3-2*t);
+   }
+   const surface=document.createElement('canvas');surface.width=width;surface.height=height;
+   return {...eye,left,top,original,weight,surface,context:surface.getContext('2d'),output:new ImageData(width,height)};
+  });
+  ready=true;schedule();
  };
+ photo.src='/assets/profile-yellow/eyes-source.webp';
+ function paint(context,patch,dx,dy){
+  context.clearRect(patch.left,patch.top,width,height);
+  const input=patch.original.data,output=patch.output.data;
+  const cx=width/2,cy=height/2,irisScale=1.1;
+  const sample=(x,y,c)=>{
+   x=Math.max(0,Math.min(width-1.001,x));y=Math.max(0,Math.min(height-1.001,y));
+   const ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;
+   const a=(iy*width+ix)*4+c,b=a+4,d=a+width*4;
+   return (input[a]*(1-fx)+input[b]*fx)*(1-fy)+(input[d]*(1-fx)+input[d+4]*fx)*fy;
+  };
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+   const i=y*width+x,w=patch.weight[i];
+   if(!w){output[i*4+3]=0;continue;}
+   const originalRadius=Math.hypot((x-cx)/patch.rx,(y-cy)/patch.ry);
+   const irisX=cx+(x-cx-dx)/irisScale,irisY=cy+(y-cy-dy)/irisScale;
+   const movedRadius=Math.hypot((irisX-cx)/patch.rx,(irisY-cy)/patch.ry);
+   const erase=Math.max(0,Math.min(1,(1.12-originalRadius)/.12));
+   const iris=Math.max(0,Math.min(1,(1.04-movedRadius)/.08));
+   for(let c=0;c<3;c++){
+    // Use photographed sclera from the same row to reveal the area behind the iris.
+    const white=sample(cx+36,y,c);
+    const backing=input[i*4+c]*(1-erase)+white*erase;
+    output[i*4+c]=backing*(1-iris)+sample(irisX,irisY,c)*iris;
+   }
+   output[i*4+3]=Math.round(w*255);
+  }
+  patch.context.putImageData(patch.output,0,0);
+  context.drawImage(patch.surface,patch.left,patch.top);
+ }
+ function tick(now){
+  frame=0;
+  const elapsed=lastFrame?Math.min(50,now-lastFrame):16.7;lastFrame=now;
+
+  if(!ready||!canvas||!art.isConnected)return;
+  const r=art.getBoundingClientRect();
+  if(!r.width||!r.height)return;
+  let state=states.get(canvas);
+  if(!state){
+   const context=canvas.getContext('2d');
+   if(!context)return;
+   state={context,eyes:eyes.map(()=>({x:0,y:0}))};
+   states.set(canvas,state);
+  }
+  // One shared gaze target prevents the eyes converging on the pointer.
+  // Hold the gaze at the pointer; no autonomous movement.
+  let tx=0,ty=0;
+  if(tracking){
+   const dx=(px-r.left-r.width/2)*3;
+   const dy=(py-r.top-r.height/2)*3;
+   tx=Math.tanh(dx/300)*(dx>0?22:12);
+   ty=Math.tanh(dy/350)*3;
+  }
+  let settling=false;
+  patches.forEach((patch,index)=>{
+   const pos=state.eyes[index];
+   // Time-based easing stays consistent across display refresh rates.
+   const ease=reduce.matches?1:1-Math.exp(-elapsed/150);
+   pos.x+=(tx-pos.x)*ease;pos.y+=(ty-pos.y)*ease;
+   if(Math.abs(tx-pos.x)+Math.abs(ty-pos.y)<.03){pos.x=tx;pos.y=ty;}
+   else settling=true;
+   paint(state.context,patch,pos.x,pos.y);
+   if(index===0){canvas.dataset.gazeX=pos.x.toFixed(2);canvas.dataset.gazeY=pos.y.toFixed(2);}
+  });
+  crops.forEach((crop,index)=>{
+   const target=output[index];const ctx=target.getContext('2d');
+   ctx.clearRect(0,0,target.width,target.height);
+   ctx.drawImage(photo,crop.x,crop.y,crop.w,crop.h,0,0,target.width,target.height);
+   ctx.drawImage(canvas,crop.x,crop.y,crop.w,crop.h,0,0,target.width,target.height);
+   target.dataset.gazeX=state.eyes[index].x.toFixed(2);
+  });
+  if(settling)frame=requestAnimationFrame(tick);
+ }
+ const reset=()=>{tracking=false;schedule();};
+ const move=e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();};
+ window.addEventListener('pointermove',move,{passive:true,signal:abort.signal});
+ window.addEventListener('pointerdown',move,{passive:true,signal:abort.signal});
+ document.documentElement.addEventListener('pointerleave',reset,{signal:abort.signal});
+ window.addEventListener('blur',reset,{signal:abort.signal});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){tracking=false;cancelAnimationFrame(frame);frame=0;}else schedule();},{signal:abort.signal});
+ reduce.addEventListener('change',schedule,{signal:abort.signal});
+ window.addEventListener('resize',schedule,{signal:abort.signal});
+ window.addEventListener('hashchange',schedule,{signal:abort.signal});
+ return ()=>{disposed=true;abort.abort();cancelAnimationFrame(frame);photo.onload=null;};
+}
+
+window.ZooniiProfile={unfold(){},hero(){return "    <article class=\"profile-page profile-poster profile\" id=\"now\" aria-labelledby=\"profile-title\">\n      <div class=\"profile-eyes\" role=\"img\" aria-label=\"마우스를 따라 바라보는 콜라주 눈\"><span class=\"profile-eye-cutout\"><canvas class=\"profile-eye profile-eye-left\" width=\"500\" height=\"416\" aria-hidden=\"true\"></canvas></span><span class=\"profile-eye-cutout\"><canvas class=\"profile-eye profile-eye-right\" width=\"504\" height=\"384\" aria-hidden=\"true\"></canvas></span></div>\n      <p class=\"profile-eyebrow\">ILLUSTRATION · WEB/APP · BRANDING · EDUCATION</p>\n      <h1 id=\"profile-title\" class=\"profile-title\">\n        <span class=\"profile-line\">저는 <img class=\"profile-art board-art board-profile\" src=\"/assets/profile-yellow/profile-board.webp\" alt=\"피젯보드 Profile 그래픽\" draggable=\"false\"/> <span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-illustration\">상상</button><span class=\"profile-word-label\" id=\"profile-illustration\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Illustration</span></span>을 그리고<sup>+</sup></span><span class=\"profile-comma\">,</span></span>\n        <span class=\"profile-line\"><span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-experience\">경험</button><span class=\"profile-word-label\" id=\"profile-experience\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>User Experience</span></span>을 <span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-design\">설계</button><span class=\"profile-word-label\" id=\"profile-design\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Design & Planning</span></span>하고<sup>+</sup></span><span class=\"profile-comma\">,</span> <img class=\"profile-art board-art board-archive\" src=\"/assets/profile-yellow/archive.webp\" alt=\"Archive — 하트를 안은 곰\" draggable=\"false\"/></span>\n        <span class=\"profile-line\">아이디어를 <img class=\"profile-art board-art board-career\" src=\"/assets/profile-yellow/career-board.webp\" alt=\"피젯보드 Career 그래픽\" draggable=\"false\"/> <span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-vibe-coding\">실제로 만드는</button><span class=\"profile-word-label\" id=\"profile-vibe-coding\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Vibe Coding</span></span><sup>+</sup></span></span>\n        <span class=\"profile-line\">김주연, Zoonii입니다.</span>\n      </h1>\n      <p class=\"profile-subtitle\">그리고 <span><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-teaching\">만드는 방법</button><span class=\"profile-word-label\" id=\"profile-teaching\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Teaching</span></span>을 나눕니다</span><sup>+</sup> .</p>\n      <p class=\"profile-description\">일러스트레이션, 웹과 앱을 디자인합니다.<br/>아이디어를 직접 구현하고, 만드는 방법을 함께 나눕니다.</p>\n      <nav class=\"profile-links\" aria-label=\"프로필 바로가기\"><a class=\"profile-primary\" href=\"/archive/\">Archive ↗</a><a href=\"/career/\">Career ↗</a><a href=\"/contact/\">Contact ↗</a></nav>\n    </article>\n";}};
+
+let mounted=null,dispose=null;
+function sync(){const next=document.querySelector('.profile-poster .profile-eyes');if(next===mounted)return;if(dispose)dispose();mounted=next;dispose=next?mountProfileEyes(next):null;}
+new MutationObserver(sync).observe(document.documentElement,{childList:true,subtree:true});sync();
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const word=e.target.closest('.profile-word');if(word)word.classList.add('tooltip-dismissed');}});
+for(const name of ['pointerover','focusin','click'])document.addEventListener(name,e=>{const word=e.target.closest('.profile-word');if(word)word.classList.remove('tooltip-dismissed');});
 })();
