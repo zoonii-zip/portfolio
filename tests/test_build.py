@@ -42,7 +42,7 @@ class BuildTests(unittest.TestCase):
             pages = json.loads(
                 (root / "seo-pages.js").read_text().split(" = ", 1)[1].rstrip(";\n")
             )
-            self.assertEqual(len(pages), 26)
+            self.assertEqual(len(pages), 27)
             for route in pages:
                 file = root / (route.strip("/") + "/index.html" if route != "/" else "index.html")
                 html = file.read_text()
