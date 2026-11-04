@@ -22,6 +22,8 @@
     const heading = target.querySelector('.pg-header h2');
     const period = target.querySelector('.pg-eyebrow');
     const description = target.querySelector('.pg-header p');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let detailAnimations = [];
     let selected = -1;
     function select(i) {
       if (selected === i) return;
@@ -31,6 +33,10 @@
       description.textContent = projects[i].description;
       open.href = projects[i].href;
       open.firstChild.textContent = projects[i].name + ' 보기 ';
+      detailAnimations.forEach(animation => animation.cancel());
+      detailAnimations = reducedMotion.matches ? [] : [period, heading, description].map((element, n) =>
+        element.animate([{opacity: 0, transform: 'translateY(9px)'}, {opacity: 1, transform: 'translateY(0)'}],
+          {duration: 260, delay: n * 35, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards'}));
     }
     function card(project, i, duplicate = false) {
       const link = document.createElement('a');
