@@ -1,6 +1,15 @@
 /* Spine-to-cover accordion, scoped to the illustration collection. */
 (() => {
-  const palette = [ ['#ff7244','#242b40'], ['#edaccb','#662745'], ['#c6ddd0','#185441'], ['#dce2ec','#233b77'], ['#ecde62','#25291e'], ['#4b6bc1','#fcf3d5'] ];
+  const palette = [ ['#ff7244','#242b40'], ['#edaccb','#662745'], ['#c6ddd0','#185441'], ['#dce2ec','#233b77'], ['#ecde62','#25291e'], ['#8acdd1','#173e42'], ['#f2d78f','#473923'] ];
+  const spineLabels = {
+    '/projects/illustration0/': ['UMBRO', ''],
+    '/projects/illustration1/': ['오뚜기', 'KT Y ×'],
+    '/projects/illustration2/': ['코나아이', ''],
+    '/projects/illustration3/': ['UNESCO', 'KT Y ×'],
+    '/projects/illustration4/': ['OK저축은행', ''],
+    '/projects/tongkeun/': ['통큰런', '롯데마트'],
+    '/projects/illustration5/': ['서일페', 'KT Y ×']
+  };
   function mount() {
     const target = document.querySelector('#zz-body .theme-story .collection-objects');
     if (!target || target.dataset.booksReady) return;
@@ -33,8 +42,8 @@
       item.className = 'ib-item';
       item.style.setProperty('--book-color',palette[i % palette.length][0]);
       item.style.setProperty('--book-ink',palette[i % palette.length][1]);
-      item.style.setProperty('--height',[90,100,84,96,88,94][i % 6]+'%');
-      item.style.setProperty('--tilt',[-3,0,3,-2,0,2][i % 6]+'deg');
+      item.style.setProperty('--height',[90,100,84,96,88,94,92][i % 7]+'%');
+      item.style.setProperty('--tilt',[-3,0,3,-2,0,2,-1][i % 7]+'deg');
       item.innerHTML = '<button type="button" class="ib-spine" aria-expanded="false"><span class="ib-number"></span><strong></strong><small></small></button><a class="ib-cover" aria-haspopup="dialog" tabindex="-1"><img alt="" width="600" height="800" draggable="false"></a>';
       const trigger = item.querySelector('button');
       const cover = item.querySelector('a');
@@ -43,10 +52,51 @@
       cover.setAttribute('aria-label',title+' 포트폴리오 열기');
       trigger.setAttribute('aria-controls',id);
       trigger.setAttribute('aria-label',title+' 표지 보기');
-      trigger.querySelector('strong').textContent = title;
+      const [spineTitle, partner] = spineLabels[new URL(href, location.href).pathname] || [title, ''];
+      const titleBlock = document.createElement('span');
+      titleBlock.className = 'ib-spine-title';
+      const heading = trigger.querySelector('strong');
+      heading.textContent = spineTitle;
+      heading.before(titleBlock);
+      if (partner) {
+        const client = document.createElement('span');
+        client.className = 'ib-spine-partner';
+        client.textContent = partner;
+        titleBlock.append(client);
+      }
+      titleBlock.append(heading);
       trigger.querySelector('small').textContent = year;
       trigger.querySelector('.ib-number').textContent = String(i+1).padStart(2,'0');
-      cover.querySelector('img').src = project.image;
+      if (new URL(href, location.href).pathname === '/projects/illustration0/') {
+        const video = document.createElement('video');
+        video.src = '/assets/illustration-covers/umbro-cover.mp4';
+        video.muted = true; video.defaultMuted = true; video.loop = true;
+        video.playsInline = true; video.preload = 'metadata';
+        video.setAttribute('aria-hidden', 'true');
+        video.setAttribute('disablepictureinpicture', '');
+        cover.querySelector('img').replaceWith(video);
+      } else cover.querySelector('img').src = new URL(href, location.href).pathname === '/projects/illustration4/'
+        ? '/assets/illustration-covers/ok-savings-cover.jpg'
+        : new URL(href, location.href).pathname === '/projects/tongkeun/'
+          ? '/assets/illustration-covers/tongkeun-cover.jpg'
+          : new URL(href, location.href).pathname === '/projects/illustration1/'
+            ? '/assets/illustration-covers/kty-ottogi-cover.png'
+            : new URL(href, location.href).pathname === '/projects/illustration3/'
+              ? '/assets/illustration-covers/unesco-cover.png'
+              : new URL(href, location.href).pathname === '/projects/illustration5/'
+                ? '/assets/illustration-covers/kty-sif-cover.png'
+                : new URL(href, location.href).pathname === '/projects/illustration2/'
+                  ? '/assets/illustration-covers/konai-cover.png' : project.image;
+      if (new URL(href, location.href).pathname === '/projects/illustration5/') {
+        cover.classList.add('ib-cover-sif');
+        item.style.setProperty('--book-color','#65b9d7');
+        item.style.setProperty('--book-ink','#164b58');
+      }
+      if (new URL(href, location.href).pathname === '/projects/illustration3/') {
+        cover.classList.add('ib-cover-unesco');
+        item.style.setProperty('--book-color','#bdfaff');
+        item.style.setProperty('--book-ink','#1c5884');
+      }
       return item;
     });
     function select(index) {
@@ -60,13 +110,18 @@
         item.classList.toggle('is-selected',active);
         item.querySelector('button').setAttribute('aria-expanded',String(active));
         const cover=item.querySelector('a');cover.tabIndex=active?0:-1;cover.inert=!active;
+        const video=cover.querySelector('video');
+        if(video){
+          if(active&&!matchMedia('(prefers-reduced-motion: reduce)').matches)video.play().catch(()=>{});
+          else video.pause();
+        }
       });
     }
     items.forEach((item,i)=>{
       const button = item.querySelector('button');
       item.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')select(i)});
       button.addEventListener('focus',()=>select(i));
-      button.addEventListener('click',()=>select(i));
+      button.addEventListener('click',()=>{select(i);document.dispatchEvent(new CustomEvent('zoonii:open-book',{detail:{path:new URL(projects[i].href,location.href).pathname,trigger:button}}));});
       button.addEventListener('keydown',e=>{
         let index;
         if(e.key==='ArrowRight')index=(i+1)%items.length;

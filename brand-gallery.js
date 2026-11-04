@@ -18,6 +18,7 @@
       const role = ({package:'패키지 디자인', editorial:'보고서 편집 디자인'})[description] || description;
       const item = document.createElement('a');
       item.className = 'brand-stamp';
+      item.dataset.category = /editorial|편집|보고서/i.test(description + ' ' + name) ? 'editorial' : 'branding';
       item.href = '/projects/' + card.dataset.project + '/';
       item.style.setProperty('--stamp-tone', colors[i % colors.length]);
       item.setAttribute('aria-label', name + ', ' + year + ', ' + role + ' — 프로젝트 보기');
@@ -29,7 +30,14 @@
       item.querySelector('.stamp-caption > span').textContent = role;
       return item;
     });
-    target.replaceChildren(...items);
+    target.replaceChildren();
+    for(const [category,title] of [['branding','BRANDING'],['editorial','EDITORIAL']]){
+      const section=document.createElement('section');section.className='brand-category';
+      const heading=document.createElement('h2');heading.textContent=title;
+      const grid=document.createElement('div');grid.className='brand-category-grid';
+      grid.append(...items.filter(item=>item.dataset.category===category));
+      section.append(heading,grid);target.append(section);
+    }
     const scene = target.closest('.collection-scene');
     scene.querySelector('.collection-meta > span').textContent = 'THE STAMP COLLECTION';
     scene.querySelector('.collection-footer').lastElementChild.textContent = '우표를 선택해 프로젝트 보기 ↗';

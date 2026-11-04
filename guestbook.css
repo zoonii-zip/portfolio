@@ -111,3 +111,48 @@ body .guest-ribbon-label{position:absolute;width:1px;height:1px;padding:0;overfl
 body .guest-ribbons{display:none;position:fixed;z-index:9999;left:0;right:0;bottom:var(--guest-ribbon-bottom,130px);height:96px;margin:0;flex:none}
 html.viewing-space:has(#zz-body>#zz-message-section) body .guest-ribbons{display:block}
 @media(max-width:760px){body .guest-ribbons{height:68px;margin:0}#zz-message-section .guest-room>#zz-leave-note{top:calc(50dvh - 114px)}}
+
+/* Guestbook actions: note first, matching intro replay immediately beside it. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section)>.panelhead{display:none!important}
+#zz-message-section .guest-room>header,#zz-message-section #zz-wall-back{display:none!important}
+body .guest-actions{display:flex;justify-content:flex-end;align-items:center;gap:12px;position:relative;z-index:2;margin:0 0 24px}
+:root body .guest-actions #zz-leave-note{--paper-tone:#000;color:#fff9eb!important;order:0;display:block!important;position:relative;inset:auto;margin:0;padding:12px 20px;font-size:28px;line-height:1.1;white-space:nowrap;cursor:pointer}
+body .guest-actions .guest-refresh{order:1;display:grid;place-items:center;flex:none;width:48px;height:48px;padding:0;border:0;background:transparent;box-shadow:none;cursor:pointer;filter:drop-shadow(1px 3px 2px #30291e26);transition:transform .18s}
+body .guest-actions .guest-refresh svg{display:block;width:48px;height:48px}
+body .guest-actions .guest-refresh:hover{transform:rotate(9deg) translateY(-2px)}
+body .guest-actions .guest-refresh:focus-visible{outline:2px solid #555c38;outline-offset:4px}
+
+/* Anchor the cork to this room, not the translated camera plane. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){background:none;isolation:isolate}
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section)::before{content:'';position:absolute;inset:0;z-index:-1;background:#d99046 url('/assets/fidget-board-cork.webp') center / 680px auto repeat;filter:saturate(.45);pointer-events:none}
+
+/* Keep writing and refresh controls anchored while the memo wall scrolls. */
+body .guest-actions{position:fixed;top:112px;right:28px;margin:0;z-index:20}
+#zz-message-section .guest-room{padding-top:72px;box-sizing:border-box}
+@media(max-width:760px){body .guest-actions{right:14px}}
+
+body .guest-actions{display:none}
+html.viewing-space:has(#zz-body>#zz-message-section) body .guest-actions{display:flex;z-index:10000}
+
+/* A sheet of stationery on the cork board. */
+#zz-message-section .guest-compose-dialog{width:min(580px,calc(100vw - 32px));padding:28px;border:0;border-radius:2px 7px 3px 5px;background:#fff9e9 url('/assets/profile-yellow/paper-grain.svg') repeat;box-shadow:4px 6px 0 #e2d8bf,0 24px 70px #241a164d;color:#25231f}
+#zz-message-section .guest-compose-dialog::backdrop{background:#241b1759;backdrop-filter:blur(3px)}
+#zz-message-section .guest-dialog-heading{align-items:flex-start;gap:16px;padding-bottom:18px;border-bottom:1px dashed #867b6055}
+#zz-message-section .guest-dialog-heading h2{font:400 48px/.95 'Just Another Hand',sans-serif!important;letter-spacing:.01em}
+#zz-message-section .guest-dialog-intro{margin:10px 0 0;font-size:13px;line-height:1.6;color:#6a6254}
+#zz-message-section .guest-compose-dialog .guest-compose{padding-top:20px}
+#zz-message-section .guest-compose-dialog .mono{font-size:12px;line-height:1.5;letter-spacing:.01em;color:#625a4e}
+#zz-message-section .guest-compose-dialog .paper-choices{gap:12px;margin:14px 0 22px}
+#zz-message-section .guest-compose-dialog .paper-choice{height:86px;min-height:0;padding:8px;font-size:0;background-size:auto 72px;outline:none;border:0;border-radius:3px;box-shadow:none;transition:transform .16s,outline-color .16s}
+#zz-message-section .guest-compose-dialog .paper-choice[aria-pressed=true]{outline:1.5px dashed #37312b;outline-offset:3px;transform:rotate(-3deg)}
+#zz-message-section .guest-compose-dialog .paper-choice:hover{transform:translateY(-3px)}
+#zz-message-section .guest-compose-dialog .paper-preview{margin:12px auto 20px;filter:drop-shadow(2px 5px 2px #49351c20)}
+:root body #zz-message-section .guest-compose-dialog .guest-dialog-close,
+:root body #zz-message-section .guest-compose-dialog .guest-stick{--paper-tone:#191917;color:#fff9e9!important}
+#zz-message-section .guest-compose-dialog .guest-dialog-close{margin:0;width:40px;height:40px}
+#zz-message-section .guest-compose-dialog .guest-stick{display:block;width:min(270px,100%);margin:0 auto;min-height:48px;font-size:17px!important;font-weight:500!important;letter-spacing:.02em}
+#zz-message-section .guest-compose-dialog .guest-stick:disabled{opacity:.45}
+#zz-message-section .guest-compose-dialog #zz-guest-status{margin:16px auto 0;max-width:420px;text-align:center;font-size:12px;line-height:1.65;color:#716757}
+@media(max-width:600px){#zz-message-section .guest-compose-dialog{padding:20px;max-height:calc(100dvh - 36px)}#zz-message-section .guest-dialog-heading h2{font-size:40px!important}#zz-message-section .guest-compose-dialog .paper-choices{gap:8px}#zz-message-section .guest-compose-dialog .paper-choice{height:70px;background-size:auto 60px}}
+#zz-message-section .guest-compose-dialog{background-image:linear-gradient(#fff9e9b3,#fff9e9b3),url('/assets/profile-yellow/paper-grain.svg')}
+:root body #zz-message-section .guest-compose-dialog .guest-dialog-close svg{color:#fff9e9!important}

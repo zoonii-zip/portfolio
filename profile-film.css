@@ -124,6 +124,170 @@
 #zz-fullscreen .overlay:has(.profile-poster)>.panelhead{display:none!important}
 
 /* Keep the paper eyes above the restored fixed navigation. */
-#zz-fullscreen .profile-poster .profile-eyes{bottom:150px}
+#zz-fullscreen .profile-poster .profile-eyes{bottom:178px;right:calc(3.8vw + 24px);width:clamp(145px,17.5vw,250px)}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-eyes{right:36px;bottom:170px;width:140px}}
+@media(max-height:500px){#zz-fullscreen .profile-poster .profile-eyes{bottom:164px;width:114px}}
 
 body:has(.profile-poster) #zz-global-dock .dock-icon{background-image:url("/assets/profile-yellow/nav-icons.webp?v=613dc5275c")}
+
+/* Keyword hover labels are small paper cutouts, not outlined pills. */
+#zz-fullscreen .profile-poster .profile-word-label {
+ isolation:isolate;border:0;border-radius:0;background:transparent;color:#29251f;
+ padding:8px 13px;gap:7px;box-shadow:none;
+ filter:drop-shadow(1px 3px 1px #0003);font-style:normal;
+}
+#zz-fullscreen .profile-poster .profile-word-label::before {
+ content:'';position:absolute;inset:0;z-index:-1;background:#eee4d6;pointer-events:none;
+ clip-path:polygon(4% 5%,68% 0,97% 8%,100% 78%,94% 98%,34% 100%,0 90%,1% 17%);
+}
+#zz-fullscreen .profile-poster .profile-word-label svg {fill:none;stroke:#29251f;stroke-width:1.2}
+
+/* SNS cutouts share the intro replay button's layered paper silhouette. */
+#zz-fullscreen .profile-poster .profile-sns{display:flex;align-items:center;gap:12px;width:max-content;margin-top:4px;position:relative;z-index:12}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button){display:block;width:56px;height:56px;padding:0;border:0;background:none;transform:rotate(-8deg);filter:drop-shadow(1px 3px 2px #0004);transition:transform .18s,filter .18s}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):nth-child(2){transform:rotate(5deg)}
+#zz-fullscreen .profile-poster .profile-sns svg{display:block;width:100%;height:100%;pointer-events:none}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):focus-visible{outline:2px solid #29251f;outline-offset:4px}
+@media(hover:hover){#zz-fullscreen .profile-poster .profile-sns :is(a,button):not(:disabled):hover{transform:translateY(-3px) rotate(0);filter:drop-shadow(2px 5px 3px #0005)}}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):not(:disabled):active{transform:scale(.94)}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-sns :is(a,button){width:48px;height:48px}}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .profile-poster .profile-sns :is(a,button){transition:none}}
+
+/* Social icons sit directly above the right-hand navigation. */
+#zz-fullscreen .profile-poster .profile-side-links{position:absolute;right:3.8vw;top:calc(50% - 28px);transform:translateY(-50%);z-index:12}
+#zz-fullscreen .profile-poster .profile-side-links .profile-links{position:relative;inset:auto;transform:none}
+#zz-fullscreen .profile-poster .profile-side-links .profile-sns{position:absolute;right:0;bottom:calc(100% + 14px);margin:0;gap:8px}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-side-links{right:16px}}
+
+/* Contact continues the profile's yellow printed-paper composition. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#fffd85;color:#32361e;overflow-y:auto;isolation:isolate}
+#zz-fullscreen #zz-overlay:has(.contact-intro)::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:30;background:url('/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px 160px;opacity:.52;mix-blend-mode:multiply}
+#zz-fullscreen #zz-overlay:has(.contact-intro)>.panelhead{display:none}
+#zz-fullscreen #zz-body:has(>.contact-intro){box-sizing:border-box;width:100%;max-width:1400px;min-height:100dvh;height:auto;margin:auto;padding:140px 5vw 160px!important;display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center;overflow:visible;font-family:Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>.contact-intro{display:flex;flex-direction:column;align-items:flex-start;gap:24px;margin:0;align-self:center}
+#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:clamp(130px,15vw,210px);filter:saturate(.72) sepia(.16) drop-shadow(2px 4px 2px #49382026);transform:rotate(-9deg)}
+#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(38px,4.5vw,70px);line-height:1.15;font-weight:800;letter-spacing:-.065em;color:#32361e;margin:0 0 20px}
+#zz-fullscreen #zz-body>.contact-intro h2::after{content:'';display:block;width:85%;height:2px;background:#32361e;transform:rotate(-1deg);margin-top:12px}
+#zz-fullscreen #zz-body>.contact-intro p{font-size:14px;line-height:1.7;color:#797d43;margin:0}
+#zz-fullscreen #zz-body>#zz-form{box-sizing:border-box;width:100%;max-width:none;margin:0;padding:28px 30px;background:#fff9e8;box-shadow:4px 7px 0 #32361e20;display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;border:0;transform:rotate(1deg)}
+#zz-fullscreen #zz-body>#zz-form>label{display:block;margin:0;color:#32361e;font:26px/1 'Just Another Hand',sans-serif;letter-spacing:.02em}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(n+3){grid-column:1/-1}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){box-sizing:border-box;display:block;width:100%;margin-top:8px;padding:10px 0;border:0;border-bottom:1px solid #a9aa79;border-radius:0;background:transparent;color:#32361e;font:14px/1.5 Arial,'Apple SD Gothic Neo',sans-serif;box-shadow:none}
+#zz-fullscreen #zz-body>#zz-form textarea{min-height:110px;resize:vertical}
+#zz-fullscreen #zz-body>#zz-form :is(input,select,textarea):focus-visible{outline:2px solid #777944;outline-offset:4px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{--paper-tone:#20201d;grid-column:1/-1;width:auto;justify-self:end;min-width:150px;margin:0;padding:12px 26px;color:#fff9eb!important;font-size:28px;line-height:1.1}
+#zz-fullscreen #zz-body>#zz-form>p{grid-column:1/-1;margin:0;font:11px/1.6 Arial,sans-serif;color:#797d43}
+#zz-fullscreen #zz-body>#zz-form>p:last-child{font-size:13px;color:#32361e}
+#zz-fullscreen #zz-body>#zz-form>p a{color:inherit;text-underline-offset:4px}
+@media(max-width:760px){#zz-fullscreen #zz-body:has(>.contact-intro){grid-template-columns:1fr;gap:32px;padding:112px 24px 150px!important}#zz-fullscreen #zz-body>.contact-intro{flex-direction:row;align-items:center;gap:20px}#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:100px}#zz-fullscreen #zz-body>.contact-intro h2{font-size:36px;margin-bottom:12px}#zz-fullscreen #zz-body>.contact-intro p{font-size:12px}#zz-fullscreen #zz-body>#zz-form{padding:24px;transform:rotate(.6deg)}}
+@media(max-width:420px){#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:74px}#zz-fullscreen #zz-body>.contact-intro h2{font-size:30px}#zz-fullscreen #zz-body>#zz-form{gap:16px}#zz-fullscreen #zz-body>#zz-form>label{grid-column:1/-1}}
+
+#zz-fullscreen #zz-body>#zz-form>label{font-family:"Just Another Hand",sans-serif!important;font-size:28px!important;font-weight:400!important}
+
+/* Dark Contact canvas puts the invitation and paper form in focus. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#171715;color:#fff9eb}
+#zz-fullscreen #zz-body>.contact-intro h2{font-family:'Just Another Hand',sans-serif!important;font-size:clamp(76px,10vw,152px);font-weight:400;letter-spacing:0;line-height:.95;color:#fff9eb}
+#zz-fullscreen #zz-body>.contact-intro h2::after{display:none}
+#zz-fullscreen #zz-body>.contact-intro p{color:#c6c3b8}
+@media(max-width:760px){#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(64px,12vw,92px)}}
+
+/* Contact composition from the supplied cyan poster reference. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#000;color:#000}
+#zz-fullscreen #zz-overlay:has(.contact-intro)::after{display:none}
+#zz-fullscreen #zz-body:has(>.contact-intro){display:flex;flex-direction:column;justify-content:center;gap:0;width:min(830px,calc(100% - 48px));max-width:none;min-height:100dvh;padding:130px 0 160px!important;margin:0 auto;isolation:isolate}
+#zz-fullscreen #zz-body>.contact-intro{display:block;width:100%;margin:0;padding:0 18px 14px;background:#00bfe7;position:relative;align-self:auto;border-radius:90px 90px 0 0}
+#zz-fullscreen #zz-body>.contact-intro .contact-logo{display:none}
+#zz-fullscreen #zz-body>.contact-intro h2{position:relative;margin:-10px -8px 10px;font-family:'Shine Coasty',Georgia,serif!important;font-size:clamp(58px,11.4vw,150px);font-weight:400;line-height:1.08;letter-spacing:-.035em;color:#fff;text-align:center;white-space:nowrap;-webkit-text-stroke:5px #000;paint-order:stroke fill;filter:drop-shadow(0 -10px 0 #00bfe7)}
+#zz-fullscreen #zz-body>.contact-intro p{margin:0;text-align:center;color:#000;font:12px/1.5 Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>#zz-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px;padding:0 18px 20px;background:#00bfe7;box-shadow:none;transform:none}
+#zz-fullscreen #zz-body>#zz-form>label{display:flex;align-items:center;gap:14px;min-width:0;grid-column:auto;margin:0;padding:10px 16px;min-height:52px;background:#fff;border:2px solid #151515;color:#000;font:700 14px/1.4 Arial,sans-serif!important;letter-spacing:-.02em}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){margin:0;padding:0;min-width:0;border:0;background:#fff;color:#000;font:14px/1.5 Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>#zz-form :is(input,textarea)::placeholder{color:#242424;opacity:1}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(4){grid-column:1/-1;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:14px 16px}
+#zz-fullscreen #zz-body>#zz-form textarea{min-height:100px;height:100px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{display:flex;align-items:center;justify-content:space-between;justify-self:center;grid-column:1/-1;width:268px;min-height:56px;margin:2px 0 10px;padding:12px 30px;--paper-tone:#000;color:#00bfe7!important;font:400 28px/1 'Just Another Hand',var(--font-body)!important;letter-spacing:.03em}
+#zz-fullscreen #zz-body>#zz-form .contact-send span{font:inherit!important}
+#zz-fullscreen #zz-body>#zz-form .contact-send span:last-child{font-size:30px!important;font-weight:400!important}
+#zz-fullscreen #zz-body>#zz-form>p{grid-column:2/-1;grid-row:4;text-align:right;align-self:end;color:#000;font:10px/1.5 Arial,sans-serif}
+#zz-fullscreen #zz-body>#zz-form>p br{display:none}
+#zz-fullscreen #zz-body>#zz-form>p:last-child{grid-column:1;grid-row:4;text-align:left;font-size:10px;color:#000}
+#zz-fullscreen #zz-body>#zz-form>p:last-child a{font-weight:700;text-decoration:none}
+@media(max-width:700px){#zz-fullscreen #zz-body:has(>.contact-intro){width:calc(100% - 32px);padding-top:120px!important}#zz-fullscreen #zz-body>.contact-intro{padding:0 12px 14px;border-radius:60px 60px 0 0}#zz-fullscreen #zz-body>.contact-intro h2{font-size:12.5vw;-webkit-text-stroke:3px #000}#zz-fullscreen #zz-body>#zz-form{padding:0 12px 18px;grid-template-columns:1fr;gap:10px}#zz-fullscreen #zz-body>#zz-form>label{grid-column:1;min-height:48px}#zz-fullscreen #zz-body>#zz-form>p,#zz-fullscreen #zz-body>#zz-form>p:last-child{grid-column:1;grid-row:auto;text-align:left}#zz-fullscreen #zz-body>#zz-form .contact-send{width:230px}}
+#zz-fullscreen #zz-body>.contact-intro{border-radius:0;background:linear-gradient(transparent 42%,#00bfe7 42%)}
+#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(58px,16vw,142px);letter-spacing:-.045em;margin:-10px -8px 10px;filter:drop-shadow(0 -8px 0 #00bfe7) drop-shadow(8px 0 0 #00bfe7) drop-shadow(-8px 0 0 #00bfe7)}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(3){grid-column:auto}
+#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:3}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro h2{font-size:15.5vw}#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(3){grid-column:1}#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:auto}}
+
+/* Printed paper grain on the cyan contact poster and white writing fields. */
+#zz-fullscreen #zz-body>.contact-intro::after{content:'';position:absolute;inset:42% 0 0;pointer-events:none;background:url('/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px 160px;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form{background-image:url('/assets/profile-yellow/paper-grain.svg');background-size:160px 160px;background-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form>label{background-image:url('/assets/profile-yellow/paper-grain.svg');background-size:160px 160px;background-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){background:transparent}
+
+/* Consistent poster spacing and field alignment. */
+#zz-fullscreen #zz-body>.contact-intro{padding-bottom:20px}
+#zz-fullscreen #zz-body>.contact-intro h2{line-height:.9;margin-bottom:8px}
+#zz-fullscreen #zz-body>.contact-intro p{line-height:1.6}
+#zz-fullscreen #zz-body>#zz-form{gap:14px 12px;padding-bottom:24px}
+#zz-fullscreen #zz-body>#zz-form>label{gap:10px;padding:12px 14px}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(4){gap:12px;padding:16px 14px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{margin:6px 0 12px}
+#zz-fullscreen #zz-body>#zz-form>p{align-self:center;line-height:1.6}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro{padding-bottom:18px}#zz-fullscreen #zz-body>#zz-form{gap:12px;padding-bottom:20px}#zz-fullscreen #zz-body>#zz-form .contact-send{margin:8px 0 8px}#zz-fullscreen #zz-body>#zz-form>p:last-child{margin-top:0}}
+#zz-fullscreen #zz-body>.contact-intro h2{z-index:1}
+
+/* Direct email belongs immediately below the message, before SEND. */
+#zz-fullscreen #zz-body>#zz-form>p.contact-direct{grid-column:1/-1;grid-row:3;display:flex;align-items:center;flex-wrap:wrap;gap:6px;text-align:left;font-size:14px;line-height:1.6;margin:0;color:#000}
+#zz-fullscreen #zz-body>#zz-form .contact-direct a{font-weight:700;text-decoration:none}
+#zz-fullscreen #zz-body>#zz-form .contact-copy{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:4px;border:0;background:transparent;color:#000;cursor:pointer;flex:none;border-radius:3px}
+#zz-fullscreen #zz-body>#zz-form .contact-copy:hover{background:#ffffff55}
+#zz-fullscreen #zz-body>#zz-form .contact-copy:focus-visible{outline:2px solid #000;outline-offset:2px}
+#zz-fullscreen #zz-body>#zz-form .contact-copy-status{font-size:12px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:4;margin:4px 0 8px}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{grid-column:1/-1;grid-row:5;text-align:center;font-size:13px;line-height:1.7;margin:0;color:#000}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure br{display:block}
+@media(max-width:700px){#zz-fullscreen #zz-body>#zz-form>p.contact-direct{grid-row:5;font-size:13px}#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:6}#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{grid-row:7;font-size:12px}}
+#zz-fullscreen #zz-body>.contact-intro h2{filter:url(#contact-title-outline)}
+#zz-fullscreen #zz-body>.contact-intro>div{width:100%;min-width:0}
+#zz-fullscreen #zz-body>.contact-intro p{display:block;width:100%;max-width:none;margin-inline:0;text-align:center!important;text-indent:0}
+
+/* Clear editable placeholders, focus states, and a matching project menu. */
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),textarea){cursor:text;pointer-events:auto;caret-color:#000}
+#zz-fullscreen #zz-body>#zz-form :is(input,textarea)::placeholder{color:#777;opacity:1;font-weight:400}
+#zz-fullscreen #zz-body>#zz-form>label:focus-within{border-color:#000;box-shadow:0 0 0 3px #ffffff80}
+#zz-fullscreen #zz-body>#zz-form input:focus-visible,#zz-fullscreen #zz-body>#zz-form textarea:focus-visible{outline:none}
+#zz-fullscreen #zz-body>#zz-form select[hidden]{display:none!important}
+#zz-fullscreen #zz-body>#zz-form .contact-picker{position:relative;display:block;flex:1;min-width:0}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:28px;border:0;padding:0;background:transparent;color:#000;font:14px/1.5 Arial,sans-serif;cursor:pointer;text-align:left}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger svg{flex:none;transition:transform .15s}
+#zz-fullscreen #zz-body>#zz-form .contact-picker.is-open .contact-picker-trigger svg{transform:rotate(180deg)}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger:focus-visible{outline:2px solid #000;outline-offset:4px}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-options{display:block;position:absolute;top:calc(100% + 16px);right:-16px;z-index:60;width:max(200px,100%);padding:6px;background:#fff url('/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px;border:2px solid #000;box-shadow:5px 5px 0 #000;}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-options[hidden]{display:none}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option{display:block;padding:10px 34px 10px 12px;position:relative;cursor:pointer;font:14px/1.4 Arial,sans-serif;white-space:nowrap}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option:is(:hover,.is-active){background:#00bfe7}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option[aria-selected=true]::after{content:'✓';position:absolute;right:12px;font-weight:700}
+
+/* Visible crumpled-paper folds across the contact poster. */
+#zz-fullscreen #zz-body>#zz-form{position:relative;isolation:isolate}
+#zz-fullscreen #zz-body>#zz-form::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:url('/assets/textures/illustration-crumpled-yellow.png') center / cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>.contact-intro::after{background:url('/assets/textures/illustration-crumpled-yellow.png') center top / cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>.contact-intro h2{-webkit-text-stroke-width:7px}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro h2{-webkit-text-stroke-width:5px}}
+
+/* Shared size for all contact supporting copy. */
+#zz-fullscreen #zz-body>.contact-intro p,
+#zz-fullscreen #zz-body>#zz-form>p.contact-direct,
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{font-size:14px;line-height:1.7}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{display:none}
+
+/* Give the contact text fields the full height of their white boxes. */
+#zz-fullscreen #zz-body>#zz-form>label:has(>input[name="name"]),
+#zz-fullscreen #zz-body>#zz-form>label:has(>input[name="email"]){padding-block:0;cursor:text}
+#zz-fullscreen #zz-body>#zz-form input:is([name="name"],[name="email"]){flex:1 1 0;align-self:stretch;min-height:48px;position:relative;z-index:3;user-select:text;-webkit-user-select:text;touch-action:auto}
+
+/* Decorative title glyphs must never intercept the contact form. */
+#zz-fullscreen #zz-body>.contact-intro{pointer-events:none;z-index:0}
+#zz-fullscreen #zz-body>.contact-intro h2{pointer-events:none}
+#zz-fullscreen #zz-body>#zz-form{position:relative;z-index:2;pointer-events:auto}

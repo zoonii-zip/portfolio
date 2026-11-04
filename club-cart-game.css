@@ -260,3 +260,14 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 #zz-fullscreen .ttc-dpad button:active {background:transparent;color:#29251f;box-shadow:none;transform:rotate(0deg) scale(.94);filter:drop-shadow(0 1px 0 #0003)}
 #zz-fullscreen .ttc-dpad button:focus-visible {outline:2px solid #3099ba;outline-offset:6px}
 @media(prefers-reduced-motion:reduce){#zz-fullscreen .ttc-dpad button{transition:none}}
+
+/* Lift the cart and its controls together only on the entry screen. */
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) {--entry-cart-lift:clamp(24px,4svh,40px)}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas,
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-dpad {translate:0 calc(-1 * var(--entry-cart-lift))}
+
+#zz-fullscreen .ttc-game .ttc-entry-actions button {font-size:16px;letter-spacing:.06em}
+
+/* Supplied logo, framed to its artwork bounds without altering the original PNG. */
+#zz-fullscreen .ttc-logo.ttc-logo-art{position:relative;width:min(430px,72vw,48vh);aspect-ratio:1155 / 507;flex:none;overflow:hidden;transform:none;margin-bottom:8px;text-shadow:none;-webkit-text-stroke:0}
+#zz-fullscreen .ttc-logo-art img{position:absolute;display:block;width:110.823%;max-width:none;height:auto;left:-5.887%;top:-32.742%;pointer-events:none}

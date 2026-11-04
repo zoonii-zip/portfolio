@@ -1,6 +1,6 @@
 /* Perforated project stamps; actual logos can replace the typographic covers. */
 #zz-fullscreen #zz-body .brand-stamp{display:block;position:relative;min-width:0;color:#252621;text-decoration:none;filter:drop-shadow(0 3px 1px #28282122);transition:transform .25s ease,filter .25s ease}
-#zz-fullscreen #zz-body .stamp-paper{display:flex;flex-direction:column;min-height:330px;padding:22px;background:#fffdf5;mask:radial-gradient(circle at 6px 6px,transparent 4px,#000 4.6px) -6px -6px/12px 12px,linear-gradient(#000 0 0) center/calc(100% - 12px) calc(100% - 12px) no-repeat;mask-composite:add}
+#zz-fullscreen #zz-body .stamp-paper{display:flex;flex-direction:column;min-height:330px;padding:22px;background:#fffdf5;mask:radial-gradient(circle at 6px 0,transparent 4px,#000 4.6px) 0 0/12px 100% repeat-x,radial-gradient(circle at 6px 100%,transparent 4px,#000 4.6px) 0 0/12px 100% repeat-x,radial-gradient(circle at 0 6px,transparent 4px,#000 4.6px) 0 0/100% 12px repeat-y,radial-gradient(circle at 100% 6px,transparent 4px,#000 4.6px) 0 0/100% 12px repeat-y;mask-composite:intersect}
 #zz-fullscreen #zz-body .stamp-top,#zz-fullscreen #zz-body .stamp-bottom{display:flex;justify-content:space-between;gap:8px;font:9px/1.5 monospace;letter-spacing:.04em}
 #zz-fullscreen #zz-body .stamp-year{font-size:15px;font-weight:bold}
 #zz-fullscreen #zz-body .stamp-art{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;min-height:170px;margin:12px 0 16px;padding:20px;background:var(--stamp-tone);border:1px solid #25262125;text-align:center}
@@ -29,3 +29,9 @@
 #zz-fullscreen #zz-body :is(.ff-project,.brand-stamp){translate:var(--archive-drag-x,0px) var(--archive-drag-y,0px);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
 #zz-fullscreen #zz-body :is(.ff-project,.brand-stamp) img{-webkit-user-drag:none}
 #zz-fullscreen #zz-body .archive-dragging{cursor:grabbing;z-index:50!important;transition:none!important}
+
+#zz-fullscreen #zz-body .collection-objects.brand-gallery{display:flex!important;flex-direction:column;align-items:stretch;gap:64px;width:100%;max-width:none}
+#zz-fullscreen #zz-body .brand-category h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid #39392c55}
+#zz-fullscreen #zz-body .brand-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+@media(max-width:900px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:1fr}}

@@ -2,11 +2,12 @@ import {arrangeStore} from './club-store-layout.mjs';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT} from './club-cart-config.mjs';
 import {createGame,step,FPS,TICKS} from './supabase/functions/_shared/cart-model.mjs';
-const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=85cf8d90a0';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=ae3224cf82';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
 const art=Array.from({length:9},(_,i)=>{const image=new Image();image.src=`/assets/club-products/product-${i+1}.png`;return image;});
+const cartArt=new Image();cartArt.src='/assets/club-products/shopping-cart.png?v=3f25d5e822';
 const safeGet=(s,k)=>{try{return s.getItem(k);}catch{return null;}};
 const safeSet=(s,k,v)=>{try{s.setItem(k,v);}catch{}};
 let player=safeGet(localStorage,'ttc-player')||crypto.randomUUID();safeSet(localStorage,'ttc-player',player);
@@ -16,7 +17,7 @@ function mount(){
  const shop=document.querySelector('#zz-body .club-collage');if(!shop||shop.dataset.cartReady)return;
  cleanup();shop.dataset.cartReady='true';
  const host=document.createElement('section');host.className='ttc-game';host.setAttribute('aria-label','띵띵클럽 카트 게임');
- const entrance = `<div class="ttc-logo" role="img" aria-label="ThingThingClub">ThingThing<span>Club!</span></div><div class="ttc-entry-actions"><button class="ttc-primary" data-start>CART GAME</button><button data-skip>GO PAGE ↗</button></div>`;
+ const entrance = `<div class="ttc-logo ttc-logo-art"><img src="/assets/club-products/thingthingclub-title.png" alt="Thing Thing Club" width="1280" height="1080" draggable="false"></div><div class="ttc-entry-actions"><button class="ttc-primary" data-start>↖ CART GAME</button><button data-skip>GO PAGE ↗</button></div>`;
  host.dataset.state='ready';
  host.innerHTML=`<div class="ttc-hud"><span><b data-time>20</b>s</span><span><b data-score>0000</b> pts</span><span data-mode hidden></span></div><div class="ttc-court"><canvas width="960" height="560" tabindex="0" aria-label="좌우 방향키로 카트를 움직여 떨어지는 소품을 받으세요"></canvas><div class="ttc-screen">${entrance}</div></div><div class="ttc-dpad" aria-label="카트 이동"><button type="button" data-move="1" aria-label="왼쪽으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14 6-7 6 7 6M7 12h14"/></svg></button><button type="button" data-move="2" aria-label="오른쪽으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 6 7 6-7 6M4 12h13"/></svg></button></div><aside class="ttc-ranking"><h2>${local?'LOCAL RANKING':'TOP 10'}</h2><ol data-ranking></ol></aside><p class="ttc-status" role="status" data-status></p>`;
  shop.before(host);const replay=document.createElement('button');replay.className='ttc-shop-replay';replay.textContent='CART GAME ↗';shop.prepend(replay);arrangeStore(shop,replay);
@@ -37,31 +38,14 @@ function mount(){
    ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale*aspect);
    const shadow=ctx.createRadialGradient(-3,12,8,-3,12,79);shadow.addColorStop(0,'#26382b24');shadow.addColorStop(1,'#26382b00');
    ctx.save();ctx.scale(1,.28);ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(-3,40,85,0,Math.PI*2);ctx.fill();ctx.restore();
-   ctx.lineJoin='round';ctx.lineCap='round';
-   // Far basket wall and open top establish depth before the contents are drawn.
-   ctx.fillStyle='#d1e1d7';ctx.strokeStyle='#547966';ctx.lineWidth=2;
-   ctx.beginPath();ctx.moveTo(-65,-87);ctx.lineTo(-48,-101);ctx.lineTo(68,-101);ctx.lineTo(52,-87);ctx.closePath();ctx.fill();ctx.stroke();
-   ctx.fillStyle='#b8cfc1';ctx.beginPath();ctx.moveTo(52,-87);ctx.lineTo(68,-101);ctx.lineTo(52,-42);ctx.lineTo(38,-28);ctx.closePath();ctx.fill();ctx.stroke();
-   const basket=ctx.createLinearGradient(-50,-90,40,-20);basket.addColorStop(0,'#eff6eecc');basket.addColorStop(1,'#bdd5c590');ctx.fillStyle=basket;
-   ctx.beginPath();ctx.moveTo(-65,-87);ctx.lineTo(52,-87);ctx.lineTo(38,-28);ctx.lineTo(-48,-28);ctx.closePath();ctx.fill();
-   // Rounded tubular chassis, coral grip, and inset wheel hubs.
-   ctx.strokeStyle='#547666';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-65,-87);ctx.lineTo(-74,-108);ctx.lineTo(-95,-108);ctx.moveTo(-48,-28);ctx.lineTo(-43,-12);ctx.lineTo(39,-12);ctx.stroke();
-   ctx.strokeStyle='#d5e1d8';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-63,-88);ctx.lineTo(-72,-110);ctx.moveTo(-43,-14);ctx.lineTo(38,-14);ctx.stroke();
-   ctx.strokeStyle='#ba493b';ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(-99,-109);ctx.lineTo(-78,-109);ctx.stroke();
-   ctx.strokeStyle='#f2a38e';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(-98,-112);ctx.lineTo(-79,-112);ctx.stroke();
-   for(const x of [-36,30]){ctx.fillStyle='#263c32';ctx.beginPath();ctx.arc(x,0,9,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#718779';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#e0e9df';ctx.beginPath();ctx.arc(x,0,3,0,Math.PI*2);ctx.fill();}
    const caughtItems=game.drops.filter(drop=>drop.caught);for(let i=0;i<caughtItems.length;i++){
    const drop=caughtItems[i],im=art[drop.kind-1],column=i%5,layer=Math.floor(i/5),origin=project(drop.x,drop.z);
    const age=Math.max(0,(game.tick-drop.tick-drop.fallTicks-1+acc/(1000/FPS))/FPS);
    const pose=catchPose({x:(origin.x-p.x)/scale,y:(origin.y-102.06*aspect-p.y)/(scale*aspect),size:96/scale,rotation:Math.sin(drop.fallTicks*.08+drop.kind)*.12},{x:-20.5+column*14+(layer%2)*3,y:-60.5-(column%2)*12-layer*6},age,reducedMotion.matches);
    if(im.complete&&im.naturalWidth){ctx.save();ctx.translate(pose.x,pose.y);ctx.rotate(pose.rotation);ctx.scale(1/pose.squash,pose.squash);ctx.drawImage(im,-pose.size/2,-pose.size/2,pose.size,pose.size);ctx.restore();}
   }
-  // The basket's front wires sit in front of the goods, not behind them.
-  ctx.strokeStyle='#587e69';ctx.lineWidth=2;ctx.beginPath();
-  for(let i=0;i<6;i++){ctx.moveTo(-49+i*17,-85);ctx.lineTo(-38+i*13,-29);}
-  for(let i=0;i<3;i++){ctx.moveTo(-60+i*5,-72+i*17);ctx.lineTo(49-i*4,-72+i*17);}ctx.stroke();
-  ctx.strokeStyle='#456d57';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-65,-87);ctx.lineTo(52,-87);ctx.lineTo(38,-28);ctx.lineTo(-48,-28);ctx.closePath();ctx.stroke();
-  ctx.strokeStyle='#f7fff1';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-62,-89);ctx.lineTo(51,-89);ctx.stroke();
+  // Transparent artwork overlays the caught goods so they remain visible through the basket.
+  if(cartArt.complete&&cartArt.naturalWidth)ctx.drawImage(cartArt,-116,-144,208,160);
   ctx.restore();};
   // Draw far-side goods behind the cart, near-side goods in front.
   function good(d){const age=game.tick-d.tick,p=project(d.x,d.z),height=Math.max(0,(1-age/d.fallTicks)*260),im=art[d.kind-1];ctx.save();ctx.translate(p.x,p.y-height-102.06*aspect);ctx.scale(1,aspect);ctx.rotate(Math.sin(age*.08+d.kind)*.12);ctx.globalAlpha=age>d.fallTicks?Math.max(0,1-(age-d.fallTicks)/8):1;if(im.complete&&im.naturalWidth)ctx.drawImage(im,-48,-48,96,96);ctx.restore();}
@@ -85,8 +69,8 @@ function mount(){
  function showShop(){run++;clearTimeout(auto);state='shop';keys=touch=0;cancelAnimationFrame(frame);host.hidden=true;shop.hidden=false;safeSet(sessionStorage,'ttc-played','1');replay.focus({preventScroll:true});}
  function openGame(){host.hidden=false;shop.hidden=true;state='ready';host.dataset.state=state;screen.hidden=false;screen.innerHTML=entrance;game=createGame(197);clearTimeout(auto);cancelAnimationFrame(frame);frame=requestAnimationFrame(tick);$('[data-start]').focus({preventScroll:true});}
  async function start(){if(state==='starting')return;const token=++run;state='starting';host.dataset.state=state;$('[data-start]').disabled=true;message('쇼핑 준비 중…');try{session=await api({action:'start'});}catch(e){session=null;message(e.message);}if(token!==run||!host.isConnected)return;game=createGame(session?.seed??crypto.getRandomValues(new Uint32Array(1))[0]);events=[];keys=touch=0;lastMask=-1;acc=0;last=performance.now();state='playing';host.dataset.state=state;screen.hidden=true;$('[data-mode]').textContent=session?(local?'LOCAL RANKED':'RANKED PLAY'):'PRACTICE';if(session)message(local?'로컬 테스트 기록으로 참여 중':'전체 랭킹에 도전 중');canvas.focus({preventScroll:true});}
- function finish(){state='result';host.dataset.state=state;keys=touch=0;screen.hidden=false;screen.innerHTML=`<h2>${game.score.toLocaleString()} <small>pts</small></h2>${session?'<form data-submit><label>닉네임<input name="name" maxlength="16" required autocomplete="nickname" placeholder="예: 띵띵쇼퍼"></label><button class="ttc-primary" type="submit">SAVE SCORE</button></form>':'<p>연습 모드 · 전체 랭킹에는 등록되지 않아요.</p>'}<div class="ttc-result-actions"><button data-start>CART GAME</button><button data-skip>GO PAGE ↗</button></div>`;const input=screen.querySelector('input');if(input)input.value=safeGet(localStorage,'ttc-name')||'';(input||screen.querySelector('[data-skip]')).focus({preventScroll:true});}
- on(host,'submit',async e=>{if(!e.target.matches('[data-submit]'))return;e.preventDefault();const token=run,form=e.target,button=form.querySelector('button'),name=form.elements.name.value.trim();button.disabled=true;try{const d=await api({action:'finish',id:session.id,name,events});if(token!==run||!host.isConnected)return;safeSet(localStorage,'ttc-name',name);ranks(d.entries);screen.innerHTML=`<span class="ttc-overline">${local?'LOCAL TEST RANKING':'GLOBAL RANKING'}</span><h2>#${d.rank}</h2><p>이번 점수 ${d.score} · 내 최고 기록 ${d.best}</p><div class="ttc-result-actions"><button data-start>CART GAME</button><button class="ttc-primary" data-skip>GO PAGE ↗</button></div>`;const ranking=$('[data-ranking]').cloneNode(true);ranking.removeAttribute('data-ranking');ranking.className='ttc-result-ranking';screen.append(ranking);message('');}catch(error){message(error.message);button.disabled=false;}});
+ function finish(){state='result';host.dataset.state=state;keys=touch=0;screen.hidden=false;screen.innerHTML=`<h2>${game.score.toLocaleString()} <small>pts</small></h2>${session?'<form data-submit><label>닉네임<input name="name" maxlength="16" required autocomplete="nickname" placeholder="예: 띵띵쇼퍼"></label><button class="ttc-primary" type="submit">SAVE SCORE</button></form>':'<p>연습 모드 · 전체 랭킹에는 등록되지 않아요.</p>'}<div class="ttc-result-actions"><button data-start>↖ CART GAME</button><button data-skip>GO PAGE ↗</button></div>`;const input=screen.querySelector('input');if(input)input.value=safeGet(localStorage,'ttc-name')||'';(input||screen.querySelector('[data-skip]')).focus({preventScroll:true});}
+ on(host,'submit',async e=>{if(!e.target.matches('[data-submit]'))return;e.preventDefault();const token=run,form=e.target,button=form.querySelector('button'),name=form.elements.name.value.trim();button.disabled=true;try{const d=await api({action:'finish',id:session.id,name,events});if(token!==run||!host.isConnected)return;safeSet(localStorage,'ttc-name',name);ranks(d.entries);screen.innerHTML=`<span class="ttc-overline">${local?'LOCAL TEST RANKING':'GLOBAL RANKING'}</span><h2>#${d.rank}</h2><p>이번 점수 ${d.score} · 내 최고 기록 ${d.best}</p><div class="ttc-result-actions"><button data-start>↖ CART GAME</button><button class="ttc-primary" data-skip>GO PAGE ↗</button></div>`;const ranking=$('[data-ranking]').cloneNode(true);ranking.removeAttribute('data-ranking');ranking.className='ttc-result-ranking';screen.append(ranking);message('');}catch(error){message(error.message);button.disabled=false;}});
  on(host,'click',e=>{if(e.target.closest('[data-start]')){clearTimeout(auto);start();}if(e.target.closest('[data-skip]'))showShop();if(e.target.closest('[data-resume]')){state='playing';host.dataset.state=state;screen.hidden=true;last=performance.now();canvas.focus({preventScroll:true});}});
  const masks={ArrowLeft:1,ArrowRight:2};
  on(document,'keydown',e=>{if(['playing','ready'].includes(state)&&masks[e.key]){e.preventDefault();keys|=masks[e.key];}});on(document,'keyup',e=>{if(masks[e.key])keys&=~masks[e.key];});

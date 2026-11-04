@@ -9,7 +9,7 @@
 #zz-fullscreen #zz-body .is-selected .ib-spine strong{font-size:13px!important}
 #zz-fullscreen #zz-body .ib-cover{position:absolute;inset:0 0 0 25px;display:block;padding:0;min-width:0;overflow:hidden;background:var(--book-color);color:var(--book-ink);text-decoration:none;border:1px solid #0002;box-shadow:inset 4px 0 6px #0002,3px 0 #f8f2e8,5px 0 #aca79e,9px 8px 12px #0002;opacity:0;transform:rotateY(-85deg);transform-origin:left center;pointer-events:none;transition:transform .65s cubic-bezier(.2,.75,.2,1),opacity .2s}
 #zz-fullscreen #zz-body .is-selected .ib-cover{opacity:1;transform:rotateY(-10deg);pointer-events:auto}
-#zz-fullscreen #zz-body .ib-cover img{display:block;width:100%;height:100%;object-fit:cover}
+#zz-fullscreen #zz-body .ib-cover :is(img,video){display:block;width:100%;height:100%;object-fit:cover}
 #zz-fullscreen #zz-body .theme-story .collection-scene:has(.illustration-shelf){position:relative;box-sizing:border-box;padding-top:140px}
 #zz-fullscreen #zz-body .ib-scroll{width:100%;min-width:0;padding:12px 0 24px}
 #zz-fullscreen #zz-body .ib-current{position:absolute;left:0;top:0;display:flex;gap:16px;width:min(380px,60%);padding:0;pointer-events:none;z-index:20}
@@ -24,3 +24,55 @@
 @media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .illustration-shelf .ib-item,#zz-fullscreen #zz-body .ib-spine,#zz-fullscreen #zz-body .ib-cover{transition:none}}
 
 @media(max-width:700px){#zz-fullscreen #zz-body .ib-current{width:100%;gap:8px}#zz-fullscreen #zz-body .ib-current strong{font-size:17px}}
+
+/* Printed stock: static grain and fine ink dots over the cover artwork. */
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover{isolation:isolate}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::before,
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::after{
+ content:'';position:absolute;inset:0;pointer-events:none;
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::before{
+ z-index:1;background:url('/assets/illustration-covers/print-grain.svg') repeat;
+ background-size:140px 140px;mix-blend-mode:soft-light;opacity:.48;
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::after{
+ z-index:2;
+ background-image:radial-gradient(circle,rgba(54,39,23,.22) .45px,transparent .8px),linear-gradient(100deg,rgba(88,65,35,.12),rgba(255,246,220,.07) 8%,rgba(255,246,220,.04) 90%,rgba(79,59,31,.08));
+ background-size:3px 3px,100% 100%;mix-blend-mode:multiply;opacity:.55;
+ box-shadow:inset 2px 0 5px #49391e20,inset 0 0 0 1px #fff5;
+}
+
+/* Original transparent calendar artwork over the key visual's sky palette. */
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover-unesco{
+ background:linear-gradient(180deg,#e5fdff 0%,#d4fbff 25%,#bdfaff 50%,#a8f8ff 75%,#90f7fe 100%);
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover-unesco img{object-fit:contain}
+
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover-sif{background:linear-gradient(#65b9d7 0%,#c6e9ef 50%,#f4ce91 50%,#f4ce91 100%)}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover-sif img{object-fit:cover;object-position:center}
+
+/* Soft, cloth-bound spines: rounded shoulders, printed grain and a binding crease. */
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine{
+ border:0;border-radius:5px 3px 3px 5px;isolation:isolate;
+ background-color:var(--book-color);
+ background-image:linear-gradient(90deg,#30231320 0%,#fff8df45 9%,#fff8df18 25%,transparent 50%,#30231308 80%,#30231329 100%);
+ box-shadow:inset 0 1px 1px #fff8, inset 0 -2px 3px #45351c25,2px 3px 5px #46341a24;
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine::before{
+ content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:url('/assets/illustration-covers/print-grain.svg') repeat;
+ background-size:100px 100px;mix-blend-mode:multiply;opacity:.36;
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine::after{
+ content:'';position:absolute;inset:3px 5px 3px auto;width:2px;pointer-events:none;
+ border-radius:50%;background:#45351c12;box-shadow:1px 0 1px #fff5;
+}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine strong{opacity:.88;text-shadow:0 1px #fff2}
+
+/* Separate collaboration credits from the short, readable spine title. */
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine-title{display:flex;flex-direction:column;align-items:center;gap:16px;min-height:0}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine-partner{font:600 10px/1.2 'SUIT',sans-serif!important;letter-spacing:.04em;white-space:nowrap;opacity:.7}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine strong{font-family:'Source Sans 3','SUIT',sans-serif!important;font-size:20px!important;font-weight:600!important;line-height:1.2!important;letter-spacing:.08em}
+#zz-fullscreen #zz-body .illustration-shelf .is-selected .ib-spine strong{font-size:12px!important;letter-spacing:.02em}
+#zz-fullscreen #zz-body .illustration-shelf .is-selected .ib-spine-partner{display:none}
+@media(max-width:1000px){#zz-fullscreen #zz-body .illustration-shelf .ib-spine-partner{font-size:8px!important}#zz-fullscreen #zz-body .illustration-shelf .ib-spine strong{font-size:17px!important}#zz-fullscreen #zz-body .illustration-shelf .is-selected .ib-spine strong{font-size:12px!important}}
