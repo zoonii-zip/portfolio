@@ -148,11 +148,37 @@
  };
  const overviewGraphicStyle=document.createElement('style');overviewGraphicStyle.textContent='@media (min-width:681px){#zz-overview .overview-preview{width:clamp(150px,18vw,280px);height:clamp(120px,22vh,220px);overflow:visible;border-radius:0;background:transparent!important;box-shadow:none!important;transform:translate(10px,-50%) scale(.98);transition:opacity .18s ease-out,transform .22s cubic-bezier(.2,.7,.2,1)}#zz-overview .overview-preview img{width:100%;height:100%;object-fit:contain!important;padding:0!important;background:transparent!important;filter:drop-shadow(0 5px 5px rgba(0,0,0,.12))!important}#zz-overview .overview-preview>span{display:none}#zz-overview nav button:focus-visible .overview-preview{opacity:1;transform:translate(0,-50%) scale(1)}}@media (min-width:681px) and (hover:hover){#zz-overview nav button:hover .overview-preview{opacity:1;transform:translate(0,-50%) scale(1)}}';document.head.append(overviewGraphicStyle);
  const overview=document.createElement('dialog');overview.id='zz-overview';overview.setAttribute('aria-label','전체 메뉴');
- overview.innerHTML=`<div class="overview-content"><header><button type="button" class="overview-close" aria-label="Close Menu" autofocus>Close ×</button></header><nav aria-label="Main navigation">${Object.entries(menuLabels).map(([key,label])=>`<button type="button" data-overview-action="${key}" aria-label="${label}"><span class="overview-roll-window" aria-hidden="true"><span class="overview-roll-track"><span class="overview-label">${label}</span><span class="overview-label overview-label-hover">${label}</span></span></span><span class="overview-category" aria-hidden="true">${overviewPreviews[key][0]}</span><span class="overview-preview" aria-hidden="true"><img src="${overviewPreviews[key][1]}" alt="" width="240" height="160"><span></span></span></button>`).join('')}</nav><footer>TAKE A LOOK AROUND.<span>© ZOONII.ZIP</span></footer></div>`;
+ overview.innerHTML=`<div class="overview-content"><header><button type="button" class="overview-close" aria-label="Close Menu" autofocus>Close ×</button></header><nav aria-label="Main navigation">${Object.entries(menuLabels).map(([key,label])=>`<button type="button" data-overview-action="${key}" aria-label="${label}"><span class="overview-label" aria-hidden="true">${Array.from(label).map(letter=>`<span class="overview-letter"><span class="overview-letter-track"><span>${letter}</span><span class="overview-letter-copy">${letter}</span></span></span>`).join('')}</span><span class="overview-category" aria-hidden="true">${overviewPreviews[key][0]}</span><span class="overview-preview" aria-hidden="true"><img src="${overviewPreviews[key][1]}" alt="" width="240" height="160"><span></span></span></button>`).join('')}</nav><footer>TAKE A LOOK AROUND.<span>© ZOONII.ZIP</span></footer></div>`;
  document.body.append(overview);
+ // Replay the forward letter swap in a fresh random order on each entry.
+ const overviewMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ const letterAnimations=new Map();
+ function stopLetterSwap(button){
+  (letterAnimations.get(button)||[]).forEach(animation=>animation.cancel());
+  letterAnimations.delete(button);
+ }
+ function playLetterSwap(button){
+  stopLetterSwap(button);
+  if(overviewMotion.matches)return;
+  const letters=Array.from(button.querySelectorAll('.overview-letter-track'));
+  for(let i=letters.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[letters[i],letters[j]]=[letters[j],letters[i]]}
+  const animations=letters.map((letter,i)=>letter.animate(
+   [{transform:'translateY(0)'},{transform:'translateY(100%)'}],
+   {duration:800,delay:i*20,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}
+  ));
+  letterAnimations.set(button,animations);
+  Promise.all(animations.map(animation=>animation.finished)).then(()=>{
+   if(letterAnimations.get(button)===animations)stopLetterSwap(button);
+  }).catch(()=>{}); // A new hover or closing the panel cancels the previous run.
+ }
+ overview.querySelectorAll('[data-overview-action]').forEach(button=>{
+  button.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')playLetterSwap(button)});
+  button.addEventListener('focus',()=>{if(button.matches(':focus-visible'))playLetterSwap(button)});
+ });
+ overviewMotion.addEventListener('change',()=>{if(overviewMotion.matches)letterAnimations.forEach((_,button)=>stopLetterSwap(button))});
  const overviewContent=overview.querySelector('.overview-content');
  let overviewClosing=false;
- function closeOverview(done){if(overviewClosing)return;overviewClosing=true;overview.classList.remove('visible');setTimeout(()=>{overview.close();document.documentElement.classList.remove('overview-open');overviewButton.setAttribute('aria-expanded','false');overviewClosing=false;if(done)done()},reduced?0:300)}
+ function closeOverview(done){if(overviewClosing)return;overviewClosing=true;letterAnimations.forEach((_,button)=>stopLetterSwap(button));overview.classList.remove('visible');setTimeout(()=>{overview.close();document.documentElement.classList.remove('overview-open');overviewButton.setAttribute('aria-expanded','false');overviewClosing=false;if(done)done()},reduced?0:300)}
  overviewButton.addEventListener('click',()=>{if(moving||overview.open)return;overview.showModal();overviewContent.scrollTop=0;document.documentElement.classList.add('overview-open');overviewButton.setAttribute('aria-expanded','true');requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!overview.open||overviewClosing)return;overview.classList.add('visible')}))});
  overview.addEventListener('cancel',e=>{e.preventDefault();closeOverview()});
  overview.addEventListener('click',e=>{if(e.target===overview){const r=overview.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeOverview();return}if(e.target.closest('.overview-close')){closeOverview();return}const target=e.target.closest('[data-overview-action],[data-overview-project]');if(!target)return;closeOverview(()=>{current=null;activeFolder=null;const key=target.dataset.overviewAction;if(key){selectDock(key);if(key==='home'){close();root.scrollIntoView({behavior:reduced?'instant':'smooth'})}else action(key)}else{selectDock('files');travel('files',()=>project(target.dataset.overviewProject))}})});
