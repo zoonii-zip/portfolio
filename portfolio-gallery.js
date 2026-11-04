@@ -43,7 +43,8 @@
       link.style.zIndex = projects.length - i;
       const image = document.createElement('img'); image.src = project.src; image.alt = ''; image.width = 1536; image.height = 1024; image.decoding = 'async';
       const title = document.createElement('span'); title.className = 'pg-card-title'; title.textContent = project.name + ' ↗';
-      link.append(image, title);
+      const ink = document.createElement('span'); ink.className = 'pg-folder-ink'; ink.setAttribute('aria-hidden', 'true');
+      link.append(image, ink, title);
       if (duplicate) { link.tabIndex = -1; link.setAttribute('aria-hidden', 'true'); }
       link.addEventListener('pointerenter', () => select(i));
       link.addEventListener('focus', () => select(i));

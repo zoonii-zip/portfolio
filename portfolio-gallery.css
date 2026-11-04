@@ -19,10 +19,10 @@
 /* Each upright card advances right and upward along one diagonal. */
 #zz-fullscreen .pg-deck{position:absolute;inset:0;isolation:isolate}
 #zz-fullscreen .pg-card{display:block;position:relative;text-decoration:none;color:#292e27;border-radius:5px;background:#fff;box-shadow:5px 3px 0 #bfc3b7,8px 5px 0 #f8f8ed,12px 14px 18px #24302530;overflow:hidden}
-#zz-fullscreen .pg-deck .pg-card{position:absolute;left:calc(3% + var(--i) * 15%);top:calc(65% - var(--i) * 9%);width:min(38%,60cqh);transform:translateY(-50%) perspective(1400px) rotateY(-38deg) skewY(20deg);transform-origin:center;transition:transform .3s,box-shadow .3s;animation:pg-enter .45s ease-out both;animation-delay:calc(var(--i) * .05s)}
+#zz-fullscreen .pg-deck .pg-card{position:absolute;left:calc(24% + var(--i) * 7%);top:calc(65% - var(--i) * 8%);width:min(46%,62cqh);transform:translateY(-50%) perspective(1400px) rotateY(-62deg) skewY(15deg);transform-origin:center;transition:transform .3s,box-shadow .3s;animation:pg-enter .45s ease-out both;animation-delay:calc(var(--i) * .05s)}
 #zz-fullscreen .pg-card img{display:block;width:100%;height:auto;aspect-ratio:1080/608;object-fit:cover;transition:transform .3s}
 #zz-fullscreen .pg-card-title{display:block;padding:10px 12px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#zz-fullscreen .pg-deck .pg-card:is(:hover,:focus-visible){transform:translateY(calc(-50% - 18px)) perspective(1400px) rotateY(-25deg) skewY(14deg);z-index:10!important;box-shadow:5px 3px 0 #bfc3b7,8px 5px 0 #f8f8ed,16px 24px 25px #24302540}
+#zz-fullscreen .pg-deck .pg-card:is(:hover,:focus-visible){transform:translateY(calc(-50% - 18px)) perspective(1400px) rotateY(-62deg) skewY(15deg);z-index:10!important;box-shadow:5px 3px 0 #bfc3b7,8px 5px 0 #f8f8ed,16px 24px 25px #24302540}
 #zz-fullscreen .pg-card:is(:hover,:focus-visible) img{transform:scale(1.05)}
 #zz-fullscreen .pg-index{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;padding:10px 0;position:relative;z-index:10}
 #zz-fullscreen .pg-index a{color:#73776f;font-size:10px;text-decoration:none;padding:4px 0;border-bottom:1px solid transparent}
@@ -94,3 +94,8 @@
  #zz-fullscreen .portfolio-gallery .pg-eyebrow{display:block}
  #zz-fullscreen .portfolio-gallery .pg-header h2{font-size:24px}
 }
+
+/* Color the paper face while preserving the original folder silhouette and grain. */
+#zz-fullscreen .pg-folder-ink{position:absolute;left:11.4%;right:11.4%;top:20.2%;bottom:7%;background:var(--folder-label);mix-blend-mode:multiply;opacity:.85;clip-path:polygon(0 6%,3% 0,45% 0,49% 5%,95% 5%,100% 9%,100% 96%,98% 100%,2% 100%,0 97%);border-radius:8px;pointer-events:none}
+#zz-fullscreen .portfolio-gallery .pg-card{isolation:isolate}
+#zz-fullscreen .portfolio-gallery .pg-card-title{background:transparent;box-shadow:none;font-weight:700;top:42%;text-shadow:0 1px 2px #0006}
