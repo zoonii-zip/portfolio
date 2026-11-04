@@ -35,7 +35,7 @@ for route,data in pages.items():
  assert ('noindex' not in p.meta['robots'])==data['index'],route
  for image in p.images:
   assert 'alt' in image,(route,image)
-  if not urlparse(image.get('src','')).scheme:assert (ROOT/image['src'].lstrip('/')).exists(),image
+  if not urlparse(image.get('src','')).scheme:assert (ROOT/urlparse(image['src']).path.lstrip('/')).exists(),image
  for link in p.links:assert urlparse(link).path in pages,link
  for src in p.external_scripts:
   if urlparse(src).scheme:continue

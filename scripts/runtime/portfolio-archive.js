@@ -1,4 +1,4 @@
-import('/club-cart-game.mjs').catch(()=>{});
+import('/club-cart-game.mjs?v=cf11d9f649').catch(()=>{});
 (()=>{const root=document.getElementById('zz-fullscreen'),q=s=>root.querySelector(s),world=q('#zz-world'),entry=q('#zz-entry'),overlay=q('#zz-overlay'),body=q('#zz-body');let activeFolder=null;let entered=false,x=0,y=0,z=.75,drag=null,chapter=0,current=null,returnFocus=null;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const menuLabels=Object.freeze({home:'Home',about:'Profile',career:'Career',files:'Archive',club:'ThingThingClub',guest:'Guestbook',contact:'Contact'});
  // One label per destination across desktop, mobile, shortcuts, and the menu.
@@ -73,7 +73,7 @@ import('/club-cart-game.mjs').catch(()=>{});
  intro.addEventListener('pointerdown',e=>{if(e.target.closest('.trail-tools,button'))return;const r=intro.getBoundingClientRect();Object.assign(pointer,{x:e.clientX-r.left,y:e.clientY-r.top,vx:250,vy:-500,t:performance.now()})});
  intro.addEventListener('pointerleave',()=>{pointer.t=0;pointer.x=-999});
  new IntersectionObserver(es=>{physicsVisible=es[0].isIntersecting;if(physicsVisible&&!trailRAF){trailItems.forEach(o=>o.last=performance.now());trailRAF=requestAnimationFrame(tickTrail)}},{threshold:.05}).observe(intro);
- const replay=document.createElement('button');replay.type='button';replay.textContent='↻';replay.setAttribute('aria-label','Replay — 그래픽 다시 뿌리기');replay.title='Replay';intro.querySelector('.trail-tools').appendChild(replay);replay.addEventListener('click',()=>{if(!trailReady)enableTrail();else shower()});
+ const replay=document.createElement('button');replay.type='button';replay.innerHTML='<svg viewBox="0 0 64 64" width="48" height="48" fill="none" aria-hidden="true" focusable="false"><path d="M9 14 24 6 48 8 59 20 57 42 43 57 19 59 6 45 5 27Z" fill="#e8ded0"/><path d="m11 16 15-7 21 2 9 10-2 20-13 13-21 2L9 44 8 28Z" fill="#f1e8dc"/><g stroke="#29251f" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 31c-1-11 8-18 18-17 7 0 12 4 15 10"/><path d="m39 23 13-7-3 16-10-9Z" fill="#e8ded0"/><path d="m40 23 9 1 3-8" stroke-width="1.4"/><path d="M48 39c-3 8-11 12-19 10-7-1-12-6-14-12" stroke-dasharray="2.5 4.5" stroke-width="1.8"/></g></svg>';replay.setAttribute('aria-label','Replay — 그래픽 다시 뿌리기');replay.title='Replay';intro.querySelector('.trail-tools').appendChild(replay);replay.addEventListener('click',()=>{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const icon=replay.querySelector('svg');icon.getAnimations().forEach(animation=>animation.cancel());icon.animate([{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}],{duration:480,easing:'cubic-bezier(.22,.61,.36,1)'});}if(!trailReady)enableTrail();else shower()});
  let archiveMode='STORY';
  const archiveLabels={STORY:'Illustration',PRODUCT:'Web / App',VISUAL:'Brand / Editorial'};
  const gfExtraFiles={};
