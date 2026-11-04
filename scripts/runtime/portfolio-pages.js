@@ -1,3 +1,4 @@
+import('/club-cart-game.mjs').catch(()=>{});
 (()=>{const root=document.getElementById('zz-fullscreen'),q=s=>root.querySelector(s),world=q('#zz-world'),entry=q('#zz-entry'),overlay=q('#zz-overlay'),body=q('#zz-body');let activeFolder=null;let entered=false,x=0,y=0,z=.75,drag=null,chapter=0,current=null,returnFocus=null;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const menuLabels=Object.freeze({home:'Home',about:'Profile',career:'Career',files:'Archive',club:'ThingThingClub',guest:'Guestbook',contact:'Contact'});
  // One label per destination across desktop, mobile, shortcuts, and the menu.
