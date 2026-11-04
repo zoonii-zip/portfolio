@@ -1,13 +1,13 @@
 /* Current-site controls only; archived weeks retain their original styling. */
 (()=>{
  if(location.pathname.startsWith('/weeks/'))return;
- const selector=['#zz-overview-button','.overview-close','[data-overview-action]','#zz-weeks button','#zz-weeks .weeks-list a','#zz-fullscreen .action','#zz-fullscreen .chapterbar button','#zz-fullscreen .archive-tabs button','.pp-facts-tabs button','.cs-more','.cs-reel-toggle','.cs-scroll-next','.guest-stick','.guest-refresh','.guest-dialog-close','#zz-leave-note','#zz-wall-back','#zz-contact-back','#zz-overlay .panelhead button','.ttc-game button','.ttc-shop-replay','.portfolio-window button:not(.ib-spine)','.pw-original','.case-back','.case-footer a'].join(',');
+ const selector=['#zz-overview-button','.overview-close','[data-overview-action]','#zz-weeks button','#zz-weeks .weeks-list a','#zz-fullscreen .action','#zz-fullscreen .chapterbar button','.pp-facts-tabs button','.cs-more','.cs-reel-toggle','.cs-scroll-next','.guest-stick','.guest-refresh','.guest-dialog-close','#zz-leave-note','#zz-wall-back','#zz-contact-back','#zz-overlay .panelhead button','.ttc-game button','.ttc-shop-replay','.portfolio-window button:not(.ib-spine)','.pw-original','.case-back','.case-footer a'].join(',');
  const paths={back:'m14 6-7 6 7 6M7 12h14',next:'m10 6 7 6-7 6M4 12h13',close:'m7 6 11 12M18 6 7 18',minus:'M5 12h14',expand:'M5 10V5h5m4 0h5v5M5 14v5h5m4 0h5v-5'};
  function enhance(el){
   if(el.classList.contains('zz-paper-control')&&(!el.classList.contains('zz-paper-icon')||el.querySelector('svg')))return;
   el.classList.add('zz-paper-control');
   if(getComputedStyle(el).position==='static')el.classList.add('zz-paper-relative');
-  if(el.matches('[data-overview-action],.archive-tabs button,.cs-more,.weeks-list a,.weeks-list button'))el.classList.add('zz-paper-wide');
+  if(el.matches('[data-overview-action],.cs-more,.weeks-list a,.weeks-list button'))el.classList.add('zz-paper-wide');
   const kind=el.matches('.pw-previous,#zz-wall-back,#zz-contact-back,#zz-overlay .panelhead button[data-action=close]')?'back':el.matches('.pw-next')?'next':el.matches('.pw-close,.guest-dialog-close')?'close':el.matches('.pw-minimize')?'minus':el.matches('.pw-maximize')?'expand':null;
   if(kind){
    if(!el.getAttribute('aria-label'))el.setAttribute('aria-label',el.textContent.trim()||'뒤로');
