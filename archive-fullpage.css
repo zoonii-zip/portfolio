@@ -23,7 +23,12 @@
 #zz-fullscreen #zz-body .theme-product:has(.digital-ribbon) .archive-tabs button{color:#f5f4ed!important}
 #zz-fullscreen #zz-body .dr-hero{height:calc(100svh - 240px);min-height:540px}
 #zz-fullscreen #zz-body .dr-project{width:clamp(110px,13vw,220px)}
-html:has(#zz-overlay.open .archive-shell) :is(#zz-global-dock,#zz-fixed-links){display:none!important}
+/* Preserve shared navigation and leave room for its fixed icons. */
+#zz-fullscreen #zz-body .archive-shell{padding-bottom:140px}
+#zz-fullscreen #zz-body .archive-shell :is(#archive-panel,.collection-scene){min-height:calc(100svh - 260px)}
+html:has(#zz-overlay.open .theme-product) #zz-fixed-links button{color:#f5f4ed}
+html:has(#zz-overlay.open .theme-product) #zz-global-dock .dock-mobile-label{color:#f5f4ed;text-shadow:0 1px 3px #000}
+html:has(#zz-overlay.open .theme-product) :is(#zz-global-dock,#zz-fixed-links) button:focus-visible{outline-color:#f5f4ed}
 @media(max-width:1100px){
  #zz-fullscreen #zz-body .archive-shell,#zz-fullscreen #zz-body .archive-shell.theme-product:has(.digital-ribbon){grid-template-columns:170px minmax(0,1fr)!important;gap:24px;padding:116px 24px 36px}
  #zz-fullscreen #zz-body .archive-shell .archive-tabs strong{font-size:25px!important}
@@ -68,3 +73,5 @@ html:has(#zz-overlay.open .archive-shell) :is(#zz-global-dock,#zz-fixed-links){d
 
 /* Match the lemon background of the Figma profile wireframe. */
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){--archive-page:#fffd89}
+
+@media(max-width:1100px){#zz-fullscreen #zz-body .archive-shell{padding-bottom:140px}}
