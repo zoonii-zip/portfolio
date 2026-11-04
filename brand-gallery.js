@@ -38,3 +38,63 @@
   if (body) new MutationObserver(mount).observe(body, {childList: true, subtree: true});
   mount();
 })();
+
+/* Shared pointer dragging for project folders and brand stamps. */
+(() => {
+  const body = document.getElementById('zz-body');
+  if (!body) return;
+  const selector = '.ff-project, .brand-stamp';
+  const positions = new WeakMap();
+  let drag = null, suppressClick = false;
+  body.addEventListener('dragstart', event => {
+    if (event.target.closest(selector)) event.preventDefault();
+  });
+  body.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || !event.isPrimary) return;
+    suppressClick = false;
+    const item = event.target.closest(selector);
+    if (!item) return;
+    const position = positions.get(item) || {x: 0, y: 0};
+    drag = {item, id: event.pointerId, startX: event.clientX, startY: event.clientY,
+      x: position.x, y: position.y, moved: false};
+  });
+  body.addEventListener('pointermove', event => {
+    if (!drag || event.pointerId !== drag.id) return;
+    const dx = event.clientX - drag.startX, dy = event.clientY - drag.startY;
+    if (!drag.moved && Math.hypot(dx, dy) < 6) return;
+    if (!drag.moved) {
+      drag.moved = true;
+      drag.item.setPointerCapture(drag.id);
+      drag.item.classList.add('archive-dragging');
+      drag.item.focus({preventScroll: true});
+    }
+    event.preventDefault();
+    const parent = drag.item.parentElement;
+    const x = Math.max(-drag.item.offsetLeft, Math.min(parent.clientWidth - drag.item.offsetLeft - drag.item.offsetWidth, drag.x + dx));
+    const y = Math.max(-drag.item.offsetTop, Math.min(parent.clientHeight - drag.item.offsetTop - drag.item.offsetHeight, drag.y + dy));
+    drag.item.style.setProperty('--archive-drag-x', x + 'px');
+    drag.item.style.setProperty('--archive-drag-y', y + 'px');
+    positions.set(drag.item, {x, y});
+  });
+  function finish(event) {
+    if (!drag || event.pointerId !== drag.id) return;
+    suppressClick = drag.moved;
+    if (event.type === 'pointercancel') {
+      positions.set(drag.item, {x: drag.x, y: drag.y});
+      drag.item.style.setProperty('--archive-drag-x', drag.x + 'px');
+      drag.item.style.setProperty('--archive-drag-y', drag.y + 'px');
+    }
+    drag.item.classList.remove('archive-dragging');
+    if (drag.item.hasPointerCapture(drag.id)) drag.item.releasePointerCapture(drag.id);
+    drag = null;
+  }
+  body.addEventListener('pointerup', finish);
+  body.addEventListener('pointercancel', finish);
+  window.addEventListener('keydown', () => { suppressClick = false; });
+  window.addEventListener('click', event => {
+    if (!suppressClick) return;
+    suppressClick = false;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+})();
