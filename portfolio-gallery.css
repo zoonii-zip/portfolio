@@ -76,3 +76,10 @@
 #zz-fullscreen #zz-body .theme-product .pg-header h2{color:#f5f4ed}
 #zz-fullscreen #zz-body .theme-product :is(.pg-eyebrow,.pg-header p,.pg-index a,.pg-pause){color:#b8b9b1}
 #zz-fullscreen #zz-body .theme-product .pg-index a:is(:hover,.is-selected){color:#fff}
+
+/* Use the original paper-folder cutout, including its tab and paper clip. */
+#zz-fullscreen .portfolio-gallery .pg-card{background:transparent;border-radius:0;box-shadow:none;overflow:visible;filter:drop-shadow(5px 9px 6px #0005)}
+#zz-fullscreen .portfolio-gallery .pg-card img{aspect-ratio:3/2;object-fit:contain}
+#zz-fullscreen .portfolio-gallery .pg-card-title{position:absolute;left:19%;right:17%;top:49%;padding:10px 8px;background:var(--folder-label);color:#fff9ed;border-radius:2px;font-size:clamp(10px,1.1vw,16px);white-space:normal;line-height:1.4;overflow-wrap:anywhere;box-shadow:0 2px 3px #0002}
+#zz-fullscreen .portfolio-gallery .pg-card:is(:hover,:focus-visible){box-shadow:none;filter:drop-shadow(10px 18px 10px #0006)}
+#zz-fullscreen .portfolio-gallery .pg-card:is(:hover,:focus-visible) img{transform:none}
