@@ -15,10 +15,9 @@
     target.classList.add('portfolio-gallery');
     target.setAttribute('role', 'region');
     target.setAttribute('aria-label', '웹·앱 프로젝트 갤러리');
-    target.innerHTML = `<header class="pg-header" aria-live="polite" aria-atomic="true"><span class="pg-eyebrow"></span><h2></h2><p></p><a class="pg-open">프로젝트 보기 <span aria-hidden="true">↗</span></a></header><div class="pg-stage"><div class="pg-deck"></div></div><div class="pg-mobile"><div class="pg-marquee"></div><button type="button" class="pg-pause" aria-pressed="false">흐름 멈추기 Ⅱ</button></div><nav class="pg-index" aria-label="웹·앱 프로젝트"></nav>`;
+    target.innerHTML = `<header class="pg-header" aria-live="polite" aria-atomic="true"><span class="pg-eyebrow"></span><h2></h2><p></p><a class="pg-open">프로젝트 보기 <span aria-hidden="true">↗</span></a></header><div class="pg-stage"><div class="pg-deck"></div></div><div class="pg-mobile"><div class="pg-marquee"></div><button type="button" class="pg-pause" aria-pressed="false">흐름 멈추기 Ⅱ</button></div>`;
     const deck = target.querySelector('.pg-deck');
     const marquee = target.querySelector('.pg-marquee');
-    const index = target.querySelector('.pg-index');
     const open = target.querySelector('.pg-open');
     const heading = target.querySelector('.pg-header h2');
     const period = target.querySelector('.pg-eyebrow');
@@ -32,7 +31,6 @@
       description.textContent = projects[i].description;
       open.href = projects[i].href;
       open.firstChild.textContent = projects[i].name + ' 보기 ';
-      [...index.children].forEach((link, n) => link.classList.toggle('is-selected', n === i));
     }
     function card(project, i, duplicate = false) {
       const link = document.createElement('a');
@@ -52,11 +50,6 @@
     }
     projects.forEach((project, i) => {
       deck.append(card(project, i));
-      const link = document.createElement('a'); link.href = project.href;
-      link.textContent = String(i + 1).padStart(2, '0') + ' / ' + project.name;
-      link.addEventListener('pointerenter', () => select(i));
-      link.addEventListener('focus', () => select(i));
-      index.append(link);
     });
     for (let repeat = 0; repeat < 2; repeat++) {
       const group = document.createElement('div'); group.className = 'pg-marquee-group';
