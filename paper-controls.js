@@ -6,6 +6,7 @@
  function enhance(el){
   if(el.classList.contains('zz-paper-control')&&(!el.classList.contains('zz-paper-icon')||el.querySelector('svg')))return;
   el.classList.add('zz-paper-control');
+  if(el.id==='zz-overview-button')el.innerHTML='<span>Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 6 14-.3M5 12l14 .2M5 18l14-.4"/></svg>';
   if(getComputedStyle(el).position==='static')el.classList.add('zz-paper-relative');
   if(el.matches('[data-overview-action],.cs-more,.weeks-list a,.weeks-list button'))el.classList.add('zz-paper-wide');
   const kind=el.matches('.pw-previous,#zz-wall-back,#zz-contact-back,#zz-overlay .panelhead button[data-action=close]')?'back':el.matches('.pw-next')?'next':el.matches('.pw-close,.guest-dialog-close')?'close':el.matches('.pw-minimize')?'minus':el.matches('.pw-maximize')?'expand':null;
