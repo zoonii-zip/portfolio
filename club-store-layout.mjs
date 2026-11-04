@@ -18,7 +18,7 @@ export function arrangeStore(shop,replay){
     for(const [key,value] of Object.entries(vars))item.style.setProperty(`--${key}`,`${value}%`);
     item.style.setProperty('--fit-width',String(w/774*1.12));
     item.style.setProperty('--center-x',`${(x+w/2)/1309.81*100}%`);
-    item.querySelector('img').src=`/assets/club-store-figma/product-${id}.png`;
+    item.querySelector('img').src=`/assets/club-store-figma/product-${id}.webp`;
   }
   replay.textContent='CART GAME';
   const colophon=shop.querySelector('.club-colophon');
