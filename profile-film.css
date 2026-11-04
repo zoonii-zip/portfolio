@@ -124,4 +124,6 @@
 #zz-fullscreen .overlay:has(.profile-poster)>.panelhead{display:none!important}
 
 /* Keep the paper eyes above the restored fixed navigation. */
-#zz-fullscreen .profile-poster .profile-eyes{bottom:110px}
+#zz-fullscreen .profile-poster .profile-eyes{bottom:150px}
+
+body:has(.profile-poster) #zz-global-dock .dock-icon{background-image:url("/assets/profile-yellow/nav-icons.webp?v=613dc5275c")}
