@@ -1,0 +1,256 @@
+/* Set-times button language. Artwork controls (stickers, book spines and
+   paper swatches) retain their visual content. Add .zz-button to new actions. */
+:root {
+  --button-yellow: #fff500;
+  --button-ink: #171717;
+  --button-border: 2px;
+  --button-radius: 999px;
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+) {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--button-padding, 8px 18px);
+  border: var(--button-border) solid var(--button-ink);
+  border-radius: var(--button-radius);
+  background: var(--button-yellow);
+  color: var(--button-ink);
+  box-shadow: none;
+  font-size: var(--button-size, 16px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  text-decoration: none;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color .15s, color .15s;
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):is([aria-pressed="true"], [aria-selected="true"], [aria-current="page"], [aria-expanded="true"]) {
+  background: var(--button-ink);
+  color: var(--button-yellow);
+}
+@media (hover: hover) {
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):not(:disabled):not([aria-disabled="true"]):hover {
+  background: var(--button-ink);
+  color: var(--button-yellow);
+}
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):focus-visible {
+  outline: 3px solid var(--button-ink);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px var(--button-yellow);
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):is(:disabled, [aria-disabled="true"]) {
+  background: #ece9cd;
+  color: #6a685b;
+  border-color: #6a685b;
+  opacity: 1;
+}
+
+/* Compact icon controls keep their existing position and accessible name. */
+:root body #zz-fullscreen .panelhead button[data-action="close"] {
+  width: 44px; height: 44px; --button-padding: 0; --button-size: 0;
+}
+:root body :is(#zz-message-section .guest-dialog-close,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  .portfolio-window .pw-navigation button, .portfolio-window .pw-original) {
+  width: 44px; height: 44px; --button-padding: 0; flex-shrink: 0;
+}
+:root body #zz-message-section .guest-dialog-close { --button-size: 28px; }
+:root body #zz-message-section #zz-leave-note { transform: translate(-50%, -50%); }
+:root body #zz-fullscreen .pp-facts-tabs { flex-wrap: wrap; gap: 8px; }
+:root body #zz-fullscreen .pp-facts-tabs button::after { display: none; }
+
+/* Versions uses the reference's two-part capsule with a full-height rule. */
+:root body #zz-weeks .weeks-toggle { gap: 0; --button-padding: 0 14px 0 18px; }
+:root body #zz-weeks .weeks-dot { display: none; }
+:root body #zz-weeks .weeks-toggle > span:not(.weeks-plus) {
+  display: flex; align-items: center; align-self: stretch;
+}
+:root body #zz-weeks .weeks-current {
+  display: flex; align-items: center; align-self: stretch;
+  margin-left: 14px; padding: 8px 12px; border-left: 2px solid currentColor;
+  color: inherit;
+}
+:root body #zz-weeks .weeks-plus { font-size: 20px; }
+:root body #zz-weeks .weeks-list :is(a,button) { --button-padding: 0 14px; gap: 10px; }
+:root body #zz-weeks :is(.weeks-number,.weeks-status) { color: inherit; font-weight: 700; }
+:root body #zz-weeks .weeks-status {
+  display: flex; align-items: center; align-self: stretch;
+  padding: 8px 0 8px 12px; border-left: 2px solid currentColor;
+}
+
+:root body .portfolio-window .pw-toolbar { grid-template-columns: 78px 92px minmax(0,1fr) 44px; }
+@media (max-width: 700px) {
+  :root body .portfolio-window .pw-toolbar { grid-template-columns: 64px minmax(0,1fr) 44px; height: 110px; grid-template-rows: 50px 44px; }
+}
+@media (max-width: 760px) {
+  :root body #zz-weeks .weeks-toggle { --button-size: 13px; --button-padding: 0 10px 0 12px; }
+  :root body #zz-weeks .weeks-current { margin-left: 10px; padding-inline: 10px; }
+  :root body #zz-fullscreen .pp-facts-tabs button { --button-size: 12px; --button-padding: 8px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+) { transition: none; }
+}
+
+/* Keep the back control legible over the black Web/App archive canvas. */
+:root body #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"] {
+  color: var(--button-ink); border-color: var(--button-ink);
+}
+@media (hover: hover) {
+  :root body #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"]:hover {
+    color: var(--button-yellow);
+  }
+}
+
+/* Shared back control: white 48px rounded square and a thin arrow. */
+:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back) {
+ box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;max-width:48px!important;
+ padding:0!important;border:0!important;border-radius:16px!important;color:#171717!important;
+ font-size:0!important;line-height:0!important;box-shadow:none!important;flex-shrink:0;
+ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M24 14H4m8-8-8 8 8 8' fill='none' stroke='%23171717' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 28px 28px no-repeat!important;
+ vertical-align:middle;cursor:pointer;transition:background-color .15s,transform .15s;
+}
+:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back)::before,:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back)::after{content:none!important;display:none!important}
+:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back):hover{background-color:#f2f2f2!important;box-shadow:none!important;transform:none}
+:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back):active{background-color:#e7e7e7!important;transform:scale(.96)}
+:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back):focus-visible{outline:2px solid #06a6c3!important;outline-offset:4px!important;box-shadow:none!important}
+@media(prefers-reduced-motion:reduce){:root body :is(.zz-back, #zz-fullscreen #zz-overlay.overlay .panelhead button[data-action="close"], #zz-wall-back, #zz-contact-back){transition:none!important}}
