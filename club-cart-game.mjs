@@ -2,7 +2,7 @@ import {arrangeStore} from './club-store-layout.mjs';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT} from './club-cart-config.mjs';
 import {createGame,step,FPS,TICKS} from './supabase/functions/_shared/cart-model.mjs';
-const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=85cf8d90a0';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
@@ -18,7 +18,7 @@ function mount(){
  const host=document.createElement('section');host.className='ttc-game';host.setAttribute('aria-label','띵띵클럽 카트 게임');
  const entrance = `<div class="ttc-logo" role="img" aria-label="ThingThingClub">ThingThing<span>Club!</span></div><div class="ttc-entry-actions"><button class="ttc-primary" data-start>CART GAME</button><button data-skip>GO PAGE ↗</button></div>`;
  host.dataset.state='ready';
- host.innerHTML=`<div class="ttc-hud"><span><b data-time>20</b>s</span><span><b data-score>0000</b> pts</span><span data-mode hidden></span></div><div class="ttc-court"><canvas width="960" height="560" tabindex="0" aria-label="좌우 방향키로 카트를 움직여 떨어지는 소품을 받으세요"></canvas><div class="ttc-screen">${entrance}</div></div><div class="ttc-dpad" aria-label="카트 이동"><button data-move="1" aria-label="왼쪽으로">←</button><button data-move="2" aria-label="오른쪽으로">→</button></div><aside class="ttc-ranking"><h2>${local?'LOCAL RANKING':'TOP 10'}</h2><ol data-ranking></ol></aside><p class="ttc-status" role="status" data-status></p>`;
+ host.innerHTML=`<div class="ttc-hud"><span><b data-time>20</b>s</span><span><b data-score>0000</b> pts</span><span data-mode hidden></span></div><div class="ttc-court"><canvas width="960" height="560" tabindex="0" aria-label="좌우 방향키로 카트를 움직여 떨어지는 소품을 받으세요"></canvas><div class="ttc-screen">${entrance}</div></div><div class="ttc-dpad" aria-label="카트 이동"><button type="button" data-move="1" aria-label="왼쪽으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14 6-7 6 7 6M7 12h14"/></svg></button><button type="button" data-move="2" aria-label="오른쪽으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 6 7 6-7 6M4 12h13"/></svg></button></div><aside class="ttc-ranking"><h2>${local?'LOCAL RANKING':'TOP 10'}</h2><ol data-ranking></ol></aside><p class="ttc-status" role="status" data-status></p>`;
  shop.before(host);const replay=document.createElement('button');replay.className='ttc-shop-replay';replay.textContent='CART GAME ↗';shop.prepend(replay);arrangeStore(shop,replay);
  const $=s=>host.querySelector(s),canvas=$('canvas'),ctx=canvas.getContext('2d'),screen=$('.ttc-screen'),status=$('[data-status]');
  const abort=new AbortController(),on=(el,event,fn)=>el.addEventListener(event,fn,{signal:abort.signal});

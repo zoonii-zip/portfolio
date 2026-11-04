@@ -239,3 +239,24 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
  #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:10px}
  #zz-fullscreen .club-figma-layout .club-fairs p {font-size:12px;line-height:1.5}
 }
+
+/* Paper-cut direction controls, shared with the button style study. */
+#zz-fullscreen .ttc-dpad {grid-template-columns:repeat(2,48px);gap:16px}
+#zz-fullscreen .ttc-dpad button {
+ --paper-tilt:-4deg;position:relative;isolation:isolate;display:grid;place-items:center;
+ width:48px;height:48px;min-width:48px;min-height:48px;padding:0;
+ border:0;border-radius:0;background:transparent;color:#29251f;box-shadow:none;
+ transform:rotate(var(--paper-tilt));filter:drop-shadow(1px 3px 1px #0003);
+ transition:transform .18s ease,filter .18s ease;touch-action:none;user-select:none;
+}
+#zz-fullscreen .ttc-dpad button::before {
+ content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:#eee4d6;
+ clip-path:polygon(7% 3%,69% 0,95% 8%,100% 75%,92% 97%,35% 100%,0 90%,2% 18%);
+}
+#zz-fullscreen .ttc-dpad button[data-move="2"] {--paper-tilt:3deg}
+#zz-fullscreen .ttc-dpad button[data-move="2"]::before {clip-path:polygon(4% 9%,36% 0,97% 6%,100% 86%,88% 100%,3% 94%,0 48%)}
+#zz-fullscreen .ttc-dpad button svg {display:block;width:27px;height:27px;pointer-events:none}
+@media(hover:hover){#zz-fullscreen .ttc-dpad button:hover {background:transparent;color:#29251f;box-shadow:none;transform:translateY(-3px) rotate(0deg);filter:drop-shadow(2px 6px 2px #0004)}}
+#zz-fullscreen .ttc-dpad button:active {background:transparent;color:#29251f;box-shadow:none;transform:rotate(0deg) scale(.94);filter:drop-shadow(0 1px 0 #0003)}
+#zz-fullscreen .ttc-dpad button:focus-visible {outline:2px solid #3099ba;outline-offset:6px}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .ttc-dpad button{transition:none}}
