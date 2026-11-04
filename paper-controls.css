@@ -41,3 +41,12 @@
 :root body #zz-weeks .weeks-toggle,:root body #zz-weeks .weeks-toggle:hover {background:transparent!important;color:#29251f!important;border:0!important;box-shadow:none!important}
 :root body #zz-fullscreen #zz-body .cs-more{border:0!important}
 :root body .zz-paper-icon svg{margin:auto}
+
+/* Override the legacy menu's ID-level !important surface. */
+:root body #zz-overview-button.zz-paper-control,
+:root body #zz-overview-button.zz-paper-control:hover {
+ background:transparent!important;border:0!important;box-shadow:none!important;color:#29251f!important;
+ min-height:48px;padding:14px 20px;gap:18px;
+}
+:root body #zz-overview-button.zz-paper-control svg {width:20px;height:20px;stroke-width:1.65;flex:none}
+@media(max-width:760px){:root body #zz-overview-button.zz-paper-control{width:48px;height:48px;padding:12px;justify-content:center}}
