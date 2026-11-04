@@ -6,7 +6,7 @@
     const projects = [...target.querySelectorAll('.project-folder')].map(card => ({
       href: card.getAttribute('href'),
       name: card.querySelector('.folder-caption strong').textContent,
-      src: '/assets/web-projects/' + card.getAttribute('href').split('/').filter(Boolean).pop() + '.svg'
+      src: '/assets/archive-folder-paper.webp'
     }));
     if (!projects.length) return;
     target.dataset.portfolioReady = 'true';
@@ -28,8 +28,9 @@
       link.className = 'pg-card'; link.href = project.href;
       link.setAttribute('aria-label', project.name + ' 상세 보기');
       link.style.setProperty('--i', i);
+      link.style.setProperty('--folder-label', ['#305fc6','#34745a','#7354af','#d74748','#544080'][i]);
       link.style.zIndex = projects.length - i;
-      const image = document.createElement('img'); image.src = project.src; image.alt = ''; image.width = 1080; image.height = 608; image.decoding = 'async';
+      const image = document.createElement('img'); image.src = project.src; image.alt = ''; image.width = 1536; image.height = 1024; image.decoding = 'async';
       const title = document.createElement('span'); title.className = 'pg-card-title'; title.textContent = project.name + ' ↗';
       link.append(image, title);
       if (duplicate) { link.tabIndex = -1; link.setAttribute('aria-hidden', 'true'); }
