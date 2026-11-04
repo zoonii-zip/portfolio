@@ -109,3 +109,17 @@
  #zz-fullscreen .pg-deck .pg-card:active{transform:translate(-16px,calc(-50% - 23px)) perspective(1400px) rotateY(-56deg) skewY(15deg)}
 }
 @keyframes pg-file-in{from{opacity:0;translate:65px -45px;filter:blur(3px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+
+/* Keep the same folder composition in narrow windows; do not switch to a marquee. */
+@media(max-width:760px){
+ #zz-fullscreen .theme-product .collection-objects.portfolio-gallery{grid-template-rows:minmax(0,1fr)}
+ #zz-fullscreen .portfolio-gallery .pg-stage{display:block;min-height:400px}
+ #zz-fullscreen .portfolio-gallery .pg-mobile{display:none}
+ #zz-fullscreen .portfolio-gallery .pg-header{position:absolute;top:0;left:0;width:100%;max-width:100%;padding:8px 0 0}
+ #zz-fullscreen .portfolio-gallery .pg-header h2{font-size:clamp(20px,4vw,28px)}
+ #zz-fullscreen .portfolio-gallery .pg-open{display:none}
+ #zz-fullscreen .portfolio-gallery .pg-deck .pg-card{left:calc(3% + var(--i) * 10%);top:calc(71% - var(--i) * 7%);width:65%}
+ #zz-fullscreen .portfolio-gallery .pg-card-title{font-size:clamp(8px,1.7vw,12px);padding:5px}
+}
+/* Fixed navigation should stay over the archive canvas, even after focus scrolling. */
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){min-height:100svh}
