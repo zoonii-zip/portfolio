@@ -99,3 +99,13 @@
 #zz-fullscreen .pg-folder-ink{position:absolute;left:11.4%;right:11.4%;top:20.2%;bottom:7%;background:var(--folder-label);mix-blend-mode:multiply;opacity:.85;clip-path:polygon(0 6%,3% 0,45% 0,49% 5%,95% 5%,100% 9%,100% 96%,98% 100%,2% 100%,0 97%);border-radius:8px;pointer-events:none}
 #zz-fullscreen .portfolio-gallery .pg-card{isolation:isolate}
 #zz-fullscreen .portfolio-gallery .pg-card-title{background:transparent;box-shadow:none;font-weight:700;top:42%;text-shadow:0 1px 2px #0006}
+
+/* A folder slides out of the file, while its neighbors make room. */
+@media(prefers-reduced-motion:no-preference){
+ #zz-fullscreen .pg-deck .pg-card{transition:transform .48s cubic-bezier(.22,.85,.25,1.15),translate .4s ease,filter .4s;animation:pg-file-in .85s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(var(--i) * .11s)}
+ #zz-fullscreen .pg-deck .pg-card:is(:hover,:focus-visible){transform:translate(-20px,calc(-50% - 30px)) perspective(1400px) rotateY(-52deg) skewY(15deg);filter:drop-shadow(16px 22px 12px #0007)}
+ #zz-fullscreen .pg-deck .pg-card:has(~ .pg-card:is(:hover,:focus-visible)){translate:-8px 4px}
+ #zz-fullscreen .pg-deck .pg-card:is(:hover,:focus-visible) ~ .pg-card{translate:8px -4px}
+ #zz-fullscreen .pg-deck .pg-card:active{transform:translate(-16px,calc(-50% - 23px)) perspective(1400px) rotateY(-56deg) skewY(15deg)}
+}
+@keyframes pg-file-in{from{opacity:0;translate:65px -45px;filter:blur(3px)}to{opacity:1;translate:0 0;filter:blur(0)}}
