@@ -67,15 +67,19 @@
   finally{restoring=false;}
  }
  window.ZooniiSEO={publish,opened:title=>{if(titles[title])publish(titles[title]);},archive:mode=>publish(categories[mode]||'/archive/')};
- document.addEventListener('DOMContentLoaded',()=>{
-  if(!window.ZooniiSEOView)return;
+ let initialized=false;
+ function initialize(){
+  if(initialized||!window.ZooniiSEOView)return;
+  initialized=true;
   if(path()!=='/')restore();
   else {showInitialIntro();requestAnimationFrame(showInitialIntro);}
   document.documentElement.classList.add('zz-seo-ready');
   const textLink=document.createElement('a');textLink.className='zz-text-link';textLink.href='#zz-readable';textLink.textContent='텍스트로 포트폴리오 보기';document.body.prepend(textLink);
   textLink.addEventListener('click',e=>{e.preventDefault();document.documentElement.classList.add('zz-text-view');const main=document.getElementById('zz-readable');main.focus();main.scrollIntoView();});
   if(new URLSearchParams(location.search).get('view')==='text')document.documentElement.classList.add('zz-text-view');
- });
+ }
+ document.addEventListener('DOMContentLoaded',initialize);
+ document.addEventListener('zz-profile-runtime-ready',initialize);
  window.addEventListener('popstate',restore);
  document.addEventListener('click',event=>{
   const a=event.target.closest('a[href]');if(!a||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||a.target||a.hasAttribute('download'))return;
