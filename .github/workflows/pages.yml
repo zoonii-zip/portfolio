@@ -24,7 +24,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='tests' --exclude='supabase' ./ _site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='tests' ./ _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
