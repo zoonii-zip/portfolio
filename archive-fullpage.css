@@ -86,13 +86,13 @@ html:has(#zz-overlay.open .theme-product) :is(#zz-global-dock,#zz-fixed-links) b
 }
 
 /* Fine paper fibers across the illustration shelf's yellow backdrop. */
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){background-image:linear-gradient(#fff8c5a6,#fff8c5a6),url('/assets/textures/illustration-crumpled-yellow.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:normal}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){background-image:linear-gradient(#fff8c5a6,#fff8c5a6),url('/assets/textures/illustration-crumpled-yellow.webp');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:normal}
 
 /* Category canvases: black print gallery and vintage desktop landscape. */
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-visual){--archive-page:#171715;background:#171715;color:#f5f0e5}
 #zz-fullscreen #zz-body .archive-shell.theme-visual .archive-tabs button{color:#f5f0e5!important}
 #zz-fullscreen #zz-body .theme-visual .brand-category h2{color:#f5f0e5;border-bottom-color:#f5f0e540}
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){background:#a5b9bd url('/assets/textures/web-vintage-meadow.png') center / cover no-repeat}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){background:#a5b9bd url('/assets/textures/web-vintage-meadow.webp') center / cover no-repeat}
 
 /* Keep project dates legible against the web/app landscape. */
 #zz-fullscreen #zz-body .theme-product .ff-current time{color:#fff;text-shadow:0 1px 3px #243c4b80}

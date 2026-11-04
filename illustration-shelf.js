@@ -76,17 +76,17 @@
         video.setAttribute('disablepictureinpicture', '');
         cover.querySelector('img').replaceWith(video);
       } else cover.querySelector('img').src = new URL(href, location.href).pathname === '/projects/illustration4/'
-        ? '/assets/illustration-covers/ok-savings-cover.jpg'
+        ? '/assets/illustration-covers/ok-savings-cover.webp'
         : new URL(href, location.href).pathname === '/projects/tongkeun/'
-          ? '/assets/illustration-covers/tongkeun-cover.jpg'
+          ? '/assets/illustration-covers/tongkeun-cover.webp'
           : new URL(href, location.href).pathname === '/projects/illustration1/'
-            ? '/assets/illustration-covers/kty-ottogi-cover.png'
+            ? '/assets/illustration-covers/kty-ottogi-cover.webp'
             : new URL(href, location.href).pathname === '/projects/illustration3/'
-              ? '/assets/illustration-covers/unesco-cover.png'
+              ? '/assets/illustration-covers/unesco-cover.webp'
               : new URL(href, location.href).pathname === '/projects/illustration5/'
-                ? '/assets/illustration-covers/kty-sif-cover.png'
+                ? '/assets/illustration-covers/kty-sif-cover.webp'
                 : new URL(href, location.href).pathname === '/projects/illustration2/'
-                  ? '/assets/illustration-covers/konai-cover.png' : project.image;
+                  ? '/assets/illustration-covers/konai-cover.webp' : project.image;
       if (new URL(href, location.href).pathname === '/projects/illustration5/') {
         cover.classList.add('ib-cover-sif');
         item.style.setProperty('--book-color','#65b9d7');
