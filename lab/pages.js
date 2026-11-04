@@ -2,7 +2,7 @@
 export const pages = [
   {
     id: 'buttons', number: '01', category: 'COMPONENTS', title: '버튼 스타일 가이드',
-    description: '노란 캡슐, 검정 테두리, 굵은 글자. 기본·선택·비활성 상태를 한눈에.',
+    description: '운영 중인 버튼·탭·폼·카드·그림 메뉴를 한눈에. 노란 캡슐 시안도 함께 비교해요.',
     href: './button-guide/index.html', label: '가이드 열기', preview: 'buttons', local: false,
   },
   {

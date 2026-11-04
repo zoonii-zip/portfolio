@@ -1,0 +1,234 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>ZOONII.ZIP · Button guide</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eeeae1;color:#171717;font-family:Arial,'Apple SD Gothic Neo',sans-serif;padding:56px 7vw;max-width:1100px;margin-inline:auto}header{border-bottom:2px solid;padding-bottom:26px;margin-bottom:36px}h1{font-size:clamp(32px,6vw,64px);letter-spacing:-.06em;margin:10px 0}header p{line-height:1.7;margin:0;color:#555}small{letter-spacing:.1em;font-weight:bold}section{margin:0 0 36px}h2{font-size:13px;letter-spacing:.08em;margin-bottom:16px}.row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.zz-button{cursor:pointer;font-family:inherit}.demo-split{display:inline-flex;align-items:stretch;gap:0;--button-padding:0}.demo-split span{display:flex;align-items:center;padding:9px 20px}.demo-split span+span{border-left:2px solid currentColor}footer{border-top:1px solid #aaa;padding-top:18px;font-size:12px;line-height:1.8}.swatch{display:inline-block;background:#fff500;border:2px solid;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:5px}
+/* Set-times button language. Artwork controls (stickers, book spines and
+   paper swatches) retain their visual content. Add .zz-button to new actions. */
+:root {
+  --button-yellow: #fff500;
+  --button-ink: #171717;
+  --button-border: 2px;
+  --button-radius: 999px;
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+) {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--button-padding, 8px 18px);
+  border: var(--button-border) solid var(--button-ink);
+  border-radius: var(--button-radius);
+  background: var(--button-yellow);
+  color: var(--button-ink);
+  box-shadow: none;
+  font-size: var(--button-size, 16px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  text-decoration: none;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color .15s, color .15s;
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):is([aria-pressed="true"], [aria-selected="true"], [aria-current="page"], [aria-expanded="true"]) {
+  background: var(--button-ink);
+  color: var(--button-yellow);
+}
+@media (hover: hover) {
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):not(:disabled):not([aria-disabled="true"]):hover {
+  background: var(--button-ink);
+  color: var(--button-yellow);
+}
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):focus-visible {
+  outline: 3px solid var(--button-ink);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px var(--button-yellow);
+}
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+):is(:disabled, [aria-disabled="true"]) {
+  background: #ece9cd;
+  color: #6a685b;
+  border-color: #6a685b;
+  opacity: 1;
+}
+
+/* Compact icon controls keep their existing position and accessible name. */
+:root body #zz-fullscreen .panelhead button[data-action="close"] {
+  width: 44px; height: 44px; --button-padding: 0; --button-size: 0;
+}
+:root body :is(#zz-message-section .guest-dialog-close,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  .portfolio-window .pw-navigation button, .portfolio-window .pw-original) {
+  width: 44px; height: 44px; --button-padding: 0; flex-shrink: 0;
+}
+:root body #zz-message-section .guest-dialog-close { --button-size: 28px; }
+:root body #zz-message-section #zz-leave-note { transform: translate(-50%, -50%); }
+:root body #zz-fullscreen .pp-facts-tabs { flex-wrap: wrap; gap: 8px; }
+:root body #zz-fullscreen .pp-facts-tabs button::after { display: none; }
+
+/* Versions uses the reference's two-part capsule with a full-height rule. */
+:root body #zz-weeks .weeks-toggle { gap: 0; --button-padding: 0 14px 0 18px; }
+:root body #zz-weeks .weeks-dot { display: none; }
+:root body #zz-weeks .weeks-toggle > span:not(.weeks-plus) {
+  display: flex; align-items: center; align-self: stretch;
+}
+:root body #zz-weeks .weeks-current {
+  display: flex; align-items: center; align-self: stretch;
+  margin-left: 14px; padding: 8px 12px; border-left: 2px solid currentColor;
+  color: inherit;
+}
+:root body #zz-weeks .weeks-plus { font-size: 20px; }
+:root body #zz-weeks .weeks-list :is(a,button) { --button-padding: 0 14px; gap: 10px; }
+:root body #zz-weeks :is(.weeks-number,.weeks-status) { color: inherit; font-weight: 700; }
+:root body #zz-weeks .weeks-status {
+  display: flex; align-items: center; align-self: stretch;
+  padding: 8px 0 8px 12px; border-left: 2px solid currentColor;
+}
+
+:root body .portfolio-window .pw-toolbar { grid-template-columns: 78px 92px minmax(0,1fr) 44px; }
+@media (max-width: 700px) {
+  :root body .portfolio-window .pw-toolbar { grid-template-columns: 64px minmax(0,1fr) 44px; height: 110px; grid-template-rows: 50px 44px; }
+}
+@media (max-width: 760px) {
+  :root body #zz-weeks .weeks-toggle { --button-size: 13px; --button-padding: 0 10px 0 12px; }
+  :root body #zz-weeks .weeks-current { margin-left: 10px; padding-inline: 10px; }
+  :root body #zz-fullscreen .pp-facts-tabs button { --button-size: 12px; --button-padding: 8px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+:root body :is(
+  .zz-button,
+  #zz-overview-button,
+  #zz-overview .overview-close,
+  #zz-weeks .weeks-toggle,
+  #zz-weeks .weeks-list :is(a,button),
+  #zz-fullscreen .action,
+  #zz-fullscreen .panelhead button[data-action="close"],
+  #zz-fullscreen .navmenu button,
+  #zz-fullscreen .career-filter button,
+  #zz-fullscreen .career-paging button,
+  #zz-fullscreen #zz-body .cs-more,
+  #zz-fullscreen .pp-facts-tabs button,
+  #zz-fullscreen #zz-body .cs-reel-toggle,
+  #zz-message-section #zz-leave-note,
+  #zz-message-section .guest-stick,
+  #zz-message-section .guest-refresh,
+  #zz-message-section .guest-dialog-close,
+  #zz-wall-back,
+  #zz-contact-back,
+  #zz-contact-section button,
+  .portfolio-window .pw-navigation button,
+  .portfolio-window .pw-original
+) { transition: none; }
+}
+</style><a href="../index.html" style="display:inline-block;margin-bottom:24px;color:inherit;font-weight:bold">← 테스트 허브</a><header><small>ZOONII.ZIP / COMPONENT GUIDE</small><h1>Set-times buttons.</h1><p>이름과 시간이 담긴 노란 캡슐에서 가져온 버튼 스타일.<br>노란 면, 검정 테두리, 굵은 글자와 명확한 구분선.</p></header><section><h2>01 / ACTIONS</h2><div class="row"><button class="zz-button">Menu ↗</button><button class="zz-button">보내기 ↗</button><button class="zz-button">메모 남기기 +</button><button class="zz-button" aria-label="뒤로가기">←</button></div></section><section><h2>02 / SPLIT LABELS</h2><div class="row"><button class="zz-button demo-split"><span>Versions</span><span>In Progress +</span></button><button class="zz-button demo-split"><span>Week 2</span><span>View ↗</span></button></div></section><section><h2>03 / STATES</h2><div class="row"><button class="zz-button">Default</button><button class="zz-button" aria-pressed="true">Selected</button><button class="zz-button" disabled>Coming Soon</button></div></section><section><h2>04 / PROFILE TABS</h2><div class="row"><button class="zz-button" aria-pressed="true">Abilities</button><button class="zz-button">Education</button><button class="zz-button">Activities</button><button class="zz-button">License</button></div></section><footer><span class="swatch"></span>#FFF500 · INK #171717 · BORDER 2px · RADIUS 999px · MIN HEIGHT 44px<br>호버: 검정 바탕 / 노랑 글자 · 키보드 포커스: 바깥 테두리 · 비활성: 저채도</footer></html>
