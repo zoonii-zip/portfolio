@@ -49,7 +49,7 @@
     const dialog = document.createElement('dialog');
     dialog.className = 'guest-compose-dialog';
     dialog.setAttribute('aria-labelledby', 'guest-compose-title');
-    dialog.innerHTML = '<div class="guest-dialog-heading"><h2 id="guest-compose-title">메모 남기기</h2><button type="button" class="guest-dialog-close" aria-label="작성창 닫기">×</button></div>';
+    dialog.innerHTML = '<div class="guest-dialog-heading"><div><h2 id="guest-compose-title">Leave a note!</h2><p class="guest-dialog-intro">마음에 드는 메모지에 한마디 남겨주세요.</p></div><button type="button" class="guest-dialog-close" aria-label="작성창 닫기">×</button></div>';
     room.append(dialog);
     dialog.append(compose);
     noteButton.hidden = false;
@@ -76,8 +76,16 @@
     verificationStatus.hidden = true;
     button.before(verificationStatus);
     const refresh = document.createElement('button');
-    refresh.type = 'button'; refresh.textContent = '메모 새로고침'; refresh.className = 'guest-refresh';
-    wall.before(refresh);
+    refresh.type = 'button'; refresh.className = 'guest-refresh';
+    refresh.setAttribute('aria-label', '메모 새로고침');
+    refresh.title = '메모 새로고침';
+    refresh.innerHTML = '<svg viewBox="0 0 64 64" width="48" height="48" fill="none" aria-hidden="true" focusable="false"><path d="M9 14 24 6 48 8 59 20 57 42 43 57 19 59 6 45 5 27Z" fill="#e8ded0"/><path d="m11 16 15-7 21 2 9 10-2 20-13 13-21 2L9 44 8 28Z" fill="#f1e8dc"/><g stroke="#29251f" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 31c-1-11 8-18 18-17 7 0 12 4 15 10"/><path d="m39 23 13-7-3 16-10-9Z" fill="#e8ded0"/><path d="m40 23 9 1 3-8" stroke-width="1.4"/><path d="M48 39c-3 8-11 12-19 10-7-1-12-6-14-12" stroke-dasharray="2.5 4.5" stroke-width="1.8"/></g></svg>';
+    const actions = document.createElement('div');
+    actions.className = 'guest-actions';
+    noteButton.textContent = 'LEAVE A NOTE ↗';
+    actions.append(noteButton, refresh);
+    document.body.append(actions);
+    room.querySelector('.wall-label')?.remove();
     let entries = [], token = '', widget, busy = false, loading = false;
     let visitor = crypto.randomUUID();
     try {

@@ -54,3 +54,18 @@ html.portfolio-window-open #zz-fullscreen #zz-overlay.overlay{overflow:hidden!im
  .portfolio-window .case-grid-3 .case-media{max-width:100%}
 }
 @media(prefers-reduced-motion:reduce){.portfolio-window[open]{animation:none}}
+
+/* Branding and editorial work opens as a printed portfolio sheet. */
+.portfolio-window .folio-toolbar[hidden]{display:none}
+.portfolio-window.is-folio{border:0;border-radius:0;background:#f7f2e7;box-shadow:8px 9px 0 #d8cfbc,0 24px 70px #26221540}
+.portfolio-window.is-folio::backdrop{background:#37342b66;backdrop-filter:blur(4px)}
+.portfolio-window.is-folio .pw-toolbar{display:none}
+.portfolio-window .folio-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid #a9a18b;background:#f7f2e7;font:11px/1.4 monospace;letter-spacing:.06em;flex:none}
+.portfolio-window .folio-toolbar nav{display:flex;align-items:center;gap:10px}
+.portfolio-window .folio-toolbar button{border:0;border-radius:0;background:transparent;padding:8px;min-width:36px;min-height:36px;font:16px/1.2 Arial,sans-serif}
+.portfolio-window .folio-toolbar button:hover{background:#e7dfce}
+.portfolio-window.is-folio .pw-content{background:#f7f2e7 url('/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px;padding:clamp(24px,5vw,70px)}
+.portfolio-window.is-folio .case-header{border-bottom:2px solid #39382c;padding-bottom:24px}
+.portfolio-window.is-folio .case-header h1{font-family:Georgia,'Apple SD Gothic Neo',serif;letter-spacing:-.05em}
+.portfolio-window.is-folio .case-media{background:#e8e1d2}
+@media(max-width:700px){.portfolio-window .folio-toolbar{padding:12px;gap:8px;font-size:9px}.portfolio-window .folio-toolbar nav{gap:2px}.portfolio-window.is-folio{width:calc(100vw - 28px);height:calc(100svh - 40px)}}

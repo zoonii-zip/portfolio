@@ -93,7 +93,7 @@
 
 /* Illustration archive: preserve real book spines and make each book open its project. */
 (function(){
- const order=['illustration0','illustration1','illustration2','illustration3','illustration4','tongkeun'];
+ const order=['illustration0','illustration1','illustration2','illustration3','illustration4','tongkeun','illustration5'];
  function enhance(){
    const scene=document.querySelector('#zz-fullscreen .theme-story .collection-objects');
    if(!scene||scene.dataset.linkedBooks==='1')return;
