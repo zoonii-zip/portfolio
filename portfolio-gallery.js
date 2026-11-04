@@ -6,6 +6,8 @@
     const projects = [...target.querySelectorAll('.project-folder')].map(card => ({
       href: card.getAttribute('href'),
       name: card.querySelector('.folder-caption strong').textContent,
+      period: card.querySelector('.folder-caption small').textContent,
+      description: card.dataset.description || card.querySelector('.folder-caption > span').textContent,
       src: '/assets/archive-folder-paper.webp'
     }));
     if (!projects.length) return;
@@ -13,12 +15,21 @@
     target.classList.add('portfolio-gallery');
     target.setAttribute('role', 'region');
     target.setAttribute('aria-label', '웹·앱 프로젝트 갤러리');
-    target.innerHTML = `<header class="pg-header"><span class="pg-eyebrow">SELECTED DIGITAL WORK / 01—05</span><h2>Browse my library.</h2><p>웹과 앱으로 만든 다섯 가지 경험.</p><a class="pg-open">프로젝트 보기 <span aria-hidden="true">↗</span></a></header><div class="pg-stage"><div class="pg-deck"></div></div><div class="pg-mobile"><div class="pg-marquee"></div><button type="button" class="pg-pause" aria-pressed="false">흐름 멈추기 Ⅱ</button></div><nav class="pg-index" aria-label="웹·앱 프로젝트"></nav>`;
+    target.innerHTML = `<header class="pg-header" aria-live="polite" aria-atomic="true"><span class="pg-eyebrow"></span><h2></h2><p></p><a class="pg-open">프로젝트 보기 <span aria-hidden="true">↗</span></a></header><div class="pg-stage"><div class="pg-deck"></div></div><div class="pg-mobile"><div class="pg-marquee"></div><button type="button" class="pg-pause" aria-pressed="false">흐름 멈추기 Ⅱ</button></div><nav class="pg-index" aria-label="웹·앱 프로젝트"></nav>`;
     const deck = target.querySelector('.pg-deck');
     const marquee = target.querySelector('.pg-marquee');
     const index = target.querySelector('.pg-index');
     const open = target.querySelector('.pg-open');
+    const heading = target.querySelector('.pg-header h2');
+    const period = target.querySelector('.pg-eyebrow');
+    const description = target.querySelector('.pg-header p');
+    let selected = -1;
     function select(i) {
+      if (selected === i) return;
+      selected = i;
+      heading.textContent = projects[i].name;
+      period.textContent = projects[i].period;
+      description.textContent = projects[i].description;
       open.href = projects[i].href;
       open.firstChild.textContent = projects[i].name + ' 보기 ';
       [...index.children].forEach((link, n) => link.classList.toggle('is-selected', n === i));

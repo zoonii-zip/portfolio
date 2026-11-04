@@ -83,3 +83,14 @@
 #zz-fullscreen .portfolio-gallery .pg-card-title{position:absolute;left:19%;right:17%;top:49%;padding:10px 8px;background:var(--folder-label);color:#fff9ed;border-radius:2px;font-size:clamp(10px,1.1vw,16px);white-space:normal;line-height:1.4;overflow-wrap:anywhere;box-shadow:0 2px 3px #0002}
 #zz-fullscreen .portfolio-gallery .pg-card:is(:hover,:focus-visible){box-shadow:none;filter:drop-shadow(10px 18px 10px #0006)}
 #zz-fullscreen .portfolio-gallery .pg-card:is(:hover,:focus-visible) img{transform:none}
+
+/* Keep changing project details readable without moving the folder sequence. */
+#zz-fullscreen .portfolio-gallery .pg-header{width:min(420px,48%);max-width:48%;pointer-events:none}
+#zz-fullscreen .portfolio-gallery .pg-header h2{font-size:clamp(24px,2.6vw,36px);line-height:1.15;word-break:keep-all;overflow-wrap:anywhere}
+#zz-fullscreen .portfolio-gallery .pg-header p{display:block;line-height:1.6;word-break:keep-all}
+#zz-fullscreen .portfolio-gallery .pg-open{pointer-events:auto}
+@media(max-width:760px){
+ #zz-fullscreen .portfolio-gallery .pg-header{width:100%;max-width:none;box-sizing:border-box}
+ #zz-fullscreen .portfolio-gallery .pg-eyebrow{display:block}
+ #zz-fullscreen .portfolio-gallery .pg-header h2{font-size:24px}
+}
