@@ -43,3 +43,6 @@ html:has(#zz-fullscreen.board-night):not(.viewing-space) #zz-global-dock .dock-m
   box-shadow:0 0 0 4px #000;text-decoration:none;border-radius:0;
  }
 }
+
+/* Main sections use the persistent dock for navigation. */
+#zz-fullscreen #zz-overlay:has(.archive-shell,.profile-page,.career-scroll,.club-collage) > .panelhead button[data-action="close"]{display:none!important}
