@@ -265,6 +265,7 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) {--entry-cart-lift:clamp(24px,4svh,40px)}
 #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas,
 #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-dpad {translate:0 calc(-1 * var(--entry-cart-lift))}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas{filter:saturate(1.7)}
 
 #zz-fullscreen .ttc-game .ttc-entry-actions button {font-size:16px;letter-spacing:.06em}
 
