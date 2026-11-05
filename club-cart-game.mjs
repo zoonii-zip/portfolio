@@ -2,7 +2,7 @@ import {arrangeStore} from './club-store-layout.mjs?v=106ff013dd';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT} from './club-cart-config.mjs';
 import {createGame,step,FPS,TICKS} from './supabase/functions/_shared/cart-model.mjs';
-const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=49acbca9b7';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=494626dbba';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
