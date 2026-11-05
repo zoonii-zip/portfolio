@@ -140,12 +140,8 @@ html.viewing-space:has(#zz-body>#zz-message-section) body .guest-actions{display
 #zz-message-section .guest-compose-dialog{background-image:linear-gradient(#fff9e9b3,#fff9e9b3),url('/assets/profile-yellow/paper-grain.svg')}
 :root body #zz-message-section .guest-compose-dialog .guest-dialog-close svg{color:#fff9e9!important}
 
-/* Quiet heading, evenly spaced notes, and enough room around the fixed controls. */
+/* Evenly spaced notes and enough room around the fixed controls. */
 #zz-message-section .guest-room{width:100%;max-width:1120px;margin-inline:auto}
-#zz-message-section .guest-board-intro{width:100%;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;max-width:1024px;margin:0 auto 36px;padding:0 8px 24px;border-bottom:1px dashed #51392255;color:#2d241b}
-#zz-message-section .guest-board-intro h2{margin:0 0 8px;font:400 clamp(44px,5vw,64px)/1 'Just Another Hand',sans-serif!important;letter-spacing:.01em}
-#zz-message-section .guest-board-intro p{margin:0;font-size:13px;line-height:1.7;word-break:keep-all;color:#4e3928}
-#zz-message-section .guest-note-count{flex:none;font:10px/1.6 monospace;letter-spacing:.1em;color:#513c2a}
 #zz-message-section #zz-guestresult{gap:44px clamp(24px,3vw,40px);padding-top:12px;padding-bottom:32px}
 #zz-message-section .wall-note{filter:drop-shadow(2px 5px 3px #35201326)}
 #zz-message-section .wall-note p{font-size:13px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere;letter-spacing:-.015em}
@@ -157,14 +153,9 @@ body .guest-actions .guest-refresh:disabled{opacity:.5;cursor:wait}
 body .guest-actions :is(button):focus-visible{outline:2px dashed #262622;outline-offset:6px}
 #zz-message-section .guest-compose-dialog .guest-dialog-intro{word-break:keep-all}
 @media(max-width:760px){
- #zz-message-section .guest-board-intro{gap:16px;margin-bottom:28px;padding-bottom:18px}
- #zz-message-section .guest-board-intro h2{font-size:48px!important}
- #zz-message-section .guest-board-intro p{font-size:12px}
  #zz-message-section #zz-guestresult{gap:36px 24px}
 }
 @media(max-width:400px){
- #zz-message-section .guest-board-intro{align-items:flex-start}
- #zz-message-section .guest-note-count{padding-top:10px;font-size:9px}
  :root body .guest-actions #zz-leave-note{font-size:26px;padding:12px 18px}
 }
 /* Start can notes below the printed title, including longer existing messages. */
