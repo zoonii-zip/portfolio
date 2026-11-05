@@ -167,3 +167,5 @@ body .guest-actions :is(button):focus-visible{outline:2px dashed #262622;outline
  #zz-message-section .guest-note-count{padding-top:10px;font-size:9px}
  :root body .guest-actions #zz-leave-note{font-size:26px;padding:12px 18px}
 }
+/* Start can notes below the printed title, including longer existing messages. */
+#zz-message-section .wall-note:is(.paper-lined,.paper-ticket){min-height:340px;padding:185px 49px 42px}
