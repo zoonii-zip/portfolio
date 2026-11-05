@@ -5,11 +5,6 @@
     const wall = document.querySelector('#zz-guestresult');
     if (!form || !wall) return;
     const room = form.closest('.guest-room');
-    const intro = document.createElement('div');
-    intro.className = 'guest-board-intro';
-    intro.innerHTML = '<div><h2>Guestbook</h2><p>잠깐 들른 마음을, 작은 메모로 남겨주세요.</p></div><span class="guest-note-count" hidden></span>';
-    room.prepend(intro);
-    const count = intro.querySelector('.guest-note-count');
     const compose = form.closest('.guest-compose');
     const noteButton = document.getElementById('zz-leave-note');
     const dialog = document.createElement('dialog');
@@ -76,8 +71,6 @@
     const message = text => { status.textContent = text; };
     function updateButton() { verificationStatus.hidden = !token; verificationStatus.textContent = token ? '✓ 인증 성공' : ''; button.disabled = !ready || !token || busy; button.textContent = busy ? '붙이는 중…' : '메모 붙이기'; }
     function render() {
-      count.hidden = !entries.length;
-      count.textContent = String(entries.length).padStart(2, '0') + ' NOTES';
       wall.replaceChildren();
       wall.style.removeProperty('min-height');
       if (!entries.length) {
