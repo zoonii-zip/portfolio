@@ -5,6 +5,11 @@
     const wall = document.querySelector('#zz-guestresult');
     if (!form || !wall) return;
     const room = form.closest('.guest-room');
+    const intro = document.createElement('div');
+    intro.className = 'guest-board-intro';
+    intro.innerHTML = '<div><h2>Guestbook</h2><p>잠깐 들른 마음을, 작은 메모로 남겨주세요.</p></div><span class="guest-note-count" hidden></span>';
+    room.prepend(intro);
+    const count = intro.querySelector('.guest-note-count');
     const compose = form.closest('.guest-compose');
     const noteButton = document.getElementById('zz-leave-note');
     const dialog = document.createElement('dialog');
@@ -71,6 +76,8 @@
     const message = text => { status.textContent = text; };
     function updateButton() { verificationStatus.hidden = !token; verificationStatus.textContent = token ? '✓ 인증 성공' : ''; button.disabled = !ready || !token || busy; button.textContent = busy ? '붙이는 중…' : '메모 붙이기'; }
     function render() {
+      count.hidden = !entries.length;
+      count.textContent = String(entries.length).padStart(2, '0') + ' NOTES';
       wall.replaceChildren();
       wall.style.removeProperty('min-height');
       if (!entries.length) {
@@ -106,7 +113,7 @@
         message('같은 브라우저에서 다시 쓰면 이전 메모가 교체돼요. 닉네임과 글은 공개돼요.');
       } catch {
         message('메모를 불러오지 못했어요. 새로고침을 눌러 다시 시도해주세요.');
-        if (!entries.length) { wall.replaceChildren(); const p = document.createElement('p'); p.textContent = '메모 목록에 연결하지 못했어요.'; wall.append(p); }
+        if (!entries.length) { wall.replaceChildren(); const p = document.createElement('p'); p.className = 'guest-empty'; p.setAttribute('role', 'status'); p.textContent = '메모를 불러오지 못했어요. 아래 새로고침 아이콘을 눌러 다시 시도해주세요.'; wall.append(p); }
       } finally { loading = false; refresh.disabled = false; }
     }
     refresh.addEventListener('click', load);
