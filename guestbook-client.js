@@ -5,45 +5,6 @@
     const wall = document.querySelector('#zz-guestresult');
     if (!form || !wall) return;
     const room = form.closest('.guest-room');
-    if (room && !document.querySelector('.guest-ribbons')) {
-      const ribbons = document.createElement('div');
-      ribbons.className = 'guest-ribbons';
-      const label = document.createElement('span');
-      label.className = 'guest-ribbon-label';
-      label.textContent = 'Have a Good Day:)';
-      ribbons.append(label);
-      for (let direction = 0; direction < 2; direction++) {
-        const ribbon = document.createElement('div');
-        ribbon.className = 'guest-ribbon' + (direction ? ' guest-ribbon-reverse' : '');
-        ribbon.setAttribute('aria-hidden', 'true');
-        const track = document.createElement('div');
-        track.className = 'guest-ribbon-track';
-        for (let copy = 0; copy < 2; copy++) {
-          const group = document.createElement('span');
-          group.className = 'guest-ribbon-group';
-          for (let repeat = 0; repeat < 8; repeat++) {
-            const word = document.createElement('span');
-            word.textContent = 'Have a Good Day:)';
-            group.append(word);
-          }
-          track.append(group);
-        }
-        ribbon.append(track);
-        ribbons.append(ribbon);
-      }
-      document.body.append(ribbons);
-      const dock = document.getElementById('zz-global-dock');
-      function placeRibbons() {
-        if (!dock) return;
-        const clearance = Math.max(0, window.innerHeight - dock.getBoundingClientRect().top) + 8;
-        document.documentElement.style.setProperty('--guest-ribbon-bottom', clearance + 'px');
-        document.documentElement.style.setProperty('--guest-bottom-clearance', (clearance + ribbons.offsetHeight + 24) + 'px');
-      }
-      if (dock) new ResizeObserver(placeRibbons).observe(dock);
-      window.addEventListener('resize', placeRibbons);
-      new MutationObserver(placeRibbons).observe(document.getElementById('zz-body'), { childList: true });
-      placeRibbons();
-    }
     const compose = form.closest('.guest-compose');
     const noteButton = document.getElementById('zz-leave-note');
     const dialog = document.createElement('dialog');
@@ -85,6 +46,19 @@
     noteButton.textContent = 'LEAVE A NOTE ↗';
     actions.append(noteButton, refresh);
     document.body.append(actions);
+    const dock = document.getElementById('zz-global-dock');
+    function placeActions() {
+      if (!dock || !actions.offsetHeight) return;
+      const clearance = Math.max(0, window.innerHeight - dock.getBoundingClientRect().top) + 16;
+      document.documentElement.style.setProperty('--guest-actions-bottom', clearance + 'px');
+      document.documentElement.style.setProperty('--guest-bottom-clearance', (clearance + actions.offsetHeight + 24) + 'px');
+    }
+    const actionLayout = new ResizeObserver(placeActions);
+    if (dock) actionLayout.observe(dock);
+    actionLayout.observe(actions);
+    window.addEventListener('resize', placeActions);
+    new MutationObserver(() => requestAnimationFrame(placeActions)).observe(document.getElementById('zz-body'), {childList: true});
+    requestAnimationFrame(placeActions);
     room.querySelector('.wall-label')?.remove();
     let entries = [], token = '', widget, busy = false, loading = false;
     let visitor = crypto.randomUUID();
