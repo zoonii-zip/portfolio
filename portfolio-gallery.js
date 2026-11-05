@@ -20,9 +20,13 @@
       link.innerHTML='<span class="ff-tab"></span><span class="ff-body"><span class="ff-image"><img alt="" width="1080" height="608"></span></span><span class="ff-number"></span>';
       link.querySelector('img').src='/assets/web-projects/'+p.href.split('/').filter(Boolean).pop()+'.svg';
       link.querySelector('.ff-number').textContent=String(i+1).padStart(2,'0');
+      const caption=document.createElement('span');caption.className='ff-caption';
+      const name=document.createElement('span');name.textContent=p.name;
+      const year=document.createElement('small');year.textContent=p.period;
+      caption.append(name,year);link.append(caption);
       link.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')select(i)});link.addEventListener('focus',()=>select(i));stage.append(link);
     });
-    select(2);
+    select(0);
   }
   const body=document.getElementById('zz-body');if(body)new MutationObserver(mount).observe(body,{childList:true,subtree:true});mount();
 })();

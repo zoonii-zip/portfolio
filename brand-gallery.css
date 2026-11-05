@@ -26,7 +26,7 @@
 @media(max-width:760px){#zz-fullscreen .archive-shell .archive-tabs{gap:10px!important}#zz-fullscreen .archive-shell .archive-tabs button{flex:0 1 auto!important;padding:10px 4px!important}#zz-fullscreen .archive-shell .archive-tabs strong{font-size:12px!important}}
 
 /* Move either collection's items without changing the underlying grid. */
-#zz-fullscreen #zz-body :is(.ff-project,.brand-stamp){translate:var(--archive-drag-x,0px) var(--archive-drag-y,0px);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+#zz-fullscreen #zz-body :is(.ff-project,.brand-stamp){translate:var(--archive-drag-x,0px) var(--archive-drag-y,0px);cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #zz-fullscreen #zz-body :is(.ff-project,.brand-stamp) img{-webkit-user-drag:none}
 #zz-fullscreen #zz-body .archive-dragging{cursor:grabbing;z-index:50!important;transition:none!important}
 
@@ -35,3 +35,10 @@
 #zz-fullscreen #zz-body .brand-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 @media(max-width:900px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:1fr}}
+
+#zz-fullscreen #zz-body .brand-category-grid{align-items:stretch;row-gap:36px}
+#zz-fullscreen #zz-body .brand-stamp{height:100%}
+#zz-fullscreen #zz-body .stamp-paper{height:100%;box-sizing:border-box}
+#zz-fullscreen #zz-body .stamp-caption>span{line-height:1.65;word-break:keep-all}
+#zz-fullscreen #zz-body .brand-stamp:focus-visible{outline:2px solid #f5f0e5;outline-offset:8px}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .brand-stamp{transition:none}}
