@@ -96,3 +96,17 @@ html:has(#zz-overlay.open .theme-product) :is(#zz-global-dock,#zz-fixed-links) b
 
 /* Keep project dates legible against the web/app landscape. */
 #zz-fullscreen #zz-body .theme-product .ff-current time{color:#fff;text-shadow:0 1px 3px #243c4b80}
+
+/* Keep the collection open and spacious, including narrow screens. */
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button{position:relative}
+#zz-fullscreen #zz-body .archive-shell .archive-tabs button.selected::after{content:'';display:block;width:22px;height:2px;margin-top:9px;background:currentColor;opacity:.65}
+#zz-fullscreen #zz-body .archive-shell{padding-bottom:max(150px,env(safe-area-inset-bottom))}
+@media(max-width:700px){
+ #zz-fullscreen #zz-body .archive-shell,#zz-fullscreen #zz-body .archive-shell.theme-product:has(.digital-ribbon){grid-template-columns:minmax(0,1fr)!important;gap:32px;padding:112px 20px 150px}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs{position:relative!important;top:auto!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:12px!important;grid-row:1!important}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs button{min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+ #zz-fullscreen #zz-body .archive-shell .archive-tabs button.selected::after{position:absolute;bottom:-8px;margin:0}
+ #zz-fullscreen #zz-body .archive-shell #archive-panel{grid-column:1!important;grid-row:2!important}
+ #zz-fullscreen #zz-body .archive-shell :is(#archive-panel,.collection-scene){min-height:0}
+ :root body #zz-fullscreen #zz-body .archive-shell .archive-tabs{--archive-tab-type-size:clamp(19px,5vw,28px)}
+}

@@ -18,3 +18,16 @@
 
 @media(max-width:1100px){#zz-fullscreen #zz-body .ff-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}}
 @media(max-width:700px){#zz-fullscreen #zz-body .ff-stage{grid-template-columns:minmax(0,1fr);gap:24px}#zz-fullscreen #zz-body .ff-current{gap:8px}#zz-fullscreen #zz-body .ff-current strong{font-size:17px}}
+
+/* Dark ink stays legible over the pale sky; captions identify every folder. */
+#zz-fullscreen #zz-body .theme-product .ff-current :is(strong,time,small),
+#zz-fullscreen #zz-body .theme-product .ff-current>span{color:#233a42;text-shadow:0 1px 2px #ffffff60}
+#zz-fullscreen #zz-body .ff-current{min-height:124px;max-width:620px}
+#zz-fullscreen #zz-body .ff-current small{margin-top:10px}
+#zz-fullscreen #zz-body .ff-stage{row-gap:58px;padding-bottom:36px}
+#zz-fullscreen #zz-body .ff-caption{position:absolute;top:calc(100% + 12px);left:0;right:0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;color:#fff;font-size:13px;line-height:1.4;text-shadow:0 1px 4px #172e39}
+#zz-fullscreen #zz-body .ff-caption small{flex:none;font:10px/1.4 monospace;opacity:.8}
+@media(max-width:700px){
+ #zz-fullscreen #zz-body .ff-current{min-height:112px}
+ #zz-fullscreen #zz-body .ff-stage{row-gap:58px}
+}

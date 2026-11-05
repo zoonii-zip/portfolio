@@ -58,6 +58,7 @@
     if (event.target.closest(selector)) event.preventDefault();
   });
   body.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') { suppressClick = false; return; }
     if (event.button !== 0 || !event.isPrimary) return;
     suppressClick = false;
     const item = event.target.closest(selector);
