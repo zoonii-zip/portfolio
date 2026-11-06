@@ -43,7 +43,8 @@
   });
   ready=true;schedule();
  };
- photo.src='assets/profile-collage-skin-clean.webp';
+ // Load this legacy artwork only if its canvas is actually mounted.
+ let photoRequested=false;
  function paint(context,patch,dx,dy){
   context.clearRect(patch.left,patch.top,width,height);
   const input=patch.original.data,output=patch.output.data;
@@ -78,7 +79,9 @@
   const elapsed=lastFrame?Math.min(50,now-lastFrame):16.7;lastFrame=now;
   const art=document.querySelector('.profile-artwork');
   const canvas=art?.querySelector('.profile-eye-canvas');
-  if(!ready||!canvas||!art.isConnected)return;
+  if(!canvas||!art.isConnected)return;
+  if(!photoRequested){photoRequested=true;photo.src='assets/profile-collage-skin-clean.webp';}
+  if(!ready)return;
   const r=art.getBoundingClientRect();
   if(!r.width||!r.height)return;
   let state=states.get(canvas);

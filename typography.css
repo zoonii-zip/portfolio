@@ -57,7 +57,7 @@
 /* Handwritten face for the intro and paper controls. */
 @font-face {
  font-family:'Just Another Hand';font-style:normal;font-weight:400;font-display:swap;
- src:url('assets/fonts/JustAnotherHand-Regular.ttf') format('truetype');
+ src:url('assets/fonts/JustAnotherHand-Regular.woff2') format('woff2');
 }
 :root body #zz-logo-entry .intro-copy [lang='en'] {
  font-family:'Just Another Hand',cursive!important;font-weight:400;
@@ -67,11 +67,11 @@
 /* Archive tab typefaces and proportions from the selected Figma labels. */
 @font-face {
  font-family:'Pixelify Sans';font-style:normal;font-weight:400 700;font-display:swap;
- src:url('assets/fonts/PixelifySans-Variable.ttf') format('truetype');
+ src:url('assets/fonts/PixelifySans-Variable.woff2') format('woff2');
 }
 @font-face {
  font-family:'Boldonse';font-style:normal;font-weight:400;font-display:swap;
- src:url('assets/fonts/Boldonse-Regular.ttf') format('truetype');
+ src:url('assets/fonts/Boldonse-Regular.woff2') format('woff2');
 }
 :root body #zz-fullscreen #zz-body .archive-tabs{--archive-tab-type-size:34px}
 :root body #zz-fullscreen #zz-body .archive-tabs strong{
@@ -96,5 +96,5 @@
  :root body #zz-fullscreen #zz-body .archive-tabs{--archive-tab-type-size:26px}
 }
 
-@font-face{font-family:'Shine Coasty';src:url('/assets/fonts/Shine-Coasty-Demo.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Shine Coasty';src:url('/assets/fonts/Shine-Coasty-Demo.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
 :root body #zz-logo-entry .intro-copy [lang='en']{font-family:'Shine Coasty',cursive!important;font-weight:400}
