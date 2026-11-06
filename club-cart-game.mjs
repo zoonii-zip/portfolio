@@ -31,8 +31,12 @@ function mount(){
  function ranks(entries){const list=$('[data-ranking]');list.replaceChildren();let prev=-1,rank=0;entries.forEach((entry,i)=>{if(entry.score!==prev)rank=i+1;prev=entry.score;const li=document.createElement('li'),n=document.createElement('span'),name=document.createElement('strong'),points=document.createElement('b');n.textContent=String(rank).padStart(2,'0');name.textContent=entry.name;points.textContent=entry.score.toLocaleString();li.append(n,name,points);list.append(li);});if(!entries.length){const li=document.createElement('li');li.textContent='첫 번째 기록을 남겨주세요.';list.append(li);}}
  api().then(d=>{if(!host.isConnected)return;ranks(d.entries);message(local?'이 로컬 서버에 저장된 기록입니다.':'최고 기록으로 순위가 정해져요.');}).catch(e=>message(e.message));
  function project(x,z){return {x:120+x*720,y:300+z*180};}
+ // Cache layout dimensions; canvas drawing must not read layout on every frame.
+ let canvasBox=canvas.getBoundingClientRect();
+ const canvasResize=new ResizeObserver(entries=>{canvasBox=entries[0].contentRect;});canvasResize.observe(canvas);
  function draw(){
-  const box=canvas.getBoundingClientRect(),aspect=(box.width/960)/(box.height/560);
+  const box=canvasBox;if(!box.width||!box.height)return;
+  const aspect=(box.width/960)/(box.height/560);
   ctx.clearRect(0,0,960,560); // Transparent canvas keeps the shared pegboard texture visible.
   const things=(state==='ready'||state==='starting'||state==='result'?[]:game.drops).filter(d=>game.tick>=d.tick&&game.tick-d.tick<=d.fallTicks+8&&!d.caught);
   for(const d of things){const p=project(d.x,d.z),age=game.tick-d.tick;ctx.fillStyle=`rgba(36,77,57,${age>d.fallTicks?.08:.16})`;ctx.beginPath();ctx.ellipse(p.x,p.y,36,12,0,0,Math.PI*2);ctx.fill();}
@@ -100,7 +104,7 @@ function mount(){
  for(const b of host.querySelectorAll('[data-move]')){on(b,'pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);touch|=Number(b.dataset.move);});for(const event of ['pointerup','pointercancel','lostpointercapture'])on(b,event,()=>{touch&=~Number(b.dataset.move);});}
  function pause(){keys=touch=0;if(state!=='playing')return;state='paused';host.dataset.state=state;screen.hidden=false;screen.innerHTML='<button class="ttc-primary" data-resume>RESUME →</button><button data-skip>GO PAGE ↗</button>';}
  on(window,'blur',pause);on(document,'visibilitychange',()=>{if(document.hidden)pause();});on(replay,'click',openGame);
- cleanup=()=>{run++;abort.abort();cancelAnimationFrame(frame);clearTimeout(auto);};
+ cleanup=()=>{run++;canvasResize.disconnect();abort.abort();cancelAnimationFrame(frame);clearTimeout(auto);};
  shop.hidden=true;frame=requestAnimationFrame(tick);
 }
 new MutationObserver(()=>{if(!document.querySelector('.ttc-game'))cleanup();mount();}).observe(document.getElementById('zz-body'),{childList:true,subtree:true});mount();
