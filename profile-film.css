@@ -123,10 +123,10 @@
 #zz-fullscreen:has(.profile-poster) :is(#zz-location,#zz-navbutton){display:none!important}
 #zz-fullscreen .overlay:has(.profile-poster)>.panelhead{display:none!important}
 
-/* Keep the paper eyes above the restored fixed navigation. */
-#zz-fullscreen .profile-poster .profile-eyes{bottom:178px;right:calc(3.8vw + 24px);width:clamp(145px,17.5vw,250px)}
-@media(max-width:700px){#zz-fullscreen .profile-poster .profile-eyes{right:36px;bottom:170px;width:140px}}
-@media(max-height:500px){#zz-fullscreen .profile-poster .profile-eyes{bottom:164px;width:114px}}
+/* Anchor the eyes to the left of the three navigation buttons. */
+#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{top:50%;bottom:auto;right:calc(100% + 28px);width:clamp(145px,17.5vw,250px);transform:translateY(-50%) rotate(-7deg)}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{right:calc(100% + 18px);width:140px}}
+@media(max-height:500px){#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{width:114px}}
 
 body:has(.profile-poster) #zz-global-dock .dock-icon{background-image:url("/assets/profile-yellow/nav-icons.webp?v=613dc5275c")}
 
