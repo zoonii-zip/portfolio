@@ -278,7 +278,7 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 
 /* A quiet paper result card: one score, one primary action. */
 #zz-fullscreen .ttc-game[data-state=result] :is(.ttc-hud,.ttc-dpad){display:none}
-#zz-fullscreen .ttc-game[data-state=result] .ttc-court canvas{visibility:hidden}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-court canvas{visibility:visible}
 #zz-fullscreen .ttc-game[data-state=result] .ttc-screen{padding:100px 20px 130px;background:transparent;backdrop-filter:none;overflow-y:auto;justify-content:center}
 #zz-fullscreen .ttc-result-card{width:min(460px,100%);padding:32px 30px 28px;display:flex;flex-direction:column;align-items:center;gap:24px;background:#fffaf0 url('/assets/club-game/grain.svg');border:1px solid #d9cfbd;box-shadow:0 8px 0 -3px #e5dac5,0 16px 38px #45371912; border-radius:3px;position:relative}
 :root body #zz-fullscreen .ttc-result-card .ttc-overline{font-family:'Just Another Hand',sans-serif!important;font-size:30px;line-height:1;letter-spacing:.09em;color:#29251f}
@@ -299,7 +299,7 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 @media(max-height:700px){#zz-fullscreen .ttc-game[data-state=result] .ttc-screen{justify-content:flex-start;padding-top:85px}#zz-fullscreen .ttc-result-card{gap:16px;padding-top:22px;padding-bottom:22px}}
 
 /* Result poster follows the Contact page's cyan paper and ink treatment. */
-#zz-fullscreen .ttc-game[data-state=result]{background:#000!important}
+
 #zz-fullscreen .ttc-result-card{background:#00bfe7;border:0;border-radius:0;box-shadow:none;isolation:isolate}
 #zz-fullscreen .ttc-result-card::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:url('/assets/textures/illustration-crumpled-yellow.webp') center/cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
 :root body #zz-fullscreen .ttc-result-card .ttc-overline{color:#000;letter-spacing:.04em}
@@ -399,3 +399,20 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
  #zz-fullscreen .club-figma-layout:not([hidden]){padding-inline:20px;grid-template-columns:1fr;gap:20px}
  #zz-fullscreen .club-figma-layout .club-product{height:190px}
 }
+
+/* A single white scroll thumb on the cyan ranking panel. */
+#zz-fullscreen .ttc-result-card .ttc-result-ranking{scrollbar-width:thin;scrollbar-color:#fff transparent;scrollbar-gutter:stable;padding-right:8px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar{width:5px;background:transparent}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-track{background:transparent;border:0}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-thumb{background:#fff;border:0;border-radius:999px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-button{display:none;width:0;height:0}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-corner{background:transparent}
+
+/* In-game scoreboard: ink-black cut paper with clear time and score. */
+#zz-fullscreen .ttc-hud{isolation:isolate;top:112px;min-width:250px;padding:14px 8px;gap:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;color:#fffaf0;filter:drop-shadow(2px 4px 1px #0002)}
+#zz-fullscreen .ttc-hud::before{content:'';position:absolute;inset:0;z-index:-1;background:#191919;clip-path:polygon(3% 6%,43% 0,97% 5%,100% 89%,63% 100%,1% 94%,0 24%)}
+#zz-fullscreen .ttc-hud>span:not([hidden]){display:flex;align-items:baseline;justify-content:center;gap:5px;min-width:110px;padding:0 18px;color:#fffaf0;font-size:12px;line-height:1}
+#zz-fullscreen .ttc-hud>span+span{border-left:1px solid #ffffff40}
+:root body #zz-fullscreen .ttc-hud b{font-family:'Shine Coasty',Georgia,serif!important;font-size:32px;font-weight:400;line-height:1.1;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:#fff}
+:root body #zz-fullscreen .ttc-hud [data-score]{color:#00bfe7}
+@media(max-width:600px){#zz-fullscreen .ttc-hud{top:100px;min-width:230px;padding:12px 6px}#zz-fullscreen .ttc-hud>span:not([hidden]){min-width:100px;padding:0 14px}:root body #zz-fullscreen .ttc-hud b{font-size:28px}}

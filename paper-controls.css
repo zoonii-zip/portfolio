@@ -80,3 +80,23 @@
 }
 
 :root body #zz-fullscreen .club-figma-layout .club-store-actions{flex-wrap:wrap;row-gap:12px}
+
+/* Shared scrollbars: aqua on light paper, white on colored surfaces. */
+:root{--zz-scroll-thumb:#00bfe7}
+:root,:root *{scrollbar-width:thin;scrollbar-color:var(--zz-scroll-thumb) transparent!important}
+:root::-webkit-scrollbar,:root *::-webkit-scrollbar{width:3px!important;height:3px!important;background:transparent!important}
+:root::-webkit-scrollbar-track,:root *::-webkit-scrollbar-track{background:transparent!important;border:0!important;box-shadow:none!important}
+:root::-webkit-scrollbar-thumb,:root *::-webkit-scrollbar-thumb{background:var(--zz-scroll-thumb)!important;border:0!important;border-radius:999px;box-shadow:none!important}
+:root::-webkit-scrollbar-button,:root *::-webkit-scrollbar-button{display:none!important;width:0;height:0}
+:root::-webkit-scrollbar-corner,:root *::-webkit-scrollbar-corner{background:transparent!important}
+#zz-overlay:has(.archive-shell),.archive-shell,
+#zz-overlay:has(.contact-intro),.contact-intro,#zz-form,
+.profile-poster,.ttc-game[data-state=result],.ttc-result-card,
+#zz-message-section .wall-note:is(.paper-pink,.paper-yellow){--zz-scroll-thumb:#fff}
+/* Light inner panels retain their own aqua scrollbar within colored pages. */
+.portfolio-window .pw-content,#zz-form :is(input,textarea,select),
+#zz-weeks-panel,.guest-compose-dialog,.guest-compose-dialog textarea,
+.club-figma-layout,.club-object-field{--zz-scroll-thumb:#00bfe7}
+
+/* Chromium/WebKit use the explicit slim width; Firefox keeps its thin fallback. */
+@supports selector(::-webkit-scrollbar){:root,:root *{scrollbar-width:auto!important;scrollbar-color:auto!important}}

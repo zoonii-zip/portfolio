@@ -110,3 +110,6 @@ html:has(#zz-overlay.open .theme-product) :is(#zz-global-dock,#zz-fixed-links) b
  #zz-fullscreen #zz-body .archive-shell :is(#archive-panel,.collection-scene){min-height:0}
  :root body #zz-fullscreen #zz-body .archive-shell .archive-tabs{--archive-tab-type-size:clamp(19px,5vw,28px)}
 }
+
+/* Category headings share the Branding tab's italic serif typography. */
+#zz-fullscreen #zz-body .brand-category h2{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;font-style:italic;line-height:1.08;letter-spacing:-1px}
