@@ -2,7 +2,7 @@
   const load = () => {
     if (!document.querySelector('#zz-body .club-collage')) return;
     observer.disconnect();
-    import('/weeks/week-3/club-cart-game.mjs?v=0ab1467635').catch(() => { observer.observe(document.body, {childList:true,subtree:true}); });
+    import('/weeks/week-3/club-cart-game.mjs?v=d75dde7fb7').catch(() => { observer.observe(document.body, {childList:true,subtree:true}); });
   };
   const observer = new MutationObserver(load);
   observer.observe(document.body, {childList:true,subtree:true});
@@ -149,7 +149,7 @@
  const overviewButton=document.createElement('button');overviewButton.id='zz-overview-button';overviewButton.type='button';overviewButton.setAttribute('aria-label','Menu');overviewButton.setAttribute('aria-haspopup','dialog');overviewButton.setAttribute('aria-expanded','false');overviewButton.setAttribute('aria-controls','zz-overview');overviewButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></svg><span>Menu</span>';document.body.append(overviewButton);
  const overviewPreviews={
   home:['Start here','assets/board-stickers/orange-eyes.webp'],
-  about:['About me','assets/board-profile-transparent.webp'],
+  about:['About me','assets/board-menu/profile-cutout.webp'],
   career:['Experience','assets/board-menu/career-cutout.webp'],
   files:['Selected work','assets/board-menu/archive-cutout.webp'],
   club:['Objects & shop','assets/thingthing-horse-glitter.webp'],
