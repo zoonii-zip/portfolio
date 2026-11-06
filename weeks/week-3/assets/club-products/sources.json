@@ -1,0 +1,43 @@
+{
+  "source": "ThingThingClub Smartstore",
+  "retrieved": "2026-10-11",
+  "processing": "Built-in image generation background extraction; preserve product artwork, lettering, texture and shape. Transparent alpha cutouts.",
+  "products": [
+    {
+      "asset": "product-1.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13169446629"
+    },
+    {
+      "asset": "product-2.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13169353108"
+    },
+    {
+      "asset": "product-3.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13169353107"
+    },
+    {
+      "asset": "product-4.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13169353106"
+    },
+    {
+      "asset": "product-5.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13169140795"
+    },
+    {
+      "asset": "product-6.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13168867196"
+    },
+    {
+      "asset": "product-7.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13168867195"
+    },
+    {
+      "asset": "product-8.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13139003039"
+    },
+    {
+      "asset": "product-9.png",
+      "url": "https://smartstore.naver.com/thingthingclub/products/13034533691"
+    }
+  ]
+}

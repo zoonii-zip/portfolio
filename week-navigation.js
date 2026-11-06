@@ -8,7 +8,7 @@
     { number: 'working', label: 'In Progress', path: 'index.html' },
     { number: 1, path: 'weeks/week-1.html' },
     { number: 2, path: 'weeks/week-2.html' },
-    { number: 3, path: null },
+    { number: 3, path: 'weeks/week-3.html' },
     { number: 4, path: null },
   ];
   const style = document.createElement('link');

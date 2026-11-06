@@ -1,0 +1,418 @@
+/* Full-viewport entrance/game; existing site graphics stay above this layer. */
+#zz-fullscreen .overlay:has(.ttc-game:not([hidden])){background:#f4efe1!important;overflow:hidden!important;height:100dvh}
+#zz-fullscreen .panelbody:has(>.ttc-game:not([hidden])){padding:0!important;margin:0!important;width:100%;max-width:none;height:100dvh}
+#zz-fullscreen .ttc-game{position:absolute;inset:0;overflow:hidden;color:#244d39;background:#f4efe1;font-family:Arial,sans-serif;z-index:1}
+#zz-fullscreen .ttc-game [hidden],#zz-fullscreen .ttc-game[hidden],#zz-fullscreen .club-collage[hidden]{display:none!important}
+#zz-fullscreen .ttc-game *{box-sizing:border-box}
+#zz-fullscreen .ttc-court{position:absolute;inset:0}
+#zz-fullscreen .ttc-court canvas{display:block;width:100%;height:100%;touch-action:none;outline:0}
+#zz-fullscreen .ttc-screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;pointer-events:none}
+#zz-fullscreen .ttc-screen>*{pointer-events:auto}
+#zz-fullscreen .ttc-game[data-state=ready] .ttc-screen,#zz-fullscreen .ttc-game[data-state=starting] .ttc-screen{justify-content:flex-start;padding-top:25vh}
+#zz-fullscreen .ttc-logo{font:900 italic clamp(38px,6vw,90px)/.82 Georgia,serif!important;letter-spacing:-.075em;transform:rotate(-5deg);text-align:center;margin-bottom:14px}
+#zz-fullscreen .ttc-logo span{display:block;font:inherit!important;letter-spacing:inherit;margin-top:6px}
+#zz-fullscreen .ttc-entry-actions,#zz-fullscreen .ttc-result-actions{display:flex;gap:12px}
+#zz-fullscreen .ttc-game button,#zz-fullscreen .ttc-shop-replay{border:1px solid #244d39;background:#f4efe1;color:#244d39;border-radius:0;padding:13px 22px;font:700 11px/1.3 Arial,sans-serif;letter-spacing:.08em;cursor:pointer}
+#zz-fullscreen .ttc-game .ttc-primary{background:#244d39;color:#f4efe1}
+#zz-fullscreen .ttc-game button:disabled{opacity:.5;cursor:wait}
+#zz-fullscreen .ttc-game button:focus-visible,#zz-fullscreen .ttc-game input:focus-visible{outline:2px solid #e15a3a;outline-offset:4px}
+#zz-fullscreen .ttc-dpad{position:absolute;right:5vw;bottom:145px;display:grid;grid-template-columns:repeat(2,42px);gap:5px;z-index:3}
+#zz-fullscreen .ttc-dpad button{padding:7px;height:34px;font-size:17px;touch-action:none;user-select:none;background:#f4efe1aa;border-color:#244d3955}
+
+
+#zz-fullscreen .ttc-dpad button:active{background:#244d39;color:white}
+#zz-fullscreen .ttc-hud{position:absolute;top:120px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:35px;font:12px monospace}
+#zz-fullscreen .ttc-hud b{font:700 22px monospace}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-hud{display:none}
+#zz-fullscreen .ttc-ranking,#zz-fullscreen .ttc-status{display:none}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-screen,#zz-fullscreen .ttc-game[data-state=paused] .ttc-screen{background:#f4efe1ee;padding:100px 24px 150px}
+#zz-fullscreen #zz-body .ttc-screen h2{font:700 52px/1 Arial,sans-serif;letter-spacing:-.05em;margin:0}
+#zz-fullscreen .ttc-screen p{font:12px/1.5 Arial,sans-serif;margin:0}
+#zz-fullscreen .ttc-screen form{display:flex;gap:10px;align-items:end}
+#zz-fullscreen .ttc-screen label{display:grid;gap:8px;text-align:left;font:11px Arial,sans-serif}
+#zz-fullscreen .ttc-screen input{width:160px;padding:11px;border:1px solid #244d3980;border-radius:0;background:transparent;font:14px Arial,sans-serif}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status{display:block;position:absolute;bottom:140px;left:15%;right:15%;text-align:center;font:11px/1.5 Arial,sans-serif;pointer-events:none}
+#zz-fullscreen .ttc-shop-replay{position:relative;z-index:3;margin:12px 0}
+body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overview-button,#zz-weeks){z-index:10000!important}
+#zz-fullscreen:has(.ttc-game:not([hidden]))>.top{z-index:10000!important}
+#zz-fullscreen .overlay:has(.ttc-game:not([hidden]))>.panelhead{position:absolute;inset:0 0 auto;z-index:100!important;background:transparent!important;pointer-events:none}
+#zz-fullscreen .overlay:has(.ttc-game:not([hidden]))>.panelhead button{pointer-events:auto}
+#zz-fullscreen .overlay:has(.ttc-game:not([hidden])) #zz-paneltitle{display:none}
+@media(max-width:600px){#zz-fullscreen .ttc-game[data-state=ready] .ttc-screen,#zz-fullscreen .ttc-game[data-state=starting] .ttc-screen{padding-top:28vh}#zz-fullscreen .ttc-logo{font-size:clamp(38px,10vw,60px)!important}#zz-fullscreen .ttc-dpad{bottom:150px;right:20px}#zz-fullscreen .ttc-hud{top:110px}#zz-fullscreen .ttc-game button{padding:12px 15px}#zz-fullscreen .ttc-screen form{flex-direction:column;align-items:stretch}}
+
+#zz-fullscreen .ttc-result-ranking{list-style:none;padding:0;margin:0;width:min(280px,80vw);max-height:120px;overflow:auto;font:12px/1.5 Arial,sans-serif}
+#zz-fullscreen .ttc-result-ranking li{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid #244d3920}
+#zz-fullscreen .ttc-result-ranking strong{flex:1;text-align:left}
+/* Softer toy-store finish, retaining the two-action entrance. */
+#zz-fullscreen .ttc-logo{color:#a63f36;letter-spacing:-.065em;line-height:.88!important;text-shadow:1px 2px 0 #fff9e9,2px 4px 0 #dfb6a1;transform:rotate(-4deg);margin-bottom:20px;-webkit-text-stroke:.6px #a63f36}
+#zz-fullscreen .ttc-logo span{margin-top:2px;font-size:1.16em!important}
+#zz-fullscreen .ttc-game button,#zz-fullscreen .ttc-shop-replay{min-height:44px;padding:14px 25px;border-radius:999px;background:#fffaf0;border-color:#d2c7b5;color:#395d46;font-size:10px;letter-spacing:.13em;box-shadow:0 3px 0 #d9cebc,0 5px 10px #493b2310;transition:transform .16s,box-shadow .16s,background .16s}
+#zz-fullscreen .ttc-game .ttc-primary{background:#42664e;border-color:#42664e;color:#fffbed;box-shadow:0 3px 0 #294331,0 6px 12px #29433118}
+#zz-fullscreen .ttc-game button:hover{transform:translateY(-2px)}
+#zz-fullscreen .ttc-game button:active{transform:translateY(2px);box-shadow:0 1px 0 #d0c5b3}
+#zz-fullscreen .ttc-entry-actions{gap:14px}
+#zz-fullscreen .ttc-dpad{left:50%;right:auto;transform:translateX(-50%);bottom:137px;gap:10px;grid-template-columns:repeat(2,44px)}
+#zz-fullscreen .ttc-dpad button{border-radius:12px;min-height:38px;height:38px;padding:4px;font:20px/1 Arial,sans-serif;background:#fffaf0c9;border-color:#d9cebc;box-shadow:0 3px 0 #d9cebc,0 4px 9px #493b2310}
+#zz-fullscreen .ttc-hud{gap:0;padding:9px 0;border:1px solid #ddd4c2;border-radius:99px;background:#fffaf0c4;box-shadow:0 3px 12px #493b2307;color:#4d6250;font-size:10px;backdrop-filter:blur(8px)}
+#zz-fullscreen .ttc-hud>span{min-width:100px;padding:0 20px;text-align:center}
+#zz-fullscreen .ttc-hud>span+span{border-left:1px solid #ddd4c2}
+#zz-fullscreen .ttc-hud b{font-size:22px;font-variant-numeric:tabular-nums}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-screen,#zz-fullscreen .ttc-game[data-state=paused] .ttc-screen{background:#f9f5e9e8;backdrop-filter:blur(12px)}
+#zz-fullscreen #zz-body .ttc-screen h2{font:italic 76px/1 Georgia,serif!important;color:#a63f36;text-shadow:1px 2px #fff}
+#zz-fullscreen .ttc-screen input{border-radius:10px;border-color:#d2c7b5;background:#fffaf0;min-height:44px;box-shadow:inset 0 2px 4px #493b2306}
+#zz-fullscreen .ttc-result-ranking li{padding:8px 2px;border-bottom-style:dashed}
+@media(max-width:600px){#zz-fullscreen .ttc-game button{padding:12px 19px}#zz-fullscreen .ttc-dpad{left:50%;right:auto;bottom:145px}#zz-fullscreen .ttc-dpad button{padding:4px}#zz-fullscreen .ttc-hud>span{min-width:90px;padding:0 15px}}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .ttc-game button{transition:none}}
+
+/* Cream enamel pegboard: fixed-size holes, aged edges, static fine grain. */
+#zz-fullscreen .overlay:has(.club-collage),
+#zz-fullscreen .ttc-game {
+  background-color:#f8f2df!important;
+  background-image:radial-gradient(ellipse at 48% 38%,#fffdf033 20%,#ac936910 100%),url('/weeks/week-3/assets/club-game/pegboard.svg')!important;
+  background-size:100% 100%,32px 32px!important;
+  background-position:center,0 0!important;
+}
+#zz-fullscreen .overlay:has(.club-collage)::after {
+  content:"";position:fixed;inset:0;z-index:5;pointer-events:none;
+  background:url('/weeks/week-3/assets/club-game/grain.svg') repeat;
+  opacity:.16;mix-blend-mode:multiply;
+  box-shadow:inset 0 0 110px #8b754312;
+}
+#zz-fullscreen .club-collage {background:transparent!important}
+#zz-fullscreen .ttc-court canvas,
+#zz-fullscreen .club-collage img {filter:sepia(.16) saturate(.84) contrast(.96)}
+#zz-fullscreen .ttc-game:is([data-state=result],[data-state=paused]) .ttc-screen {
+  background:#f7f0dddc;backdrop-filter:blur(3px);
+}
+/* User-edited Figma store composition: unequal product sizes and a left intro. */
+#zz-fullscreen .club-figma-layout {container-type:inline-size;position:relative}
+@media(min-width:601px){
+ #zz-fullscreen .club-figma-layout .club-object-field {height:max(680px,59.0925cqw);min-height:0;display:block}
+ #zz-fullscreen .club-figma-layout .club-product {left:var(--sx);top:var(--sy);width:var(--sw);height:auto;padding-bottom:0;aspect-ratio:auto;display:block}
+ #zz-fullscreen .club-figma-layout .club-product::before {content:"";display:block;padding-bottom:var(--sh)}
+ #zz-fullscreen .club-figma-layout .club-product img {position:absolute;left:var(--ix);top:var(--iy);width:var(--iw);height:var(--ih);max-height:none;object-fit:contain;transform:none;filter:none}
+ #zz-fullscreen .club-figma-layout .club-product:hover img,
+ #zz-fullscreen .club-figma-layout .club-product:focus-visible img {transform:translateY(-5px)}
+ #zz-fullscreen .club-figma-layout .club-product-number {position:absolute;top:var(--badge);left:50%;transform:translateX(-50%);margin:0;width:clamp(16px,1.68cqw,22px);height:clamp(16px,1.68cqw,22px);font-size:clamp(10px,.993cqw,13px);line-height:clamp(15px,1.60cqw,21px)}
+ #zz-fullscreen .club-figma-layout .club-product-name {left:50%;transform:translateX(-50%)}
+ #zz-fullscreen .club-figma-layout .club-colophon {left:2%;top:11.111%;bottom:auto;width:25%;padding:0;background:none;display:flex;flex-direction:column;align-items:flex-start}
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:clamp(20px,2.29cqw,30px);white-space:nowrap}
+ #zz-fullscreen .club-figma-layout .club-colophon>p {font-size:clamp(11px,1.069cqw,14px)}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:clamp(9px,.84cqw,11px)}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {margin:28px 0 0;min-width:140px}
+}
+@media(max-width:600px){
+ #zz-fullscreen .club-figma-layout {padding-top:60px}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {position:absolute;top:0;left:66px;margin:0}
+ #zz-fullscreen .club-figma-layout .club-product img {transform:none;filter:none}
+ #zz-fullscreen .club-figma-layout .club-product:hover img {transform:translateY(-5px)}
+}
+/* Fit the store between the fixed site header and navigation, without scrolling. */
+#zz-fullscreen .overlay:has(.club-figma-layout:not([hidden])) {height:100dvh;overflow:hidden!important}
+#zz-fullscreen .panelbody:has(>.club-figma-layout:not([hidden])) {padding:0!important;margin:0!important;max-width:none;height:100%;overflow:hidden}
+#zz-fullscreen .club-figma-layout:not([hidden]) {
+ position:absolute;inset:120px 4vw 115px;width:auto;padding:0;
+ display:flex;align-items:center;justify-content:center;
+ container-type:normal;
+}
+@media(min-width:601px){
+ #zz-fullscreen .club-figma-layout .club-object-field {
+  width:min(100%,calc((100dvh - 235px) * 1.69226));
+  height:auto;min-height:0;aspect-ratio:1309.81 / 774;container-type:inline-size;flex:none;
+ }
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:2.29cqw;margin-bottom:.99cqw}
+ #zz-fullscreen .club-figma-layout .club-colophon>p {font-size:1.069cqw;margin-bottom:.76cqw}
+ #zz-fullscreen .club-figma-layout .club-shop-link {font-size:.993cqw}
+ #zz-fullscreen .club-figma-layout .club-fairs {margin-top:1.91cqw}
+ #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:.764cqw;margin-bottom:.534cqw}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:.84cqw}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {margin:2.14cqw 0 0;min-width:10.69cqw;min-height:3.51cqw;padding:1.069cqw 1.91cqw;font-size:.764cqw}
+ #zz-fullscreen .club-figma-layout .club-product-number {width:1.68cqw;height:1.68cqw;font-size:.993cqw;line-height:1.60cqw}
+}
+@media(max-width:600px){
+ #zz-fullscreen .club-figma-layout:not([hidden]) {inset:110px 20px 95px}
+ #zz-fullscreen .club-figma-layout .club-object-field {width:100%;height:100%;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto repeat(3,minmax(0,1fr));gap:10px 12px;align-items:stretch}
+ #zz-fullscreen .club-figma-layout .club-product {position:relative;inset:auto;width:100%;height:100%;min-height:0;margin:0!important;justify-content:flex-end}
+ #zz-fullscreen .club-figma-layout .club-product img {height:calc(100% - 20px);min-height:0;max-height:none;object-fit:contain}
+ #zz-fullscreen .club-figma-layout .club-product-number {width:16px;height:16px;font:10px/14px Arial,sans-serif;margin-top:3px;flex:none}
+ #zz-fullscreen .club-figma-layout .club-product-name {display:none}
+ #zz-fullscreen .club-figma-layout .club-colophon {position:static;order:-1;grid-column:1/-1;width:100%;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;align-items:start}
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:20px;grid-column:1/-1;margin:0}
+ #zz-fullscreen .club-figma-layout .club-colophon>p {font-size:10px;line-height:1.5;margin:0;grid-column:1;grid-row:2}
+ #zz-fullscreen .club-figma-layout .club-shop-link {font-size:10px;grid-column:1;grid-row:3}
+ #zz-fullscreen .club-figma-layout .club-fairs {margin:0;grid-column:2;grid-row:2/5}
+ #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:8px;margin-bottom:4px}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:8px;line-height:1.5}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {position:static;min-height:28px;min-width:0;padding:7px 12px;font-size:8px;margin:0;justify-self:start;grid-column:1;grid-row:4}
+}
+#zz-fullscreen .panelbody:has(>.club-figma-layout:not([hidden])) {position:absolute;inset:0}
+@media(min-width:601px) and (max-width:900px){
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:18px;margin-bottom:7px}
+ #zz-fullscreen .club-figma-layout .club-colophon>p {font-size:9px;line-height:1.45;margin-bottom:6px}
+ #zz-fullscreen .club-figma-layout .club-shop-link {font-size:9px}
+ #zz-fullscreen .club-figma-layout .club-fairs {margin-top:10px}
+ #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:7px;margin-bottom:4px}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:7.5px;line-height:1.5}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {font-size:8px;min-height:28px;padding:8px 14px;margin-top:10px}
+}
+/* Keep reading sizes independent of the product canvas scale. */
+@media(min-width:601px){
+ #zz-fullscreen .club-figma-layout .club-object-field {width:100%;height:100%;aspect-ratio:auto}
+ #zz-fullscreen .club-figma-layout .club-colophon {width:27%;top:8%}
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:30px;margin-bottom:13px;white-space:normal}
+ #zz-fullscreen .club-figma-layout .club-colophon>p {font-size:14px;line-height:1.7;margin-bottom:10px;word-break:keep-all}
+ #zz-fullscreen .club-figma-layout .club-shop-link {font-size:13px;line-height:1.5}
+ #zz-fullscreen .club-figma-layout .club-fairs {margin-top:16px}
+ #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:10px;margin-bottom:7px}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:11px;line-height:1.8}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {font-size:10px;min-height:44px;min-width:140px;padding:14px 25px;margin-top:20px}
+ #zz-fullscreen .club-figma-layout .club-product-number {width:22px;height:22px;font-size:13px;line-height:21px}
+}
+@media(min-width:601px) and (max-width:900px){
+ #zz-fullscreen .club-figma-layout .club-colophon h2 {font-size:26px}
+ #zz-fullscreen .club-figma-layout .club-colophon {width:30%;top:4%}
+ #zz-fullscreen .club-figma-layout .club-product-1 {left:34%}
+ #zz-fullscreen .club-figma-layout .club-product-5 {left:34%;top:45%}
+ #zz-fullscreen .club-figma-layout .club-product-7 {top:78%}
+ #zz-fullscreen .club-figma-layout .club-product-8 {top:66%}
+ #zz-fullscreen .club-figma-layout .club-product-9 {top:78%}
+}
+@media(min-width:901px) and (max-height:800px){
+ #zz-fullscreen .club-figma-layout .club-colophon {top:1%;width:29%}
+ #zz-fullscreen .club-figma-layout .club-fairs {margin-top:8px}
+ #zz-fullscreen .club-figma-layout .ttc-shop-replay {margin-top:12px}
+ #zz-fullscreen .club-figma-layout .club-product-7 {left:29%;top:72%}
+}
+/* Spread anchors across wide screens without inflating the merchandise. */
+@media(min-width:901px){
+ #zz-fullscreen .club-figma-layout .club-product {
+  width:min(var(--sw),calc((100dvh - 235px) * var(--fit-width)));
+  transform:translateX(-50%);
+  left:var(--center-x);
+ }
+}
+/* Use the full horizontal stage; merchandise sizes stay height-capped. */
+@media(min-width:901px){
+ #zz-fullscreen .club-figma-layout:not([hidden]) {left:2vw;right:2vw}
+ #zz-fullscreen .club-figma-layout .club-colophon {left:1%;width:25%}
+ #zz-fullscreen .club-figma-layout .club-product-1 {left:36%}
+ #zz-fullscreen .club-figma-layout .club-product-2 {left:53%}
+ #zz-fullscreen .club-figma-layout .club-product-3 {left:69%}
+ #zz-fullscreen .club-figma-layout .club-product-4 {left:93%}
+ #zz-fullscreen .club-figma-layout .club-product-5 {left:31%}
+ #zz-fullscreen .club-figma-layout .club-product-6 {left:80%}
+ #zz-fullscreen .club-figma-layout .club-product-7 {left:10%;top:72%}
+ #zz-fullscreen .club-figma-layout .club-product-8 {left:55%;top:73%}
+ #zz-fullscreen .club-figma-layout .club-product-9 {left:94%;top:72%}
+}
+/* Denser wide-screen collage, retaining readable copy and clear navigation. */
+@media(min-width:901px){
+ #zz-fullscreen .club-figma-layout .club-product {
+  width:min(var(--sw),calc((100dvh - 235px) * var(--fit-width) * 1.18));
+ }
+ #zz-fullscreen .club-figma-layout .club-product-1 {left:35%;top:3%}
+ #zz-fullscreen .club-figma-layout .club-product-2 {left:52%;top:19%}
+ #zz-fullscreen .club-figma-layout .club-product-3 {left:69%;top:4%}
+ #zz-fullscreen .club-figma-layout .club-product-4 {left:92%;top:2%}
+ #zz-fullscreen .club-figma-layout .club-product-5 {left:32%;top:44%}
+ #zz-fullscreen .club-figma-layout .club-product-6 {left:78%;top:39%}
+ #zz-fullscreen .club-figma-layout .club-product-7 {left:13%;top:70%}
+ #zz-fullscreen .club-figma-layout .club-product-8 {left:55%;top:56%}
+ #zz-fullscreen .club-figma-layout .club-product-9 {left:93%;top:68%}
+}
+
+/* Readable fair history and paired store/game actions. */
+#zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:12px;line-height:1.5;font-weight:700;color:#292d25}
+#zz-fullscreen .club-figma-layout .club-fairs p {font-size:14px;line-height:1.7}
+#zz-fullscreen .club-figma-layout .club-store-actions {display:flex;align-items:center;gap:10px;margin-top:20px;position:relative;z-index:3}
+#zz-fullscreen .club-figma-layout .club-store-actions .club-shop-link,
+#zz-fullscreen .club-figma-layout .club-store-actions .ttc-shop-replay {
+ display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;
+ position:static;margin:0;min-width:0;min-height:44px;padding:14px 18px;
+ border:1px solid #d2c7b5;border-radius:999px;background:#fffaf0;color:#395d46;
+ font:700 10px/1.3 Arial,sans-serif;letter-spacing:.10em;white-space:nowrap;text-decoration:none;
+ box-shadow:0 3px 0 #d9cebc,0 5px 10px #493b2310;
+}
+#zz-fullscreen .club-figma-layout .club-store-actions .club-shop-link:focus-visible {outline:2px solid #e15a3a;outline-offset:4px}
+@media(max-width:600px){
+ #zz-fullscreen .club-figma-layout .club-store-actions {grid-column:1/-1;grid-row:auto;margin-top:4px}
+ #zz-fullscreen .club-figma-layout .club-fairs h3 {font-size:10px}
+ #zz-fullscreen .club-figma-layout .club-fairs p {font-size:12px;line-height:1.5}
+}
+
+/* Paper-cut direction controls, shared with the button style study. */
+#zz-fullscreen .ttc-dpad {grid-template-columns:repeat(2,48px);gap:16px}
+#zz-fullscreen .ttc-dpad button {
+ --paper-tilt:-4deg;position:relative;isolation:isolate;display:grid;place-items:center;
+ width:48px;height:48px;min-width:48px;min-height:48px;padding:0;
+ border:0;border-radius:0;background:transparent;color:#29251f;box-shadow:none;
+ transform:rotate(var(--paper-tilt));filter:drop-shadow(1px 3px 1px #0003);
+ transition:transform .18s ease,filter .18s ease;touch-action:none;user-select:none;
+}
+#zz-fullscreen .ttc-dpad button::before {
+ content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:#eee4d6;
+ clip-path:polygon(7% 3%,69% 0,95% 8%,100% 75%,92% 97%,35% 100%,0 90%,2% 18%);
+}
+#zz-fullscreen .ttc-dpad button[data-move="2"] {--paper-tilt:3deg}
+#zz-fullscreen .ttc-dpad button[data-move="2"]::before {clip-path:polygon(4% 9%,36% 0,97% 6%,100% 86%,88% 100%,3% 94%,0 48%)}
+#zz-fullscreen .ttc-dpad button svg {display:block;width:27px;height:27px;pointer-events:none}
+@media(hover:hover){#zz-fullscreen .ttc-dpad button:hover {background:transparent;color:#29251f;box-shadow:none;transform:translateY(-3px) rotate(0deg);filter:drop-shadow(2px 6px 2px #0004)}}
+#zz-fullscreen .ttc-dpad button:active {background:transparent;color:#29251f;box-shadow:none;transform:rotate(0deg) scale(.94);filter:drop-shadow(0 1px 0 #0003)}
+#zz-fullscreen .ttc-dpad button:focus-visible {outline:2px solid #3099ba;outline-offset:6px}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .ttc-dpad button{transition:none}}
+
+/* Lift the cart and its controls together only on the entry screen. */
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) {--entry-cart-lift:clamp(24px,4svh,40px)}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas,
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-dpad {translate:0 calc(-1 * var(--entry-cart-lift))}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas{filter:saturate(1.7)}
+
+#zz-fullscreen .ttc-game .ttc-entry-actions button {font-size:16px;letter-spacing:.06em}
+
+/* Supplied logo, framed to its artwork bounds without altering the original PNG. */
+#zz-fullscreen .ttc-logo.ttc-logo-art{position:relative;width:min(430px,72vw,48vh);aspect-ratio:1155 / 507;flex:none;overflow:hidden;transform:translateY(calc(-1 * clamp(36px,5svh,48px)));margin-bottom:8px;text-shadow:none;-webkit-text-stroke:0}
+#zz-fullscreen .ttc-logo-art img{position:absolute;display:block;width:110.823%;max-width:none;height:auto;left:-5.887%;top:-32.742%;pointer-events:none}
+
+#zz-fullscreen .ttc-entry-actions{position:relative}
+#zz-fullscreen .ttc-screen .ttc-rules{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;font-size:13px;line-height:1.5;margin:0;color:#333;font-weight:600}
+
+/* A quiet paper result card: one score, one primary action. */
+#zz-fullscreen .ttc-game[data-state=result] :is(.ttc-hud,.ttc-dpad){display:none}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-court canvas{visibility:visible}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-screen{padding:100px 20px 130px;background:transparent;backdrop-filter:none;overflow-y:auto;justify-content:center}
+#zz-fullscreen .ttc-result-card{width:min(460px,100%);padding:32px 30px 28px;display:flex;flex-direction:column;align-items:center;gap:24px;background:#fffaf0 url('/weeks/week-3/assets/club-game/grain.svg');border:1px solid #d9cfbd;box-shadow:0 8px 0 -3px #e5dac5,0 16px 38px #45371912; border-radius:3px;position:relative}
+:root body #zz-fullscreen .ttc-result-card .ttc-overline{font-family:'Just Another Hand',sans-serif!important;font-size:30px;line-height:1;letter-spacing:.09em;color:#29251f}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2{font-family:'Shine Coasty',Georgia,serif!important;font-size:clamp(54px,8vw,82px)!important;font-style:normal!important;font-weight:400;line-height:1;letter-spacing:-.04em;color:#00afd5;text-shadow:none;margin:0;white-space:nowrap}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2 small{font-family:'Just Another Hand',sans-serif!important;font-size:26px;letter-spacing:.04em;color:#29251f;vertical-align:baseline}
+#zz-fullscreen .ttc-result-card form{display:grid;grid-template-columns:1fr;gap:16px;width:100%;padding-top:22px;border-top:1px dashed #cfc4ae}
+#zz-fullscreen .ttc-result-card label{display:grid;gap:10px;font-size:13px;font-weight:600;color:#454238}
+#zz-fullscreen .ttc-result-card input{width:100%;min-width:0;height:52px;padding:12px 15px;font-size:16px;border:1px solid #b9ae98;border-radius:3px;background:#fffef9;box-shadow:none;color:#26231e;outline:none}
+#zz-fullscreen .ttc-result-card input:focus{border-color:#009fbd;box-shadow:0 0 0 3px #00bfe71f;outline:none;outline-offset:0}
+:root body #zz-fullscreen .ttc-result-card button{font-family:'Just Another Hand',sans-serif!important;font-size:27px!important;line-height:1!important;letter-spacing:.025em;min-height:50px;padding:12px 18px}
+:root body #zz-fullscreen .ttc-result-card form button.zz-paper-control{--paper-tone:#24221f;color:#fffaf0!important;--paper-tilt:-1deg;width:100%}
+#zz-fullscreen .ttc-result-card .ttc-result-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;padding-top:6px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking{width:100%;max-height:160px;margin:0;font-size:14px}
+#zz-fullscreen .ttc-result-card>p{font-size:14px;line-height:1.6;color:#5c564a}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status{bottom:100px;left:24px;right:24px;font-size:13px;color:#a93625}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status:empty{display:none}
+@media(max-width:480px){#zz-fullscreen .ttc-result-card{padding:24px 20px;gap:20px}:root body #zz-fullscreen .ttc-result-card button{font-size:24px!important}#zz-fullscreen .ttc-result-card .ttc-result-actions{gap:12px}}
+@media(max-height:700px){#zz-fullscreen .ttc-game[data-state=result] .ttc-screen{justify-content:flex-start;padding-top:85px}#zz-fullscreen .ttc-result-card{gap:16px;padding-top:22px;padding-bottom:22px}}
+
+/* Result poster follows the Contact page's cyan paper and ink treatment. */
+
+#zz-fullscreen .ttc-result-card{background:#00bfe7;border:0;border-radius:0;box-shadow:none;isolation:isolate}
+#zz-fullscreen .ttc-result-card::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:url('/weeks/week-3/assets/textures/illustration-crumpled-yellow.webp') center/cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
+:root body #zz-fullscreen .ttc-result-card .ttc-overline{color:#000;letter-spacing:.04em}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2{color:#fff;-webkit-text-stroke:4px #000;paint-order:stroke fill}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2 small{color:#000;-webkit-text-stroke:0}
+#zz-fullscreen .ttc-result-card form{border-top:0;padding-top:6px}
+#zz-fullscreen .ttc-result-card label{color:#000}
+#zz-fullscreen .ttc-result-card input{background:#fff;border:2px solid #000;border-radius:0;color:#000}
+#zz-fullscreen .ttc-result-card input:focus{border-color:#000;outline:2px solid #fff;outline-offset:3px;box-shadow:none}
+:root body #zz-fullscreen .ttc-result-card button.zz-paper-control{--paper-tone:#000;color:#00bfe7!important}
+#zz-fullscreen .ttc-result-card>p,#zz-fullscreen .ttc-result-card .ttc-result-ranking{color:#000}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status{color:#fff}
+
+:root body #zz-fullscreen .ttc-result-card form button.zz-paper-control{--paper-tone:#000;color:#00bfe7!important}
+
+/* Rank numerals use the same display face as the personal #1 heading. */
+:root body #zz-fullscreen :is(.ttc-ranking,.ttc-result-ranking) li>span:first-child{font-family:'Shine Coasty',Georgia,serif!important;font-weight:400;font-style:normal;font-size:24px;line-height:1.2;min-width:2ch}
+#zz-fullscreen .ttc-result-ranking li{align-items:center}
+
+/* Entry: introduction on the left, playable cart preview on the right. */
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-screen{width:50%;inset:0 auto 0 0;padding:100px 3vw 140px 6vw;justify-content:center;gap:28px}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-logo-art{width:100%;max-width:460px;transform:none;margin:0}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions{display:grid;grid-template-columns:1fr 1fr;gap:20px 14px;width:100%;max-width:460px}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-rules{position:static;grid-column:1/-1;transform:none;width:auto;max-width:none;font-size:13px;line-height:1.7;text-align:center}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-court canvas{translate:none}
+#zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-dpad{left:75%;right:auto;top:calc(46% + min(123px,12.3vw) + 24px);bottom:auto;translate:-50% 0;transform:none}
+@media(max-width:599px){
+ #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-screen{width:100%;inset:100px 0 auto;padding:0 24px;gap:18px}
+ #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-logo-art{width:min(270px,64vw,29svh)}
+ #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions{max-width:340px;gap:16px 12px}
+ #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-rules{font-size:12px}
+ #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-dpad{left:50%;top:calc(59% + min(85px,18.5vw) + 18px)}
+}
+
+/* Entry actions invert to black paper on hover or keyboard focus. */
+@media(hover:hover){
+ :root body #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions button.zz-paper-control:not(:disabled):hover{--paper-tone:#000;color:#fffaf0!important}
+}
+:root body #zz-fullscreen .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions button.zz-paper-control:focus-visible{--paper-tone:#000;color:#fffaf0!important}
+
+/* Growing store: anchored introduction and an independently scrolling catalogue. */
+#zz-fullscreen .club-figma-layout:not([hidden]){inset:110px 4vw 120px;display:grid;grid-template-columns:minmax(240px,32%) minmax(0,1fr);gap:5vw;align-items:stretch}
+#zz-fullscreen .club-figma-layout>.club-colophon{position:relative;inset:auto;width:100%;align-self:center;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0;margin:0;background:none}
+#zz-fullscreen .club-figma-layout>.club-colophon h2{font-size:clamp(25px,2.6vw,38px);margin:0;white-space:normal}
+#zz-fullscreen .club-figma-layout>.club-colophon>p{font-size:14px;line-height:1.7;margin:0}
+#zz-fullscreen .club-figma-layout .club-fairs{margin:12px 0}
+#zz-fullscreen .club-figma-layout .club-fairs h3{font-size:11px;margin:0 0 10px}
+#zz-fullscreen .club-figma-layout .club-fairs p{font-size:12px;line-height:1.8}
+#zz-fullscreen .club-figma-layout .club-store-actions{position:static;display:flex;flex-wrap:wrap;gap:12px;margin:0}
+#zz-fullscreen .club-figma-layout .club-store-actions :is(.ttc-shop-replay,.club-shop-link){position:relative;inset:auto;margin:0;min-width:0;min-height:48px;padding:12px 18px;font-size:22px}
+#zz-fullscreen .club-figma-layout .club-object-field{width:100%;height:100%;min-height:0;aspect-ratio:auto;container-type:normal;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:max-content;align-content:start;gap:28px 20px;padding:24px 16px 48px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scrollbar-color:#9c977f transparent}
+#zz-fullscreen .club-figma-layout .club-product{position:relative;inset:auto;width:100%;height:clamp(210px,23vw,310px);min-height:0;margin:0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:auto;padding:8px 8px 32px;transform:none}
+#zz-fullscreen .club-figma-layout .club-product::before{display:none}
+#zz-fullscreen .club-figma-layout .club-product img{position:static;width:100%;height:100%;max-height:100%;object-fit:contain;transform:none}
+#zz-fullscreen .club-figma-layout .club-product-number{position:absolute;top:auto;bottom:0;left:50%;transform:translateX(-50%);width:22px;height:22px;font-size:12px;line-height:20px;margin:0}
+#zz-fullscreen .club-figma-layout .club-object-field:focus-visible{outline:2px solid #00afd5;outline-offset:4px}
+@media(max-width:700px){
+ #zz-fullscreen .club-figma-layout:not([hidden]){inset:100px 20px 115px;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:20px}
+ #zz-fullscreen .club-figma-layout>.club-colophon{gap:6px}
+ #zz-fullscreen .club-figma-layout>.club-colophon h2{font-size:25px}
+ #zz-fullscreen .club-figma-layout>.club-colophon>p{font-size:12px}
+ #zz-fullscreen .club-figma-layout .club-fairs{margin:3px 0}
+ #zz-fullscreen .club-figma-layout .club-fairs h3{margin-bottom:3px;font-size:9px}
+ #zz-fullscreen .club-figma-layout .club-fairs p{font-size:10px;line-height:1.5}
+ #zz-fullscreen .club-figma-layout .club-object-field{gap:20px 12px;padding:12px 8px 32px}
+ #zz-fullscreen .club-figma-layout .club-product{height:190px}
+}
+
+/* Staggered merchandise keeps the growing catalogue playful and readable. */
+#zz-fullscreen .club-figma-layout .club-object-field{gap:36px 24px;padding-top:38px;padding-bottom:100px}
+#zz-fullscreen .club-figma-layout .club-product{width:88%;justify-self:center;transform:rotate(-4deg)}
+#zz-fullscreen .club-figma-layout .club-product:nth-child(6n+2){width:78%;margin-top:62px!important;transform:rotate(7deg)}
+#zz-fullscreen .club-figma-layout .club-product:nth-child(6n+3){width:73%;justify-self:start;margin-left:12px!important;transform:rotate(-8deg)}
+#zz-fullscreen .club-figma-layout .club-product:nth-child(6n+4){width:92%;margin-top:48px!important;transform:rotate(3deg)}
+#zz-fullscreen .club-figma-layout .club-product:nth-child(6n+5){width:96%;transform:rotate(5deg)}
+#zz-fullscreen .club-figma-layout .club-product:nth-child(6n){width:80%;justify-self:end;margin-top:72px!important;transform:rotate(-6deg)}
+@media(max-width:700px){
+ #zz-fullscreen .club-figma-layout .club-object-field{gap:24px 12px;padding-top:20px;padding-bottom:75px}
+ #zz-fullscreen .club-figma-layout .club-product:nth-child(even){margin-top:38px!important}
+ #zz-fullscreen .club-figma-layout .club-product:nth-child(6n+3){margin-left:4px!important}
+}
+
+/* Use the available viewport: proportional intro, responsive catalogue columns. */
+#zz-fullscreen .club-figma-layout:not([hidden]){left:0;right:0;width:100%;padding-inline:3vw;grid-template-columns:minmax(0,27fr) minmax(0,73fr);column-gap:3vw}
+#zz-fullscreen .club-figma-layout>.club-colophon{min-width:0}
+#zz-fullscreen .club-figma-layout .club-object-field{grid-template-columns:repeat(2,minmax(0,1fr))}
+#zz-fullscreen .club-figma-layout .club-product{height:clamp(200px,19vw,280px)}
+@media(min-width:1200px){
+ #zz-fullscreen .club-figma-layout .club-object-field{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #zz-fullscreen .club-figma-layout .club-product{height:clamp(200px,16vw,270px)}
+}
+@media(min-width:1600px){
+ #zz-fullscreen .club-figma-layout .club-object-field{grid-template-columns:repeat(4,minmax(0,1fr))}
+ #zz-fullscreen .club-figma-layout .club-product{height:clamp(200px,13vw,300px)}
+}
+@media(max-width:700px){
+ #zz-fullscreen .club-figma-layout:not([hidden]){padding-inline:20px;grid-template-columns:1fr;gap:20px}
+ #zz-fullscreen .club-figma-layout .club-product{height:190px}
+}
+
+/* A single white scroll thumb on the cyan ranking panel. */
+#zz-fullscreen .ttc-result-card .ttc-result-ranking{scrollbar-width:thin;scrollbar-color:#fff transparent;scrollbar-gutter:stable;padding-right:8px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar{width:5px;background:transparent}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-track{background:transparent;border:0}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-thumb{background:#fff;border:0;border-radius:999px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-button{display:none;width:0;height:0}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking::-webkit-scrollbar-corner{background:transparent}
+
+/* In-game scoreboard: ink-black cut paper with clear time and score. */
+#zz-fullscreen .ttc-hud{isolation:isolate;top:112px;min-width:250px;padding:14px 8px;gap:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;color:#fffaf0;filter:drop-shadow(2px 4px 1px #0002)}
+#zz-fullscreen .ttc-hud::before{content:'';position:absolute;inset:0;z-index:-1;background:#191919;clip-path:polygon(3% 6%,43% 0,97% 5%,100% 89%,63% 100%,1% 94%,0 24%)}
+#zz-fullscreen .ttc-hud>span:not([hidden]){display:flex;align-items:baseline;justify-content:center;gap:5px;min-width:110px;padding:0 18px;color:#fffaf0;font-size:12px;line-height:1}
+#zz-fullscreen .ttc-hud>span+span{border-left:1px solid #ffffff40}
+:root body #zz-fullscreen .ttc-hud b{font-family:'Shine Coasty',Georgia,serif!important;font-size:32px;font-weight:400;line-height:1.1;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:#fff}
+:root body #zz-fullscreen .ttc-hud [data-score]{color:#00bfe7}
+@media(max-width:600px){#zz-fullscreen .ttc-hud{top:100px;min-width:230px;padding:12px 6px}#zz-fullscreen .ttc-hud>span:not([hidden]){min-width:100px;padding:0 14px}:root body #zz-fullscreen .ttc-hud b{font-size:28px}}

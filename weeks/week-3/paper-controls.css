@@ -1,0 +1,102 @@
+/* Paper / ink family. Artwork navigation remains artwork. */
+:root body .zz-paper-control {
+ --paper-tone:#eee4d6;--paper-tilt:-2deg;
+ isolation:isolate;border:0!important;border-radius:0!important;background:transparent!important;
+ color:#29251f!important;box-shadow:none!important;text-shadow:none!important;
+ min-height:44px;overflow:visible!important;
+ filter:drop-shadow(1px 3px 1px #0003);
+ rotate:var(--paper-tilt);transition:rotate .18s,translate .18s,scale .18s,filter .18s;
+}
+:root body .zz-paper-relative{position:relative}
+:root body .zz-paper-control::before {
+ content:''!important;display:block!important;position:absolute!important;inset:0!important;
+ width:auto!important;height:auto!important;margin:0!important;z-index:-1!important;
+ border:0!important;border-radius:0!important;transform:none!important;pointer-events:none!important;
+ background:var(--paper-tone)!important;
+ clip-path:polygon(4% 4%,68% 0,97% 7%,100% 78%,94% 98%,34% 100%,0 91%,1% 16%);
+}
+:root body .zz-paper-control:nth-child(even){--paper-tilt:2deg}
+:root body .zz-paper-control:nth-child(even)::before{clip-path:polygon(2% 8%,36% 0,98% 5%,100% 85%,92% 100%,2% 94%,0 46%)}
+:root body .zz-paper-wide{--paper-tilt:0deg!important}
+:root body .zz-paper-control:focus-visible{outline:2px solid #3099ba!important;outline-offset:5px!important}
+:root body .zz-paper-control:disabled{opacity:.35;cursor:not-allowed;filter:none}
+:root body .zz-paper-control:is([aria-selected=true],[aria-pressed=true],[aria-current=page],.selected,.active){--paper-tone:#e6ce8c}
+:root body .zz-paper-control svg{pointer-events:none}
+:root body .zz-paper-icon {place-items:center!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;font-size:0!important;line-height:0!important}
+:root body .zz-paper-icon svg{display:block!important;opacity:1!important;width:25px!important;height:25px!important;color:#29251f!important}
+:root body .zz-paper-control:is(.action,.guest-stick,.guest-refresh,.guest-dialog-close,.book-close){padding:12px 18px!important}
+:root body #zz-weeks .weeks-current{color:#62594c}
+:root body #zz-weeks .weeks-dot{background:#75654b}
+:root body .portfolio-window .pw-toolbar{grid-template-columns:148px 96px minmax(0,1fr) 44px;gap:12px}
+:root body .portfolio-window .pw-lights{gap:6px}
+:root body .portfolio-window .pw-navigation{gap:8px}
+:root body .ttc-dpad .zz-paper-control{rotate:none;min-height:48px}
+@media(hover:hover){:root body .zz-paper-control:not(:disabled):hover{rotate:0deg;translate:0 -2px;filter:drop-shadow(2px 5px 2px #0004)}}
+:root body .zz-paper-control:not(:disabled):active{rotate:0deg;translate:0 1px;scale:.96;filter:drop-shadow(0 1px 0 #0003)}
+@media(max-width:600px){:root body .portfolio-window .pw-toolbar{grid-template-columns:148px 96px 1fr;padding-inline:12px;gap:8px}:root body .portfolio-window .pw-address{display:none}}
+@media(prefers-reduced-motion:reduce){:root body .zz-paper-control{transition:none}}
+
+:root body #zz-weeks .weeks-toggle,:root body #zz-weeks .weeks-toggle:hover {background:transparent!important;color:#29251f!important;border:0!important;box-shadow:none!important}
+:root body .zz-paper-icon svg{margin:auto}
+
+/* Override the legacy menu's ID-level !important surface. */
+:root body #zz-overview-button.zz-paper-control,
+:root body #zz-overview-button.zz-paper-control:hover {
+ background:transparent!important;border:0!important;box-shadow:none!important;color:#29251f!important;
+ min-height:48px;padding:14px 20px;gap:18px;
+}
+:root body #zz-overview-button.zz-paper-control svg {width:20px;height:20px;stroke-width:1.65;flex:none}
+@media(max-width:760px){:root body #zz-overview-button.zz-paper-control{width:48px;height:48px;padding:12px;justify-content:center}}
+
+:root body #zz-overview .overview-close.zz-paper-control{padding:10px 22px!important;font-size:28px!important;line-height:1.1!important}
+
+/* Profile's right-hand navigation uses black paper, retaining its vertical stack. */
+:root body #zz-fullscreen .profile-poster .profile-links a.zz-paper-control {
+ --paper-tone:#20201d;color:#fff9eb!important;
+ display:flex;align-items:center;min-height:44px;
+ border:0!important;text-decoration:none;
+}
+:root body #zz-fullscreen .profile-poster .profile-links a.zz-paper-control:focus-visible {
+ outline-color:#29251f!important;
+}
+
+/* Handwritten lettering follows the existing paper-control scope. */
+:root body .zz-paper-control,
+:root body .zz-paper-control :where(*) {
+ font-family:'Just Another Hand',var(--font-body)!important;
+ font-weight:400!important;
+ letter-spacing:.02em;
+}
+:root body #zz-weeks .weeks-toggle.zz-paper-control {font-size:22px;line-height:1}
+:root body #zz-overview-button.zz-paper-control {font-size:24px;line-height:1}
+:root body #zz-fullscreen .profile-poster .profile-links a.zz-paper-control {font-size:26px;line-height:1.1}
+:root body #zz-fullscreen .ttc-game .ttc-entry-actions button.zz-paper-control {font-size:28px;line-height:1;letter-spacing:.03em}
+
+/* Shop actions use the profile's black paper treatment. */
+:root body #zz-fullscreen .club-figma-layout .club-store-actions :is(.club-shop-link,.ttc-shop-replay).zz-paper-control{
+ --paper-tone:#20201d;color:#fff9eb!important;
+ font-size:24px!important;line-height:1.1!important;letter-spacing:.02em!important;
+ min-height:46px;padding:10px 18px!important;text-decoration:none;
+}
+
+:root body #zz-fullscreen .club-figma-layout .club-store-actions{flex-wrap:wrap;row-gap:12px}
+
+/* Shared scrollbars: aqua on light paper, white on colored surfaces. */
+:root{--zz-scroll-thumb:#00bfe7}
+:root,:root *{scrollbar-width:thin;scrollbar-color:var(--zz-scroll-thumb) transparent!important}
+:root::-webkit-scrollbar,:root *::-webkit-scrollbar{width:3px!important;height:3px!important;background:transparent!important}
+:root::-webkit-scrollbar-track,:root *::-webkit-scrollbar-track{background:transparent!important;border:0!important;box-shadow:none!important}
+:root::-webkit-scrollbar-thumb,:root *::-webkit-scrollbar-thumb{background:var(--zz-scroll-thumb)!important;border:0!important;border-radius:999px;box-shadow:none!important}
+:root::-webkit-scrollbar-button,:root *::-webkit-scrollbar-button{display:none!important;width:0;height:0}
+:root::-webkit-scrollbar-corner,:root *::-webkit-scrollbar-corner{background:transparent!important}
+#zz-overlay:has(.archive-shell),.archive-shell,
+#zz-overlay:has(.contact-intro),.contact-intro,#zz-form,
+.profile-poster,.ttc-game[data-state=result],.ttc-result-card,
+#zz-message-section .wall-note:is(.paper-pink,.paper-yellow){--zz-scroll-thumb:#fff}
+/* Light inner panels retain their own aqua scrollbar within colored pages. */
+.portfolio-window .pw-content,#zz-form :is(input,textarea,select),
+#zz-weeks-panel,.guest-compose-dialog,.guest-compose-dialog textarea,
+.club-figma-layout,.club-object-field{--zz-scroll-thumb:#00bfe7}
+
+/* Chromium/WebKit use the explicit slim width; Firefox keeps its thin fallback. */
+@supports selector(::-webkit-scrollbar){:root,:root *{scrollbar-width:auto!important;scrollbar-color:auto!important}}

@@ -1,0 +1,293 @@
+
+.profile{background:#fffd85;color:#32361e;min-height:100svh;padding:88px 3.8vw 44px;display:flex;flex-direction:column;justify-content:center;scroll-margin-top:42px}
+.profile-eyebrow{font-size:10px;letter-spacing:.07em;font-weight:400;margin:0 0 28px;color:#777944}
+.profile-title{font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:clamp(36px,7.15vw,108px);font-weight:800;letter-spacing:-.065em;line-height:1.2;margin:0;max-width:1320px}
+.profile-line{display:flex;align-items:center;gap:.22em;white-space:nowrap;min-height:1.27em}
+.profile-underlined{position:relative;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:.16em}
+.profile-underlined sup{position:absolute;right:-1.3em;top:50%;font-size:.15em;line-height:1;letter-spacing:0}
+.profile-comma{margin-left:.16em}
+.profile-art{flex:none;display:inline-block;object-fit:contain;object-position:center;transform-origin:50% 70%;animation:profile-float 5s ease-in-out infinite;will-change:transform}
+.profile-art.character{width:1.3em;height:1.4em}
+.profile-art.laptop{width:2.02em;height:1.36em;animation-delay:-1.6s}
+.profile-art.logo{width:1.22em;height:.94em;animation-delay:-3.2s}
+.profile-subtitle{font-size:clamp(17px,2.85vw,38px);font-weight:700;letter-spacing:-.055em;margin:20px 0 26px}.profile-subtitle span{text-decoration:underline;text-underline-offset:.16em}.profile-subtitle sup{font-size:.55em;vertical-align:middle;margin:0 .6em}
+.profile-description{font-size:clamp(11px,1.35vw,16px);line-height:1.7;color:#797d43;margin:0 0 26px}
+.profile-links{display:flex;align-items:center;gap:32px;font-size:clamp(10px,1.15vw,14px)}.profile-links a{padding:14px 0}.profile-links .profile-primary{padding:16px 22px;background:#32361e;color:#fffd85}.profile-links a:hover{text-decoration:underline;text-underline-offset:4px}.profile-links a:focus-visible{outline:2px solid #32361e;outline-offset:5px}
+@keyframes profile-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-.09em) rotate(4deg)}}
+@media(min-width:1500px){.profile{padding-left:max(4vw,calc((100vw - 1380px)/2))}}
+@media(max-width:700px){.profile{padding:82px 22px 48px;min-height:85svh}.profile-eyebrow{font-size:8px;letter-spacing:.025em;margin-bottom:28px}.profile-title{font-size:7.35vw;letter-spacing:-.07em}.profile-line{min-height:1.6em;gap:.17em}.profile-subtitle{margin-top:24px;font-size:4.4vw}.profile-description{font-size:12px;margin:2px 0 26px}.profile-links{gap:20px;flex-wrap:wrap;font-size:11px}.profile-links .profile-primary{padding:14px 16px}}
+@media(prefers-reduced-motion:reduce){.profile-art{animation:none;will-change:auto}}
+
+/* The profile is a complete, viewport-sized view when opened directly. */
+
+.profile{height:calc(100dvh - 42px);min-height:0;margin-top:0;padding:24px 3.8vw;scroll-margin-top:42px}
+
+.profile > *{flex-shrink:0}
+.profile-eyebrow{line-height:1.2;margin-bottom:20px}
+.profile-title{font-size:min(7.15vw,calc((100dvh - 300px)/5.4),108px)}
+.profile-subtitle{font-size:min(2.85vw,4dvh,38px);line-height:1.2;margin:14px 0 18px}
+.profile-description{line-height:1.6;margin:0 0 18px}
+.profile-links{line-height:1.2;gap:28px}.profile-links .profile-primary{padding:14px 20px}
+@media(max-width:700px){.profile{padding:20px 22px;height:calc(100dvh - 42px);min-height:0}.profile-title{font-size:min(7.35vw,calc((100dvh - 270px)/6.4))}.profile-eyebrow{margin-bottom:18px}.profile-subtitle{font-size:min(4.4vw,4dvh);margin:14px 0 18px}.profile-description{margin:0 0 18px}.profile-links{gap:18px;flex-wrap:nowrap;font-size:10px}.profile-links .profile-primary{padding:13px 12px}}
+@media(max-height:500px){.profile{padding-top:12px;padding-bottom:12px}.profile-eyebrow{font-size:8px;margin-bottom:10px}.profile-title{font-size:min(7.15vw,calc((100dvh - 210px)/5.4))}.profile-line{min-height:1.27em}.profile-subtitle{font-size:min(4.4vw,4dvh);margin:8px 0}.profile-description{font-size:10px;margin-bottom:10px}.profile-links{font-size:10px}.profile-links .profile-primary{padding:10px 14px}}
+
+
+
+/* Small floating name tags on the three introduction keywords. */
+.profile-title{font-size:min(6.58vw,calc((100dvh - 300px)/5.87),99px)}
+.profile-word{position:relative;display:inline-block;text-decoration:inherit}
+.profile-word > button{appearance:none;background:none;border:0;border-radius:3px;padding:0;margin:0;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit;cursor:help;text-decoration:inherit}
+.profile-word > button:focus-visible{outline:2px solid #8d92bc;outline-offset:4px}
+.profile-word-label{position:absolute;z-index:8;bottom:calc(100% + 8px);left:50%;display:flex;align-items:center;gap:5px;width:max-content;padding:3px 10px 3px 6px;border:1px solid #9b9a92;border-radius:999px;background:#fffefb;color:#48483f;box-shadow:0 2px 4px #25252320;font:italic 14px/1.2 Georgia,"Apple SD Gothic Neo","Malgun Gothic",serif;letter-spacing:0;white-space:nowrap;text-decoration:none;opacity:0;visibility:hidden;transform:translate(-50%,6px) rotate(-3deg);transition:opacity .16s ease,transform .16s ease,visibility .16s;pointer-events:none}
+.profile-word-label svg{width:13px;height:13px;fill:#afb3d3;stroke:#777ea7;stroke-width:.7;flex:none}
+.profile-word:not(.tooltip-dismissed):is(:hover,:focus-within) .profile-word-label{opacity:1;visibility:visible;transform:translate(-50%,0) rotate(-3deg);pointer-events:auto}
+.profile-word-label::after{content:"";position:absolute;inset:100% 0 -12px}
+@media(max-width:700px){.profile-title{font-size:min(6.76vw,calc((100dvh - 270px)/6.96))}.profile-word-label{font-size:12px;padding:3px 8px 3px 5px}}
+@media(max-height:500px){.profile-title{font-size:min(6.58vw,calc((100dvh - 210px)/5.87))}}
+@media(prefers-reduced-motion:reduce){.profile-word-label{transition:none}}
+
+.profile-subtitle .profile-word-label{text-decoration:none;font-style:normal}
+.profile-word-label{transform:translate(-50%,6px)}
+.profile-word:not(.tooltip-dismissed):is(:hover,:focus-within) .profile-word-label{transform:translate(-50%,0)}
+
+.profile-eyebrow{margin-bottom:30px}
+@media(max-height:500px){.profile-eyebrow{margin-bottom:18px}}
+
+/* Hover labels overlay their own typography in the foreground. */
+.profile-word{isolation:isolate}
+.profile-word > button{position:relative;z-index:0}
+.profile-word-label{top:50%;bottom:auto;left:50%;z-index:2;transform:translate(-50%,calc(-50% + 4px))}
+.profile-word:not(.tooltip-dismissed):is(:hover,:focus-within){z-index:10}
+.profile-word:not(.tooltip-dismissed):is(:hover,:focus-within) .profile-word-label{transform:translate(-50%,-50%);pointer-events:none}
+.profile-word-label::after{display:none}
+
+/* Profile navigation sits on the right edge, vertically centered. */
+.profile-links{position:absolute;right:3.8vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:stretch;gap:10px;font-size:13px;z-index:12}
+.profile-links a{padding:12px 18px;text-align:left;white-space:nowrap}
+.profile-links .profile-primary{padding:12px 18px}
+@media(max-width:700px){.profile-links{right:16px;gap:8px;font-size:10px}.profile-links a,.profile-links .profile-primary{padding:10px 9px}.profile-title{font-size:min(5.65vw,calc((100dvh - 270px)/6.96))}.profile-subtitle{font-size:min(3.65vw,4dvh)}}
+
+/* Reused photographic eyes, detached from the original collage. */
+.profile-eyes{position:absolute;right:3.8vw;top:17%;width:clamp(116px,14vw,200px);display:flex;align-items:center;gap:8px;transform:rotate(-7deg);filter:drop-shadow(2px 5px 2px #32361e25);pointer-events:none;z-index:2}
+.profile-eye{display:block;width:calc(50% - 4px);height:auto}
+.profile-eye-left{clip-path:polygon(0% 49%,5% 32%,20% 14%,39% 2%,58% 8%,80% 17%,93% 33%,99% 49%,91% 72%,79% 85%,47% 96%,30% 96%,10% 80%,3% 65%)}
+.profile-eye-right{clip-path:polygon(1% 40%,14% 20%,30% 7%,48% 2%,66% 6%,81% 18%,96% 41%,99% 55%,93% 78%,84% 91%,61% 98%,37% 95%,16% 84%,6% 66%)}
+@media(max-width:700px){.profile-eyes{right:18px;top:15%;width:110px;gap:5px}}
+@media(max-height:500px){.profile-eyes{top:8%;width:90px}}
+
+/* Fine paper grain beneath the profile content. */
+.profile{background-image:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg');background-size:240px 240px;background-repeat:repeat;background-blend-mode:multiply}
+
+.profile-art.archive-art{width:1.3em;height:1.4em;object-fit:cover}
+.profile-eyes{top:auto;bottom:30px;right:3.8vw}
+@media(max-width:700px){.profile-eyes{top:auto;bottom:22px;right:18px}}
+@media(max-height:500px){.profile-eyes{top:auto;bottom:14px}}
+
+/* Trim inside the original cyan surround; add a fresh paper-cut edge. */
+.profile-eyes{filter:none;gap:12px}
+.profile-eye-cutout{display:block;width:calc(50% - 6px);filter:drop-shadow(2px 0 0 #fffdf0) drop-shadow(-2px 0 0 #fffdf0) drop-shadow(0 2px 0 #fffdf0) drop-shadow(0 -2px 0 #fffdf0) drop-shadow(1px 4px 2px #403b2940)}
+.profile-eye-cutout:nth-child(1){transform:rotate(-4deg)}
+.profile-eye-cutout:nth-child(2){transform:rotate(5deg) translateY(2px)}
+.profile-eye{width:100%}
+.profile-eye-left{clip-path:polygon(5% 49%,10% 33%,22% 18%,40% 7%,57% 13%,77% 21%,89% 36%,94% 50%,86% 68%,76% 80%,60% 85%,45% 91%,31% 91%,16% 79%,8% 64%)}
+.profile-eye-right{clip-path:polygon(6% 42%,18% 24%,32% 12%,48% 7%,64% 11%,77% 23%,91% 43%,94% 55%,88% 75%,80% 86%,62% 92%,39% 90%,20% 80%,11% 63%)}
+.profile{background-size:180px 180px}
+
+/* Fidget-board artwork with a faded, warm print finish. */
+.profile-art.board-art{object-fit:contain;filter:saturate(.72) sepia(.24) contrast(.94) brightness(1.02) drop-shadow(1px 2px 1px #49382026)}
+.profile-art.board-profile{width:1.3em;height:1.4em}
+.profile-art.board-archive{width:1.5em;height:1.36em;object-fit:cover;animation-delay:-1.6s}
+.profile-art.board-career{width:1.22em;height:1.15em;animation-delay:-3.2s}
+.profile-art.board-profile{width:1.5em;object-fit:cover}
+.profile-art.board-career{object-fit:cover}
+
+/* A shared print-grain layer over the entire profile composition. */
+.profile::after{content:"";position:absolute;inset:0;z-index:30;pointer-events:none;background-image:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg');background-repeat:repeat;background-size:160px 160px;opacity:.52;mix-blend-mode:multiply}
+.profile{isolation:isolate}
+
+#zz-fullscreen:has(.profile-poster){overflow:clip!important}
+#zz-fullscreen #zz-overlay:has(.profile-poster){height:100dvh;overflow:clip!important;background:#fffd85;color:#32361e}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead{position:absolute;inset:0 0 auto;z-index:40;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;pointer-events:none}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead button{pointer-events:auto}
+#zz-fullscreen .overlay:has(.profile-poster) #zz-paneltitle{display:none}
+#zz-fullscreen #zz-body:has(>.profile-poster){width:100%;max-width:none;height:100dvh;min-height:0;padding:0!important;overflow:hidden!important}
+#zz-fullscreen .profile-poster{box-sizing:border-box;position:relative;height:100dvh;min-height:0;margin:0;overflow:hidden;font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+#zz-fullscreen .profile-poster *{box-sizing:border-box}
+#zz-fullscreen .profile-poster .profile-title{font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-weight:800;line-height:1.2;letter-spacing:-.065em;margin:0;max-width:1320px;color:#32361e}
+#zz-fullscreen .profile-poster .profile-word>button{border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;padding:0;box-shadow:none;min-width:0;border-radius:3px}
+#zz-fullscreen .profile-poster .profile-links a{color:inherit;text-decoration:none}
+#zz-fullscreen .profile-poster .profile-links .profile-primary{color:#fffd85}
+#zz-fullscreen .profile-poster .profile-eyebrow{margin:0 0 30px;color:#777944;font-size:10px;line-height:1.2;letter-spacing:.07em}
+#zz-fullscreen .profile-poster .profile-description{font-size:clamp(11px,1.35vw,16px);line-height:1.6;color:#797d43;margin:0 0 18px}
+#zz-fullscreen .profile-poster .profile-subtitle{font-weight:700;letter-spacing:-.055em;line-height:1.2;margin:14px 0 18px;color:#32361e}
+#zz-fullscreen:has(.profile-poster) :is(#zz-location,#zz-navbutton){display:none!important}
+#zz-fullscreen .overlay:has(.profile-poster)>.panelhead{display:none!important}
+
+/* Anchor the eyes to the left of the three navigation buttons. */
+#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{top:50%;bottom:auto;right:calc(100% + 28px);width:clamp(145px,17.5vw,250px);transform:translateY(-50%) rotate(-7deg)}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{right:calc(100% + 18px);width:140px}}
+@media(max-height:500px){#zz-fullscreen .profile-poster .profile-side-links .profile-eyes{width:114px}}
+
+body:has(.profile-poster) #zz-global-dock .dock-icon{background-image:url("/weeks/week-3/assets/profile-yellow/nav-icons.webp?v=613dc5275c")}
+
+/* Keyword hover labels are small paper cutouts, not outlined pills. */
+#zz-fullscreen .profile-poster .profile-word-label {
+ isolation:isolate;border:0;border-radius:0;background:transparent;color:#29251f;
+ padding:8px 13px;gap:7px;box-shadow:none;
+ filter:drop-shadow(1px 3px 1px #0003);font-style:normal;
+}
+#zz-fullscreen .profile-poster .profile-word-label::before {
+ content:'';position:absolute;inset:0;z-index:-1;background:#eee4d6;pointer-events:none;
+ clip-path:polygon(4% 5%,68% 0,97% 8%,100% 78%,94% 98%,34% 100%,0 90%,1% 17%);
+}
+#zz-fullscreen .profile-poster .profile-word-label svg {fill:none;stroke:#29251f;stroke-width:1.2}
+
+/* SNS cutouts share the intro replay button's layered paper silhouette. */
+#zz-fullscreen .profile-poster .profile-sns{display:flex;align-items:center;gap:12px;width:max-content;margin-top:4px;position:relative;z-index:12}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button){display:block;width:56px;height:56px;padding:0;border:0;background:none;transform:rotate(-8deg);filter:drop-shadow(1px 3px 2px #0004);transition:transform .18s,filter .18s}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):nth-child(2){transform:rotate(5deg)}
+#zz-fullscreen .profile-poster .profile-sns svg{display:block;width:100%;height:100%;pointer-events:none}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):focus-visible{outline:2px solid #29251f;outline-offset:4px}
+@media(hover:hover){#zz-fullscreen .profile-poster .profile-sns :is(a,button):not(:disabled):hover{transform:translateY(-3px) rotate(0);filter:drop-shadow(2px 5px 3px #0005)}}
+#zz-fullscreen .profile-poster .profile-sns :is(a,button):not(:disabled):active{transform:scale(.94)}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-sns :is(a,button){width:48px;height:48px}}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .profile-poster .profile-sns :is(a,button){transition:none}}
+
+/* Social icons sit directly above the right-hand navigation. */
+#zz-fullscreen .profile-poster .profile-side-links{position:absolute;right:3.8vw;top:calc(50% - 28px);transform:translateY(-50%);z-index:12}
+#zz-fullscreen .profile-poster .profile-side-links .profile-links{position:relative;inset:auto;transform:none}
+#zz-fullscreen .profile-poster .profile-side-links .profile-sns{position:absolute;right:0;bottom:calc(100% + 14px);margin:0;gap:8px}
+@media(max-width:700px){#zz-fullscreen .profile-poster .profile-side-links{right:16px}}
+
+/* Contact continues the profile's yellow printed-paper composition. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#fffd85;color:#32361e;overflow-y:auto;isolation:isolate}
+#zz-fullscreen #zz-overlay:has(.contact-intro)::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:30;background:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px 160px;opacity:.52;mix-blend-mode:multiply}
+#zz-fullscreen #zz-overlay:has(.contact-intro)>.panelhead{display:none}
+#zz-fullscreen #zz-body:has(>.contact-intro){box-sizing:border-box;width:100%;max-width:1400px;min-height:100dvh;height:auto;margin:auto;padding:140px 5vw 160px!important;display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center;overflow:visible;font-family:Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>.contact-intro{display:flex;flex-direction:column;align-items:flex-start;gap:24px;margin:0;align-self:center}
+#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:clamp(130px,15vw,210px);filter:saturate(.72) sepia(.16) drop-shadow(2px 4px 2px #49382026);transform:rotate(-9deg)}
+#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(38px,4.5vw,70px);line-height:1.15;font-weight:800;letter-spacing:-.065em;color:#32361e;margin:0 0 20px}
+#zz-fullscreen #zz-body>.contact-intro h2::after{content:'';display:block;width:85%;height:2px;background:#32361e;transform:rotate(-1deg);margin-top:12px}
+#zz-fullscreen #zz-body>.contact-intro p{font-size:14px;line-height:1.7;color:#797d43;margin:0}
+#zz-fullscreen #zz-body>#zz-form{box-sizing:border-box;width:100%;max-width:none;margin:0;padding:28px 30px;background:#fff9e8;box-shadow:4px 7px 0 #32361e20;display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;border:0;transform:rotate(1deg)}
+#zz-fullscreen #zz-body>#zz-form>label{display:block;margin:0;color:#32361e;font:26px/1 'Just Another Hand',sans-serif;letter-spacing:.02em}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(n+3){grid-column:1/-1}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){box-sizing:border-box;display:block;width:100%;margin-top:8px;padding:10px 0;border:0;border-bottom:1px solid #a9aa79;border-radius:0;background:transparent;color:#32361e;font:14px/1.5 Arial,'Apple SD Gothic Neo',sans-serif;box-shadow:none}
+#zz-fullscreen #zz-body>#zz-form textarea{min-height:110px;resize:vertical}
+#zz-fullscreen #zz-body>#zz-form :is(input,select,textarea):focus-visible{outline:2px solid #777944;outline-offset:4px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{--paper-tone:#20201d;grid-column:1/-1;width:auto;justify-self:end;min-width:150px;margin:0;padding:12px 26px;color:#fff9eb!important;font-size:28px;line-height:1.1}
+#zz-fullscreen #zz-body>#zz-form>p{grid-column:1/-1;margin:0;font:11px/1.6 Arial,sans-serif;color:#797d43}
+#zz-fullscreen #zz-body>#zz-form>p:last-child{font-size:13px;color:#32361e}
+#zz-fullscreen #zz-body>#zz-form>p a{color:inherit;text-underline-offset:4px}
+@media(max-width:760px){#zz-fullscreen #zz-body:has(>.contact-intro){grid-template-columns:1fr;gap:32px;padding:112px 24px 150px!important}#zz-fullscreen #zz-body>.contact-intro{flex-direction:row;align-items:center;gap:20px}#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:100px}#zz-fullscreen #zz-body>.contact-intro h2{font-size:36px;margin-bottom:12px}#zz-fullscreen #zz-body>.contact-intro p{font-size:12px}#zz-fullscreen #zz-body>#zz-form{padding:24px;transform:rotate(.6deg)}}
+@media(max-width:420px){#zz-fullscreen #zz-body>.contact-intro .contact-logo{width:74px}#zz-fullscreen #zz-body>.contact-intro h2{font-size:30px}#zz-fullscreen #zz-body>#zz-form{gap:16px}#zz-fullscreen #zz-body>#zz-form>label{grid-column:1/-1}}
+
+#zz-fullscreen #zz-body>#zz-form>label{font-family:"Just Another Hand",sans-serif!important;font-size:28px!important;font-weight:400!important}
+
+/* Dark Contact canvas puts the invitation and paper form in focus. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#171715;color:#fff9eb}
+#zz-fullscreen #zz-body>.contact-intro h2{font-family:'Just Another Hand',sans-serif!important;font-size:clamp(76px,10vw,152px);font-weight:400;letter-spacing:0;line-height:.95;color:#fff9eb}
+#zz-fullscreen #zz-body>.contact-intro h2::after{display:none}
+#zz-fullscreen #zz-body>.contact-intro p{color:#c6c3b8}
+@media(max-width:760px){#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(64px,12vw,92px)}}
+
+/* Contact composition from the supplied cyan poster reference. */
+#zz-fullscreen #zz-overlay:has(.contact-intro){background:#000;color:#000}
+#zz-fullscreen #zz-overlay:has(.contact-intro)::after{display:none}
+#zz-fullscreen #zz-body:has(>.contact-intro){display:flex;flex-direction:column;justify-content:center;gap:0;width:min(830px,calc(100% - 48px));max-width:none;min-height:100dvh;padding:130px 0 160px!important;margin:0 auto;isolation:isolate}
+#zz-fullscreen #zz-body>.contact-intro{display:block;width:100%;margin:0;padding:0 18px 14px;background:#00bfe7;position:relative;align-self:auto;border-radius:90px 90px 0 0}
+#zz-fullscreen #zz-body>.contact-intro .contact-logo{display:none}
+#zz-fullscreen #zz-body>.contact-intro h2{position:relative;margin:-10px -8px 10px;font-family:'Shine Coasty',Georgia,serif!important;font-size:clamp(58px,11.4vw,150px);font-weight:400;line-height:1.08;letter-spacing:-.035em;color:#fff;text-align:center;white-space:nowrap;-webkit-text-stroke:5px #000;paint-order:stroke fill;filter:drop-shadow(0 -10px 0 #00bfe7)}
+#zz-fullscreen #zz-body>.contact-intro p{margin:0;text-align:center;color:#000;font:12px/1.5 Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>#zz-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px;padding:0 18px 20px;background:#00bfe7;box-shadow:none;transform:none}
+#zz-fullscreen #zz-body>#zz-form>label{display:flex;align-items:center;gap:14px;min-width:0;grid-column:auto;margin:0;padding:10px 16px;min-height:52px;background:#fff;border:2px solid #151515;color:#000;font:700 14px/1.4 Arial,sans-serif!important;letter-spacing:-.02em}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){margin:0;padding:0;min-width:0;border:0;background:#fff;color:#000;font:14px/1.5 Arial,'Apple SD Gothic Neo',sans-serif}
+#zz-fullscreen #zz-body>#zz-form :is(input,textarea)::placeholder{color:#242424;opacity:1}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(4){grid-column:1/-1;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:14px 16px}
+#zz-fullscreen #zz-body>#zz-form textarea{min-height:100px;height:100px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{display:flex;align-items:center;justify-content:space-between;justify-self:center;grid-column:1/-1;width:268px;min-height:56px;margin:2px 0 10px;padding:12px 30px;--paper-tone:#000;color:#00bfe7!important;font:400 28px/1 'Just Another Hand',var(--font-body)!important;letter-spacing:.03em}
+#zz-fullscreen #zz-body>#zz-form .contact-send span{font:inherit!important}
+#zz-fullscreen #zz-body>#zz-form .contact-send span:last-child{font-size:30px!important;font-weight:400!important}
+#zz-fullscreen #zz-body>#zz-form>p{grid-column:2/-1;grid-row:4;text-align:right;align-self:end;color:#000;font:10px/1.5 Arial,sans-serif}
+#zz-fullscreen #zz-body>#zz-form>p br{display:none}
+#zz-fullscreen #zz-body>#zz-form>p:last-child{grid-column:1;grid-row:4;text-align:left;font-size:10px;color:#000}
+#zz-fullscreen #zz-body>#zz-form>p:last-child a{font-weight:700;text-decoration:none}
+@media(max-width:700px){#zz-fullscreen #zz-body:has(>.contact-intro){width:calc(100% - 32px);padding-top:120px!important}#zz-fullscreen #zz-body>.contact-intro{padding:0 12px 14px;border-radius:60px 60px 0 0}#zz-fullscreen #zz-body>.contact-intro h2{font-size:12.5vw;-webkit-text-stroke:3px #000}#zz-fullscreen #zz-body>#zz-form{padding:0 12px 18px;grid-template-columns:1fr;gap:10px}#zz-fullscreen #zz-body>#zz-form>label{grid-column:1;min-height:48px}#zz-fullscreen #zz-body>#zz-form>p,#zz-fullscreen #zz-body>#zz-form>p:last-child{grid-column:1;grid-row:auto;text-align:left}#zz-fullscreen #zz-body>#zz-form .contact-send{width:230px}}
+#zz-fullscreen #zz-body>.contact-intro{border-radius:0;background:linear-gradient(transparent 42%,#00bfe7 42%)}
+#zz-fullscreen #zz-body>.contact-intro h2{font-size:clamp(58px,16vw,142px);letter-spacing:-.045em;margin:-10px -8px 10px;filter:drop-shadow(0 -8px 0 #00bfe7) drop-shadow(8px 0 0 #00bfe7) drop-shadow(-8px 0 0 #00bfe7)}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(3){grid-column:auto}
+#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:3}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro h2{font-size:15.5vw}#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(3){grid-column:1}#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:auto}}
+
+/* Printed paper grain on the cyan contact poster and white writing fields. */
+#zz-fullscreen #zz-body>.contact-intro::after{content:'';position:absolute;inset:42% 0 0;pointer-events:none;background:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px 160px;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form{background-image:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg');background-size:160px 160px;background-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form>label{background-image:url('/weeks/week-3/assets/profile-yellow/paper-grain.svg');background-size:160px 160px;background-blend-mode:multiply}
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),select,textarea){background:transparent}
+
+/* Consistent poster spacing and field alignment. */
+#zz-fullscreen #zz-body>.contact-intro{padding-bottom:20px}
+#zz-fullscreen #zz-body>.contact-intro h2{line-height:.9;margin-bottom:8px}
+#zz-fullscreen #zz-body>.contact-intro p{line-height:1.6}
+#zz-fullscreen #zz-body>#zz-form{gap:14px 12px;padding-bottom:24px}
+#zz-fullscreen #zz-body>#zz-form>label{gap:10px;padding:12px 14px}
+#zz-fullscreen #zz-body>#zz-form>label:nth-of-type(4){gap:12px;padding:16px 14px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{margin:6px 0 12px}
+#zz-fullscreen #zz-body>#zz-form>p{align-self:center;line-height:1.6}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro{padding-bottom:18px}#zz-fullscreen #zz-body>#zz-form{gap:12px;padding-bottom:20px}#zz-fullscreen #zz-body>#zz-form .contact-send{margin:8px 0 8px}#zz-fullscreen #zz-body>#zz-form>p:last-child{margin-top:0}}
+#zz-fullscreen #zz-body>.contact-intro h2{z-index:1}
+
+/* Direct email belongs immediately below the message, before SEND. */
+#zz-fullscreen #zz-body>#zz-form>p.contact-direct{grid-column:1/-1;grid-row:3;display:flex;align-items:center;flex-wrap:wrap;gap:6px;text-align:left;font-size:14px;line-height:1.6;margin:0;color:#000}
+#zz-fullscreen #zz-body>#zz-form .contact-direct a{font-weight:700;text-decoration:none}
+#zz-fullscreen #zz-body>#zz-form .contact-copy{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:4px;border:0;background:transparent;color:#000;cursor:pointer;flex:none;border-radius:3px}
+#zz-fullscreen #zz-body>#zz-form .contact-copy:hover{background:#ffffff55}
+#zz-fullscreen #zz-body>#zz-form .contact-copy:focus-visible{outline:2px solid #000;outline-offset:2px}
+#zz-fullscreen #zz-body>#zz-form .contact-copy-status{font-size:12px}
+#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:4;margin:4px 0 8px}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{grid-column:1/-1;grid-row:5;text-align:center;font-size:13px;line-height:1.7;margin:0;color:#000}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure br{display:block}
+@media(max-width:700px){#zz-fullscreen #zz-body>#zz-form>p.contact-direct{grid-row:5;font-size:13px}#zz-fullscreen #zz-body>#zz-form .contact-send{grid-row:6}#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{grid-row:7;font-size:12px}}
+#zz-fullscreen #zz-body>.contact-intro h2{filter:url(#contact-title-outline)}
+#zz-fullscreen #zz-body>.contact-intro>div{width:100%;min-width:0}
+#zz-fullscreen #zz-body>.contact-intro p{display:block;width:100%;max-width:none;margin-inline:0;text-align:center!important;text-indent:0}
+
+/* Clear editable placeholders, focus states, and a matching project menu. */
+#zz-fullscreen #zz-body>#zz-form :is(input:not([type=hidden]),textarea){cursor:text;pointer-events:auto;caret-color:#000}
+#zz-fullscreen #zz-body>#zz-form :is(input,textarea)::placeholder{color:#777;opacity:1;font-weight:400}
+#zz-fullscreen #zz-body>#zz-form>label:focus-within{border-color:#000;box-shadow:0 0 0 3px #ffffff80}
+#zz-fullscreen #zz-body>#zz-form input:focus-visible,#zz-fullscreen #zz-body>#zz-form textarea:focus-visible{outline:none}
+#zz-fullscreen #zz-body>#zz-form select[hidden]{display:none!important}
+#zz-fullscreen #zz-body>#zz-form .contact-picker{position:relative;display:block;flex:1;min-width:0}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:28px;border:0;padding:0;background:transparent;color:#000;font:14px/1.5 Arial,sans-serif;cursor:pointer;text-align:left}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger svg{flex:none;transition:transform .15s}
+#zz-fullscreen #zz-body>#zz-form .contact-picker.is-open .contact-picker-trigger svg{transform:rotate(180deg)}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-trigger:focus-visible{outline:2px solid #000;outline-offset:4px}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-options{display:block;position:absolute;top:calc(100% + 16px);right:-16px;z-index:60;width:max(200px,100%);padding:6px;background:#fff url('/weeks/week-3/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px;border:2px solid #000;box-shadow:5px 5px 0 #000;}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-options[hidden]{display:none}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option{display:block;padding:10px 34px 10px 12px;position:relative;cursor:pointer;font:14px/1.4 Arial,sans-serif;white-space:nowrap}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option:is(:hover,.is-active){background:#00bfe7}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-option[aria-selected=true]::after{content:'✓';position:absolute;right:12px;font-weight:700}
+
+/* Visible crumpled-paper folds across the contact poster. */
+#zz-fullscreen #zz-body>#zz-form{position:relative;isolation:isolate}
+#zz-fullscreen #zz-body>#zz-form::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:url('/weeks/week-3/assets/textures/illustration-crumpled-yellow.webp') center / cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>.contact-intro::after{background:url('/weeks/week-3/assets/textures/illustration-crumpled-yellow.webp') center top / cover no-repeat;filter:grayscale(1) contrast(1.3);opacity:.32;mix-blend-mode:multiply}
+#zz-fullscreen #zz-body>.contact-intro h2{-webkit-text-stroke-width:7px}
+@media(max-width:700px){#zz-fullscreen #zz-body>.contact-intro h2{-webkit-text-stroke-width:5px}}
+
+/* Shared size for all contact supporting copy. */
+#zz-fullscreen #zz-body>.contact-intro p,
+#zz-fullscreen #zz-body>#zz-form>p.contact-direct,
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{font-size:14px;line-height:1.7}
+#zz-fullscreen #zz-body>#zz-form>p.contact-disclosure{display:none}
+
+/* Give the contact text fields the full height of their white boxes. */
+#zz-fullscreen #zz-body>#zz-form>label:has(>input[name="name"]),
+#zz-fullscreen #zz-body>#zz-form>label:has(>input[name="email"]){padding-block:0;cursor:text}
+#zz-fullscreen #zz-body>#zz-form input:is([name="name"],[name="email"]){flex:1 1 0;align-self:stretch;min-height:48px;position:relative;z-index:3;user-select:text;-webkit-user-select:text;touch-action:auto}
+
+/* Decorative title glyphs must never intercept the contact form. */
+#zz-fullscreen #zz-body>.contact-intro{pointer-events:none;z-index:0}
+#zz-fullscreen #zz-body>.contact-intro h2{pointer-events:none}
+#zz-fullscreen #zz-body>#zz-form{position:relative;z-index:2;pointer-events:auto}

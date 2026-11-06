@@ -1,0 +1,6 @@
+/* Colored die-cut edges follow each graphic's silhouette, not its image box. */
+#zz-fullscreen .world button.illustrated-menu[data-action="about"]{filter:url(#board-profile-edge)}
+#zz-fullscreen .world button.illustrated-menu[data-action="files"]{filter:url(#board-archive-edge)}
+#zz-fullscreen .world button.illustrated-menu[data-action="career"]{filter:url(#board-career-edge)}
+/* Die-cut stickers no longer need the old paper-tape decoration. */
+#zz-fullscreen .world .center.profile-sticker.illustrated-menu::before{content:none}
