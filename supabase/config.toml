@@ -1,2 +1,5 @@
 [functions.guestbook]
 verify_jwt = false
+
+[functions.cart-game]
+verify_jwt = true

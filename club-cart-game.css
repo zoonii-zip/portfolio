@@ -272,3 +272,5 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 /* Supplied logo, framed to its artwork bounds without altering the original PNG. */
 #zz-fullscreen .ttc-logo.ttc-logo-art{position:relative;width:min(430px,72vw,48vh);aspect-ratio:1155 / 507;flex:none;overflow:hidden;transform:translateY(calc(-1 * clamp(36px,5svh,48px)));margin-bottom:8px;text-shadow:none;-webkit-text-stroke:0}
 #zz-fullscreen .ttc-logo-art img{position:absolute;display:block;width:110.823%;max-width:none;height:auto;left:-5.887%;top:-32.742%;pointer-events:none}
+
+.ttc-rules{font-size:14px;line-height:1.5;margin:10px 0 14px;color:#333;font-weight:600}
