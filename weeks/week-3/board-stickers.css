@@ -1,0 +1,210 @@
+/* The supplied artwork stays intact; the lower-right printed edge curls back on hover. */
+#zz-fullscreen .board-logo-sticker {
+  position: absolute;
+  left: var(--board-left);
+  top: var(--board-top);
+  width: 210px;
+  user-select: none;
+  transform: rotate(-9deg);
+  z-index: 1;
+  filter: drop-shadow(0 1px 0 #fff9e9) drop-shadow(1px 2px 1px #35291c38);
+}
+#zz-fullscreen button.board-logo-sticker {
+  pointer-events: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  overflow: visible;
+  perspective: 700px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+#zz-fullscreen .board-logo-sticker img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  /* A fixed hinge avoids the old animated cutout/vanishing-corner effect. */
+  clip-path: polygon(0 0, 100% 0, 100% 41.3%, 55% 100%, 0 100%);
+}
+#zz-fullscreen .board-logo-sticker .sticker-curl {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--sticker-art) center / 100% 100% no-repeat;
+  clip-path: polygon(100% 41%, 100% 100%, 54.7% 100%);
+  transform-origin: 77.5% 70.65%;
+  transform: rotate3d(1, -1, 0, 0deg);
+  transition: transform 480ms cubic-bezier(.22,.61,.36,1), filter 480ms ease;
+}
+#zz-fullscreen .board-logo-sticker .sticker-curl::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #d6c9ad 60%, #fff9eb 76%, #fffdf5 84%, #d9cdb5 100%);
+  -webkit-mask: var(--sticker-art) center / 100% 100% no-repeat;
+  mask: var(--sticker-art) center / 100% 100% no-repeat;
+  opacity: 0;
+  transition: opacity 480ms ease;
+}
+#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) .sticker-curl {
+  transform: rotate3d(1, -1, 0, 112deg);
+  filter: drop-shadow(1px 1px 0 #fff4dc) drop-shadow(2px 4px 3px #35291c38);
+}
+#zz-fullscreen .board-logo-sticker:is(.is-curled, :focus-visible) .sticker-curl::after { opacity: 1; }
+#zz-fullscreen .board-logo-sticker:focus-visible { outline: 2px dashed #7f7055; outline-offset: 10px; }
+@media (hover: hover) {
+  #zz-fullscreen .board-logo-sticker:hover .sticker-curl {
+    transform: rotate3d(1, -1, 0, 112deg);
+    filter: drop-shadow(1px 1px 0 #fff4dc) drop-shadow(2px 4px 3px #35291c38);
+  }
+  #zz-fullscreen .board-logo-sticker:hover .sticker-curl::after { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #zz-fullscreen .board-logo-sticker .sticker-curl,
+  #zz-fullscreen .board-logo-sticker .sticker-curl::after { transition: none; }
+}
+
+/* Moving the sticker uses the board’s existing scale-aware drag offsets. */
+#zz-fullscreen .board-logo-sticker.movable-object {
+  animation: none;
+  transition: filter 180ms ease;
+  cursor: grab !important;
+}
+#zz-fullscreen .board-logo-sticker.movable-object:is(:hover,:focus-visible,.object-held) {
+  transform: rotate(-9deg);
+}
+#zz-fullscreen .board-logo-sticker.movable-object.object-held {
+  cursor: grabbing !important;
+}
+
+/* Use the same original face-and-ZOONII collage as the profile page. */
+#zz-fullscreen .center.profile-sticker {
+  width: 350px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 12px;
+  align-items: center;
+  filter: drop-shadow(2px 5px 3px #35291c33);
+}
+#zz-fullscreen .profile-sticker .board-profile-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+
+}
+#zz-fullscreen .profile-sticker .profile-open {
+  margin: 0;
+  padding: 5px 12px;
+  background: #f3eee3;
+  font-size: 11px;
+  letter-spacing: .06em;
+  transform: rotate(2deg);
+}
+
+#zz-fullscreen .contact-intro { display:flex; align-items:center; gap:clamp(24px,5vw,64px); margin-bottom:32px; }
+#zz-fullscreen .contact-logo { display:block; width:clamp(150px,22vw,270px); height:auto; flex-shrink:0; }
+#zz-fullscreen .contact-intro h2 { margin-top:0; }
+@media(max-width:600px) { #zz-fullscreen .contact-intro { flex-direction:column; align-items:flex-start; gap:20px; } #zz-fullscreen .contact-logo { width:150px; } }
+
+/* Only the original white lettering turns; the lemon and green badge stay still. */
+.contact-art { position:relative; display:block; width:100%; aspect-ratio:558 / 555; }
+.contact-art > img { display:block; width:100%; height:100%; object-fit:contain; pointer-events:none; }
+.contact-art > .contact-ring-text { position:absolute; inset:0; animation:contact-text-orbit 12s linear infinite; transform-origin:50% 50%; }
+@keyframes contact-text-orbit { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .contact-art > .contact-ring-text { animation:none; } }
+
+/* Larger Contact badge on the fidget board. */
+#zz-fullscreen .board-shortcut[data-action="contact"],
+#zz-fullscreen .board-shortcut[data-action="contact"] .dock-art { width:240px; }
+
+/* The label stays flat; only the horse artwork receives the SVG sticker lighting. */
+#zz-fullscreen .club-glitter .club-sticker-art {
+  display:block;
+  width:100%;
+  height:auto;
+  overflow:visible;
+  pointer-events:none;
+  user-select:none;
+}
+
+/* Each matte sticker folds inward from its own edge. */
+#zz-fullscreen #zz-world .board-peel {
+  --peel-depth:0%;
+  --peel-ease:650ms cubic-bezier(.22,.75,.24,1.08);
+  overflow:visible;
+  isolation:isolate;
+}
+/* Profile: left → right. Archive: right → left. Career: bottom → top. */
+#zz-fullscreen .board-peel[data-action="about"] {
+  --peel-hover-depth:28%;
+  --peel-front-clip:inset(0 0 0 var(--peel-depth));
+  --peel-back-clip:inset(0 calc(100% - var(--peel-depth)) 0 0);
+  --peel-back-transform:translateX(calc(-100% + var(--peel-depth) + var(--peel-depth))) scaleX(-1);
+  --peel-shadow:3px 0 2px #35291c38;
+}
+#zz-fullscreen .board-peel[data-action="files"] {
+  --peel-hover-depth:34%;
+  --peel-front-clip:inset(0 var(--peel-depth) 0 0);
+  --peel-back-clip:inset(0 0 0 calc(100% - var(--peel-depth)));
+  --peel-back-transform:translateX(calc(100% - var(--peel-depth) - var(--peel-depth))) scaleX(-1);
+  --peel-shadow:-3px 0 2px #35291c38;
+}
+#zz-fullscreen .board-peel[data-action="career"] {
+  --peel-hover-depth:22%;
+  --peel-front-clip:inset(0 0 var(--peel-depth) 0);
+  --peel-back-clip:inset(calc(100% - var(--peel-depth)) 0 0 0);
+  --peel-back-transform:translateY(calc(100% - var(--peel-depth) - var(--peel-depth))) scaleY(-1);
+  --peel-shadow:0 -3px 2px #35291c38;
+}
+/* Keep the existing coloured die-cut edge on the artwork, outside the keyboard outline. */
+#zz-fullscreen #zz-world button.illustrated-menu.board-peel { filter:none; }
+#zz-fullscreen .board-peel[data-action="about"] .board-peel-frame { filter:url(#board-profile-edge); }
+#zz-fullscreen .board-peel[data-action="files"] .board-peel-frame { filter:url(#board-archive-edge); }
+#zz-fullscreen .board-peel[data-action="career"] .board-peel-frame { filter:url(#board-career-edge); }
+#zz-fullscreen .board-peel-frame {
+  display:block;
+  position:relative;
+  width:100%;
+  pointer-events:none;
+}
+#zz-fullscreen .board-peel-front {
+  display:block;
+  clip-path:var(--peel-front-clip);
+  transition:clip-path var(--peel-ease);
+}
+#zz-fullscreen .board-peel-flap {
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:clip;
+  pointer-events:none;
+  filter:drop-shadow(var(--peel-shadow));
+}
+#zz-fullscreen .board-peel-back {
+  display:block;
+  position:absolute;
+  inset:0;
+  background:#e9e2d4;
+  clip-path:var(--peel-back-clip);
+  transform:var(--peel-back-transform);
+  transition:clip-path var(--peel-ease),transform var(--peel-ease);
+}
+#zz-fullscreen .board-peel-cutout {
+  -webkit-mask:var(--peel-art) center / 100% 100% no-repeat;
+  mask:var(--peel-art) center / 100% 100% no-repeat;
+}
+@media (hover:hover) {
+  #zz-fullscreen #zz-world .board-peel:hover { --peel-depth:var(--peel-hover-depth); }
+}
+#zz-fullscreen #zz-world .board-peel:focus-visible { --peel-depth:var(--peel-hover-depth); }
+#zz-fullscreen #zz-world .board-peel.object-held { --peel-depth:calc(var(--peel-hover-depth) + 8%); }
+@media (prefers-reduced-motion:reduce) {
+  #zz-fullscreen .board-peel-front,
+  #zz-fullscreen .board-peel-back { transition:none; }
+}

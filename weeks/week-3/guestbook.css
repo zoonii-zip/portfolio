@@ -1,0 +1,162 @@
+#zz-message-section .guest-wall{overflow-y:auto!important;overscroll-behavior:contain}
+#zz-message-section #zz-guestresult{display:grid!important;position:relative;grid-template-columns:repeat(auto-fill,min(220px,100%));justify-content:start;align-content:start;gap:28px 20px;height:auto!important;padding:16px 8px;box-sizing:border-box}
+#zz-message-section .wall-note{position:relative!important;inset:auto!important;width:auto!important;min-width:0;min-height:200px;align-self:start;margin:0}
+#zz-message-section .wall-note time{display:block;font:10px/1.8 monospace;color:#6b6250;margin-top:8px}
+#zz-message-section .guest-compose{overflow-y:auto!important}
+#zz-message-section #zz-guestform{flex:none;min-height:310px}
+#zz-message-section .paper-preview{flex:none}
+#zz-message-section .paper-preview textarea{min-height:80px}
+#zz-message-section .guest-challenge{margin:0 0 8px;min-width:0}
+#zz-message-section .guest-refresh{border:1px solid #998d6c;background:#f7f4ed;padding:8px 12px;cursor:pointer}
+#zz-message-section .guest-empty{font-size:14px;line-height:1.7;color:#615948}
+#zz-message-section .paper-preview label:has(textarea){flex:none}
+#zz-message-section .paper-preview textarea{flex:none;height:96px;min-height:80px}
+
+#zz-message-section .guest-verification-status{margin:0 0 10px;font:12px/1.5 Arial,sans-serif;color:#327344}
+
+/* Original pink house memo artwork, with writing kept inside its yellow center. */
+#zz-message-section .paper-house { background:transparent url('assets/guestbook-house.webp') center / 100% 100% no-repeat; color:#382711; border:0; box-shadow:none; }
+#zz-message-section .paper-choice.paper-house { grid-column:1 / -1; min-height:100px; background-size:contain; font-weight:700; }
+#zz-message-section .paper-choice.paper-house[aria-pressed=true] { outline:2px solid #f92692; outline-offset:3px; }
+#zz-message-section .paper-preview.paper-house { padding:40px 18% 32px; min-height:310px; }
+#zz-message-section .wall-note.paper-house { padding:38px 34px 30px; min-height:240px; }
+#zz-message-section .wall-note.paper-house::before,#zz-message-section .wall-note.paper-house::after { display:none; }
+#zz-message-section .wall-note.paper-house p { overflow-wrap:anywhere; }
+
+/* Keep the supplied apple artwork intact, including its transparent edge. */
+#zz-message-section .paper-yellow{background:transparent url('assets/guestbook-apple.webp') center / 100% 100% no-repeat;border:0;box-shadow:none;color:#513308}
+#zz-message-section .paper-choice.paper-yellow{min-height:100px;background-size:contain;padding-top:48px;font-weight:700}
+#zz-message-section .paper-choice.paper-yellow[aria-pressed=true]{outline:2px solid #e52b13;outline-offset:3px}
+#zz-message-section .paper-preview.paper-yellow{box-sizing:border-box;aspect-ratio:1;min-height:0;padding:39% 18% 14%;gap:0}
+#zz-message-section .paper-preview.paper-yellow label{margin-bottom:4px;font-size:10px}
+#zz-message-section .paper-preview.paper-yellow input{padding:3px 0;font-size:13px;line-height:1.4}
+#zz-message-section .paper-preview.paper-yellow textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
+#zz-message-section .wall-note.paper-yellow{height:220px;min-height:220px;padding:88px 38px 50px;display:flex;flex-direction:column}
+#zz-message-section .wall-note.paper-yellow::before,#zz-message-section .wall-note.paper-yellow::after{display:none}
+#zz-message-section .wall-note.paper-yellow p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
+#zz-message-section .wall-note.paper-yellow small{flex:none;font-size:10px}
+#zz-message-section .wall-note.paper-yellow time{flex:none;margin-top:2px;font-size:9px}
+#zz-message-section .paper-preview.paper-yellow small{text-align:center}
+#zz-message-section .wall-note.paper-yellow small,#zz-message-section .wall-note.paper-yellow time{text-align:center}
+
+/* Original tooth and can memo artwork, replacing the pink and ticket papers; retain lined for existing entries. */
+#zz-message-section .paper-pink{background:transparent url('assets/guestbook-teeth.webp') center / 100% 100% no-repeat;color:#123166;border:0;box-shadow:none}
+#zz-message-section :is(.paper-lined,.paper-ticket){background:transparent url('assets/guestbook-dopamine.webp') center / 100% 100% no-repeat;color:#282828;border:0;box-shadow:none}
+#zz-message-section .paper-choice.paper-pink,#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){min-height:100px;background-size:contain;font-weight:700;box-shadow:none}
+#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket){padding-top:48px}
+#zz-message-section .paper-choice.paper-pink[aria-pressed=true]{outline:2px solid #183cfe;outline-offset:3px}
+#zz-message-section .paper-choice:is(.paper-lined,.paper-ticket)[aria-pressed=true]{outline:2px solid #ec4014;outline-offset:3px}
+#zz-message-section .paper-preview.paper-pink,#zz-message-section .paper-preview:is(.paper-lined,.paper-ticket){box-sizing:border-box;min-height:0;gap:0}
+#zz-message-section .paper-preview.paper-pink{aspect-ratio:1;padding:22% 27% 31% 29%}
+#zz-message-section .paper-preview:is(.paper-lined,.paper-ticket){aspect-ratio:827 / 1181;padding:72% 24% 17%}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) label{margin-bottom:4px;font-size:10px}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) input{padding:3px 0;font-size:13px;line-height:1.4}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) textarea{height:54px;min-height:54px;padding:3px 0;font-size:13px;line-height:1.4;resize:none}
+#zz-message-section .paper-preview:is(.paper-pink,:is(.paper-lined,.paper-ticket)) small{text-align:center}
+#zz-message-section .wall-note.paper-pink{height:220px;min-height:220px;padding:46px 52px 76px 62px;display:flex;flex-direction:column}
+#zz-message-section .wall-note:is(.paper-lined,.paper-ticket){height:314px;min-height:314px;padding:145px 49px 60px;display:flex;flex-direction:column}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket))::before,#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket))::after{display:none}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) p{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;margin:0 0 5px;font-size:13px;line-height:1.5}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) small{flex:none;font-size:10px;text-align:center}
+#zz-message-section .wall-note:is(.paper-pink,:is(.paper-lined,.paper-ticket)) time{flex:none;margin-top:2px;font-size:9px;text-align:center}
+
+/* An open memo wall with a separate writing dialog. */
+#zz-message-section .guest-layout{display:block!important;grid-template-columns:none!important;position:relative}
+#zz-message-section .guest-wall{width:100%;box-sizing:border-box}
+#zz-message-section #zz-guestresult{justify-content:center;gap:36px 28px;padding-bottom:90px}
+#zz-message-section .guest-room>#zz-leave-note{display:block!important;position:absolute;z-index:2;left:50%;top:50%;margin:0;transform:translate(-50%,-50%) rotate(-3deg);padding:19px 32px;white-space:nowrap;background:#ffdf57;border:1px solid #463f29;color:#262622;border-radius:3px;box-shadow:5px 7px 0 #44392430;font:700 18px/1.3 Arial,sans-serif;cursor:pointer}
+#zz-message-section .guest-compose-dialog{box-sizing:border-box;position:fixed;inset:0;margin:auto;width:min(560px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 48px);padding:24px;border:1px solid #ab9d80;border-radius:12px;background:#f6f0e4;color:#262622;box-shadow:0 24px 90px #19150e45;overflow:auto;overscroll-behavior:contain}
+#zz-message-section .guest-compose-dialog:not([open]){display:none!important}
+#zz-message-section .guest-compose-dialog::backdrop{background:#25251e70;backdrop-filter:blur(5px)}
+#zz-message-section .guest-dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}
+#zz-message-section .guest-dialog-heading h2{font:800 26px/1.2 Arial,sans-serif;margin:0}
+#zz-message-section .guest-dialog-close{flex:none;width:40px;height:40px;border:1px solid #a79d86;border-radius:50%;background:transparent;font:28px/1 Arial,sans-serif;cursor:pointer}
+#zz-message-section .guest-compose-dialog .guest-compose{position:static!important;display:flex!important;width:100%;max-height:none!important;height:auto;overflow:visible!important;padding:22px 0 0;background:transparent;border:0;box-shadow:none;box-sizing:border-box}
+#zz-message-section .guest-compose-dialog .paper-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 24px}
+#zz-message-section .guest-compose-dialog .paper-choice{grid-column:auto;min-height:95px;padding:60px 2px 3px;font-size:10px}
+#zz-message-section .guest-compose-dialog #zz-guestform{flex:none;min-height:0}
+#zz-message-section .guest-compose-dialog .paper-preview{flex:none;width:min(300px,100%);margin:16px auto;min-height:0}
+#zz-message-section .guest-compose-dialog .guest-stick{padding:14px;font-weight:700}
+#zz-message-section .guest-compose-dialog :is(button,input,textarea):focus-visible,#zz-message-section #zz-leave-note:focus-visible{outline:3px solid #555c38;outline-offset:4px}
+@media(max-width:760px){#zz-message-section .guest-compose-dialog{padding:18px;max-height:calc(100dvh - 28px)}#zz-message-section .guest-compose-dialog .paper-choices{gap:5px}#zz-message-section .guest-compose-dialog .paper-choice{min-height:78px;padding-top:45px}#zz-message-section .guest-room>#zz-leave-note{font-size:16px;padding:17px 26px}}
+/* Percentage padding used the wider modal as its reference; keep fields inside the artwork. */
+#zz-message-section .guest-compose-dialog .paper-preview.paper-yellow{padding:117px 54px 42px;height:300px;aspect-ratio:auto}
+#zz-message-section .guest-compose-dialog .paper-preview.paper-pink{padding:66px 81px 93px 87px;height:300px;aspect-ratio:auto}
+#zz-message-section .guest-compose-dialog .paper-preview:is(.paper-lined,.paper-ticket){padding:216px 72px 51px;height:428px;aspect-ratio:auto}
+#zz-message-section .guest-compose-dialog .paper-preview.paper-house{padding:40px 54px 32px;min-height:310px}
+
+/* The page scrolls as one open board, clear of the fixed action row and dock. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){overflow-y:auto;overflow-x:hidden}
+#zz-fullscreen #zz-body:has(>#zz-message-section){height:auto;min-height:100dvh;overflow:visible}
+#zz-fullscreen #zz-body>#zz-message-section{height:auto!important;min-height:100dvh!important;overflow:visible;padding-bottom:var(--guest-bottom-clearance,240px)!important}
+#zz-message-section .guest-room{height:auto;min-height:calc(100dvh - 380px)}
+#zz-message-section .guest-layout,#zz-message-section .guest-wall{height:auto;min-height:0;max-height:none;overflow:visible!important}
+#zz-message-section #zz-guestresult{height:auto!important;max-height:none;overflow:visible;padding:30px 8px 40px}
+#zz-message-section .wall-note{height:auto!important;overflow:visible}
+#zz-message-section .wall-note p{overflow:visible!important;flex:none;overflow-wrap:anywhere}
+#zz-message-section .guest-room>#zz-leave-note{top:calc(50dvh - 128px)}
+/* Guestbook actions: note first, matching intro replay immediately beside it. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section)>.panelhead{display:none!important}
+#zz-message-section .guest-room>header,#zz-message-section #zz-wall-back{display:none!important}
+body .guest-actions{display:flex;justify-content:flex-end;align-items:center;gap:12px;position:relative;z-index:2;margin:0 0 24px}
+:root body .guest-actions #zz-leave-note{--paper-tone:#000;color:#fff9eb!important;order:0;display:block!important;position:relative;inset:auto;margin:0;padding:12px 20px;font-size:28px;line-height:1.1;white-space:nowrap;cursor:pointer}
+body .guest-actions .guest-refresh{order:1;display:grid;place-items:center;flex:none;width:48px;height:48px;padding:0;border:0;background:transparent;box-shadow:none;cursor:pointer;filter:drop-shadow(1px 3px 2px #30291e26);transition:transform .18s}
+body .guest-actions .guest-refresh svg{display:block;width:48px;height:48px}
+body .guest-actions .guest-refresh:hover{transform:rotate(9deg) translateY(-2px)}
+body .guest-actions .guest-refresh:focus-visible{outline:2px solid #555c38;outline-offset:4px}
+
+/* Paint cork on the scroll container so it covers the viewport at every scroll offset. */
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){background-color:#d99046;background-image:linear-gradient(#8080808c,#8080808c),url('/weeks/week-3/assets/fidget-board-cork.webp');background-position:center;background-size:auto,680px auto;background-repeat:repeat;background-attachment:scroll;background-blend-mode:color,normal;isolation:isolate}
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section)::before{content:none}
+
+/* Keep writing and refresh controls anchored while the memo wall scrolls. */
+body .guest-actions{position:fixed;top:auto;right:auto;left:50%;bottom:var(--guest-actions-bottom,120px);transform:translateX(-50%);justify-content:center;width:max-content;max-width:calc(100vw - 32px);margin:0;z-index:20}
+#zz-message-section .guest-room{padding-top:0;box-sizing:border-box}
+
+
+body .guest-actions{display:none}
+html.viewing-space:has(#zz-body>#zz-message-section) body .guest-actions{display:flex;z-index:10000}
+
+/* A sheet of stationery on the cork board. */
+#zz-message-section .guest-compose-dialog{width:min(580px,calc(100vw - 32px));padding:28px;border:0;border-radius:2px 7px 3px 5px;background:#fff9e9 url('/weeks/week-3/assets/profile-yellow/paper-grain.svg') repeat;box-shadow:4px 6px 0 #e2d8bf,0 24px 70px #241a164d;color:#25231f}
+#zz-message-section .guest-compose-dialog::backdrop{background:#241b1759;backdrop-filter:blur(3px)}
+#zz-message-section .guest-dialog-heading{align-items:flex-start;gap:16px;padding-bottom:18px;border-bottom:1px dashed #867b6055}
+#zz-message-section .guest-dialog-heading h2{font:400 48px/.95 'Just Another Hand',sans-serif!important;letter-spacing:.01em}
+#zz-message-section .guest-dialog-intro{margin:10px 0 0;font-size:13px;line-height:1.6;color:#6a6254}
+#zz-message-section .guest-compose-dialog .guest-compose{padding-top:20px}
+#zz-message-section .guest-compose-dialog .mono{font-size:12px;line-height:1.5;letter-spacing:.01em;color:#625a4e}
+#zz-message-section .guest-compose-dialog .paper-choices{gap:12px;margin:14px 0 22px}
+#zz-message-section .guest-compose-dialog .paper-choice{height:86px;min-height:0;padding:8px;font-size:0;background-size:auto 72px;outline:none;border:0;border-radius:3px;box-shadow:none;transition:transform .16s,outline-color .16s}
+#zz-message-section .guest-compose-dialog .paper-choice[aria-pressed=true]{outline:1.5px dashed #37312b;outline-offset:3px;transform:rotate(-3deg)}
+#zz-message-section .guest-compose-dialog .paper-choice:hover{transform:translateY(-3px)}
+#zz-message-section .guest-compose-dialog .paper-preview{margin:12px auto 20px;filter:drop-shadow(2px 5px 2px #49351c20)}
+:root body #zz-message-section .guest-compose-dialog .guest-dialog-close,
+:root body #zz-message-section .guest-compose-dialog .guest-stick{--paper-tone:#191917;color:#fff9e9!important}
+#zz-message-section .guest-compose-dialog .guest-dialog-close{margin:0;width:40px;height:40px}
+#zz-message-section .guest-compose-dialog .guest-stick{display:block;width:min(270px,100%);margin:0 auto;min-height:48px;font-size:17px!important;font-weight:500!important;letter-spacing:.02em}
+#zz-message-section .guest-compose-dialog .guest-stick:disabled{opacity:.45}
+#zz-message-section .guest-compose-dialog #zz-guest-status{margin:16px auto 0;max-width:420px;text-align:center;font-size:12px;line-height:1.65;color:#716757}
+@media(max-width:600px){#zz-message-section .guest-compose-dialog{padding:20px;max-height:calc(100dvh - 36px)}#zz-message-section .guest-dialog-heading h2{font-size:40px!important}#zz-message-section .guest-compose-dialog .paper-choices{gap:8px}#zz-message-section .guest-compose-dialog .paper-choice{height:70px;background-size:auto 60px}}
+#zz-message-section .guest-compose-dialog{background-image:linear-gradient(#fff9e9b3,#fff9e9b3),url('/weeks/week-3/assets/profile-yellow/paper-grain.svg')}
+:root body #zz-message-section .guest-compose-dialog .guest-dialog-close svg{color:#fff9e9!important}
+
+/* Evenly spaced notes and enough room around the fixed controls. */
+#zz-message-section .guest-room{width:100%;max-width:1120px;margin-inline:auto}
+#zz-message-section #zz-guestresult{gap:44px clamp(24px,3vw,40px);padding-top:12px;padding-bottom:32px}
+#zz-message-section .wall-note{filter:drop-shadow(2px 5px 3px #35201326)}
+#zz-message-section .wall-note p{font-size:13px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere;letter-spacing:-.015em}
+#zz-message-section .wall-note small{display:block;margin-top:10px;font-family:Arial,sans-serif;font-size:10px;font-weight:600;line-height:1.6;color:inherit;opacity:.8}
+#zz-message-section .wall-note time{font-size:9px;line-height:1.6;letter-spacing:0;color:inherit;opacity:.65}
+#zz-message-section .guest-empty{grid-column:1/-1;justify-self:center;margin:40px 0;padding:24px 28px;max-width:360px;text-align:center;background:#fff9e9d9;border-radius:2px;box-shadow:2px 3px 0 #533c2020;color:#514331;word-break:keep-all}
+body .guest-actions{gap:14px;filter:drop-shadow(0 3px 4px #37271824)}
+body .guest-actions .guest-refresh:disabled{opacity:.5;cursor:wait}
+body .guest-actions :is(button):focus-visible{outline:2px dashed #262622;outline-offset:6px}
+#zz-message-section .guest-compose-dialog .guest-dialog-intro{word-break:keep-all}
+@media(max-width:760px){
+ #zz-message-section #zz-guestresult{gap:36px 24px}
+}
+@media(max-width:400px){
+ :root body .guest-actions #zz-leave-note{font-size:26px;padding:12px 18px}
+}
+/* Start can notes below the printed title, including longer existing messages. */
+#zz-message-section .wall-note:is(.paper-lined,.paper-ticket){min-height:340px;padding:185px 49px 42px}

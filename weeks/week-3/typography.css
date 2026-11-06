@@ -1,0 +1,100 @@
+/* Source Sans 3 by Adobe and SUIT are distributed under SIL OFL 1.1. */
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('assets/fonts/SourceSans3VF-Upright.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('assets/fonts/SourceSans3VF-Italic.woff2') format('woff2-variations');
+}
+/* SUIT: https://sun.fo/suit/ (SIL OFL, Korean fallback). */
+@font-face {
+  font-family: 'SUIT';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/SUIT-Variable.woff2') format('woff2');
+}
+:root {
+  --font-body: 'Source Sans 3', 'SUIT', 'Helvetica Neue', Arial, sans-serif;
+  --font-title: var(--font-body);
+  --font-display-en: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+}
+/* Existing components use font shorthands; unify the family without changing sizing. */
+:root body, :root body :where(*) {
+  font-family: var(--font-body) !important;
+}
+:root body #zz-logo-entry .intro-copy [lang='en'] {
+  font-weight: 400;
+  letter-spacing: -.015em;
+}
+
+/* Keep all English display typography in the same neutral grotesk family. */
+:root body :is(
+  #zz-logo-entry .intro-copy [lang='en'],
+  #zz-fullscreen .profile-film-title,
+  #zz-fullscreen .profile-film-title span,
+  #zz-fullscreen .cs-hero h2,
+  #zz-fullscreen .cs-hero h2 span,
+  #zz-fullscreen .cs-chapter h3,
+  #zz-fullscreen .cs-end h3,
+  #zz-fullscreen .cs-feature strong
+) {
+  font-family: var(--font-display-en) !important;
+}
+
+/* Site-wide desktop cursor: the navigation Career glove, pointing with its index finger. */
+@media (hover:hover) and (pointer:fine){
+ html:root,html:root body,html:root body *,html:root body *::before,html:root body *::after,html:root dialog::backdrop{cursor:url('/weeks/week-3/assets/cursors/career-pointer.png') 21 2,auto!important}
+}
+
+/* Handwritten face for the intro and paper controls. */
+@font-face {
+ font-family:'Just Another Hand';font-style:normal;font-weight:400;font-display:swap;
+ src:url('assets/fonts/JustAnotherHand-Regular.ttf') format('truetype');
+}
+:root body #zz-logo-entry .intro-copy [lang='en'] {
+ font-family:'Just Another Hand',cursive!important;font-weight:400;
+ font-size:clamp(36px,4.5vw,60px);line-height:1.08;letter-spacing:.01em;
+}
+
+/* Archive tab typefaces and proportions from the selected Figma labels. */
+@font-face {
+ font-family:'Pixelify Sans';font-style:normal;font-weight:400 700;font-display:swap;
+ src:url('assets/fonts/PixelifySans-Variable.ttf') format('truetype');
+}
+@font-face {
+ font-family:'Boldonse';font-style:normal;font-weight:400;font-display:swap;
+ src:url('assets/fonts/Boldonse-Regular.ttf') format('truetype');
+}
+:root body #zz-fullscreen #zz-body .archive-tabs{--archive-tab-type-size:34px}
+:root body #zz-fullscreen #zz-body .archive-tabs strong{
+ font-weight:400!important;font-style:normal!important;
+}
+:root body #zz-fullscreen #zz-body #archive-tab-STORY strong {
+ font-family:'Just Another Hand',var(--font-body)!important;
+ font-size:var(--archive-tab-type-size)!important;text-transform:uppercase;
+ line-height:1!important;letter-spacing:0!important;
+}
+:root body #zz-fullscreen #zz-body #archive-tab-PRODUCT strong {
+ font-family:'Pixelify Sans',var(--font-body)!important;
+ font-size:var(--archive-tab-type-size)!important;
+ line-height:1.2!important;letter-spacing:-.02em!important;white-space:nowrap!important;
+}
+:root body #zz-fullscreen #zz-body #archive-tab-VISUAL strong {
+ font-family:'Boldonse',var(--font-body)!important;
+ font-size:calc(var(--archive-tab-type-size) * .6)!important;
+ line-height:1.433333!important;letter-spacing:0!important;white-space:pre-line!important;
+}
+@media(max-width:700px){
+ :root body #zz-fullscreen #zz-body .archive-tabs{--archive-tab-type-size:26px}
+}
+
+@font-face{font-family:'Shine Coasty';src:url('/weeks/week-3/assets/fonts/Shine-Coasty-Demo.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+:root body #zz-logo-entry .intro-copy [lang='en']{font-family:'Shine Coasty',cursive!important;font-weight:400}

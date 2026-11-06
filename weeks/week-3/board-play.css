@@ -1,0 +1,22 @@
+/* Small tactile objects share the board's responsive coordinate system. */
+#zz-fullscreen .board-light-switch,#zz-fullscreen .board-star-toy{position:absolute;left:var(--board-left);top:var(--board-top);padding:0;border:0;touch-action:none;user-select:none;z-index:16}
+#zz-fullscreen .board-light-switch{width:156px;height:234px;background:transparent;box-shadow:none;transform:rotate(-8deg);transition:transform .12s ease;overflow:visible}
+#zz-fullscreen .board-light-switch .light-art{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
+#zz-fullscreen .board-light-switch:active{transform:translateY(2px) rotate(-8deg) scale(.97)}
+#zz-fullscreen .board-star-toy{width:160px;height:220px;background:transparent;overflow:visible;filter:drop-shadow(3px 7px 3px #34251c44)}
+#zz-fullscreen .board-star-toy svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+#zz-fullscreen .board-star-toy .star-face{pointer-events:none}
+#zz-fullscreen .board-star-toy .star-coil{fill:none;stroke:#34312b;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+#zz-fullscreen .board-star-toy .star-coil-shine{fill:none;stroke:#a7a294;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+#zz-fullscreen .board-light-switch:focus-visible,#zz-fullscreen .board-star-toy:focus-visible{outline:3px dashed #faedbd;outline-offset:8px}
+#zz-camera-plane #zz-stage::before{transition:filter .45s ease}
+#zz-fullscreen.board-night #zz-stage::before{filter:saturate(.35) brightness(.38)}
+#zz-fullscreen .world{transition:transform .68s cubic-bezier(.22,1,.36,1),filter .45s ease}
+#zz-fullscreen.board-night .world{filter:brightness(.83) saturate(.86) drop-shadow(0 5px 10px #121a2e45)}
+#zz-fullscreen.board-night .board-star-toy .star-face{fill:#ffe28a;filter:drop-shadow(0 0 9px #ffdc7480)}
+@media(prefers-reduced-motion:reduce){#zz-camera-plane #zz-stage::before,#zz-fullscreen .world,#zz-fullscreen .board-light-switch{transition:none}}
+
+/* The plate stays fixed; only the original ivory lever pivots toward sun/moon. */
+#zz-fullscreen .board-light-switch .light-lever{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;clip-path:polygon(50.1% 35%,50.4% 34%,52% 32.4%,55% 31.6%,58.5% 31.6%,61.4% 32.7%,63% 34.5%,63.1% 36%,61.9% 38.5%,58% 44.5%,56.5% 45.6%,55% 48.5%,53% 49.8%,50% 49.8%,47.2% 48.3%,47.3% 46.8%,48.5% 43%,49.6% 39%);transform-origin:50% 48.5%;transform:rotateX(0deg);transition:transform .22s cubic-bezier(.2,.8,.3,1.15)}
+#zz-fullscreen .board-light-switch[aria-checked=true] .light-lever{transform:rotateX(180deg)}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .board-light-switch .light-lever{transition:none}}
