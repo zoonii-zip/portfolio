@@ -1,16 +1,16 @@
-export const FPS=30, TICKS=600, VERSION=4;
+export const FPS=30, TICKS=600, VERSION=5;
 export function createGame(seed){
  let n=seed>>>0;
  const random=()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};
  const drops=[];
  for(let tick=0;tick<TICKS;){
   const progress=tick/(TICKS-1);
-  const fallTicks=Math.round(78-48*progress);
+  const fallTicks=Math.round(92-38*progress);
   if(tick+fallTicks>=TICKS)break;
   const baseX=.16+random()*.68,phase=random()*Math.PI*2;
-  const bomb=tick>90&&random()<.23;
-  drops.push({tick,fallTicks,x:baseX,baseX,phase,sway:.08+progress*.12,frequency:1.1+random()*.8,z:.6,kind:Math.floor(random()*9)+1,bomb,done:false,caught:false});
-  tick+=Math.round(30-20*progress);
+  const bomb=tick>180&&random()<.12;
+  drops.push({tick,fallTicks,x:baseX,baseX,phase,sway:.04+progress*.06,frequency:.65+random()*.45,z:.6,kind:Math.floor(random()*9)+1,bomb,done:false,caught:false});
+  tick+=Math.round(34-15*progress);
  }
  return {tick:0,x:.5,z:.6,score:0,drops,caught:0};
 }
@@ -22,7 +22,7 @@ export function step(g,mask){
   if(d.done||g.tick<d.tick)continue;
   const age=(g.tick-d.tick)/d.fallTicks;
   d.x=Math.max(.07,Math.min(.93,d.baseX+Math.sin(age*Math.PI*2*d.frequency+d.phase)*d.sway));
-  if(g.tick-d.tick===d.fallTicks){d.done=true;if(Math.abs(d.x-g.x)<.12){d.caught=true;d.delta=d.bomb?-Math.min(200,g.score):100;g.score+=d.delta;if(!d.bomb)g.caught++;}}
+  if(g.tick-d.tick===d.fallTicks){d.done=true;if(Math.abs(d.x-g.x)<(d.bomb?.10:.15)){d.caught=true;d.delta=d.bomb?-Math.min(200,g.score):100;g.score+=d.delta;if(!d.bomb)g.caught++;}}
  }
  g.tick++;
 }

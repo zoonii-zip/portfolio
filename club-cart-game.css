@@ -275,3 +275,25 @@ body:has(.ttc-game:not([hidden])) :is(#zz-global-dock,#zz-fixed-links,#zz-overvi
 
 #zz-fullscreen .ttc-entry-actions{position:relative}
 #zz-fullscreen .ttc-screen .ttc-rules{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;font-size:13px;line-height:1.5;margin:0;color:#333;font-weight:600}
+
+/* A quiet paper result card: one score, one primary action. */
+#zz-fullscreen .ttc-game[data-state=result] :is(.ttc-hud,.ttc-dpad){display:none}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-court canvas{visibility:hidden}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-screen{padding:100px 20px 130px;background:transparent;backdrop-filter:none;overflow-y:auto;justify-content:center}
+#zz-fullscreen .ttc-result-card{width:min(460px,100%);padding:32px 30px 28px;display:flex;flex-direction:column;align-items:center;gap:24px;background:#fffaf0 url('/assets/club-game/grain.svg');border:1px solid #d9cfbd;box-shadow:0 8px 0 -3px #e5dac5,0 16px 38px #45371912; border-radius:3px;position:relative}
+:root body #zz-fullscreen .ttc-result-card .ttc-overline{font-family:'Just Another Hand',sans-serif!important;font-size:30px;line-height:1;letter-spacing:.09em;color:#29251f}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2{font-family:'Shine Coasty',Georgia,serif!important;font-size:clamp(54px,8vw,82px)!important;font-style:normal!important;font-weight:400;line-height:1;letter-spacing:-.04em;color:#00afd5;text-shadow:none;margin:0;white-space:nowrap}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2 small{font-family:'Just Another Hand',sans-serif!important;font-size:26px;letter-spacing:.04em;color:#29251f;vertical-align:baseline}
+#zz-fullscreen .ttc-result-card form{display:grid;grid-template-columns:1fr;gap:16px;width:100%;padding-top:22px;border-top:1px dashed #cfc4ae}
+#zz-fullscreen .ttc-result-card label{display:grid;gap:10px;font-size:13px;font-weight:600;color:#454238}
+#zz-fullscreen .ttc-result-card input{width:100%;min-width:0;height:52px;padding:12px 15px;font-size:16px;border:1px solid #b9ae98;border-radius:3px;background:#fffef9;box-shadow:none;color:#26231e;outline:none}
+#zz-fullscreen .ttc-result-card input:focus{border-color:#009fbd;box-shadow:0 0 0 3px #00bfe71f;outline:none;outline-offset:0}
+:root body #zz-fullscreen .ttc-result-card button{font-family:'Just Another Hand',sans-serif!important;font-size:27px!important;line-height:1!important;letter-spacing:.025em;min-height:50px;padding:12px 18px}
+:root body #zz-fullscreen .ttc-result-card form button.zz-paper-control{--paper-tone:#24221f;color:#fffaf0!important;--paper-tilt:-1deg;width:100%}
+#zz-fullscreen .ttc-result-card .ttc-result-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;padding-top:6px}
+#zz-fullscreen .ttc-result-card .ttc-result-ranking{width:100%;max-height:160px;margin:0;font-size:14px}
+#zz-fullscreen .ttc-result-card>p{font-size:14px;line-height:1.6;color:#5c564a}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status{bottom:100px;left:24px;right:24px;font-size:13px;color:#a93625}
+#zz-fullscreen .ttc-game[data-state=result] .ttc-status:empty{display:none}
+@media(max-width:480px){#zz-fullscreen .ttc-result-card{padding:24px 20px;gap:20px}:root body #zz-fullscreen .ttc-result-card button{font-size:24px!important}#zz-fullscreen .ttc-result-card .ttc-result-actions{gap:12px}}
+@media(max-height:700px){#zz-fullscreen .ttc-game[data-state=result] .ttc-screen{justify-content:flex-start;padding-top:85px}#zz-fullscreen .ttc-result-card{gap:16px;padding-top:22px;padding-bottom:22px}}
