@@ -2,7 +2,7 @@ import {arrangeStore} from './club-store-layout.mjs?v=11f3e8b916';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT, CART_PUBLIC_KEY} from './club-cart-config.mjs?v=86df37af63';
 import {createGame,step,FPS,TICKS,VERSION} from './supabase/functions/_shared/cart-model.mjs?v=a5f4dd3349';
-const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=82721cd016';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=e7cbbe9c50';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=!CART_ENDPOINT&&['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
@@ -38,14 +38,14 @@ function mount(){
   for(const d of things){const p=project(d.x,d.z),age=game.tick-d.tick;ctx.fillStyle=`rgba(36,77,57,${age>d.fallTicks?.08:.16})`;ctx.beginPath();ctx.ellipse(p.x,p.y,36,12,0,0,Math.PI*2);ctx.fill();}
   const intro=state==='ready'||state==='starting',compact=box.width<600;
   const scale=intro?Math.min(compact?220:320,box.width*(compact?.48:.32))*960/(208*box.width):(.75+game.z*.27)*1.215;
-  const p=intro?{x:960*((compact?.5:.75)+(game.x-.5)*(compact?.35:.22)),y:560*(compact?.59:.46)+64*scale*aspect}:project(game.x,game.z);
+  const p=intro?{x:960*((compact?.5:.70)+(game.x-.5)*(compact?.35:.22)),y:560*(compact?.59:.46)+64*scale*aspect}:project(game.x,game.z);
   const drawCart=()=>{
    ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale*aspect);
    const shadow=ctx.createRadialGradient(-3,12,8,-3,12,79);shadow.addColorStop(0,'#26382b24');shadow.addColorStop(1,'#26382b00');
    ctx.save();ctx.scale(1,.28);ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(-3,40,85,0,Math.PI*2);ctx.fill();ctx.restore();
    // Decorative merchandise belongs only to the entry preview, never the score model.
    if(intro){
-    const preview=[{kind:2,x:-38,y:-107,size:67,angle:-.22},{kind:6,x:12,y:-112,size:70,angle:.14},{kind:4,x:36,y:-96,size:52,angle:.24},{kind:0,x:-23,y:-83,size:52,angle:-.12},{kind:7,x:24,y:-80,size:50,angle:.16}];
+    const preview=[{kind:8,x:-38,y:-137,size:62,angle:-.22},{kind:5,x:0,y:-141,size:64,angle:.13},{kind:3,x:38,y:-130,size:58,angle:.22},{kind:2,x:-40,y:-108,size:64,angle:-.18},{kind:6,x:6,y:-113,size:68,angle:.12},{kind:4,x:42,y:-100,size:52,angle:.22},{kind:0,x:-27,y:-80,size:50,angle:-.14},{kind:1,x:4,y:-78,size:47,angle:.09},{kind:7,x:34,y:-80,size:48,angle:.16}];
     for(const item of preview){const image=art[item.kind];if(!image.complete||!image.naturalWidth)continue;ctx.save();ctx.translate(item.x,item.y);ctx.rotate(item.angle);ctx.drawImage(image,-item.size/2,-item.size/2,item.size,item.size);ctx.restore();}
    }
    const caughtItems=game.drops.filter(drop=>drop.caught&&!drop.bomb);for(let i=0;i<caughtItems.length;i++){
