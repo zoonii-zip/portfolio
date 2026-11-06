@@ -1,8 +1,8 @@
-import {arrangeStore} from './club-store-layout.mjs?v=106ff013dd';
+import {arrangeStore} from './club-store-layout.mjs?v=11f3e8b916';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT, CART_PUBLIC_KEY} from './club-cart-config.mjs?v=86df37af63';
 import {createGame,step,FPS,TICKS,VERSION} from './supabase/functions/_shared/cart-model.mjs?v=a5f4dd3349';
-const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=bc50bc2f3d';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=eeaabf4fb6';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=!CART_ENDPOINT&&['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
@@ -36,11 +36,18 @@ function mount(){
   ctx.clearRect(0,0,960,560); // Transparent canvas keeps the shared pegboard texture visible.
   const things=(state==='ready'||state==='starting'?[]:game.drops).filter(d=>game.tick>=d.tick&&game.tick-d.tick<=d.fallTicks+8&&!d.caught);
   for(const d of things){const p=project(d.x,d.z),age=game.tick-d.tick;ctx.fillStyle=`rgba(36,77,57,${age>d.fallTicks?.08:.16})`;ctx.beginPath();ctx.ellipse(p.x,p.y,36,12,0,0,Math.PI*2);ctx.fill();}
-  const p=project(game.x,game.z),scale=(.75+game.z*.27)*1.215;
+  const intro=state==='ready'||state==='starting',compact=box.width<600;
+  const scale=intro?Math.min(compact?220:320,box.width*(compact?.48:.32))*960/(208*box.width):(.75+game.z*.27)*1.215;
+  const p=intro?{x:960*((compact?.5:.75)+(game.x-.5)*(compact?.35:.22)),y:560*(compact?.59:.46)+64*scale*aspect}:project(game.x,game.z);
   const drawCart=()=>{
    ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale*aspect);
    const shadow=ctx.createRadialGradient(-3,12,8,-3,12,79);shadow.addColorStop(0,'#26382b24');shadow.addColorStop(1,'#26382b00');
    ctx.save();ctx.scale(1,.28);ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(-3,40,85,0,Math.PI*2);ctx.fill();ctx.restore();
+   // Decorative merchandise belongs only to the entry preview, never the score model.
+   if(intro){
+    const preview=[{kind:2,x:-38,y:-107,size:67,angle:-.22},{kind:6,x:12,y:-112,size:70,angle:.14},{kind:4,x:36,y:-96,size:52,angle:.24},{kind:0,x:-23,y:-83,size:52,angle:-.12},{kind:7,x:24,y:-80,size:50,angle:.16}];
+    for(const item of preview){const image=art[item.kind];if(!image.complete||!image.naturalWidth)continue;ctx.save();ctx.translate(item.x,item.y);ctx.rotate(item.angle);ctx.drawImage(image,-item.size/2,-item.size/2,item.size,item.size);ctx.restore();}
+   }
    const caughtItems=game.drops.filter(drop=>drop.caught&&!drop.bomb);for(let i=0;i<caughtItems.length;i++){
    const drop=caughtItems[i],im=art[drop.kind-1],column=i%5,layer=Math.floor(i/5),origin=project(drop.x,drop.z);
    const age=Math.max(0,(game.tick-drop.tick-drop.fallTicks-1+acc/(1000/FPS))/FPS);
@@ -73,7 +80,7 @@ function mount(){
  function showShop(){run++;clearTimeout(auto);state='shop';keys=touch=0;cancelAnimationFrame(frame);host.hidden=true;shop.hidden=false;safeSet(sessionStorage,'ttc-played','1');replay.focus({preventScroll:true});}
  function openGame(){host.hidden=false;shop.hidden=true;state='ready';host.dataset.state=state;screen.hidden=false;screen.innerHTML=entrance;game=createGame(197);clearTimeout(auto);cancelAnimationFrame(frame);frame=requestAnimationFrame(tick);$('[data-start]').focus({preventScroll:true});}
  async function start(){if(state==='starting')return;const token=++run;state='starting';host.dataset.state=state;$('[data-start]').disabled=true;message('쇼핑 준비 중…');try{session=await api({action:'start'});if(session.version!==VERSION)throw Error('게임이 업데이트되었어요. 새로고침 후 다시 시작해주세요.');}catch(e){session=null;message(e.message);}if(token!==run||!host.isConnected)return;game=createGame(session?.seed??crypto.getRandomValues(new Uint32Array(1))[0]);events=[];keys=touch=0;lastMask=-1;acc=0;last=performance.now();state='playing';host.dataset.state=state;screen.hidden=true;$('[data-mode]').textContent=session?(local?'LOCAL RANKED':'RANKED PLAY'):'PRACTICE';if(session)message(local?'로컬 테스트 기록으로 참여 중':'전체 랭킹에 도전 중');canvas.focus({preventScroll:true});}
- function finish(){state='result';host.dataset.state=state;keys=touch=0;screen.hidden=false;message('');screen.innerHTML=`<div class="ttc-result-card"><span class="ttc-overline">NICE SHOPPING!</span><h2>${game.score.toLocaleString()} <small>PTS</small></h2>${session?'<form data-submit><label>랭킹에 남길 닉네임<input name="name" maxlength="16" required autocomplete="nickname" placeholder="예: 띵띵쇼퍼"></label><button class="ttc-primary" type="submit">SAVE SCORE ↗</button></form>':'<p>연습 모드 · 전체 랭킹에는 등록되지 않아요.</p>'}<div class="ttc-result-actions"><button data-start>↖ CART GAME</button><button data-skip>GO PAGE ↗</button></div></div>`;const input=screen.querySelector('input');if(input)input.value=safeGet(localStorage,'ttc-name')||'';(input||screen.querySelector('[data-skip]')).focus({preventScroll:true});}
+ function finish(){state='result';host.dataset.state=state;keys=touch=0;screen.hidden=false;message('');screen.innerHTML=`<div class="ttc-result-card"><span class="ttc-overline">NICE SHOPPING!</span><h2>${game.score.toLocaleString()} <small>PTS</small></h2>${session?'<form data-submit><label>Your Nickname<input name="name" maxlength="16" required autocomplete="nickname" placeholder="예: 띵띵쇼퍼"></label><button class="ttc-primary" type="submit">SAVE SCORE ↗</button></form>':'<p>연습 모드 · 전체 랭킹에는 등록되지 않아요.</p>'}<div class="ttc-result-actions"><button data-start>↖ CART GAME</button><button data-skip>GO PAGE ↗</button></div></div>`;const input=screen.querySelector('input');if(input)input.value=safeGet(localStorage,'ttc-name')||'';(input||screen.querySelector('[data-skip]')).focus({preventScroll:true});}
  on(host,'submit',async e=>{if(!e.target.matches('[data-submit]'))return;e.preventDefault();const token=run,form=e.target,button=form.querySelector('button'),name=form.elements.name.value.trim();button.disabled=true;try{const d=await api({action:'finish',id:session.id,name,events});if(token!==run||!host.isConnected)return;safeSet(localStorage,'ttc-name',name);ranks(d.entries);screen.innerHTML=`<div class="ttc-result-card"><span class="ttc-overline">${local?'LOCAL TEST RANKING':'GLOBAL RANKING'}</span><h2>#${d.rank}</h2><p>이번 점수 ${d.score} · 내 최고 기록 ${d.best}</p><div class="ttc-result-actions"><button data-start>↖ CART GAME</button><button class="ttc-primary" data-skip>GO PAGE ↗</button></div></div>`;const ranking=$('[data-ranking]').cloneNode(true);ranking.removeAttribute('data-ranking');ranking.className='ttc-result-ranking';screen.querySelector('.ttc-result-card').append(ranking);message('');}catch(error){message(error.message);button.disabled=false;}});
  on(host,'click',e=>{if(e.target.closest('[data-start]')){clearTimeout(auto);start();}if(e.target.closest('[data-skip]'))showShop();if(e.target.closest('[data-resume]')){state='playing';host.dataset.state=state;screen.hidden=true;last=performance.now();canvas.focus({preventScroll:true});}});
  const masks={ArrowLeft:1,ArrowRight:2};

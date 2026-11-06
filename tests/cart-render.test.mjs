@@ -13,9 +13,9 @@ test('cart draws the caught product identities, including repeats and catches af
  const project=(x,z)=>({x:x*720,y:z*180});
  const ctx=new Proxy({createRadialGradient:()=>({addColorStop(){}}),createLinearGradient:()=>({addColorStop(){}}),drawImage:image=>drawn.push(image.product)},{get:(obj,key)=>key in obj?obj[key]:()=>{}});
  const drops=[{kind:8,caught:true},{kind:4,caught:false},{kind:2,caught:true},{kind:8,caught:true},{kind:9,caught:true},{kind:6,caught:true},{kind:3,caught:true}];
- runInNewContext(renderer+'drawCart();',{ctx,art,cartArt:{complete:false},project,catchPose,reducedMotion:{matches:false},acc:0,FPS:30,game:{drops:drops.map(d=>({...d,tick:0,fallTicks:60,x:.5,z:.5})),tick:100,caught:6},p:{x:0,y:0},scale:1,aspect:1});
+ runInNewContext(renderer+'drawCart();',{intro:false,ctx,art,cartArt:{complete:false},project,catchPose,reducedMotion:{matches:false},acc:0,FPS:30,game:{drops:drops.map(d=>({...d,tick:0,fallTicks:60,x:.5,z:.5})),tick:100,caught:6},p:{x:0,y:0},scale:1,aspect:1});
  assert.deepEqual(drawn,[8,2,8,9,6,3]);
  drawn.length=0;
- runInNewContext(renderer+'drawCart();',{ctx,art,cartArt:{complete:false},project,catchPose,reducedMotion:{matches:false},acc:0,FPS:30,game:{drops:drops.map(d=>({...d,caught:false})),caught:0},p:{x:0,y:0},scale:1,aspect:1});
+ runInNewContext(renderer+'drawCart();',{intro:false,ctx,art,cartArt:{complete:false},project,catchPose,reducedMotion:{matches:false},acc:0,FPS:30,game:{drops:drops.map(d=>({...d,caught:false})),caught:0},p:{x:0,y:0},scale:1,aspect:1});
  assert.deepEqual(drawn,[]);
 });

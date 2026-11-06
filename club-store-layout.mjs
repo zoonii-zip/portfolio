@@ -26,4 +26,7 @@ export function arrangeStore(shop,replay){
   storeLink.textContent='GO SMARTSTORE';
   const actions=document.createElement('div');actions.className='club-store-actions';
   actions.append(storeLink,replay);colophon.append(actions);
+  shop.prepend(colophon);
+  const field=shop.querySelector('.club-object-field');
+  field.setAttribute('tabindex','0');field.setAttribute('role','region');field.setAttribute('aria-label','띵띵클럽 제품 목록');
 }
