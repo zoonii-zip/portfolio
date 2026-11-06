@@ -7,6 +7,8 @@ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const local=!CART_ENDPOINT&&['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
 const art=Array.from({length:9},(_,i)=>{const image=new Image();image.src=`/assets/club-products/product-${i+1}.webp`;return image;});
+const scoreArt=[new Image(),new Image()];
+scoreArt[0].src='/assets/club-products/score-plus-100.png';scoreArt[1].src='/assets/club-products/score-minus-200.png';
 const bombArt=new Image();bombArt.src='/assets/club-products/bomb.png';
 const cartArt=new Image();cartArt.src='/assets/club-products/shopping-cart.webp?v=3f25d5e822';
 const safeGet=(s,k)=>{try{return s.getItem(k);}catch{return null;}};
@@ -61,9 +63,10 @@ function mount(){
    const pop=reducedMotion.matches?1:1+.16*Math.sin(Math.min(1,age/.22)*Math.PI);
    ctx.save();ctx.translate(origin.x,origin.y-(155+rise)*aspect);ctx.scale(pop,pop*aspect);
    ctx.globalAlpha=progress<.5?1:Math.max(0,(1-progress)/.5);
-   ctx.font='900 30px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
-   ctx.strokeStyle='#f4efe1';ctx.lineWidth=5;ctx.strokeText(drop.bomb?'−200':'+100',0,0);
-   ctx.fillStyle=drop.bomb?'#c62e28':'#d95330';ctx.fillText(drop.bomb?'−200':'+100',0,0);ctx.restore();
+   const badge=scoreArt[drop.bomb?1:0],crop=drop.bomb?[26,96,451,148]:[37,100,434,144];
+   const width=112,height=width*crop[3]/crop[2];
+   if(badge.complete&&badge.naturalWidth)ctx.drawImage(badge,...crop,-width/2,-height/2,width,height);
+   ctx.restore();
   }
  }
  function tick(t){if(!host.isConnected){cleanup();return;}if(state==='ready'){const mask=keys|touch;if(mask){const old=game.tick;step(game,mask);game.tick=old;}}if(state==='playing'){acc+=Math.min(150,t-last);while(acc>=1000/FPS&&game.tick<TICKS){const mask=keys|touch;if(mask!==lastMask){events.push([game.tick,mask]);lastMask=mask;}step(game,mask);acc-=1000/FPS;}$('[data-time]').textContent=Math.ceil((TICKS-game.tick)/FPS);$('[data-score]').textContent=String(game.score).padStart(4,'0');if(game.tick>=TICKS)finish();}last=t;draw();frame=requestAnimationFrame(tick);}
