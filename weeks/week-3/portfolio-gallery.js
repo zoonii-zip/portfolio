@@ -18,7 +18,7 @@
     projects.forEach((p,i)=>{
       const link=document.createElement('a');link.href=p.href;link.className='ff-project';link.style.setProperty('--i',i);link.style.setProperty('--tone',tones[i%tones.length]);link.setAttribute('aria-label',p.name+' 포트폴리오 열기');link.setAttribute('aria-haspopup','dialog');
       link.innerHTML='<span class="ff-tab"></span><span class="ff-body"><span class="ff-image"><img alt="" width="1080" height="608"></span></span><span class="ff-number"></span>';
-      link.querySelector('img').src='/weeks/week-3/assets/web-projects/'+p.href.split('/weeks/week-3/').filter(Boolean).pop()+'.svg';
+      link.querySelector('img').src='/weeks/week-3/assets/web-projects/'+p.href.split('/').filter(Boolean).pop()+'.svg';
       link.querySelector('.ff-number').textContent=String(i+1).padStart(2,'0');
       const caption=document.createElement('span');caption.className='ff-caption';
       const name=document.createElement('span');name.textContent=p.name;

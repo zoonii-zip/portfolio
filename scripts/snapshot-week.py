@@ -23,6 +23,11 @@ for name in files:
   # Prefix site-local absolute URLs, including route-map keys and CSS URLs.
   text=re.sub(r'''(["'`])/(?!/|>)''',lambda m:m[1]+prefix,text)
   text=text.replace('url(/', 'url('+prefix)
+  # A slash used as a separator or concatenated suffix is not a root URL.
+  text=re.sub(r"(\+\s*)([\"'])"+re.escape(prefix)+r"\2", lambda m:m[1]+m[2]+'/'+m[2], text)
+  text=text.replace(".split('"+prefix+"')", ".split('/')")
+  text=text.replace("path.split('/')[2]", "path.split('/').filter(Boolean).pop()")
+  text=text.replace(r'/^\/projects\/', '/^'+prefix.replace('/',r'\/')+r'projects\/')
   if p.suffix=='.html':
    text=text.replace('data-week="working"',f'data-week="{args.week}"')
    text=re.sub(r'src="(?:'+re.escape(prefix)+r')?week-navigation.js[^"]*"','src="/week-navigation.js"',text)
