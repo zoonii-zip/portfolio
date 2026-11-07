@@ -102,7 +102,7 @@
    [...scene.querySelectorAll('.shelf-book')].forEach((book,i)=>{
      const id=order[i];if(!id)return;
      const link=document.createElement('a');
-     link.href='/weeks/week-3/projects/'+id+'/weeks/week-3/';
+     link.href='/weeks/week-3/projects/'+id+'/';
      link.className=book.className;
      link.setAttribute('aria-label',(book.querySelector('strong')?.textContent||'Illustration')+' 포트폴리오 보기');
      link.innerHTML=book.innerHTML;

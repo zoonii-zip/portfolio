@@ -193,10 +193,10 @@
     if (!article) return false;
     current = index;
     article.querySelector('h1').id = 'pw-project-title';
-    if (/^\/projects\/uiux[0-4]\/$/.test(path)) {
+    if (/^\/weeks\/week-3\/projects\/uiux[0-4]\/$/.test(path)) {
       const cover = article.querySelector('.case-media');
       const image = document.createElement('img');
-      image.src = '/weeks/week-3/assets/web-projects/' + path.split('/weeks/week-3/')[2] + '.svg';
+      image.src = '/weeks/week-3/assets/web-projects/' + path.split('/').filter(Boolean).pop() + '.svg';
       image.alt = article.querySelector('h1').textContent + ' 프로젝트 표지';
       image.width = 1080;
       image.height = 608;

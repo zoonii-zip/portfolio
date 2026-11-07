@@ -88,7 +88,7 @@
  const gfExtraFiles={};
  const escapeArchiveText=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
  function renderGlassFolderFiles(id,project,index){
-  const files=[{name:project.name,meta:project.role+' · '+project.period,href:'/weeks/week-3/projects/'+id+'/weeks/week-3/',art:index%5},...(gfExtraFiles[id]||[])];
+  const files=[{name:project.name,meta:project.role+' · '+project.period,href:'/weeks/week-3/projects/'+id+'/',art:index%5},...(gfExtraFiles[id]||[])];
   return files.map((file,index)=>{
    const slot=files.length<=1?0:(index/(files.length-1))*2-1;
    const fileContent=`<span class="gf-file-art gf-file-art-${file.art??'blank'}" aria-hidden="true"></span><span class="gf-file-head"><strong>${escapeArchiveText(file.name)}</strong><small>${escapeArchiveText(file.meta||'')}</small></span>`;
