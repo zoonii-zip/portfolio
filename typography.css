@@ -61,7 +61,7 @@
 }
 :root body #zz-logo-entry .intro-copy [lang='en'] {
  font-family:'Just Another Hand',cursive!important;font-weight:400;
- font-size:clamp(36px,4.5vw,60px);line-height:1.08;letter-spacing:.01em;
+ font-size:36px;line-height:1.08;letter-spacing:.01em;
 }
 
 /* Archive tab typefaces and proportions from the selected Figma labels. */
