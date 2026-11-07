@@ -19,7 +19,7 @@
       const item = document.createElement('a');
       item.className = 'brand-stamp';
       item.dataset.category = /editorial|편집|보고서/i.test(description + ' ' + name) ? 'editorial' : 'branding';
-      item.href = '/weeks/week-3/projects/' + card.dataset.project + '/weeks/week-3/';
+      item.href = '/weeks/week-3/projects/' + card.dataset.project + '/';
       item.style.setProperty('--stamp-tone', colors[i % colors.length]);
       item.setAttribute('aria-label', name + ', ' + year + ', ' + role + ' — 프로젝트 보기');
       item.setAttribute('aria-haspopup', 'dialog');
