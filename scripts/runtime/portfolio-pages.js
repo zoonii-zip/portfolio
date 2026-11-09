@@ -2,7 +2,7 @@
   const load = () => {
     if (!document.querySelector('#zz-body .club-collage')) return;
     observer.disconnect();
-    import('/club-cart-game.mjs?v=87af646d4b').catch(() => { observer.observe(document.body, {childList:true,subtree:true}); });
+    import('/club-cart-game.mjs?v=6e4fba606a').catch(() => { observer.observe(document.body, {childList:true,subtree:true}); });
   };
   const observer = new MutationObserver(load);
   observer.observe(document.body, {childList:true,subtree:true});
