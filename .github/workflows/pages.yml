@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
+    env:
+      PAGES_ARTIFACT: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -26,8 +29,32 @@ jobs:
           mkdir _site
           rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='tests' ./ _site/
       - uses: actions/upload-pages-artifact@v3
+        id: upload
         with:
+          name: ${{ env.PAGES_ARTIFACT }}
           path: _site
+      - name: Wait for uploaded Pages artifact
+        uses: actions/github-script@v8
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+        with:
+          script: |
+            const expected = Number(process.env.PAGES_ARTIFACT_ID);
+            for (let attempt = 0; attempt < 10; attempt++) {
+              const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+                ...context.repo,
+                run_id: context.runId,
+                name: process.env.PAGES_ARTIFACT
+              });
+              if (data.artifacts.some(artifact => artifact.id === expected && !artifact.expired)) {
+                core.info('The uploaded Pages artifact is ready.');
+                return;
+              }
+              await new Promise(resolve => setTimeout(resolve, 3000));
+            }
+            throw new Error('The uploaded Pages artifact is not visible to the deployment API.');
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT }}
