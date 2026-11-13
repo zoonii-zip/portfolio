@@ -30,14 +30,38 @@
       item.querySelector('.stamp-caption > span').textContent = role;
       return item;
     });
-    target.replaceChildren();
-    for(const [category,title] of [['branding','BRANDING'],['editorial','EDITORIAL']]){
-      const section=document.createElement('section');section.className='brand-category';
-      const heading=document.createElement('h2');heading.textContent=title;
-      const grid=document.createElement('div');grid.className='brand-category-grid';
-      grid.append(...items.filter(item=>item.dataset.category===category));
-      section.append(heading,grid);target.append(section);
+    const canvas=document.createElement('div');canvas.className='brand-canvas';
+    canvas.append(...items);target.replaceChildren(canvas);
+    target.tabIndex=0;
+    const controls=document.createElement('nav');controls.className='brand-scroll-controls';controls.setAttribute('aria-label','우표 컬렉션 가로 탐색');
+    controls.innerHTML='<button type="button" class="zz-paper-control zz-paper-relative zz-paper-icon" aria-label="왼쪽 우표 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><button type="button" class="zz-paper-control zz-paper-relative zz-paper-icon" aria-label="오른쪽 우표 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>';
+    target.after(controls);
+    const [back,forward]=controls.children;
+    function updateScroll(){
+      const limit=target.scrollWidth-target.clientWidth;
+      controls.hidden=limit<2;back.disabled=target.scrollLeft<2;forward.disabled=target.scrollLeft>=limit-2;
     }
+    function move(direction){target.scrollBy({left:direction*target.clientWidth*.75,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}
+    back.addEventListener('click',()=>move(-1));forward.addEventListener('click',()=>move(1));
+    target.addEventListener('scroll',updateScroll,{passive:true});
+    target.addEventListener('wheel',event=>{
+      if(event.ctrlKey||event.shiftKey||Math.abs(event.deltaX)>=Math.abs(event.deltaY))return;
+      const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?target.clientWidth:1);
+      const limit=target.scrollWidth-target.clientWidth;
+      if((delta>0&&target.scrollLeft<limit-1)||(delta<0&&target.scrollLeft>1)){
+        event.preventDefault();target.scrollBy({left:delta,behavior:'instant'});
+      }
+    },{passive:false});
+    target.addEventListener('keydown',event=>{
+      if(event.target!==target||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      event.preventDefault();
+      if(event.key==='Home'||event.key==='End')target.scrollTo({left:event.key==='Home'?0:target.scrollWidth,behavior:'instant'});
+      else move(event.key==='ArrowLeft'?-1:1);
+    });
+    const observer=new ResizeObserver(updateScroll);observer.observe(target);
+    const cleanup=new MutationObserver(()=>{if(!target.isConnected){observer.disconnect();cleanup.disconnect();}});
+    cleanup.observe(body,{childList:true,subtree:true});
+    requestAnimationFrame(()=>{target.scrollTo({left:0,top:0,behavior:'instant'});updateScroll();});
     const scene = target.closest('.collection-scene');
     scene.querySelector('.collection-meta > span').textContent = 'THE STAMP COLLECTION';
     scene.querySelector('.collection-footer').lastElementChild.textContent = '우표를 선택해 프로젝트 보기 ↗';

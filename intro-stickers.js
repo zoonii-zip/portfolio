@@ -11,7 +11,46 @@
     ['lemon',4961,7016,575,2049,3439,3284]
   ];
   function source(name) {
-    return `assets/intro-stickers/${name}.webp`;
+    return `assets/intro-stickers/optimized/${name}.webp`;
+  }
+  const intro = document.getElementById('zz-logo-entry');
+  const root = document.documentElement;
+  let visible = false;
+  let intersecting = false;
+  let observing = false;
+  const pending = new Set();
+  function hydrate(image) {
+    image.setAttribute('href', image.dataset.src);
+    image.removeAttribute('data-src');
+    pending.delete(image);
+  }
+  // The intro is also mounted on archive routes. Keep its images dormant until
+  // it appears, including graphics made later by the replay and package button.
+  function syncVisibility() {
+    // Archive rooms cover the intro with a fixed overlay, which Intersection
+    // Observer cannot detect. A covered intro must not fetch its decoration.
+    visible = intersecting && !root.classList.contains('viewing-space');
+    if (visible) for (const image of pending) {
+      if (image.isConnected) hydrate(image);
+      else pending.delete(image);
+    }
+  }
+  function observeIntro() {
+    if (observing) return;
+    observing = true;
+    new IntersectionObserver(entries => {
+      intersecting = entries[0].isIntersecting;
+      syncVisibility();
+    }, {threshold: .01}).observe(intro);
+  }
+  if (intro) {
+    if (location.pathname === '/' || location.pathname === '/index.html' || root.classList.contains('zz-seo-ready')) observeIntro();
+    // Wait for direct-route restore, then also react when the fixed archive
+    // overlay opens or closes without changing the intro's intersection.
+    new MutationObserver(() => {
+      if (root.classList.contains('zz-seo-ready')) observeIntro();
+      syncVisibility();
+    }).observe(root, {attributes:true, attributeFilter:['class']});
   }
   const defs = document.createElementNS(NS, 'svg');
   defs.setAttribute('aria-hidden','true');
@@ -37,7 +76,10 @@
     svg.dataset.texture=material;
     const left=(200-cw*scale)/2, top=(200-ch*scale)/2;
     // Nested viewport clips stray marks and blank margins without altering source pixels.
-    svg.innerHTML=`<g filter="url(#intro-sticker-${material})"><svg x="${left}" y="${top}" width="${cw*scale}" height="${ch*scale}" viewBox="${x} ${y} ${cw} ${ch}" overflow="hidden"><image href="${source(name)}" width="${w}" height="${h}"/></svg></g>`;
+    svg.innerHTML=`<g filter="url(#intro-sticker-${material})"><svg x="${left}" y="${top}" width="${cw*scale}" height="${ch*scale}" viewBox="${x} ${y} ${cw} ${ch}" overflow="hidden"><image data-src="${source(name)}" width="${w}" height="${h}"/></svg></g>`;
+    const image = svg.querySelector('image');
+    if (visible || !intro) hydrate(image);
+    else pending.add(image);
     return svg;
   }
   window.ZooniiIntroStickers={create,count:art.length};

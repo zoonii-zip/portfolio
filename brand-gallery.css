@@ -30,15 +30,31 @@
 #zz-fullscreen #zz-body :is(.ff-project,.brand-stamp) img{-webkit-user-drag:none}
 #zz-fullscreen #zz-body .archive-dragging{cursor:grabbing;z-index:50!important;transition:none!important}
 
-#zz-fullscreen #zz-body .collection-objects.brand-gallery{display:flex!important;flex-direction:column;align-items:stretch;gap:64px;width:100%;max-width:none}
-#zz-fullscreen #zz-body .brand-category h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid #39392c55}
-#zz-fullscreen #zz-body .brand-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-@media(max-width:900px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:500px){#zz-fullscreen #zz-body .brand-category-grid{grid-template-columns:1fr}}
-
-#zz-fullscreen #zz-body .brand-category-grid{align-items:stretch;row-gap:36px}
-#zz-fullscreen #zz-body .brand-stamp{height:100%}
+/* A horizontal tabletop: each stamp has its own format and resting position. */
+:root body #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{--spread-unit:clamp(.78px,calc((100svh - 300px) / 550),1.12px);display:block!important;position:relative;width:100%;max-width:none;height:auto;min-height:0;margin:0;padding:0;overflow-x:auto;overflow-y:hidden;overflow-anchor:none;overscroll-behavior-x:contain;scroll-padding-inline:24px;scrollbar-width:none;touch-action:pan-x pan-y pinch-zoom}
+:root body #zz-fullscreen #zz-body .brand-gallery::-webkit-scrollbar{display:none}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-gallery:focus-visible{outline:1px dashed #f5f0e580;outline-offset:-4px}
+:root body #zz-fullscreen #zz-body .brand-canvas{position:relative;width:max(100%,calc(1700 * var(--spread-unit)));height:calc(550 * var(--spread-unit))}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp{position:absolute;left:calc(var(--stamp-x) * var(--spread-unit));top:calc(var(--stamp-y) * var(--spread-unit));width:calc(var(--stamp-width) * var(--spread-unit));height:auto;rotate:var(--stamp-angle);touch-action:pan-x pan-y pinch-zoom;transform:none;transform-origin:50% 50%;transition:transform .25s,filter .25s;filter:drop-shadow(0 2px 2px #20160c38)}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(1){--stamp-x:45;--stamp-y:145;--stamp-width:246;--stamp-angle:-3.5deg;--stamp-ratio:1.65}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(2){--stamp-x:344;--stamp-y:22;--stamp-width:178;--stamp-angle:2deg;--stamp-ratio:.86}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(3){--stamp-x:565;--stamp-y:240;--stamp-width:238;--stamp-angle:-2deg;--stamp-ratio:1.4}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(4){--stamp-x:862;--stamp-y:68;--stamp-width:203;--stamp-angle:3deg;--stamp-ratio:.82}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(5){--stamp-x:1125;--stamp-y:245;--stamp-width:255;--stamp-angle:-3deg;--stamp-ratio:1.9}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:nth-child(6){--stamp-x:1440;--stamp-y:105;--stamp-width:193;--stamp-angle:2deg;--stamp-ratio:.82}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp[data-cover-ready] .stamp-paper{height:auto;min-height:0;padding:calc(14 * var(--spread-unit))}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp[data-cover-ready] .stamp-top{gap:8px;font-size:max(10px,calc(10 * var(--spread-unit)))}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp[data-cover-ready] .stamp-year{font-size:inherit}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp[data-cover-ready] .stamp-art{aspect-ratio:var(--stamp-ratio);margin:calc(10 * var(--spread-unit)) 0 0}
+:root body #zz-fullscreen #zz-body .brand-canvas .stamp-caption{display:none}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp[data-cover-ready] .stamp-bottom{margin-top:calc(9 * var(--spread-unit));font-size:12px}
+:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:is(:hover,:focus-visible){transform:translateY(-4px);filter:drop-shadow(0 6px 5px #20160c3d);z-index:5}
+:root body #zz-fullscreen #zz-body .brand-scroll-controls{display:flex;justify-content:flex-end;gap:10px;padding:8px clamp(24px,3vw,48px) 0}
+:root body #zz-fullscreen #zz-body .brand-scroll-controls[hidden]{display:none}
+:root body #zz-fullscreen #zz-body .brand-scroll-controls button{min-width:44px;min-height:44px;font-size:23px;line-height:1}
+:root body #zz-fullscreen #zz-body .brand-scroll-controls button:disabled{opacity:.35;cursor:default}
+@media(max-width:700px){:root body #zz-fullscreen #zz-body .theme-visual .collection-objects.brand-gallery{--spread-unit:clamp(.82px,calc((100svh - 300px) / 550),1px)}}
 #zz-fullscreen #zz-body .stamp-paper{height:100%;box-sizing:border-box}
 #zz-fullscreen #zz-body .stamp-caption>span{line-height:1.65;word-break:keep-all}
 #zz-fullscreen #zz-body .brand-stamp:focus-visible{outline:2px solid #f5f0e5;outline-offset:8px}
-@media(prefers-reduced-motion:reduce){#zz-fullscreen #zz-body .brand-stamp{transition:none}}
+@media(prefers-reduced-motion:reduce){:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp{transition:none}:root body #zz-fullscreen #zz-body .brand-canvas .brand-stamp:is(:hover,:focus-visible){transform:none}}

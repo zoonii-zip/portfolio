@@ -1,0 +1,105 @@
+/* A stamp expands into a full-bleed editorial canvas. */
+.portfolio-window.is-folio{--folio-bar-height:76px;--be-tone:#244b40;--be-ink:#f2ead8;inset:0;width:100%;height:100svh;margin:0;border:0;border-radius:0;background:var(--be-tone);color:var(--be-ink);box-shadow:none;overflow:hidden;animation:none!important}
+.portfolio-window.is-folio::backdrop{background:#17191638;backdrop-filter:blur(2px)}
+.portfolio-window.is-folio .folio-toolbar{position:relative;z-index:30;height:var(--folio-bar-height);min-height:var(--folio-bar-height);padding:12px clamp(24px,4.5vw,72px);border:0;background:var(--be-tone);color:var(--be-ink);gap:24px}
+.portfolio-window.is-folio .folio-label{display:flex;align-items:center;gap:28px;margin-left:auto;font-size:10px;line-height:1.4;letter-spacing:.1em}
+.portfolio-window.is-folio .folio-kind{opacity:.65}
+.portfolio-window.is-folio .folio-count{font-size:11px;letter-spacing:.1em;white-space:nowrap;font-weight:400}
+.portfolio-window.is-folio .folio-toolbar nav{gap:10px}
+.portfolio-window.is-folio .folio-toolbar button{display:grid;place-items:center;min-width:44px;min-height:44px}
+.portfolio-window.is-folio .folio-toolbar .folio-close{flex:none;margin:0;padding:10px 20px;font-size:25px;line-height:1;white-space:nowrap}
+.portfolio-window.is-folio .be-footer a{display:none}
+.portfolio-window.is-folio .pw-content{padding:0;background:var(--be-tone);scrollbar-gutter:stable;outline-offset:-4px;scroll-behavior:smooth}
+.portfolio-window.is-folio .pw-content:focus-visible{outline:1px dashed color-mix(in srgb,var(--be-ink) 50%,transparent)}
+.portfolio-window.is-folio .brand-exhibit{width:100%;max-width:none;margin:0}
+.portfolio-window.is-folio.folio-closing{pointer-events:none}
+.portfolio-window.is-folio.folio-closing .pw-content{overflow:hidden}
+.folio-transition{position:absolute;inset:var(--folio-bar-height) 0 0;z-index:20;overflow:hidden;pointer-events:none}
+.brand-exhibit{width:100%;max-width:none;background:var(--be-tone);color:var(--be-ink);isolation:isolate}
+.brand-exhibit .be-hero{position:relative;display:flex;flex-direction:column;min-height:570px;height:calc(100svh - var(--folio-bar-height,0px));padding:20px clamp(28px,5vw,80px) 30px;isolation:isolate;overflow:hidden}
+.brand-exhibit .be-hero::before{content:'';position:absolute;inset:0;z-index:-1;background:url('/assets/textures/fine-art-paper-v1.webp') repeat;background-size:600px;mix-blend-mode:multiply;opacity:.16;pointer-events:none}
+.brand-exhibit .be-heading{position:relative;z-index:2;display:flex;align-items:baseline;justify-content:space-between;gap:32px}
+:root body .brand-exhibit .be-heading h1{margin:0;font-family:var(--font-body)!important;font-size:19px;font-weight:500;line-height:1.45;letter-spacing:-.03em;word-break:keep-all}
+.brand-exhibit .be-classification{display:flex;gap:32px;margin:0;font-size:11px;line-height:1.6;letter-spacing:.03em;white-space:nowrap;opacity:.7}
+.brand-exhibit .be-poster{position:relative;display:flex;flex:1;align-items:center;container-type:size;min-height:0;padding:10px 0 34px;isolation:isolate}
+.brand-exhibit .be-display{position:relative;width:100%;z-index:1}
+:root body .brand-exhibit .be-display,:root body .brand-exhibit .be-display>span{font-family:'Source Sans 3',SUIT,sans-serif!important;font-size:min(25cqw,40cqh);font-weight:850;line-height:.82;letter-spacing:-.065em}
+.brand-exhibit .be-display>span{display:block}
+.brand-exhibit .be-index{position:absolute;right:-.015em;bottom:-.02em;z-index:0;font-size:30cqw;font-weight:800;line-height:.85;letter-spacing:-.09em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--be-ink) 22%,transparent);pointer-events:none}
+:root body .be-branding0 .be-display,:root body .be-branding0 .be-display>span,:root body .be-branding3 .be-display,:root body .be-branding3 .be-display>span{font-family:Georgia,'Times New Roman',serif!important;font-weight:400;font-style:italic;letter-spacing:-.075em}
+:root body .be-branding0 .be-display>span:first-child{font-size:min(35cqw,68cqh)}
+:root body .be-branding0 .be-display>span:last-child{font-size:min(11cqw,22cqh);line-height:1;margin-top:2%;padding-right:6%;text-align:right;font-style:normal;letter-spacing:-.06em}
+:root body .be-branding1 .be-display>span{font-family:SUIT,sans-serif!important;font-size:min(25.5cqw,70cqh);line-height:1.1;letter-spacing:-.085em}
+.be-branding1 .be-index{right:auto;left:0;bottom:-.08em}
+:root body .be-branding2 .be-display>span{font-family:SUIT,sans-serif!important;font-size:min(29cqw,40cqh);line-height:1;letter-spacing:-.09em}
+.be-branding2 .be-display>span:last-child{text-align:right;margin-top:-.12em;padding-right:2%}
+.be-branding2 .be-index{font-size:23cqw;bottom:0}
+:root body .be-branding3 .be-display>span{font-size:min(28cqw,70cqh)}
+.be-branding3 .be-index{left:0;right:auto}
+:root body .be-branding4 .be-display>span{font-size:min(42cqw,75cqh)}
+.be-branding4 .be-index{font-size:22cqw;bottom:-.07em}
+:root body .be-chimpsburger .be-display>span{font-size:min(25cqw,42cqh);line-height:.84;letter-spacing:-.065em}
+.be-chimpsburger .be-index{font-size:18cqw;bottom:-.06em}
+.brand-exhibit .be-hero-footer{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:44px;font-size:9px;letter-spacing:.12em}
+.brand-exhibit .be-hero-footer>span{opacity:.55}
+.brand-exhibit .be-scroll{display:flex;align-items:center;justify-content:flex-end;gap:14px;min-height:44px;padding:10px 0;border:0;background:none;color:inherit;font-size:12px;letter-spacing:.02em;cursor:pointer}
+.brand-exhibit .be-scroll:hover{text-decoration:underline;text-underline-offset:5px}
+.brand-exhibit .be-information{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(40px,8vw,140px);padding:clamp(64px,8vw,120px) clamp(28px,5vw,80px);background:#f0ede3;color:#2b2e27}
+.brand-exhibit .be-section-kicker{font-size:9px;line-height:1.5;letter-spacing:.12em;opacity:.5;margin:0 0 28px}
+:root body .brand-exhibit .be-overview h2{font-family:var(--font-body)!important;font-size:clamp(32px,4vw,54px);font-weight:500;line-height:1.2;letter-spacing:-.055em;margin:0 0 64px}
+.brand-exhibit .be-overview dl{display:grid;grid-template-columns:1fr 1fr;gap:24px 28px;margin:0}
+.brand-exhibit .be-overview dt{font-size:9px;letter-spacing:.07em;opacity:.5;margin-bottom:8px}
+.brand-exhibit .be-overview dd{font-size:13px;line-height:1.6;letter-spacing:-.01em;margin:0;word-break:keep-all}
+.brand-exhibit .be-overview dl>div:last-child{grid-column:1/-1}
+.brand-exhibit .be-deliverables{list-style:none;padding:0;margin:0;align-self:start}
+.brand-exhibit .be-deliverables li{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:baseline;gap:24px;padding:26px 0;border-bottom:1px solid #5c61401c}
+.brand-exhibit .be-deliverables li:first-child{padding-top:0}
+.brand-exhibit .be-deliverables li:last-child{padding-bottom:0;border:0}
+.brand-exhibit .be-deliverable-number{font-size:10px;opacity:.4}
+.brand-exhibit .be-deliverables strong{font-size:clamp(19px,2.2vw,30px);font-weight:500;line-height:1.55;letter-spacing:-.045em;word-break:keep-all;overflow-wrap:anywhere}
+.brand-exhibit .be-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px clamp(28px,5vw,80px) 56px;background:#f0ede3;color:#555b4e;font-size:10px;line-height:1.5}
+.brand-exhibit .be-availability{margin:0;opacity:.55}
+:root body .brand-exhibit .be-footer a{position:relative;padding:12px 20px;background:#272c24;color:#f0ede3;font-family:'Just Another Hand',var(--font-body)!important;font-size:25px;line-height:1;letter-spacing:.02em;clip-path:polygon(3% 5%,94% 0,100% 84%,95% 100%,0 94%)}
+.brand-exhibit :is(button,a):focus-visible{outline:2px solid currentColor;outline-offset:5px}
+/* Direct project links keep the same full-width artwork and readable navigation. */
+#zz-fullscreen #zz-overlay:has(#zz-body>.brand-exhibit)>.panelhead{display:none}
+#zz-fullscreen #zz-body:has(>.brand-exhibit){width:100%;max-width:none;padding:0!important}
+#zz-fullscreen #zz-body>.brand-exhibit .be-hero{height:100svh;padding-top:100px;padding-bottom:150px}
+#zz-fullscreen #zz-body>.brand-exhibit .be-footer{padding-bottom:160px}
+html:has(#zz-body>.be-branding0){--chrome-paper:#244b40;--chrome-ink:#f2ead8}
+html:has(#zz-body>.be-branding1){--chrome-paper:#eaa493;--chrome-ink:#5c2a21}
+html:has(#zz-body>.be-branding2){--chrome-paper:#d8db91;--chrome-ink:#39452a}
+html:has(#zz-body>.be-branding3){--chrome-paper:#d6c6df;--chrome-ink:#4c3457}
+html:has(#zz-body>.be-branding4){--chrome-paper:#e4a266;--chrome-ink:#493024}
+html:has(#zz-body>.be-chimpsburger){--chrome-paper:#e4bd55;--chrome-ink:#342d20}
+@media(max-width:700px){
+ .portfolio-window.is-folio{--folio-bar-height:68px}
+ .portfolio-window.is-folio .folio-toolbar{padding:10px 16px;gap:10px}
+ .portfolio-window.is-folio .folio-label{gap:0}
+ .portfolio-window.is-folio .folio-kind{display:none}
+ .portfolio-window.is-folio .folio-count{font-size:9px}
+ .portfolio-window.is-folio .folio-toolbar nav{gap:6px}
+ .portfolio-window.is-folio .folio-toolbar .folio-close{padding:10px 12px;font-size:22px;letter-spacing:0}
+ .portfolio-window.is-folio .pw-content{scrollbar-gutter:auto}
+ .brand-exhibit .be-hero{min-height:520px;padding:16px 24px 24px}
+ .brand-exhibit .be-heading{gap:16px;align-items:flex-start}
+ :root body .brand-exhibit .be-heading h1{font-size:16px}
+ .brand-exhibit .be-classification{flex-direction:column;align-items:flex-end;gap:3px;font-size:10px}
+ .brand-exhibit .be-poster{padding:0 0 56px}
+ .brand-exhibit .be-index{font-size:51cqw;bottom:8%}
+ .be-branding2 .be-index,.be-chimpsburger .be-index{font-size:38cqw;bottom:9%}
+ .brand-exhibit .be-hero-footer{font-size:8px;letter-spacing:.08em}
+ .brand-exhibit .be-information{grid-template-columns:minmax(0,1fr);gap:56px;padding:56px 26px 64px}
+ .brand-exhibit .be-section-kicker{font-size:8px;margin-bottom:18px}
+ :root body .brand-exhibit .be-overview h2{font-size:36px;margin-bottom:36px}
+ .brand-exhibit .be-overview dl{grid-template-columns:1fr 1fr;gap:22px}
+ .brand-exhibit .be-overview dt{font-size:8px}
+ .brand-exhibit .be-overview dd{font-size:12px}
+ .brand-exhibit .be-deliverables li{gap:14px;grid-template-columns:24px minmax(0,1fr);padding-block:22px}
+ .brand-exhibit .be-deliverables strong{font-size:22px}
+ .brand-exhibit .be-footer{flex-wrap:wrap;padding:24px 26px 44px;gap:28px 20px;font-size:9px}
+ .brand-exhibit .be-availability{width:100%}
+ :root body .brand-exhibit .be-footer a{font-size:24px}
+}
+@media(max-height:650px) and (min-width:701px){.brand-exhibit .be-hero{min-height:500px}}
+@media(prefers-reduced-motion:reduce){.portfolio-window.is-folio .pw-content{scroll-behavior:auto}}

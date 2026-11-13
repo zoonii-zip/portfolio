@@ -107,3 +107,37 @@ html.illustration-reader-open,html.illustration-reader-open body{overflow:hidden
  .portfolio-window.is-book .book-pagination{min-height:64px;padding-bottom:env(safe-area-inset-bottom)}
 }
 @media(prefers-reduced-motion:reduce){.portfolio-window.is-book[open] .illustration-book{animation:none}}
+
+/* Thin, uncoated magazine stock. The same material follows the turning leaves. */
+.portfolio-window.is-book{height:min(980px,calc(100svh - 28px));--book-newsprint:url('/assets/textures/book-newsprint-v1.webp')}
+.portfolio-window.is-book::backdrop{background:#080808fa;backdrop-filter:blur(6px)}
+.portfolio-window.is-book :is(.book-toolbar,.book-pagination){color:#deded7}
+.portfolio-window.is-book .pw-content{display:grid;place-items:center;padding:10px 18px 20px}
+.portfolio-window.is-book .illustration-book{--book-unit:min(calc((100svh - 190px) / 700),calc((100vw - 96px) / 1000),1.12px);width:calc(1000 * var(--book-unit));height:calc(700 * var(--book-unit));flex:none;color:#292b28;--case-line:#41433c24}
+.portfolio-window.is-book .book-spread{border:0;border-radius:0;background:transparent;box-shadow:none;filter:drop-shadow(0 3px 2px #0005) drop-shadow(0 18px 20px #0004)}
+.portfolio-window.is-book .book-spread::after{top:.7%;bottom:.6%;left:calc(50% - 34px);width:68px;z-index:6;background:linear-gradient(90deg,transparent,#1d211b03 22%,#1d211b0c 43%,#10140e1a 49%,#10140e2b 50%,#ffffff30 51.4%,#ffffff10 63%,transparent)}
+.portfolio-window.is-book .book-leaf{--page-texture-position:0%;--page-light:linear-gradient(90deg,#262b2206,transparent 9%,#ffffff08 60%,#20251e13);border:0;border-radius:0;background-color:#e6e5e1;background-image:var(--page-light),linear-gradient(#eeeeead1,#eeeeead1),var(--book-newsprint);background-size:100% 100%,100% 100%,200% 100%;background-position:0 0,0 0,var(--page-texture-position) 0;background-repeat:no-repeat;box-shadow:none;isolation:isolate}
+.portfolio-window.is-book .book-leaf.is-left{--page-texture-position:0%;clip-path:polygon(.3% .1%,20% .45%,52% .8%,79% 1%,100% .7%,100% 99.4%,75% 99.7%,46% 99.2%,20% 98.8%,.1% 99.1%,.3% 72%,0 42%)}
+.portfolio-window.is-book .book-leaf.is-right{--page-texture-position:100%;--page-light:linear-gradient(90deg,#22271f10,#ffffff22 7%,transparent 20%,transparent 94%,#20251e04);clip-path:polygon(0 .7%,24% .45%,56% .7%,84% .55%,99.8% .6%,100% 32%,99.75% 67%,99.9% 99.7%,70% 99.8%,34% 99.55%,0 99.4%)}
+.portfolio-window.is-book .book-leaf::after{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:var(--book-newsprint) var(--page-texture-position) 0 / 200% 100% no-repeat;mix-blend-mode:multiply;opacity:.08}
+.portfolio-window.is-book .book-folio{z-index:6;color:#686b63;font-size:10px}
+.portfolio-window.is-book .book-artwork::after{display:none}
+.portfolio-window.is-book .illustration-book .case-media{background-color:#e8e8e180;border-color:#4c51421c;box-shadow:none}
+.portfolio-window.is-book .illustration-book .book-artwork{background:transparent;border:0}
+.portfolio-window.is-book .book-stack-leaf{top:.75%;height:98.9%;border:0;border-radius:0;background:#d8d8d0;box-shadow:0 1px 1px #080a0638}
+.portfolio-window.is-book .book-stack-leaf.is-left{transform:translateX(calc(var(--stack-depth) * -.7px)) translateY(calc(var(--stack-depth) * .65px)) rotateY(calc(var(--stack-depth) * .18deg)) scaleY(calc(1 - var(--stack-depth) * .0015))}
+.portfolio-window.is-book .book-stack-leaf.is-right{transform:translateX(calc(var(--stack-depth) * .7px)) translateY(calc(var(--stack-depth) * .65px)) rotateY(calc(var(--stack-depth) * -.18deg)) scaleY(calc(1 - var(--stack-depth) * .0015))}
+@media(max-width:700px){
+ .portfolio-window.is-book{height:100svh}
+ .portfolio-window.is-book .pw-content{padding:8px 24px 18px}
+ .portfolio-window.is-book .illustration-book{--book-unit:min(calc((100vw - 48px) / 500),calc((100svh - 178px) / 700));width:calc(500 * var(--book-unit));height:calc(700 * var(--book-unit))}
+ .portfolio-window.is-book .book-spread{filter:none}
+ .portfolio-window.is-book .book-spread::after{display:none}
+ .portfolio-window.is-book .book-leaf{padding:24px 26px 40px;border:0;box-shadow:none}
+ .portfolio-window.is-book .book-leaf:not(.book-motion-leaf){filter:drop-shadow(0 3px 3px #0005)}
+ .portfolio-window.is-book .book-leaf:nth-child(2){border:0}
+ .portfolio-window.is-book .illustration-book .case-header h1{font-size:30px}
+ .portfolio-window.is-book .illustration-book .case-summary{font-size:12px}
+ .portfolio-window.is-book .illustration-book .case-meta{gap:12px}
+ .portfolio-window.is-book .illustration-book .case-meta dd{font-size:11px}
+}

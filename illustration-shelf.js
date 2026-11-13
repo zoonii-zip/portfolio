@@ -1,5 +1,17 @@
 /* Spine-to-cover accordion, scoped to the illustration collection. */
 (() => {
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  function syncVideos(){
+    const visible=!document.hidden&&!document.documentElement.classList.contains('portfolio-window-open');
+    document.querySelectorAll('.illustration-shelf video').forEach(video=>{
+      const active=visible&&video.closest('#zz-overlay.open')&&video.closest('.ib-item.is-selected');
+      if(active&&!motion.matches)video.play().catch(()=>{});
+      else video.pause();
+    });
+  }
+  document.addEventListener('visibilitychange',syncVideos);
+  motion.addEventListener('change',syncVideos);
+  new MutationObserver(syncVideos).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
   const spines = {
     '/projects/illustration0/': {label:'UMBRO', color:'#272a25', ink:'#eee8d2', design:'umbro'},
     '/projects/illustration1/': {label:'OTTOGI', color:'#eac5cd', ink:'#4d202b', design:'ottogi'},
@@ -137,7 +149,8 @@
       trigger.querySelector('.ib-number').textContent = String(i+1).padStart(2,'0');
       if (new URL(href, location.href).pathname === '/projects/illustration0/') {
         const video = document.createElement('video');
-        video.src = '/assets/illustration-covers/umbro-cover.mp4';
+        video.src = '/assets/illustration-covers/umbro-cover-v2.mp4';
+        video.poster = '/assets/illustration-covers/umbro-poster.webp';
         video.muted = true; video.defaultMuted = true; video.loop = true;
         video.playsInline = true; video.preload = 'metadata';
         video.setAttribute('aria-hidden', 'true');
@@ -176,12 +189,8 @@
         item.classList.toggle('is-selected',active);
         item.querySelector('button').setAttribute('aria-expanded',String(active));
         const cover=item.querySelector('a');cover.tabIndex=active?0:-1;cover.inert=!active;
-        const video=cover.querySelector('video');
-        if(video){
-          if(active&&!matchMedia('(prefers-reduced-motion: reduce)').matches)video.play().catch(()=>{});
-          else video.pause();
-        }
       });
+      syncVideos();
     }
     items.forEach((item,i)=>{
       const button = item.querySelector('button');

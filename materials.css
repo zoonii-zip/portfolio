@@ -35,10 +35,10 @@
 :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-visual){position:relative;isolation:isolate}
 :root body #zz-fullscreen #zz-body .archive-shell.theme-artwork{background:transparent}
 :root body #zz-fullscreen #zz-body .archive-shell.theme-story{background:transparent}
-:root body #zz-fullscreen #zz-body .archive-shell.theme-visual{background:#171715}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual{background:transparent}
 :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-visual)::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--material-fiber);background-size:720px auto;background-repeat:repeat;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.12}
 :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story)::before{display:none}
-:root body #zz-fullscreen #zz-body .archive-shell.theme-visual::before{mix-blend-mode:screen;filter:grayscale(1) invert(1) contrast(1.3);opacity:.2}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual::before{display:none}
 
 /* Pigmented matte frames have a fine surface and diffuse edges around an ivory mount. */
 #zz-fullscreen #zz-body .aw-picture{background-image:linear-gradient(#faf8f1f5,#faf8f1f5),var(--material-fiber);background-size:auto,360px auto}

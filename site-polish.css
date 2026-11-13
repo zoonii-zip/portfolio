@@ -4,8 +4,8 @@
 html:has(#zz-overlay.open .contact-intro){--chrome-paper:#000;--chrome-ink:#f5f0e5;--chrome-accent:#00bfe7}
 html:has(#zz-overlay.open .profile-poster){--chrome-paper:#fffd85;--chrome-ink:#32361e}
 html:has(#zz-overlay.open .theme-artwork){--chrome-paper:#f4f2ec}
-html:has(#zz-overlay.open .theme-story){--chrome-paper:#f3f1e9}
-html:has(#zz-overlay.open .theme-visual){--chrome-paper:#171715;--chrome-ink:#f5f0e5;--chrome-accent:#edb562}
+html:has(#zz-overlay.open .theme-story){--chrome-paper:#080808;--chrome-ink:#f3f0e6;--chrome-accent:#f3f0e6}
+html:has(#zz-overlay.open .theme-visual){--chrome-paper:#69492f;--chrome-ink:#f5f0e5;--chrome-accent:#edb562}
 html:has(#zz-overlay.open .theme-product){--chrome-paper:transparent;--chrome-ink:#263b36}
 html:has(#zz-overlay.open .club-collage){--chrome-paper:#f2f0e7}
 html:has(#zz-overlay.open #zz-body>#zz-message-section){--chrome-paper:transparent}
@@ -13,6 +13,7 @@ html.chrome-on-blue{--chrome-paper:#3155b4;--chrome-ink:#f3f1e9;--chrome-accent:
 html.on-intro:not(.viewing-space){--chrome-ink:#eee8d8;--chrome-accent:#c8ee52}
 html.on-intro:not(.viewing-space) #zz-global-dock{visibility:hidden;opacity:0;pointer-events:none}
 html.viewing-space body::after{content:'';position:fixed;inset:auto 0 0;z-index:290;height:102px;background:linear-gradient(transparent,var(--chrome-paper) 66%);pointer-events:none}
+html.viewing-space:has(#zz-overlay.open .theme-visual) body::after{display:none}
 
 /* A small, consistent masthead, clear of the page's own typography. */
 #zz-fullscreen .top,html.viewing-space #zz-fullscreen .top{position:absolute;top:14px;left:0;right:0;z-index:330;display:flex;justify-content:center;pointer-events:none;padding:0}
@@ -67,7 +68,7 @@ html.viewing-space #zz-fixed-links .dock-art img{display:block;width:100%;height
 @media(hover:hover){#zz-overview nav button:hover .overview-label{color:#b94e38}}
 
 /* Fidget board: the same tactile objects on a quieter cork surface. */
-#zz-camera-plane #zz-stage::before{background-color:#d0b18c;background-image:linear-gradient(#f7f0dd36,#f7f0dd36),url('/assets/fidget-board-cork.webp');background-size:auto,720px auto;background-position:center;filter:saturate(.34)}
+#zz-camera-plane #zz-stage::before{background-color:#d0b18c;background-image:linear-gradient(#f7f0dd36,#f7f0dd36),url('/assets/textures/fidget-board-cork-v2.webp');background-size:auto,720px auto;background-position:center;filter:saturate(.34)}
 #zz-fullscreen .board-shortcut .fixed-label{display:none}
 #zz-fullscreen .board-shortcut .dock-art{filter:drop-shadow(1px 3px 2px #33271632)}
 #zz-fullscreen .club-glitter .club-label{font-size:12px;letter-spacing:.05em}

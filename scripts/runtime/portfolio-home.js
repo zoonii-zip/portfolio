@@ -48,8 +48,16 @@
  root.addEventListener('change',e=>{if(e.target.id!=='zz-portrait-upload')return;const f=e.target.files[0];if(!f||!f.type.startsWith('image/'))return;if(portraitURL)URL.revokeObjectURL(portraitURL);portraitURL=URL.createObjectURL(f);const face=q('#zz-face-photo');face.style.backgroundImage=`url("${portraitURL}")`;face.querySelector('span').hidden=true});
 
  const intro=document.getElementById('zz-logo-entry'),trailLayer=document.getElementById('zz-trail-layer');
- let trailReady=false,trailItems=[],trailRAF=0,physicsVisible=true;
+ let trailReady=false,trailItems=[],trailRAF=0,introInView=false,physicsVisible=false;
  const pointer={x:-999,y:-999,vx:0,vy:0,t:0};
+ function scheduleTrail(){if(physicsVisible&&!trailRAF)trailRAF=requestAnimationFrame(tickTrail)}
+ function syncTrailVisibility(){
+  const visible=introInView&&!document.hidden&&!document.documentElement.classList.contains('viewing-space');
+  if(visible===physicsVisible)return;
+  physicsVisible=visible;
+  if(!visible){cancelAnimationFrame(trailRAF);trailRAF=0;pointer.t=0;return}
+  trailItems.forEach(o=>o.last=performance.now());if(trailItems.length)scheduleTrail();
+ }
  function cloudLetter(i){const art=document.createElement('span');art.className='intro-letter-art intro-cloud-letter';art.style.setProperty('--letter-column',i%5);art.style.setProperty('--letter-row',Math.floor(i/5)%2);const img=document.createElement('img');img.src='assets/intro-letter-atlases/cloud-blue.webp';img.alt='';img.draggable=false;art.appendChild(img);return art}
  const graphicPool=[];
  for(let i=0;i<(window.ZooniiIntroStickers?.count||0);i++)graphicPool.push({key:'character-'+i,character:true,create:()=>window.ZooniiIntroStickers.create(i)});
@@ -68,11 +76,11 @@
   el.style.width=size+'px';el.style.height=size+'px';el.appendChild(graphic.create());trailLayer.appendChild(el);
   const o={el,key:graphic.key,size,x:Math.random()*Math.max(1,intro.clientWidth-size),y:reduced?intro.clientHeight-size-25:-size-Math.random()*650,vx:(Math.random()-.5)*250,vy:100+Math.random()*300,rotation:(Math.random()-.5)*90,spin:(Math.random()-.5)*110,last:performance.now()};trailItems.push(o);return o;
  }
- function shower(){trailItems.forEach(o=>o.el.remove());trailItems=[];graphicBag=[];drawGraphics(Math.min(24,Math.max(14,Math.floor(intro.clientWidth/60)))).forEach(makeGraphic);if(!trailRAF)trailRAF=requestAnimationFrame(tickTrail)}
+ function shower(){trailItems.forEach(o=>o.el.remove());trailItems=[];graphicBag=[];drawGraphics(Math.min(24,Math.max(14,Math.floor(intro.clientWidth/60)))).forEach(makeGraphic);scheduleTrail()}
  const zipButton=intro.querySelector('.zip-package');
  function popFromZip(){if(!trailReady){trailReady=true;intro.classList.add('unzipped')}const r=zipButton.getBoundingClientRect(),host=intro.getBoundingClientRect(),cx=r.left-host.left+r.width/2,cy=r.top-host.top+r.height*.25;
   drawGraphics(7).forEach((graphic,i)=>{const o=makeGraphic(graphic);o.x=Math.max(0,Math.min(intro.clientWidth-o.size,cx-o.size/2+(i-3)*9));o.y=cy-o.size/2;o.vx=(i-3)*105+(Math.random()-.5)*90;o.vy=-650-Math.random()*250;o.spin=(Math.random()-.5)*420;if(reduced){o.x=Math.max(0,Math.min(intro.clientWidth-o.size,cx-o.size/2+(i-3)*o.size*.65));o.y=Math.max(0,cy-o.size-30)}});
-  zipButton.classList.remove('zip-pop');void zipButton.offsetWidth;zipButton.classList.add('zip-pop');document.getElementById('zz-trail-hint').textContent='폴더를 또 클릭해보세요! 그래픽이 튀어 올라요.';if(!trailRAF)trailRAF=requestAnimationFrame(tickTrail)}
+  zipButton.classList.remove('zip-pop');void zipButton.offsetWidth;zipButton.classList.add('zip-pop');document.getElementById('zz-trail-hint').textContent='폴더를 또 클릭해보세요! 그래픽이 튀어 올라요.';scheduleTrail()}
  zipButton.addEventListener('click',popFromZip);
  document.addEventListener('zoonii:intro-replay',()=>{if(!trailReady)enableTrail();else shower()});
  function enableTrail(){if(trailReady)return;trailReady=true;intro.classList.add('unzipped');document.getElementById('zz-trail-hint').textContent='ZIP 속 그래픽이 쏟아졌어요. 마우스나 손가락으로 휘저어보세요.';shower()}
@@ -83,7 +91,9 @@
  intro.addEventListener('pointermove',e=>{if(!trailReady||e.target.closest('.trail-tools,button'))return;const r=intro.getBoundingClientRect(),t=performance.now(),px=e.clientX-r.left,py=e.clientY-r.top,dt=Math.max(.016,(t-pointer.t)/1000);pointer.vx=pointer.x<0?0:Math.max(-1200,Math.min(1200,(px-pointer.x)/dt));pointer.vy=pointer.y<0?0:Math.max(-1200,Math.min(1200,(py-pointer.y)/dt));Object.assign(pointer,{x:px,y:py,t})});
  intro.addEventListener('pointerdown',e=>{if(e.target.closest('.trail-tools,button'))return;const r=intro.getBoundingClientRect();Object.assign(pointer,{x:e.clientX-r.left,y:e.clientY-r.top,vx:250,vy:-500,t:performance.now()})});
  intro.addEventListener('pointerleave',()=>{pointer.t=0;pointer.x=-999});
- new IntersectionObserver(es=>{physicsVisible=es[0].isIntersecting;if(physicsVisible&&!trailRAF){trailItems.forEach(o=>o.last=performance.now());trailRAF=requestAnimationFrame(tickTrail)}},{threshold:.05}).observe(intro);
+ new IntersectionObserver(es=>{introInView=es[0].isIntersecting;syncTrailVisibility()},{threshold:.05}).observe(intro);
+ new MutationObserver(syncTrailVisibility).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+ document.addEventListener('visibilitychange',syncTrailVisibility);
  const replay=document.createElement('button');replay.type='button';replay.innerHTML='<svg viewBox="0 0 64 64" width="48" height="48" fill="none" aria-hidden="true" focusable="false"><path d="M9 14 24 6 48 8 59 20 57 42 43 57 19 59 6 45 5 27Z" fill="#e8ded0"/><path d="m11 16 15-7 21 2 9 10-2 20-13 13-21 2L9 44 8 28Z" fill="#f1e8dc"/><g stroke="#29251f" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 31c-1-11 8-18 18-17 7 0 12 4 15 10"/><path d="m39 23 13-7-3 16-10-9Z" fill="#e8ded0"/><path d="m40 23 9 1 3-8" stroke-width="1.4"/><path d="M48 39c-3 8-11 12-19 10-7-1-12-6-14-12" stroke-dasharray="2.5 4.5" stroke-width="1.8"/></g></svg>';replay.setAttribute('aria-label','Replay — 그래픽 다시 뿌리기');replay.title='Replay';intro.querySelector('.trail-tools').appendChild(replay);replay.addEventListener('click',()=>{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const icon=replay.querySelector('svg');icon.getAnimations().forEach(animation=>animation.cancel());icon.animate([{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}],{duration:480,easing:'cubic-bezier(.22,.61,.36,1)'});}if(!trailReady)enableTrail();else shower()});
  let archiveMode='STORY';
  const archiveLabels={ARTWORK:'Artwork',STORY:'Illustration',PRODUCT:'Web / App',VISUAL:'Brand / Editorial'};
