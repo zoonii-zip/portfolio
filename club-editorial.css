@@ -1,12 +1,12 @@
 /* ThingThingClub — a flat, spacious shop sheet. Game logic and canvas stay intact. */
 :root body #zz-fullscreen #zz-overlay:has(.club-collage),
 :root body #zz-fullscreen #zz-body .ttc-game{
- background:#f2f0e7!important;color:#232923;
+ color:#232923;
 }
 :root body #zz-fullscreen #zz-overlay:has(.club-collage)::after{display:none}
 :root body #zz-fullscreen #zz-overlay:has(.club-collage)>.panelhead{display:none}
-/* The game shares Artwork's aged paper and original Club logo repeat. */
-:root body #zz-fullscreen #zz-overlay:has(.ttc-game:not([hidden])),
+/* Both the catalogue and game share Artwork's paper and original Club logo repeat. */
+:root body #zz-fullscreen #zz-overlay:has(.club-collage),
 :root body #zz-fullscreen #zz-body .ttc-game{
  background-color:var(--aw-wall-color)!important;
  background-image:var(--aw-wall-image)!important;
@@ -15,7 +15,7 @@
  background-repeat:repeat!important;
 }
 :root body #zz-fullscreen #zz-body .ttc-game::before{display:none}
-html.viewing-space:has(#zz-overlay.open .ttc-game:not([hidden])) body::after{
+html.viewing-space:has(#zz-overlay.open .club-collage) body::after{
  background-color:var(--aw-wall-color);
  background-image:var(--aw-wall-image);
  background-size:var(--aw-wall-sizes);

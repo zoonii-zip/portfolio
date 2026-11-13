@@ -95,13 +95,35 @@ def case_content(p):
  <div class="case-intro"><span>ABOUT THE PROJECT</span><h2>{template['intro']}</h2><p class="case-draft">LAYOUT PREVIEW · 아래 설명은 구성을 확인하기 위한 샘플입니다. 실제 프로젝트 내용과 이미지로 교체할 예정입니다.</p></div>
  {sections}<footer class="case-footer"><span>THANK YOU FOR WATCHING</span><a href="/archive/{slug}/">← Back to {template['label']}</a><small>김주연 / Zoonii</small></footer></article>'''
 
+# These are the existing archive cover treatments, not proposed client identities.
+brand_covers = {
+ 'branding0': {'title':['Astar','Corp.'], 'kind':'CI / BI', 'tone':'#244b40', 'ink':'#f2ead8'},
+ 'branding1': {'title':['플린더스'], 'kind':'Package', 'tone':'#eaa493', 'ink':'#5c2a21'},
+ 'branding2': {'title':['비기닝','랩'], 'kind':'Coffee', 'tone':'#d8db91', 'ink':'#39452a'},
+ 'branding3': {'title':['Perfume'], 'kind':'Brand identity', 'tone':'#d6c6df', 'ink':'#4c3457'},
+ 'branding4': {'title':['KISA'], 'kind':'Report', 'tone':'#e4a266', 'ink':'#493024'},
+ 'chimpsburger': {'title':['CHIMPS','BURGER'], 'kind':'Brand renewal', 'tone':'#e4bd55', 'ink':'#342d20'}
+}
+def brand_case_content(key, p):
+ design = brand_covers[key]
+ number = f'{list(brand_covers).index(key)+1:02d}'
+ title = ''.join('<span>'+esc(line)+'</span>' for line in design['title'])
+ # Translate the two shorthand source descriptions; all other scope labels are
+ # taken directly from the project's comma-separated description.
+ description = {'package':'패키지 디자인', 'editorial':'보고서 편집 디자인'}.get(p['description'], p['description'])
+ deliverables = ''.join(f'<li><span class="bf-deliverable-number">{i:02d}</span><strong>{esc(scope.strip())}</strong><span class="bf-scope-mark" aria-hidden="true">↗</span></li>' for i,scope in enumerate(description.split(','), 1))
+ return f'''<article class="project-case case-visual brand-dossier bf-{esc(key)}" style="--bf-tone:{esc(design['tone'])};--bf-ink:{esc(design['ink'])}" data-brand-file="{esc(key)}">
+ <section class="bf-cover"><div class="bf-tab"><span>{number}</span><span>{esc(design['kind'])}</span></div><div class="bf-jacket"><header class="bf-cover-meta"><span>ZOONII.ZIP</span><span>BRAND / EDITORIAL</span></header><div class="bf-type-poster" aria-hidden="true"><div class="bf-display">{title}</div><span class="bf-asterisk">✳</span></div><div class="bf-cover-bottom"><h1>{esc(p['name'])}</h1><span>SELECTED WORK / {number}</span></div></div><aside class="bf-record"><p class="bf-record-caption">PROJECT NOTES</p><dl><div><dt>YEAR</dt><dd>{esc(p['period'])}</dd></div><div><dt>TYPE</dt><dd>{esc(design['kind'])}</dd></div><div><dt>DESIGNER</dt><dd>김주연 / Zoonii</dd></div></dl><div class="bf-seal" aria-hidden="true"><strong>Z.</strong><small>ZOONII.ZIP</small></div></aside></section>
+ <section class="bf-details"><p class="bf-section-label">PROJECT SCOPE</p><h2>작업 범위</h2><ol class="bf-deliverables">{deliverables}</ol></section>
+ <footer class="bf-footer"><p class="bf-availability">작업 이미지 준비 중</p><a href="/archive/branding/">← Back to archive</a><span>김주연 / Zoonii</span></footer></article>'''
+
 # This pending cover intentionally has no generic sample chapters.
 pending_content={'illustration5':'<article class="project-case case-story"><header class="case-header"><div class="case-eyebrow"><a href="/archive/illustration/">← Archive</a><span>ILLUSTRATION</span></div><h1>KT Y × 서일페</h1><p class="case-summary">프로젝트 상세 내용을 준비 중입니다.</p></header><figure class="case-media" style="--media-ratio:4 / 5"><div><figcaption>KT Y × 서일페</figcaption><small>표지 · 상세 준비 중</small></div></figure></article>'}
 for key,p in projects.items():
  path='/projects/'+key+'/'
  desc=p['name']+' — '+p.get('description',p['role'])+'. Zoonii의 '+labels[p['mode']][1]+' 프로젝트. 상세 준비 중입니다.'
  work={'@type':'CreativeWork','@id':origin+path+'#work','name':p['name'],'url':origin+path,'creator':{'@id':person['@id']},'description':p.get('description',p['role']),'genre':labels[p['mode']][1]}
- content=pending_content[key] if key in pending_content else case_content(p)
+ content=brand_case_content(key,p) if p['mode']=='VISUAL' else pending_content[key] if key in pending_content else case_content(p)
  content=re.sub(r'(?m)^[ \t]+$', '', content)
  add(path,p['name']+' — Zoonii',desc,content,'project',index=False,mode=p['mode'],work=work)
 # Hooks notify only after the existing UI actually changes, including keyboard navigation.

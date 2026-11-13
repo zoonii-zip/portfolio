@@ -60,6 +60,42 @@ class BuildTests(unittest.TestCase):
             self.assertIn("표지 · 상세 준비 중", pending["content"])
             self.assertNotIn("case-section", pending["content"])
             self.assertEqual(pending["schema"]["@graph"][-1]["genre"], "일러스트레이션")
+            # Branding details must describe the selected project, rather than
+            # repeat fictional process chapters or suggest missing images exist.
+            branding = {
+                "branding0": ("아스타", "2023", "CI / BI", [
+                    "기업 CI·BI", "브랜드 가이드", "회사 소개 자료", "홈페이지",
+                ]),
+                "branding1": ("플린더스", "2024", "Package", ["패키지 디자인"]),
+                "branding2": ("비기닝랩", "2024", "Coffee", ["커피 제품 상세 페이지 디자인"]),
+                "branding3": ("향수 브랜딩", "2024", "Brand identity", ["브랜드 아이덴티티"]),
+                "branding4": ("KISA 보고서", "2022", "Report", ["보고서 편집 디자인"]),
+                "chimpsburger": ("침스버거", "2026.09–10", "Brand renewal", [
+                    "캐릭터·로고 브랜딩", "광고판 일러스트", "시트지 2종", "버거·사이드 박스",
+                    "메뉴판", "메뉴별 포스터", "벽화",
+                ]),
+            }
+            self.assertEqual(
+                {route for route, page in pages.items() if page["action"] == "project" and page["mode"] == "VISUAL"},
+                {f"/projects/{key}/" for key in branding},
+            )
+            for key, (name, year, kind, scope) in branding.items():
+                with self.subTest(branding=key):
+                    page = pages[f"/projects/{key}/"]
+                    content = page["content"]
+                    self.assertIn(f'data-brand-file="{key}"', content)
+                    self.assertIn(f"<h1>{name}</h1>", content)
+                    self.assertIn(f"<dt>YEAR</dt><dd>{year}</dd>", content)
+                    self.assertIn(f"<dt>TYPE</dt><dd>{kind}</dd>", content)
+                    self.assertIn("<dt>DESIGNER</dt><dd>김주연 / Zoonii</dd>", content)
+                    self.assertEqual(content.count('class="bf-deliverable-number"'), len(scope))
+                    for deliverable in scope:
+                        self.assertIn(f"<strong>{deliverable}</strong>", content)
+                    self.assertIn("작업 이미지 준비 중", content)
+                    self.assertNotIn("IMAGE PLACEHOLDER", content)
+                    self.assertNotIn("LAYOUT PREVIEW", content)
+                    self.assertNotIn('class="case-section"', content)
+                    self.assertFalse(page["index"])
             for route in pages:
                 file = root / (route.strip("/") + "/index.html" if route != "/" else "index.html")
                 html = file.read_text()
