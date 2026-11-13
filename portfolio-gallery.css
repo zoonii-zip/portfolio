@@ -27,7 +27,56 @@
 #zz-fullscreen #zz-body .ff-stage{row-gap:58px;padding-bottom:36px}
 #zz-fullscreen #zz-body .ff-caption{position:absolute;top:calc(100% + 12px);left:0;right:0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;color:#fff;font-size:13px;line-height:1.4;text-shadow:0 1px 4px #172e39}
 #zz-fullscreen #zz-body .ff-caption small{flex:none;font:10px/1.4 monospace;opacity:.8}
+#zz-fullscreen #zz-body .ff-current time[hidden],#zz-fullscreen #zz-body .ff-caption small[hidden]{display:none}
 @media(max-width:700px){
  #zz-fullscreen #zz-body .ff-current{min-height:112px}
  #zz-fullscreen #zz-body .ff-stage{row-gap:58px}
+}
+
+/* Printed title sheets make each project recognizable while the folders stay intact. */
+:root body #zz-fullscreen #zz-body .ff-body{container-type:inline-size}
+:root body #zz-fullscreen #zz-body .collection-cover{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:8%;color:var(--cover-ink);text-align:left;box-sizing:border-box}
+:root body #zz-fullscreen #zz-body .collection-cover .cover-title{display:block;font-family:'Source Sans 3','SUIT',sans-serif!important;font-weight:800;font-size:28cqw;line-height:.88;letter-spacing:-.065em;white-space:nowrap}
+:root body #zz-fullscreen #zz-body .collection-cover .cover-title>span{display:block;font:inherit;font-family:inherit!important;letter-spacing:inherit}
+:root body #zz-fullscreen #zz-body .collection-cover .cover-kind{position:absolute;left:8%;bottom:7%;font:500 clamp(9px,3cqw,12px)/1.15 'Source Sans 3',sans-serif!important;letter-spacing:.055em;text-transform:uppercase}
+:root body #zz-fullscreen #zz-body .ff-number{top:3.8%;left:7%;color:var(--cover-ink);font-size:11px;font-weight:600;letter-spacing:.06em}
+:root body #zz-fullscreen #zz-body .cover-uiux0 .cover-title{font-weight:650;letter-spacing:-.075em}
+:root body #zz-fullscreen #zz-body .cover-uiux1 .cover-title{font-size:18cqw;font-weight:800;letter-spacing:-.045em}
+:root body #zz-fullscreen #zz-body .cover-uiux2{padding-top:4%}
+:root body #zz-fullscreen #zz-body .cover-uiux2 .cover-title{font-family:Georgia,'Times New Roman',serif!important;font-size:27cqw;font-weight:400;font-style:italic;line-height:.8;letter-spacing:-.065em}
+:root body #zz-fullscreen #zz-body .cover-uiux2 .cover-title>span:last-child{padding-left:27%}
+:root body #zz-fullscreen #zz-body .cover-uiux3 .cover-title{font-size:38cqw;font-weight:850;letter-spacing:-.075em}
+:root body #zz-fullscreen #zz-body .cover-uiux4 .cover-title{font-family:Georgia,'Times New Roman',serif!important;font-size:24cqw;font-weight:700;letter-spacing:-.075em}
+:root body #zz-fullscreen #zz-body .ff-cover-fallback{display:grid;place-items:center;height:100%;padding:24px;color:var(--cover-ink);font-size:28px;word-break:keep-all}
+
+/* The perforation and category grid remain; type, scale and stock distinguish the stamps. */
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-paper{min-height:0;padding:18px}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-top{align-items:baseline;gap:12px;font-size:11px;font-weight:550;letter-spacing:0;color:#44473d}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-year{font-size:11px;font-weight:500;letter-spacing:.04em}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-art{container-type:inline-size;display:block;min-height:0;height:auto;aspect-ratio:1.38;padding:0;margin:12px 0 14px;background:var(--stamp-tone)}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-caption{flex:1;min-height:40px}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-caption>span{font-size:12px;line-height:1.6;color:#414439}
+:root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-bottom{margin-top:10px;font-size:15px;line-height:1}
+:root body #zz-fullscreen #zz-body .theme-visual .collection-cover .cover-title{font-size:25cqw;line-height:.88}
+:root body #zz-fullscreen #zz-body .theme-visual .collection-cover .cover-kind{font-size:clamp(10px,3.1cqw,12px)}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding0{align-items:center;padding-bottom:14%;text-align:center}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding0 .cover-title{font-family:Georgia,'Times New Roman',serif!important;font-size:31cqw;font-weight:400;font-style:italic;letter-spacing:-.065em}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding0 .cover-title>span:last-child{margin-top:12%;font-family:'Source Sans 3',sans-serif!important;font-size:9cqw;font-style:normal;letter-spacing:.05em}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding0 .cover-kind{left:auto;right:8%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding1{justify-content:flex-start;padding-top:17%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding1 .cover-title{font-family:'SUIT',sans-serif!important;font-size:21cqw;font-weight:850;letter-spacing:-.085em;line-height:1.15}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding1 .cover-kind{font-family:Georgia,serif!important;font-size:10cqw;font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.04em;bottom:11%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding2{text-align:right;justify-content:flex-start;padding-top:9%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding2 .cover-title{font-family:'SUIT',sans-serif!important;font-size:25cqw;font-weight:850;letter-spacing:-.09em;line-height:.95}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding2 .cover-kind{left:8%;bottom:9%;font-family:Georgia,serif!important;font-size:9cqw;font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.04em}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding3{padding-bottom:16%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding3 .cover-title{font-family:Georgia,'Times New Roman',serif!important;font-size:23cqw;font-weight:400;font-style:italic;letter-spacing:-.075em}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding4{justify-content:flex-end;padding-bottom:14%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding4 .cover-title{font-size:36cqw;font-weight:850;letter-spacing:-.075em}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-branding4 .cover-kind{top:9%;bottom:auto}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-chimpsburger{padding-bottom:15%}
+:root body #zz-fullscreen #zz-body .theme-visual .cover-chimpsburger .cover-title{font-size:24cqw;font-weight:900;letter-spacing:-.06em;line-height:.83}
+@media(max-width:700px){
+ :root body #zz-fullscreen #zz-body .ff-number{font-size:10px}
+ :root body #zz-fullscreen #zz-body .theme-visual .brand-stamp[data-cover-ready] .stamp-paper{padding:16px}
 }

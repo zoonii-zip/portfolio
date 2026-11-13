@@ -30,7 +30,7 @@ class BuildTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "scripts").mkdir()
-            for name in ("index.html", "CNAME"):
+            for name in ("index.html", "CNAME", "artwork-gallery.json"):
                 shutil.copy2(ROOT / name, root / name)
             for name in ("build-seo.py", "asset_versions.py"):
                 shutil.copy2(ROOT / "scripts" / name, root / "scripts" / name)
@@ -42,7 +42,24 @@ class BuildTests(unittest.TestCase):
             pages = json.loads(
                 (root / "seo-pages.js").read_text().split(" = ", 1)[1].rstrip(";\n")
             )
-            self.assertEqual(len(pages), 27)
+            self.assertTrue({
+                "/archive/artwork/", "/archive/illustration/",
+                "/archive/uiux/", "/archive/branding/",
+                "/projects/illustration5/",
+            }.issubset(pages))
+            artwork = pages["/archive/artwork/"]
+            self.assertEqual((artwork["action"], artwork["mode"]), ("files", "ARTWORK"))
+            self.assertEqual(artwork["content"].count(" data-aw-open"), len(json.loads(
+                (root / "artwork-gallery.json").read_text()
+            )))
+            self.assertLess(
+                artwork["content"].index('href="/archive/artwork/"'),
+                artwork["content"].index('href="/archive/illustration/"'),
+            )
+            pending = pages["/projects/illustration5/"]
+            self.assertIn("표지 · 상세 준비 중", pending["content"])
+            self.assertNotIn("case-section", pending["content"])
+            self.assertEqual(pending["schema"]["@graph"][-1]["genre"], "일러스트레이션")
             for route in pages:
                 file = root / (route.strip("/") + "/index.html" if route != "/" else "index.html")
                 html = file.read_text()

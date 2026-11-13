@@ -4,7 +4,7 @@
  const pages=window.ZooniiSEOPages;
  if(!pages)return;
  let restoring=false, queued=null;
- const categories={STORY:'/archive/illustration/',PRODUCT:'/archive/uiux/',VISUAL:'/archive/branding/'};
+ const categories={ARTWORK:'/archive/artwork/',STORY:'/archive/illustration/',PRODUCT:'/archive/uiux/',VISUAL:'/archive/branding/'};
  const titles={Profile:'/profile/',Career:'/career/',Archive:'/archive/',Contact:'/contact/',Guestbook:'/guestbook/',ThingThingClub:'/thingthingclub/'};
  const path=()=>location.pathname==='/index.html'?'/':location.pathname;
  // Fresh home entries must show the intro, not a restored board scroll offset.

@@ -160,3 +160,13 @@ body .guest-actions :is(button):focus-visible{outline:2px dashed #262622;outline
 }
 /* Start can notes below the printed title, including longer existing messages. */
 #zz-message-section .wall-note:is(.paper-lined,.paper-ticket){min-height:340px;padding:185px 49px 42px}
+
+/* Keep the original memo proportions inside narrow writing dialogs. */
+@media(max-width:371px){
+ #zz-message-section .guest-compose-dialog{--memo-size:calc(100vw - 72px)}
+ #zz-message-section .guest-compose-dialog .paper-preview{width:var(--memo-size)}
+ #zz-message-section .guest-compose-dialog .paper-preview.paper-yellow{height:var(--memo-size);padding:calc(var(--memo-size) * .39) calc(var(--memo-size) * .18) calc(var(--memo-size) * .14)}
+ #zz-message-section .guest-compose-dialog .paper-preview.paper-pink{height:var(--memo-size);padding:calc(var(--memo-size) * .22) calc(var(--memo-size) * .27) calc(var(--memo-size) * .31) calc(var(--memo-size) * .29)}
+ #zz-message-section .guest-compose-dialog .paper-preview:is(.paper-lined,.paper-ticket){height:calc(var(--memo-size) * 1.426667);padding:calc(var(--memo-size) * .72) calc(var(--memo-size) * .24) calc(var(--memo-size) * .17)}
+ #zz-message-section .guest-compose-dialog .paper-preview.paper-house{padding:40px calc(var(--memo-size) * .18) 32px}
+}

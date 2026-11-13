@@ -1,0 +1,166 @@
+/* ThingThingClub — a flat, spacious shop sheet. Game logic and canvas stay intact. */
+:root body #zz-fullscreen #zz-overlay:has(.club-collage),
+:root body #zz-fullscreen #zz-body .ttc-game{
+ background:#f2f0e7!important;color:#232923;
+}
+:root body #zz-fullscreen #zz-overlay:has(.club-collage)::after{display:none}
+:root body #zz-fullscreen #zz-overlay:has(.club-collage)>.panelhead{display:none}
+/* The game shares Artwork's aged paper and original Club logo repeat. */
+:root body #zz-fullscreen #zz-overlay:has(.ttc-game:not([hidden])),
+:root body #zz-fullscreen #zz-body .ttc-game{
+ background-color:var(--aw-wall-color)!important;
+ background-image:var(--aw-wall-image)!important;
+ background-size:var(--aw-wall-sizes)!important;
+ background-position:0 0!important;
+ background-repeat:repeat!important;
+}
+:root body #zz-fullscreen #zz-body .ttc-game::before{display:none}
+html.viewing-space:has(#zz-overlay.open .ttc-game:not([hidden])) body::after{
+ background-color:var(--aw-wall-color);
+ background-image:var(--aw-wall-image);
+ background-size:var(--aw-wall-sizes);
+ background-position:0 calc(102px - 100dvh);
+ mask-image:linear-gradient(transparent,#000 66%);
+}
+:root body #zz-fullscreen #zz-body .ttc-court canvas,
+:root body #zz-fullscreen #zz-body .club-collage img{filter:none}
+
+/* A large logo and two clear choices, balanced against the loaded cart. */
+:root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-screen{
+ left:5vw;width:48%;padding:105px 2vw 130px;gap:38px;
+}
+:root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-logo-art{
+ width:min(100%,540px);max-width:540px;transform:rotate(-3deg);margin:0;
+}
+:root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions{
+ max-width:440px;gap:16px 14px;
+}
+:root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-rules{
+ font-size:13px;line-height:1.7;font-weight:450;color:#555b52;letter-spacing:-.02em;
+}
+:root body #zz-fullscreen #zz-body .ttc-entry-actions button.zz-paper-control{
+ --paper-tone:#242923;min-height:52px;padding:13px 20px!important;
+ color:#f7f4e9!important;
+}
+:root body #zz-fullscreen #zz-body .ttc-entry-actions button[data-skip].zz-paper-control{
+ --paper-tone:#c5dcdf;color:#242923!important;
+}
+:root body #zz-fullscreen #zz-body .ttc-game .ttc-dpad{gap:12px}
+:root body #zz-fullscreen #zz-body .ttc-game .ttc-dpad button{
+ filter:none;min-height:46px;height:46px;width:46px;transform:none;
+}
+:root body #zz-fullscreen #zz-body .ttc-game .ttc-dpad button::before{
+ background:#e4e1d6!important;clip-path:none!important;border-radius:50%!important;
+}
+:root body #zz-fullscreen #zz-body .ttc-game .ttc-dpad button svg{width:24px;height:24px}
+
+/* The catalogue shares one calm baseline, with product art doing the talking. */
+:root body #zz-fullscreen #zz-body .club-figma-layout:not([hidden]){
+ inset:110px 0 122px;width:100%;padding:0 clamp(24px,4vw,76px);
+ display:grid;grid-template-columns:minmax(220px,28%) minmax(0,1fr);gap:clamp(28px,4vw,76px);
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon{
+ position:relative;inset:auto;align-self:center;width:100%;gap:20px;padding-bottom:20px;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon h2{
+ margin:0;max-width:100%;font:400 clamp(34px,3.8vw,64px)/.98 'Shine Coasty',Georgia,serif!important;
+ text-decoration:none;white-space:normal;overflow-wrap:normal;letter-spacing:-.055em;color:#212821;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon h2 span{display:block;white-space:nowrap;font:inherit!important;letter-spacing:inherit}
+:root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon>p{
+ font-size:14px;line-height:1.9;letter-spacing:-.02em;color:#575d52;margin:0;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-fairs{margin:7px 0 0}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-fairs h3{
+ font-size:10px;font-weight:650;letter-spacing:.11em;margin:0 0 10px;color:#6c7165;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-fairs p{
+ font-size:11px;line-height:1.9;color:#656a60;margin:0;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-store-actions{gap:10px;margin-top:3px}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-store-actions :is(.club-shop-link,.ttc-shop-replay).zz-paper-control{
+ --paper-tone:#242923;min-height:46px;padding:10px 18px!important;
+ color:#f7f4e9!important;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-store-actions .ttc-shop-replay.zz-paper-control{
+ --paper-tone:#d8e3d1;color:#242923!important;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-object-field{
+ width:100%;height:100%;min-height:0;aspect-ratio:auto;container-type:normal;
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:max-content;
+ align-content:start;gap:40px 20px;padding:12px 5px 60px;overflow-y:auto;overscroll-behavior:contain;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product{
+ position:relative;inset:auto;justify-self:stretch;align-self:start;width:100%;
+ height:clamp(205px,22vw,320px);margin:0!important;padding:5px 6px 42px;aspect-ratio:auto;
+ display:flex;align-items:center;justify-content:center;transform:none;
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product::before{display:none}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product img{
+ position:static;inset:auto;max-height:100%;height:100%;width:100%;object-fit:contain;
+ transform:rotate(var(--product-tilt,-3deg));transition:transform .3s cubic-bezier(.2,.7,.2,1);
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product:nth-child(3n+2){--product-tilt:4deg}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product:nth-child(3n){--product-tilt:-1deg}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product-number{display:none}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product-name{
+ display:block;position:absolute;inset:auto 0 2px;max-width:100%;padding:0;
+ transform:none;opacity:1;visibility:visible;background:none;box-shadow:none;border:0;
+ font-size:11px;font-weight:500;line-height:1.5;letter-spacing:-.01em;text-align:center;
+ white-space:normal;color:#5d6358;
+}
+@media(hover:hover){
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product:hover img,
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product:focus-visible img{transform:translateY(-7px) rotate(0deg)}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product:hover .club-product-name{color:#151d15}
+}
+:root body #zz-fullscreen #zz-body .club-figma-layout .club-product:focus-visible{outline:2px solid #146a79;outline-offset:2px;border-radius:2px}
+:root body #zz-fullscreen #zz-body .ttc-result-card{background:#c4dde2;box-shadow:8px 8px 0 #e3e0d3;border-radius:2px;padding:34px}
+:root body #zz-fullscreen #zz-body .ttc-result-card::after{display:none}
+:root body #zz-fullscreen #zz-body .ttc-result-card h2{color:#252b24;-webkit-text-stroke:0;text-shadow:none}
+:root body #zz-fullscreen #zz-body .ttc-result-card input{border:1px solid #7b948f;border-radius:2px;background:#fffdf5}
+:root body #zz-fullscreen #zz-body .ttc-result-card .ttc-result-ranking li{border-bottom:0}
+@media(min-width:1650px){
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-object-field{grid-template-columns:repeat(4,minmax(0,1fr));gap:44px 28px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product{height:290px}
+}
+@media(max-width:1100px){
+ :root body #zz-fullscreen #zz-body .club-figma-layout:not([hidden]){grid-template-columns:minmax(200px,30%) minmax(0,1fr);gap:30px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-object-field{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product{height:clamp(215px,27vw,290px)}
+}
+@media(max-width:700px){
+ :root body #zz-fullscreen #zz-overlay:has(.club-figma-layout:not([hidden])){overflow-y:auto!important;overflow-x:clip!important}
+ :root body #zz-fullscreen #zz-body:has(.club-figma-layout:not([hidden])){position:relative;inset:auto;height:auto;min-height:100svh;overflow:visible}
+ :root body #zz-fullscreen #zz-body .club-figma-layout:not([hidden]){
+  position:relative;inset:auto;height:auto;min-height:100svh;padding:100px 24px 140px;grid-template-columns:1fr;grid-template-rows:auto auto;gap:28px;overflow:visible;
+ }
+ :root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon{gap:10px;padding:0;align-self:start}
+ :root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon h2{font-size:42px!important;max-width:100%;overflow-wrap:normal}
+ :root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon>p{font-size:12px;line-height:1.7}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-fairs{display:none}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-store-actions{position:static;gap:10px;margin-top:6px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-store-actions :is(.club-shop-link,.ttc-shop-replay).zz-paper-control{
+  min-height:44px;padding:10px 15px!important;font-size:22px!important;
+ }
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-object-field{height:auto;overflow:visible;overscroll-behavior:auto;padding:10px 0 0;gap:24px 14px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product{height:210px;padding:0 2px 33px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product-name{font-size:10px}
+}
+@media(max-width:599px){
+ :root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-screen{
+  inset:110px 0 auto;width:100%;padding:0 24px;gap:22px;
+ }
+ :root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-logo-art{width:min(330px,74vw,33svh)}
+ :root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-entry-actions{max-width:340px;gap:14px 12px}
+ :root body #zz-fullscreen #zz-body .ttc-game:is([data-state=ready],[data-state=starting]) .ttc-rules{font-size:11px}
+ :root body #zz-fullscreen #zz-body .ttc-entry-actions button.zz-paper-control{min-height:48px;font-size:26px!important;padding:11px 14px!important}
+}
+@media(max-width:380px){
+ :root body #zz-fullscreen #zz-body .club-figma-layout:not([hidden]){padding-inline:18px;gap:22px}
+ :root body #zz-fullscreen #zz-body .club-figma-layout>.club-colophon h2{font-size:36px!important}
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product{height:180px}
+}
+@media(prefers-reduced-motion:reduce){
+ :root body #zz-fullscreen #zz-body .club-figma-layout .club-product img{transition:none}
+}

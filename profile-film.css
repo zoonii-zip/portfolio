@@ -159,6 +159,11 @@ body:has(.profile-poster) #zz-global-dock .dock-icon{background-image:url("/asse
 #zz-fullscreen .profile-poster .profile-side-links .profile-sns{position:absolute;right:0;bottom:calc(100% + 14px);margin:0;gap:8px}
 @media(max-width:700px){#zz-fullscreen .profile-poster .profile-side-links{right:16px}}
 
+/* Keep the committed right-hand navigation, with eyes clear of narrow-screen copy. */
+@media(max-width:1100px){
+ #zz-fullscreen .profile-poster .profile-side-links .profile-eyes{top:auto;bottom:calc(100% + 72px);right:0;width:130px;transform:rotate(-7deg)}
+}
+
 /* Contact continues the profile's yellow printed-paper composition. */
 #zz-fullscreen #zz-overlay:has(.contact-intro){background:#fffd85;color:#32361e;overflow-y:auto;isolation:isolate}
 #zz-fullscreen #zz-overlay:has(.contact-intro)::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:30;background:url('/assets/profile-yellow/paper-grain.svg') repeat;background-size:160px 160px;opacity:.52;mix-blend-mode:multiply}

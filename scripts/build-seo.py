@@ -41,8 +41,16 @@ if profile_source.exists():
    pages['/profile/']['content']+='<section><h2>'+esc(section['title'])+'</h2><ul>'+items+'</ul></section>'
 def listing(mode=None):
  return '<ul>'+''.join(f'<li><a href="/projects/{esc(k)}/">{esc(p["name"])}</a> — {esc(p["role"])} · {esc(p["period"])}</li>' for k,p in projects.items() if mode is None or p['mode']==mode)+'</ul>'
-category_nav='<nav aria-label="작업 분야">'+''.join(f'<a href="/archive/{slug}/">{label}</a> ' for slug,label in labels.values())+'</nav>'
+category_nav='<nav aria-label="작업 분야">'+''.join(f'<a href="/archive/{slug}/">{label}</a> ' for slug,label in [('artwork','Artwork'),*labels.values()])+'</nav>'
 add('/archive/','Archive — Zoonii의 디자인 · 일러스트레이션 작업','Zoonii의 일러스트레이션, UI/UX, 브랜딩과 편집 디자인 프로젝트 목록. 작품 이미지와 상세 설명은 준비 중입니다.','<h1>Zoonii Archive</h1>'+category_nav+listing()+'<p>프로젝트 이미지 · 상세 준비 중</p>','files')
+artworks=json.loads((ROOT/'artwork-gallery.json').read_text())
+def artwork_content():
+ figures=[]
+ for i,art in enumerate(artworks):
+  fields={key:esc(art[key]) for key in ['id','title','client','year','src','frame','background']}
+  figures.append(f'''<figure class="aw-work aw-work-{fields['id']}" data-aw-id="{fields['id']}"><button type="button" class="aw-picture aw-frame-{fields['frame']}" data-aw-open data-aw-src="{fields['src']}" data-aw-title="{fields['title']}" data-aw-client="{fields['client']}" data-aw-year="{fields['year']}" style="--aw-bg:{fields['background']}" aria-label="{fields['title']} 크게 보기" aria-haspopup="dialog"><img src="{fields['src']}" alt="{fields['client']} — {fields['title']}" width="{int(art['width'])}" height="{int(art['height'])}" loading="{'eager' if i<3 else 'lazy'}" decoding="async"></button><figcaption><span class="aw-work-number">{i+1:02d}</span><div><strong>{fields['title']}</strong><span>{fields['client']}</span></div><time>{fields['year']}</time></figcaption></figure>''')
+ return '<div class="aw-readable-nav">'+category_nav+'</div><div class="aw-gallery"><header class="aw-heading"><h1>Artwork</h1><span class="aw-total">'+f'{len(artworks):02d} works'+'</span></header><div class="aw-grid">'+''.join(figures)+'</div></div>'
+add('/archive/artwork/','Artwork — Zoonii','김주연 / Zoonii의 아트워크 갤러리. 다채로운 색과 장면으로 이어지는 일러스트레이션 작품 모음.',artwork_content(),'files',mode='ARTWORK')
 for mode,(slug,label) in labels.items():
  add('/archive/'+slug+'/',label+' — Zoonii',f'김주연 / Zoonii의 {label} 프로젝트 목록과 작업 역할.','<h1>'+label+'</h1>'+category_nav+listing(mode)+'<p>프로젝트 이미지 · 상세 준비 중</p>','files',mode=mode)
 rows=''.join('<tr>'+''.join('<td>'+esc(r[i])+'</td>' for i in [0,2,3,5])+'</tr>' for r in records if r[4] not in ['teaching','exhibition'])
@@ -87,11 +95,14 @@ def case_content(p):
  <div class="case-intro"><span>ABOUT THE PROJECT</span><h2>{template['intro']}</h2><p class="case-draft">LAYOUT PREVIEW · 아래 설명은 구성을 확인하기 위한 샘플입니다. 실제 프로젝트 내용과 이미지로 교체할 예정입니다.</p></div>
  {sections}<footer class="case-footer"><span>THANK YOU FOR WATCHING</span><a href="/archive/{slug}/">← Back to {template['label']}</a><small>김주연 / Zoonii</small></footer></article>'''
 
+# This pending cover intentionally has no generic sample chapters.
+pending_content={'illustration5':'<article class="project-case case-story"><header class="case-header"><div class="case-eyebrow"><a href="/archive/illustration/">← Archive</a><span>ILLUSTRATION</span></div><h1>KT Y × 서일페</h1><p class="case-summary">프로젝트 상세 내용을 준비 중입니다.</p></header><figure class="case-media" style="--media-ratio:4 / 5"><div><figcaption>KT Y × 서일페</figcaption><small>표지 · 상세 준비 중</small></div></figure></article>'}
 for key,p in projects.items():
  path='/projects/'+key+'/'
  desc=p['name']+' — '+p.get('description',p['role'])+'. Zoonii의 '+labels[p['mode']][1]+' 프로젝트. 상세 준비 중입니다.'
  work={'@type':'CreativeWork','@id':origin+path+'#work','name':p['name'],'url':origin+path,'creator':{'@id':person['@id']},'description':p.get('description',p['role']),'genre':labels[p['mode']][1]}
- content=case_content(p)
+ content=pending_content[key] if key in pending_content else case_content(p)
+ content=re.sub(r'(?m)^[ \t]+$', '', content)
  add(path,p['name']+' — Zoonii',desc,content,'project',index=False,mode=p['mode'],work=work)
 # Hooks notify only after the existing UI actually changes, including keyboard navigation.
 if '/* SEO bridge */' not in data_source:

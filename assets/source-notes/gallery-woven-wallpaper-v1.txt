@@ -1,0 +1,18 @@
+# Gallery wallpaper texture
+
+- Mode: built-in image_gen tool (new texture generation).
+- Project asset: `/Users/zoonii/Documents/Codex/2026-11-11/https-github-com-zoonii-zip-portfolio/portfolio/assets/textures/gallery-woven-wallpaper-v1.webp`
+- Generated source: `/Users/zoonii/.codex/generated_images/01a1caab-334f-7103-ad2c-3f6aba3731fb/exec-fa5ef281-aa65-491c-a9ed-38da3c47ea36.png`
+- Format: 1254 × 1254 WebP, quality 88; no image content edits.
+- Placement: Artwork gallery wall only; repeat at 620 CSS pixels with a light ivory tint. The footer uses the same surface through a masked overlay.
+
+## Final prompt
+
+Use case: photorealistic-natural
+Asset type: seamless website wallpaper material texture, square 1536x1536 image
+Primary request: a realistically photographed very fine warm ivory woven wallpaper, for an art gallery wall behind colorful matte picture frames.
+Subject: only the material surface, a refined flat linen-look embossed nonwoven wall covering, tightly interlaced irregular microfibers, tiny horizontal weft and very fine vertical warp, soft subtle tactile detail.
+Composition: straight-on orthographic flat macro material scan, surface fills every pixel, same scale and light across the entire image, seamless tileable edges. The visible sample represents about 40 by 40 centimeters of real wallpaper. Fine weave that is visible yet delicate, not a grid pattern or coarse burlap.
+Lighting: diffuse frontal soft daylight, absolutely uniform exposure, understated microscopic fiber shadows only. No directional lighting gradient or vignette.
+Color palette: warm off-white ivory, approximate #ede8db, extremely subtle pale oatmeal fibers, low contrast.
+Constraints: material texture only. No objects, frames, art, room, corners, floor, furniture, text, logos, watermark, seams, folds, creases, tears, stains, large patches, stripes, motifs, decorative pattern, dark speckles, shiny fibers, sheen, or dramatic shadows.
