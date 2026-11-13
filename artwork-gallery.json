@@ -1,0 +1,8 @@
+[
+  {"id":"unesco","title":"World Peace Day","client":"KT Y × UNESCO","year":"2025","src":"/assets/illustration-covers/unesco-cover.webp","width":1200,"height":1200,"frame":"cobalt","background":"#e9f3ee"},
+  {"id":"ottogi","title":"Single Living","client":"KT Y × OTTOGI","year":"2025","src":"/assets/illustration-covers/kty-ottogi-cover.webp","width":960,"height":1200,"frame":"ochre","background":"#f0ead6"},
+  {"id":"konai","title":"Seventeen Places","client":"KONA I","year":"2025","src":"/assets/illustration-covers/konai-cover.webp","width":900,"height":1200,"frame":"pine","background":"#f1e8cd"},
+  {"id":"ok","title":"Join & Get Lucky!","client":"OK SAVINGS BANK","year":"2025","src":"/assets/illustration-covers/ok-savings-cover.webp","width":960,"height":1200,"frame":"coral","background":"#f5e9c9"},
+  {"id":"sif","title":"Artist Zone","client":"KT Y × SEOUL ILLUSTRATION FAIR","year":"","src":"/assets/illustration-covers/kty-sif-cover.webp","width":1200,"height":480,"frame":"lilac","background":"#e4eceb"},
+  {"id":"tongkeun","title":"Tongkeun Run","client":"LOTTE MART","year":"2026","src":"/assets/illustration-covers/tongkeun-cover.webp","width":855,"height":1200,"frame":"burgundy","background":"#f0ebdf"}
+]

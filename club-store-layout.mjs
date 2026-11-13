@@ -22,6 +22,7 @@ export function arrangeStore(shop,replay){
   }
   replay.textContent='CART GAME';
   const colophon=shop.querySelector('.club-colophon');
+  colophon.querySelector('h2').innerHTML='<span>ThingThing</span><span>Club!</span>';
   const storeLink=colophon.querySelector('.club-shop-link');
   storeLink.textContent='GO SMARTSTORE';
   const actions=document.createElement('div');actions.className='club-store-actions';

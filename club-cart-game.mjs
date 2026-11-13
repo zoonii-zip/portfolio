@@ -1,4 +1,4 @@
-import {arrangeStore} from './club-store-layout.mjs?v=11f3e8b916';
+import {arrangeStore} from './club-store-layout.mjs?v=7ccb74170c';
 import {catchPose} from './scripts/cart-motion.mjs';
 import {CART_ENDPOINT, CART_PUBLIC_KEY} from './club-cart-config.mjs?v=86df37af63';
 import {createGame,step,FPS,TICKS,VERSION} from './supabase/functions/_shared/cart-model.mjs?v=a5f4dd3349';
@@ -33,10 +33,19 @@ function mount(){
  function project(x,z){return {x:120+x*720,y:300+z*180};}
  // Cache layout dimensions; canvas drawing must not read layout on every frame.
  let canvasBox=canvas.getBoundingClientRect();
- const canvasResize=new ResizeObserver(entries=>{canvasBox=entries[0].contentRect;});canvasResize.observe(canvas);
+ function sizeCanvas(){
+  if(!canvasBox.width||!canvasBox.height)return;
+  const density=Math.min(2,Math.max(1,window.devicePixelRatio||1));
+  const width=Math.round(canvasBox.width*density),height=Math.round(canvasBox.height*density);
+  if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
+ }
+ const canvasResize=new ResizeObserver(entries=>{canvasBox=entries[0].contentRect;sizeCanvas();});canvasResize.observe(canvas);
+ on(window,'resize',sizeCanvas);sizeCanvas();
  function draw(){
   const box=canvasBox;if(!box.width||!box.height)return;
   const aspect=(box.width/960)/(box.height/560);
+  // Keep gameplay in its original logical space while rendering at display density.
+  ctx.setTransform(canvas.width/960,0,0,canvas.height/560,0,0);
   ctx.clearRect(0,0,960,560); // Transparent canvas keeps the shared pegboard texture visible.
   const things=(state==='ready'||state==='starting'||state==='result'?[]:game.drops).filter(d=>game.tick>=d.tick&&game.tick-d.tick<=d.fallTicks+8&&!d.caught);
   for(const d of things){const p=project(d.x,d.z),age=game.tick-d.tick;ctx.fillStyle=`rgba(36,77,57,${age>d.fallTicks?.08:.16})`;ctx.beginPath();ctx.ellipse(p.x,p.y,36,12,0,0,Math.PI*2);ctx.fill();}

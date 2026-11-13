@@ -1,0 +1,20 @@
+# Vintage Thing Thing Club gallery wallpaper
+
+- Execution: built-in image_gen for the aged paper texture; repository-native SVG for the repeating pattern.
+- Paper asset: `/Users/zoonii/Documents/Codex/2026-11-11/https-github-com-zoonii-zip-portfolio/portfolio/assets/textures/gallery-aged-paper-v2.webp`
+- Pattern asset: `/Users/zoonii/Documents/Codex/2026-11-11/https-github-com-zoonii-zip-portfolio/portfolio/assets/textures/thingthing-vintage-pattern-v1.svg`
+- Original logo: `/Users/zoonii/Documents/Codex/2026-11-11/https-github-com-zoonii-zip-portfolio/portfolio/assets/club-products/thingthingclub-title.webp`
+- Generated paper source: `/Users/zoonii/.codex/generated_images/01a1caab-334f-7103-ad2c-3f6aba3731fb/exec-c703933b-f796-4866-8682-dd9370b2e658.png`
+- Paper format: 1254 × 1254 WebP, quality 86. Format conversion only.
+- Pattern: unchanged embedded original logo, cropped via SVG viewBox and rendered as faded olive ink using inverse luminance and original alpha; half-drop oval medallions with diamond lines and small rosettes. Fixed repeat of320 ×240 CSS pixels on desktop and mobile.
+- Placement: Artwork background only, including the aligned footer scrim. Existing artwork, matte colored frames, gallery composition and viewer preserved.
+
+## Final paper generation prompt
+
+Use case: photorealistic-natural
+Asset type: square seamless aged wallpaper paper substrate texture for a vintage gallery website.
+Primary request: a genuinely old 1960s printed wallpaper substrate, WITHOUT any printed pattern or graphic: mellow buttery cream paper aged to warm parchment, softly sun faded, subtle uneven absorbed patina, minute paper fibers, very fine sparse foxing and tiny worn pinholes, delicate aged paper tooth.
+Composition: flat straight-on orthographic material scan, seamless repeat on all four edges, uniform diffuse exposure. Fine texture across the entire square. It represents a real 40cm square piece of old wallpaper, not fabric.
+Color palette: muted old vanilla cream and pale biscuit, approximate #e7dec8, subtle pale ochre aging and soft beige fiber. Low contrast, the center and edges equally light.
+Lighting: very soft flat frontal light, no directional shadows, no vignette, no folds.
+Constraints: only the paper material. NO woven threads, linen, canvas or textile texture. NO objects, room, floor, frame, typography, letters, logos, ornament, flowers, geometry, printed pattern, stripes, borders, heavy stains, dark spots, cracks or tears. No obvious large cloudy shapes, no shiny highlights, no folds, no watermark. The real brand logo and print pattern will be applied separately in code.

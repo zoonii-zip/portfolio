@@ -1,0 +1,5 @@
+Generated using built-in image_gen, 2026-11-13.
+Saved asset: assets/textures/fine-art-paper-v1.webp
+PNG converted to WebP for browser delivery.
+Prompt:
+Use case: photorealistic-natural. Asset type: seamless material texture for the background of a designer's portfolio website. Create a perfectly top-down, uniformly illuminated macro photograph of clean off-white uncoated cotton drawing paper. Fill the entire image with nothing but continuous fine paper surface. Very fine natural short fibers, delicate tooth, minute embedded pulp specks, near-white warm ivory #f4f1e7. Visibly tactile on close inspection yet extremely restrained. Professional archival art paper. Flat diffuse scanning light, uniform brightness from edge to edge. Seamless tile, no recognizable repeating motifs. No folds, no creases, no crumples, no stains, no mottled clouds, no scratches, no shadow gradients, no vignette, no edges, no objects, no letters, no labels, no graphics. Square 1024x1024 texture.

@@ -252,6 +252,11 @@
      toggle.setAttribute('aria-label',paused?'직업 소개 롤링 재생':'직업 소개 롤링 일시정지');
      toggle.textContent=paused?'▶':'Ⅱ';
      article.querySelector('.cs-identity-reel').classList.toggle('is-paused',paused);
+     // A paused ticket should show one complete title, including when pressed mid-roll.
+     if(paused){
+      const roll=article.querySelector('.cs-reel-track').getAnimations()[0];
+      if(roll&&typeof roll.currentTime==='number')roll.currentTime=Math.round(roll.currentTime/4000)*4000;
+     }
     }
     const link=event.target.closest('[data-cs-link]');
     if(link){event.preventDefault();const section=article.querySelector('#career-'+link.dataset.csLink);moveTo(Math.max(0,topOf(section)-(link.dataset.csLink==='timeline'?0:100)));}

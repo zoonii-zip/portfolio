@@ -1,4 +1,4 @@
-/* The illustration portfolio reads as open paper spreads in one vertical stream. */
+/* Illustration portfolios retain their printed spreads inside a paged book reader. */
 .portfolio-window [hidden]{display:none!important}
 .portfolio-window.is-book{width:min(1280px,calc(100vw - 40px));height:calc(100svh - 28px);border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible}
 .portfolio-window.is-book::backdrop{background:#554a3be0;backdrop-filter:blur(8px)}
@@ -80,7 +80,20 @@ html.illustration-reader-open,html.illustration-reader-open body{overflow:hidden
 .portfolio-window.is-book .book-pagination{display:flex;align-items:center;justify-content:center;gap:24px;min-height:64px;flex:none;color:#262c27}
 .portfolio-window.is-book .book-pagination button{width:48px;height:44px;border:0;background:#f2e8d6;cursor:pointer;font-size:22px}
 .portfolio-window.is-book .book-page-count{min-width:64px;text-align:center;font-size:12px;letter-spacing:.12em}
-.portfolio-window.is-book .book-turn-sheet{position:absolute!important;top:0;bottom:0;width:50%;z-index:10;backface-visibility:hidden;pointer-events:none;box-shadow:-12px 0 24px #30231325}
+.portfolio-window.is-book .illustration-book{perspective:5000px;perspective-origin:50% 50%}
+.portfolio-window.is-book .book-spread{z-index:1}
+.portfolio-window.is-book .book-measuring{position:absolute!important;inset:0;visibility:hidden!important;pointer-events:none}
+.portfolio-window.is-book .book-page-stack{position:absolute;inset:0;z-index:0;pointer-events:none;perspective:1800px}
+.portfolio-window.is-book .book-stack-leaf{position:absolute;top:1%;width:50%;height:98%;border:1px solid #c9c2b3;border-radius:3px;background:linear-gradient(90deg,#e9e3d6,#fffcf5 10%,#f1ece0 94%,#d3cabc);box-shadow:0 2px 3px #30271318}
+.portfolio-window.is-book .book-stack-leaf.is-left{left:0;transform-origin:right center;transform:translateX(calc(var(--stack-depth) * -3px)) rotateY(calc(var(--stack-depth) * 1.5deg)) scaleY(calc(1 - var(--stack-depth) * .009))}
+.portfolio-window.is-book .book-stack-leaf.is-right{right:0;transform-origin:left center;transform:translateX(calc(var(--stack-depth) * 3px)) rotateY(calc(var(--stack-depth) * -1.5deg)) scaleY(calc(1 - var(--stack-depth) * .009))}
+.portfolio-window.is-book .book-turn-layer{position:absolute;inset:1px;z-index:10;pointer-events:none;transform-style:preserve-3d}
+.portfolio-window.is-book .book-turn-strip{position:absolute;top:0;left:0;transform-origin:center;will-change:transform}
+.portfolio-window.is-book .book-turn-face{overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:transparent}
+.portfolio-window.is-book .book-motion-leaf{position:absolute!important;top:0;left:0;min-height:0!important;margin:0!important;border:0!important;box-shadow:none!important;transform:none!important;filter:brightness(calc(1 - var(--paper-shade,0)));overflow:hidden;pointer-events:none}
+.portfolio-window.is-book .book-motion-opening .case-intro{display:none}
+.portfolio-window.is-book .book-turn-hold{z-index:0}
+.portfolio-window.is-book .book-turn-shadow{position:absolute;top:0;bottom:0;width:18%;z-index:1;opacity:0;background:linear-gradient(90deg,transparent,#32241332 40%,#241b1455 50%,#32241332 60%,transparent);filter:blur(5px);transform-origin:center;pointer-events:none}
 .portfolio-window.is-book[open] .illustration-book{animation:book-unfold .55s cubic-bezier(.2,.8,.2,1)}
 @keyframes book-unfold{from{opacity:0;transform:rotateX(8deg) rotateY(-18deg) scale(.86)}to{opacity:1;transform:none}}
 @media(max-width:700px){
@@ -90,7 +103,7 @@ html.illustration-reader-open,html.illustration-reader-open body{overflow:hidden
  .portfolio-window.is-book .book-spread{display:contents;border:0;box-shadow:none}
  .portfolio-window.is-book .book-leaf{padding:24px 26px 42px;border:1px solid #ddd5c7;box-shadow:3px 3px 0 #eee6d7,5px 5px 0 #b7ac97,0 12px 24px #0002}
  .portfolio-window.is-book .book-leaf:nth-child(2){border-top:1px solid #ddd5c7}
- .portfolio-window.is-book .book-turn-sheet{width:100%}
+ .portfolio-window.is-book .book-turn-layer{inset:0}
  .portfolio-window.is-book .book-pagination{min-height:64px;padding-bottom:env(safe-area-inset-bottom)}
 }
 @media(prefers-reduced-motion:reduce){.portfolio-window.is-book[open] .illustration-book{animation:none}}

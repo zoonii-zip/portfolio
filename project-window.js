@@ -3,7 +3,7 @@
   'use strict';
   let dialog, content, address, previous, next, original, maximize;
   let collection = [], current = -1, returnFocus;
-  let bookIndex=0, bookUnits=[], bookBusy=false, wheelTotal=0, wheelTimer, bookAnimation;
+  let bookIndex=0, bookUnits=[], bookBusy=false, wheelTotal=0, wheelTimer, bookTurn;
   const bookMobile=matchMedia("(max-width:700px)"), reduceBookMotion=matchMedia("(prefers-reduced-motion: reduce)");
   const pages = () => window.ZooniiSEOPages || {};
   const icon = (path) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
@@ -46,8 +46,9 @@
     content.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')swipeStart={x:event.clientX,y:event.clientY};});
     content.addEventListener('pointerup',event=>{if(!swipeStart)return;const dx=swipeStart.x-event.clientX,dy=swipeStart.y-event.clientY;swipeStart=null;if(Math.max(Math.abs(dx),Math.abs(dy))>45)turnBook(Math.sign(Math.abs(dx)>Math.abs(dy)?dx:dy));});
     content.addEventListener('pointercancel',()=>{swipeStart=null;});
-    new ResizeObserver(()=>{if(dialog.open&&dialog.classList.contains('is-book'))fitBookPages();}).observe(content);
+    new ResizeObserver(()=>{if(dialog.open&&dialog.classList.contains('is-book')){cancelBookTurn();fitBookPages();}}).observe(content);
     bookMobile.addEventListener('change',()=>{if(dialog.open&&dialog.classList.contains('is-book'))setupBook();});
+    reduceBookMotion.addEventListener('change',()=>{if(reduceBookMotion.matches)cancelBookTurn();});
     address = dialog.querySelector('.pw-address span');
     previous = dialog.querySelector('.pw-previous');
     next = dialog.querySelector('.pw-next');
@@ -91,14 +92,14 @@
     });
     dialog.addEventListener('close', () => {
       document.documentElement.classList.remove('portfolio-window-open','illustration-reader-open');
-      bookAnimation?.cancel();clearTimeout(wheelTimer);bookBusy=false;
+      cancelBookTurn();clearTimeout(wheelTimer);bookBusy=false;wheelTotal=0;
       content.querySelectorAll('video').forEach(video=>video.pause());
       if (returnFocus?.isConnected) returnFocus.focus({preventScroll: true});
     });
     window.addEventListener('popstate', () => { if (dialog.open) dialog.close(); });
   }
   function fitBookPages(){
-    content.querySelectorAll('.book-leaf:not([hidden]) .book-leaf-content').forEach(body=>{
+    content.querySelectorAll('.book-spread > .book-leaf:not([hidden]) > .book-leaf-content').forEach(body=>{
       const leaf=body.parentElement;if(!leaf.getClientRects().length)return;
       body.style.transform='none';
       const styles=getComputedStyle(leaf),available=leaf.clientHeight-parseFloat(styles.paddingTop)-parseFloat(styles.paddingBottom);
@@ -106,8 +107,27 @@
       body.style.transform=`scale(${scale})`;
     });
   }
+  function cancelBookTurn(){
+    if(bookTurn)cancelAnimationFrame(bookTurn.frame);
+    bookTurn?.layer.remove();bookTurn=null;
+    dialog?.classList.remove('is-turning');
+  }
+  function updateBookStack(){
+    const book=content.querySelector('.illustration-book');if(!book)return;
+    book.querySelector('.book-page-stack')?.remove();
+    if(bookMobile.matches)return;
+    const stack=document.createElement('div');stack.className='book-page-stack';stack.setAttribute('aria-hidden','true');
+    for(const side of ['left','right']){
+      const remaining=side==='left'?bookIndex:bookUnits.length-bookIndex-1;
+      for(let i=Math.min(remaining,4);i>0;i--){
+        const paper=document.createElement('i');paper.className='book-stack-leaf is-'+side;
+        paper.style.setProperty('--stack-depth',i);stack.append(paper);
+      }
+    }
+    book.prepend(stack);
+  }
   function showBookPage(index){
-    bookAnimation?.cancel();content.querySelector('.book-turn-sheet')?.remove();
+    cancelBookTurn();
     bookIndex=Math.max(0,Math.min(bookUnits.length-1,index));
     bookUnits.forEach((unit,i)=>{unit.hidden=i!==bookIndex;unit.inert=i!==bookIndex;});
     dialog.querySelector('.book-page-count').textContent=`${String(bookIndex+1).padStart(2,'0')} / ${String(bookUnits.length).padStart(2,'0')}`;
@@ -115,28 +135,102 @@
     dialog.querySelector('.book-next').disabled=bookIndex===bookUnits.length-1;
     if(document.activeElement?.matches('.book-pagination button:disabled'))content.focus({preventScroll:true});
     content.querySelectorAll('video').forEach(video=>{if(video.closest('[hidden]'))video.pause();else if(!reduceBookMotion.matches)video.play().catch(()=>{});});
+    updateBookStack();
     requestAnimationFrame(fitBookPages);
   }
   function setupBook(){
     const book=content.querySelector('.illustration-book');if(!book)return;
+    const currentLeaf=bookUnits[bookIndex]?.matches('.book-leaf')?bookUnits[bookIndex]:bookUnits[bookIndex]?.querySelector('.book-leaf');
+    const folio=currentLeaf?.querySelector('.book-folio')?.textContent;
+    cancelBookTurn();
     book.querySelectorAll('.book-spread,.book-leaf').forEach(el=>{el.hidden=false;el.inert=false;});
     bookUnits=[...book.querySelectorAll(bookMobile.matches?'.book-leaf':'.book-spread')];
-    showBookPage(0);
+    const preserved=folio?bookUnits.findIndex(unit=>[...unit.querySelectorAll('.book-folio')].some(el=>el.textContent===folio)):-1;
+    showBookPage(Math.max(0,preserved));
+  }
+  // Freeze the actual page, including a playing cover video, for both sides of the moving paper.
+  function copyBookLeaf(source,width,height){
+    const copy=source.cloneNode(true),style=getComputedStyle(source);
+    copy.hidden=false;copy.inert=true;copy.removeAttribute('id');
+    copy.classList.add('book-motion-leaf');
+    if(source.closest('.book-opening'))copy.classList.add('book-motion-opening');
+    Object.assign(copy.style,{width:width+'px',height:height+'px',padding:style.padding,background:style.background,border:style.border,borderRadius:style.borderRadius});
+    copy.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+    const folio=copy.querySelector('.book-folio'),originalFolio=source.querySelector('.book-folio');
+    if(folio&&originalFolio){const s=getComputedStyle(originalFolio);Object.assign(folio.style,{left:s.left,right:s.right,bottom:s.bottom});}
+    const videos=source.querySelectorAll('video');
+    copy.querySelectorAll('video').forEach((video,i)=>{
+      const originalVideo=videos[i],image=document.createElement('img');
+      image.alt='';image.width=originalVideo.videoWidth||600;image.height=originalVideo.videoHeight||800;
+      image.src=originalVideo.poster;
+      if(originalVideo.readyState>=2){
+        try{const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(originalVideo,0,0,canvas.width,canvas.height);image.src=canvas.toDataURL('image/jpeg',.9);}catch{}
+      }
+      video.replaceWith(image);
+    });
+    copy.querySelectorAll('img').forEach(image=>{image.loading='eager';image.draggable=false;});
+    return copy;
   }
   function turnBook(direction){
-    if(!dialog?.open||!dialog.classList.contains('is-book')||bookAnimation?.playState==='running')return;
+    if(!dialog?.open||!dialog.classList.contains('is-book')||bookTurn)return;
+    direction=Math.sign(direction);if(!direction)return;
     const nextIndex=bookIndex+direction;if(nextIndex<0||nextIndex>=bookUnits.length)return;
-    const old=bookUnits[bookIndex];
-    const leaf=(bookMobile.matches?old:old.children[direction>0?1:0]).cloneNode(true);
-    leaf.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+    if(reduceBookMotion.matches){showBookPage(nextIndex);return;}
+    const mobile=bookMobile.matches,old=bookUnits[bookIndex],target=bookUnits[nextIndex];
+    const front=mobile?old:old.children[direction>0?1:0];
+    const back=mobile?target:target.children[direction>0?0:1];
+    if([...front.querySelectorAll('video'),...back.querySelectorAll('video')].some(video=>video.readyState<2&&!video.poster)){showBookPage(nextIndex);return;}
+    const book=content.querySelector('.illustration-book');
+    const width=front.offsetWidth,height=front.offsetHeight;
+    if(!width||!height){showBookPage(nextIndex);return;}
+    fitBookPages();
+    const frontCopy=copyBookLeaf(front,width,height);
+    const hold=mobile?null:copyBookLeaf(old.children[direction>0?0:1],width,height);
+    // Lay out and fit the incoming page before it is copied; it must not jump at the end of the turn.
+    target.hidden=false;target.classList.add('book-measuring');fitBookPages();
+    const backCopy=copyBookLeaf(back,width,height);
+    target.classList.remove('book-measuring');
     showBookPage(nextIndex);
-    if(reduceBookMotion.matches)return;
-    leaf.classList.add('book-turn-sheet');leaf.setAttribute('aria-hidden','true');leaf.inert=true;
-    leaf.style.left=bookMobile.matches?'0':direction>0?'50%':'0';
-    leaf.style.transformOrigin=direction>0?'left center':'right center';
-    content.querySelector('.illustration-book').append(leaf);
-    bookAnimation=leaf.animate([{transform:'rotateY(0deg)',filter:'brightness(1)'},{transform:`rotateY(${direction>0?-95:95}deg)`,filter:'brightness(.78)',offset:.6},{transform:`rotateY(${direction>0?-180:180}deg)`,filter:'brightness(.94)'}],{duration:650,easing:'cubic-bezier(.3,.1,.2,1)'});
-    bookAnimation.onfinish=()=>{leaf.remove();bookAnimation=null;};
+    const layer=document.createElement('div');layer.className='book-turn-layer';layer.setAttribute('aria-hidden','true');layer.inert=true;
+    const hinge=mobile?(direction>0?0:width):book.clientWidth/2;
+    if(hold){hold.classList.add('book-turn-hold');hold.style.left=direction>0?'0':'50%';layer.append(hold);}
+    const shadow=document.createElement('div');shadow.className='book-turn-shadow';shadow.style.left=hinge+'px';layer.append(shadow);
+    // Opaque page crops overlap so subpixel compositing cannot expose seams in the curved surface.
+    const strips=[],count=24,stripWidth=width/count,overlap=6;
+    for(let i=0;i<count;i++){
+      const strip={};
+      for(const [side,template,crop] of [['front',frontCopy,direction>0?i:count-i-1],['back',backCopy,direction>0?count-i-1:i]]){
+        const face=document.createElement('div');face.className='book-turn-strip book-turn-face is-'+side;
+        face.style.width=(stripWidth+overlap*2)+'px';face.style.height=height+'px';
+        const page=template.cloneNode(true);page.style.left=(overlap-crop*stripWidth)+'px';face.append(page);layer.append(face);strip[side]=face;
+      }
+      strips.push(strip);
+    }
+    book.append(layer);dialog.classList.add('is-turning');
+    const state={layer,frame:0,started:performance.now(),duration:960};bookTurn=state;
+    function draw(now){
+      if(bookTurn!==state)return;
+      const t=Math.min(1,(now-state.started)/state.duration);
+      // A gentle start and landing, with the free edge following the binding a little later.
+      const progress=t*t*(3-2*t),sweep=Math.PI*progress,curl=.72*Math.sin(Math.PI*progress);
+      let x=0,z=0;
+      strips.forEach((strip,i)=>{
+        const distance=(i+.5)/count,angle=sweep-curl*Math.pow(distance,.8);
+        const center=hinge+direction*(x+Math.cos(angle)*stripWidth/2),depth=z+Math.sin(angle)*stripWidth/2;
+        for(const [side,face] of Object.entries(strip)){
+          const rotation=-direction*angle+(side==='back'?Math.PI:0);
+          face.style.transform=`translate3d(${center-(stripWidth+overlap*2)/2+Math.sin(rotation)*.1}px,0,${depth+Math.cos(rotation)*.1}px) rotateY(${rotation}rad)`;
+        }
+        const light=Math.sin(angle);
+        for(const face of Object.values(strip))face.style.setProperty('--paper-shade',(Math.sin(Math.PI*progress)*(.025+Math.max(0,light)*(.08+.12*distance))).toFixed(3));
+        x+=Math.cos(angle)*stripWidth;z+=Math.sin(angle)*stripWidth;
+      });
+      const shade=Math.sin(Math.PI*progress);
+      shadow.style.opacity=(shade*.3).toFixed(3);
+      shadow.style.transform=`translateX(-50%) scaleX(${.6+shade*1.5})`;
+      if(t<1)state.frame=requestAnimationFrame(draw);else cancelBookTurn();
+    }
+    draw(state.started);
   }
   function makeIllustrationBook(article) {
     const book = document.createElement('article');
@@ -191,6 +285,7 @@
     template.innerHTML = page.content;
     const article = template.content.querySelector('.project-case');
     if (!article) return false;
+    cancelBookTurn();bookUnits=[];bookIndex=0;
     current = index;
     article.querySelector('h1').id = 'pw-project-title';
     if (/^\/projects\/uiux[0-4]\/$/.test(path)) {

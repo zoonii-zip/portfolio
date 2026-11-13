@@ -1,0 +1,59 @@
+/* Photographic material lives on the surface, beneath content and controls. */
+:root{--material-fiber:url('/assets/textures/fine-art-paper-v1.webp');--material-folds:url('/assets/profile-cream-paper.webp')}
+
+/* Preserve the committed profile composition and its yellow stock. */
+#zz-fullscreen .profile-poster{background-image:none;isolation:isolate}
+#zz-fullscreen .profile-poster::after{z-index:-1;background-image:var(--material-fiber);background-size:540px auto;background-position:center;background-repeat:repeat;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.55}
+#zz-fullscreen .profile-poster .profile-word-label::before{background-image:linear-gradient(#eee4d6df,#eee4d6df),var(--material-folds);background-size:auto,420px auto}
+:root body .zz-paper-control::before{background-image:linear-gradient(color-mix(in srgb,var(--paper-tone) 92%,transparent),color-mix(in srgb,var(--paper-tone) 92%,transparent)),var(--material-folds)!important;background-size:auto,360px auto!important;background-position:center!important}
+
+/* Contact remains black and cyan. Folds belong to the blue poster, not its text. */
+#zz-fullscreen #zz-body>.contact-intro{isolation:isolate}
+#zz-fullscreen #zz-body>.contact-intro::after{z-index:-1;background-image:var(--material-fiber);background-size:540px auto;background-position:48% 20%;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.45}
+#zz-fullscreen #zz-body>#zz-form{background-image:none;isolation:isolate;box-shadow:inset 1px 0 #ffffff52,inset -1px 0 #003d5133,0 2px 1px #0008}
+#zz-fullscreen #zz-body>#zz-form::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--material-fiber);background-size:540px auto;background-position:48% 55%;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.45}
+#zz-fullscreen #zz-body>#zz-form::after{display:none}
+#zz-fullscreen #zz-body>#zz-form>label{background-image:linear-gradient(#ffffffe6,#ffffffe6),var(--material-folds);background-size:auto,760px auto;background-position:center;background-blend-mode:normal;box-shadow:inset 0 1px #fff,0 1px 1px #00526752}
+#zz-fullscreen #zz-body>#zz-form .contact-picker-options{background-image:linear-gradient(#ffffffdf,#ffffffdf),var(--material-folds);background-size:auto,500px auto}
+
+/* Bookcloth grain, a compressed hinge, and the page block are separate layers. */
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine{box-shadow:inset 1px 0 #fff9,inset 3px 0 4px #fff3,inset -4px 0 5px #0003,2px 2px 1px #231d1633,5px 5px 7px #231d161f}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine::before{z-index:1;background-image:var(--material-fiber);background-size:240px auto;background-position:28% 50%;background-repeat:repeat;filter:grayscale(1) contrast(1.5);mix-blend-mode:multiply;opacity:.38}
+#zz-fullscreen #zz-body .illustration-shelf .ib-item:nth-child(3n+2) .ib-spine::before{background-size:330px auto;background-position:76% 35%;opacity:.27}
+#zz-fullscreen #zz-body .illustration-shelf .ib-item:nth-child(3n) .ib-spine::before{background-image:var(--material-folds);background-size:260px auto;filter:grayscale(1) contrast(1.2);opacity:.35}
+#zz-fullscreen #zz-body .illustration-shelf .ib-spine::after{z-index:2;right:4px;top:1px;bottom:1px;width:2px;background:#16171230;box-shadow:1px 0 #ffffff5c,-2px 0 2px #00000014}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover{box-shadow:1px 0 #e9e5da,2px 0 #8e897b,3px 0 #f8f5eb,4px 0 #c0baaa,5px 1px #f2eee3,7px 3px 2px #30281930,11px 8px 13px #30281924}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::before{display:none}
+#zz-fullscreen #zz-body .illustration-shelf .ib-cover::after{box-shadow:inset 5px 0 7px #1d170b3b,inset 0 1px #ffffff8c,inset 0 -1px #0002;background:linear-gradient(90deg,#1c160f1f,transparent 8%,transparent 98%,#ffffff29)}
+
+/* Digital project folders keep the landscape, with lightly printed card stock. */
+#zz-fullscreen #zz-body .ff-body{isolation:isolate;box-shadow:inset 0 1px #ffffff85,0 2px 2px #182d3630}
+#zz-fullscreen #zz-body .ff-body::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background-image:var(--material-fiber);background-size:360px auto;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.17;box-shadow:inset 0 1px #ffffff70,inset 1px 0 #ffffff30}
+#zz-fullscreen #zz-body .ff-tab{background-image:linear-gradient(color-mix(in srgb,var(--tone) 90%,transparent),color-mix(in srgb,var(--tone) 90%,transparent)),var(--material-folds);background-size:auto,420px auto}
+
+/* Quiet matte walls; the meadow photo and the original cork remain unobscured. */
+:root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-visual){position:relative;isolation:isolate}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-artwork{background:transparent}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-story{background:#f3f1e9}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual{background:#171715}
+:root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-visual)::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--material-fiber);background-size:720px auto;background-repeat:repeat;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.12}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-artwork::before{display:none}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual::before{mix-blend-mode:screen;filter:grayscale(1) invert(1) contrast(1.3);opacity:.2}
+
+/* Pigmented matte frames have a fine surface and diffuse edges around an ivory mount. */
+#zz-fullscreen #zz-body .aw-picture{background-image:linear-gradient(#faf8f1f5,#faf8f1f5),var(--material-fiber);background-size:auto,360px auto}
+#zz-fullscreen #zz-body .aw-picture::before{content:'';position:absolute;inset:calc(-1 * var(--frame-edge));padding:var(--frame-edge);border-radius:2px;pointer-events:none;background-color:var(--aw-frame);background-image:linear-gradient(145deg,#ffffff08,#00000006),var(--material-fiber);background-blend-mode:soft-light,multiply;background-size:auto,240px auto;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;box-shadow:inset 1px 1px #ffffff1a,inset -1px -1px #00000024}
+#zz-fullscreen #zz-body .aw-picture::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 1px 3px #28231c14,0 0 0 1px color-mix(in srgb,var(--aw-frame) 76%,#28231c)}
+
+/* Perforated stamp stock carries grain without making its typography fuzzy. */
+#zz-fullscreen #zz-body .stamp-paper{background-image:linear-gradient(#fffdf5f2,#fffdf5f2),var(--material-folds);background-size:auto,620px auto;box-shadow:inset 0 1px #fff,inset -1px -1px #675b3926}
+#zz-fullscreen #zz-body .stamp-art{isolation:isolate}
+#zz-fullscreen #zz-body .stamp-art::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--material-fiber);background-size:290px auto;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.32}
+
+/* Keep the original Career intro; material below belongs to its records. */
+#zz-fullscreen #zz-body .career-scroll .cs-chapter,#zz-fullscreen #zz-body .career-scroll .cs-end{isolation:isolate}
+#zz-fullscreen #zz-body .career-scroll .cs-chapter::before,#zz-fullscreen #zz-body .career-scroll .cs-end::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--material-fiber);background-size:760px auto;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.12}
+
+/* Stationery grounds the real product cutouts and visitor memo artwork. */
+:root body #zz-fullscreen #zz-body .ttc-game{isolation:isolate}
+:root body #zz-fullscreen #zz-body .ttc-game::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:var(--material-fiber);background-size:760px auto;filter:grayscale(1) contrast(1.4);mix-blend-mode:multiply;opacity:.13}

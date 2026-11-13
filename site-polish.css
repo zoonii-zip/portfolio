@@ -1,0 +1,118 @@
+/* Shared print language. Page compositions retain their own paper and artwork. */
+:root{--chrome-paper:#f3f1e9;--chrome-ink:#2a2d26;--chrome-accent:#bd4b35;--site-nav-width:min(660px,calc(100vw - 36px))}
+#zz-fullscreen{overflow:clip!important}
+html:has(#zz-overlay.open .contact-intro){--chrome-paper:#000;--chrome-ink:#f5f0e5;--chrome-accent:#00bfe7}
+html:has(#zz-overlay.open .profile-poster){--chrome-paper:#fffd85;--chrome-ink:#32361e}
+html:has(#zz-overlay.open .theme-artwork){--chrome-paper:#f4f2ec}
+html:has(#zz-overlay.open .theme-story){--chrome-paper:#f3f1e9}
+html:has(#zz-overlay.open .theme-visual){--chrome-paper:#171715;--chrome-ink:#f5f0e5;--chrome-accent:#edb562}
+html:has(#zz-overlay.open .theme-product){--chrome-paper:transparent;--chrome-ink:#263b36}
+html:has(#zz-overlay.open .club-collage){--chrome-paper:#f2f0e7}
+html:has(#zz-overlay.open #zz-body>#zz-message-section){--chrome-paper:transparent}
+html.chrome-on-blue{--chrome-paper:#3155b4;--chrome-ink:#f3f1e9;--chrome-accent:#f3f1e9}
+html.on-intro:not(.viewing-space){--chrome-ink:#eee8d8;--chrome-accent:#c8ee52}
+html.on-intro:not(.viewing-space) #zz-global-dock{visibility:hidden;opacity:0;pointer-events:none}
+html.viewing-space body::after{content:'';position:fixed;inset:auto 0 0;z-index:290;height:102px;background:linear-gradient(transparent,var(--chrome-paper) 66%);pointer-events:none}
+
+/* A small, consistent masthead, clear of the page's own typography. */
+#zz-fullscreen .top,html.viewing-space #zz-fullscreen .top{position:absolute;top:14px;left:0;right:0;z-index:330;display:flex;justify-content:center;pointer-events:none;padding:0}
+html.viewing-space #zz-fullscreen .top{position:fixed}
+#zz-fullscreen .top .wordmark,html.viewing-space #zz-fullscreen .top .wordmark{display:block;position:relative;width:76px;height:48px;margin:0;padding:0;pointer-events:auto;transition:transform .2s}
+#zz-fullscreen .header-title-image{top:-5px;left:0;width:76px;height:57px}
+#zz-fullscreen .wordmark:hover{transform:rotate(-4deg)}
+/* Shared controls retain their original cut-paper surface and lettering. */
+:root body #zz-overview-button.zz-paper-control{top:16px;right:28px}
+#zz-weeks{left:28px;top:16px;color:var(--chrome-ink)}
+#zz-weeks .weeks-current,#zz-weeks .weeks-dot{display:none}
+#zz-weeks .weeks-plus{font-size:17px!important;font-weight:400!important}
+#zz-weeks-panel{width:min(350px,calc(100vw - 40px));margin-top:12px;padding:26px;background:#f5f1e7;border:0;border-radius:0;box-shadow:0 6px 30px #26231916;color:#2a2d26}
+#zz-weeks .weeks-eyebrow,#zz-weeks .weeks-footnote{display:none}
+:root body #zz-weeks h2{margin:0 0 13px;font:400 31px/1.1 Georgia,'Times New Roman',serif!important;letter-spacing:-.04em}
+#zz-weeks p{font-size:12px;line-height:1.7}
+#zz-weeks .weeks-list{margin:22px 0 0;gap:0}
+#zz-weeks .weeks-list a,#zz-weeks .weeks-list button{padding:15px 8px;border:0;border-radius:0;gap:15px;font-size:13px}
+#zz-weeks .weeks-list a[aria-current=page]{background:#e8e4d9}
+#zz-weeks .weeks-status{font-size:10px;font-weight:450}
+
+/* Seven destinations share one visual rhythm on the inside pages. */
+html.viewing-space #zz-global-dock{left:calc(50% - var(--site-nav-width)/2);right:auto;bottom:14px;transform:none;width:calc(var(--site-nav-width)*5/7);max-width:none;height:72px;padding:0;gap:0;align-items:end;justify-content:space-between;background:none;border:0;box-shadow:none;backdrop-filter:none}
+html.viewing-space #zz-fixed-links{left:calc(50% - var(--site-nav-width)/2 + var(--site-nav-width)*5/7);right:auto;bottom:14px;width:calc(var(--site-nav-width)*2/7);max-width:none;height:72px;padding:0;gap:0;align-items:end;justify-content:space-between}
+html.viewing-space #zz-global-dock button,html.viewing-space #zz-global-dock button:is(.dock-hover,.dock-near,.dock-far),html.viewing-space #zz-fixed-links button{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:none;width:calc(var(--site-nav-width)/7)!important;min-width:0;height:72px;padding:0 2px 7px;gap:9px;border:0;background:none;border-radius:0;transform:none;transition:color .16s}
+html.viewing-space #zz-global-dock .dock-art,html.viewing-space #zz-fixed-links .dock-art{display:flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;max-width:44px;filter:none;translate:none;transition:transform .2s}
+html.viewing-space #zz-global-dock .dock-icon{width:44px;height:44px}
+html.viewing-space #zz-global-dock [data-dock=home] .dock-art img{width:44px;height:37px}
+html.viewing-space #zz-fixed-links .dock-art img{display:block;width:100%;height:100%;object-fit:contain}
+:root body #zz-global-dock .dock-mobile-label,:root body #zz-fixed-links .fixed-label{display:block;font-family:var(--font-body)!important;font-size:10px!important;font-weight:500!important;line-height:1.2;letter-spacing:-.015em;color:var(--chrome-ink)!important;text-shadow:none!important;background:transparent!important;box-shadow:none!important}
+#zz-global-dock button[aria-current=page] .dock-mobile-label,#zz-fixed-links button[aria-current=page] .fixed-label{text-decoration:underline;text-decoration-color:var(--chrome-accent);text-decoration-thickness:2px;text-underline-offset:5px}
+:root body:has(#zz-overlay.open .theme-product) #zz-global-dock .dock-mobile-label,:root body:has(#zz-overlay.open .theme-product) #zz-fixed-links .fixed-label{color:#fff!important;text-shadow:0 1px 2px #152d3e,0 0 4px #152d3e8c!important;text-decoration-color:#fff}
+#zz-global-dock button:focus-visible,#zz-fixed-links button:focus-visible{outline:2px solid var(--chrome-accent);outline-offset:2px;border-radius:2px}
+@media(hover:hover){
+ html.viewing-space #zz-global-dock button:hover .dock-art,html.viewing-space #zz-fixed-links button:hover .dock-art{transform:translateY(-3px)}
+ :root body #zz-global-dock button:hover .dock-mobile-label,:root body #zz-fixed-links button:hover .fixed-label{color:var(--chrome-accent)!important;text-decoration:underline;text-underline-offset:5px}
+}
+
+/* The menu reads as a contents page, with the original cutouts on hover. */
+#zz-overview{width:min(760px,100%);background:#f3f1e9;color:#282b25}
+#zz-overview::backdrop{background:#272b2452;backdrop-filter:blur(4px)}
+#zz-overview .overview-content{--overview-font-size:clamp(31px,6.3dvh,59px);padding:30px 44px 26px}
+#zz-overview header{margin-bottom:15px}
+#zz-overview nav{margin:0 0 24px;gap:0}
+#zz-overview nav button{border:0;min-height:62px;padding:0;color:#282b25}
+#zz-overview .overview-category{display:none}
+#zz-overview .overview-label{font-weight:600;text-transform:none;letter-spacing:-.055em}
+:root body #zz-overview [data-overview-action=about] .overview-label :where(*),:root body #zz-overview [data-overview-action=career] .overview-label :where(*),:root body #zz-overview [data-overview-action=contact] .overview-label :where(*){font-family:Georgia,'Times New Roman',serif!important;font-style:italic;font-weight:400}
+#zz-overview nav button[aria-current=page] .overview-label{color:#b94e38}
+#zz-overview .overview-preview{right:4px}
+#zz-overview footer{justify-content:flex-start;font:11px/1.4 var(--font-body);letter-spacing:.03em;color:#7a7d71}
+@media(hover:hover){#zz-overview nav button:hover .overview-label{color:#b94e38}}
+
+/* Fidget board: the same tactile objects on a quieter cork surface. */
+#zz-camera-plane #zz-stage::before{background-color:#d0b18c;background-image:linear-gradient(#f7f0dd36,#f7f0dd36),url('/assets/fidget-board-cork.webp');background-size:auto,720px auto;background-position:center;filter:saturate(.34)}
+#zz-fullscreen .board-shortcut .fixed-label{display:none}
+#zz-fullscreen .board-shortcut .dock-art{filter:drop-shadow(1px 3px 2px #33271632)}
+#zz-fullscreen .club-glitter .club-label{font-size:12px;letter-spacing:.05em}
+html:not(.viewing-space) #zz-global-dock{bottom:16px;gap:4px;padding:0;width:min(430px,calc(100vw - 32px))}
+html:not(.viewing-space) #zz-global-dock button,html:not(.viewing-space) #zz-global-dock button:is(.dock-hover,.dock-near,.dock-far){width:20%;padding-bottom:5px;gap:7px}
+html:not(.viewing-space) #zz-global-dock .dock-art{height:48px;filter:none}
+html:not(.viewing-space) #zz-global-dock .dock-icon{width:48px;height:48px}
+html:not(.viewing-space) #zz-global-dock [data-dock=home] .dock-art img{width:48px;height:40px}
+#zz-logo-entry .intro-copy{letter-spacing:-.025em}
+#zz-logo-entry .intro-copy [lang=ko]{color:#c4beb3;font-size:14px}
+#zz-logo-entry .trail-tools{opacity:.65}
+#zz-logo-entry #zz-trail-hint{font-size:11px;letter-spacing:0}
+#zz-logo-entry .trail-tools button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #e8e1d55c;border-radius:50%;background:none;color:#e8e1d5;filter:none}
+#zz-logo-entry .trail-tools button svg{width:21px;height:21px}
+
+/* Quiet collection canvases let the folders and perforated stamps lead. */
+#zz-fullscreen #zz-body .theme-visual .brand-category h2{margin-bottom:24px;padding-bottom:0;border:0;font-size:clamp(28px,4vw,44px);font-weight:400!important}
+#zz-fullscreen #zz-body .theme-visual .stamp-art{border:0}
+#zz-fullscreen #zz-body .theme-visual .stamp-orbit{display:none}
+#zz-fullscreen #zz-body .theme-visual .stamp-caption>strong{display:none}
+#zz-fullscreen #zz-body .theme-visual .stamp-bottom{justify-content:flex-end;margin-top:12px;padding-top:0;border:0}
+#zz-fullscreen #zz-body .theme-visual .stamp-bottom>span:first-child{display:none}
+
+@media(max-width:760px){
+ :root{--site-nav-width:calc(100vw - 24px)}
+ #zz-fullscreen .top,html.viewing-space #zz-fullscreen .top{top:12px}
+ #zz-fullscreen .top .wordmark,html.viewing-space #zz-fullscreen .top .wordmark{width:66px;height:44px}
+ #zz-fullscreen .header-title-image{width:66px;height:49.5px;top:-3px}
+ #zz-weeks{left:20px;top:12px}
+ :root body #zz-overview-button.zz-paper-control{right:20px;top:12px;width:48px;height:48px;padding:12px;justify-content:center}
+ :root body #zz-overview-button.zz-paper-control span{display:none}
+ #zz-overview .overview-content{--overview-font-size:clamp(29px,5.9dvh,47px);padding:20px 28px 24px}
+ #zz-overview nav button{min-height:54px}
+ #zz-overview .overview-preview{display:none}
+ html.viewing-space #zz-global-dock,html.viewing-space #zz-fixed-links{bottom:14px;height:64px}
+ html.viewing-space #zz-global-dock button,html.viewing-space #zz-fixed-links button{height:64px;gap:8px;padding-bottom:6px}
+ html.viewing-space #zz-global-dock .dock-art,html.viewing-space #zz-fixed-links .dock-art{width:39px;height:39px;max-width:39px}
+ html.viewing-space #zz-global-dock .dock-icon{width:39px;height:39px}
+ html.viewing-space #zz-global-dock [data-dock=home] .dock-art img{width:39px;height:33px}
+ :root body #zz-global-dock .dock-mobile-label,:root body #zz-fixed-links .fixed-label{font-size:9px!important}
+}
+@media(max-width:480px){
+ :root body #zz-global-dock .dock-mobile-label,:root body #zz-fixed-links .fixed-label{font-size:8px!important;letter-spacing:-.025em}
+ html.viewing-space #zz-global-dock .dock-art,html.viewing-space #zz-fixed-links .dock-art{width:33px;height:33px;max-width:33px}
+ html.viewing-space #zz-global-dock .dock-icon{width:33px;height:33px}
+ html.viewing-space #zz-global-dock [data-dock=home] .dock-art img{width:33px;height:28px}
+}
+@media(prefers-reduced-motion:reduce){#zz-fullscreen .top .wordmark,html.viewing-space #zz-global-dock .dock-art,html.viewing-space #zz-fixed-links .dock-art{transition:none}}

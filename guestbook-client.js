@@ -60,7 +60,7 @@
     new MutationObserver(() => requestAnimationFrame(placeActions)).observe(document.getElementById('zz-body'), {childList: true});
     requestAnimationFrame(placeActions);
     room.querySelector('.wall-label')?.remove();
-    let entries = [], token = '', widget, busy = false, loading = false;
+    let entries = [], token = '', widget, busy = false, loading = false, loadError = false;
     let visitor = crypto.randomUUID();
     try {
       const saved = localStorage.getItem('zoonii-guestbook-visitor');
@@ -75,7 +75,8 @@
       wall.style.removeProperty('min-height');
       if (!entries.length) {
         const empty = document.createElement('p'); empty.className = 'guest-empty';
-        empty.textContent = loading ? '메모를 불러오는 중이에요…' : '아직 메모가 없어요. 첫 인사를 남겨주세요!';
+        empty.setAttribute('role', 'status');
+        empty.textContent = loading ? '메모를 불러오는 중이에요…' : loadError ? '메모를 불러오지 못했어요. 아래 새로고침 아이콘을 눌러 다시 시도해주세요.' : '아직 메모가 없어요. 첫 인사를 남겨주세요!';
         wall.append(empty);
       }
       entries.forEach((entry, index) => {
@@ -99,14 +100,15 @@
     }
     async function load() {
       if (!ready || loading || busy) return;
-      loading = true; refresh.disabled = true;
+      loading = true; loadError = false; refresh.disabled = true;
       if (!entries.length) render();
       try {
         const data = await request(); entries = data.entries; loading = false; render();
         message('같은 브라우저에서 다시 쓰면 이전 메모가 교체돼요. 닉네임과 글은 공개돼요.');
       } catch {
+        loading = false; loadError = true;
         message('메모를 불러오지 못했어요. 새로고침을 눌러 다시 시도해주세요.');
-        if (!entries.length) { wall.replaceChildren(); const p = document.createElement('p'); p.className = 'guest-empty'; p.setAttribute('role', 'status'); p.textContent = '메모를 불러오지 못했어요. 아래 새로고침 아이콘을 눌러 다시 시도해주세요.'; wall.append(p); }
+        if (!entries.length) render();
       } finally { loading = false; refresh.disabled = false; }
     }
     refresh.addEventListener('click', load);
