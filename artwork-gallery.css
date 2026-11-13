@@ -24,7 +24,7 @@ html.viewing-space:has(#zz-overlay.open .theme-artwork) body::after{display:none
 #zz-fullscreen #zz-body .aw-work-ok{grid-column:7/span 5;max-width:400px}
 #zz-fullscreen #zz-body .aw-work-sif{grid-column:1/span 8;max-width:760px;align-self:center}
 #zz-fullscreen #zz-body .aw-work-tongkeun{grid-column:10/span 3;max-width:290px}
-#zz-fullscreen #zz-body .aw-picture{--frame-edge:clamp(11px,1.05vw,15px);--aw-frame:#355cad;position:relative;display:block;width:100%;padding:clamp(14px,2vw,26px);border:var(--frame-edge) solid var(--aw-frame);border-radius:2px;background:#faf8f1;box-shadow:1px 1px 0 color-mix(in srgb,var(--aw-frame) 82%,#27291e),3px 4px 0 color-mix(in srgb,var(--aw-frame) 78%,#27291e),6px 12px 18px #352c2424;cursor:pointer;transition:translate .28s,box-shadow .28s}
+#zz-fullscreen #zz-body .aw-picture{--frame-edge:clamp(11px,1.05vw,15px);--aw-frame:#355cad;position:relative;display:block;width:100%;padding:clamp(14px,2vw,26px);border:var(--frame-edge) solid var(--aw-frame);border-radius:2px;background:#faf8f1;box-shadow:0 1px 2px #302b2112,0 5px 10px -5px #302b211a;cursor:pointer;transition:translate .28s,box-shadow .28s}
 #zz-fullscreen #zz-body .aw-frame-ochre{--aw-frame:#d7be6f}
 #zz-fullscreen #zz-body .aw-frame-pine{--aw-frame:#417462}
 #zz-fullscreen #zz-body .aw-frame-coral{--aw-frame:#c85e4c}
@@ -39,7 +39,7 @@ html.viewing-space:has(#zz-overlay.open .theme-artwork) body::after{display:none
 #zz-fullscreen #zz-body .aw-work time{margin-left:auto;font-size:10px;opacity:.5;white-space:nowrap}
 #zz-fullscreen #zz-body .aw-work time:empty{display:none}
 #zz-fullscreen #zz-body .aw-picture:focus-visible{outline:2px solid #375eab;outline-offset:7px}
-@media(hover:hover){#zz-fullscreen #zz-body .aw-picture:hover{translate:0 -3px;box-shadow:1px 1px 0 color-mix(in srgb,var(--aw-frame) 82%,#27291e),3px 4px 0 color-mix(in srgb,var(--aw-frame) 78%,#27291e),7px 16px 22px #352c2429}}
+@media(hover:hover){#zz-fullscreen #zz-body .aw-picture:hover{translate:0 -1px;box-shadow:0 1px 2px #302b2112,0 6px 12px -6px #302b211a}}
 .aw-viewer{position:fixed;inset:0;width:100%;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:#f4f2ec;color:#30322b;overflow:hidden}
 .aw-viewer::backdrop{background:#f4f2ec}
 .aw-viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}

@@ -8,7 +8,7 @@ function mountProfileEyes(art) {
  const output=[...art.querySelectorAll('canvas')];
  const crops=[{x:382,y:346,w:250,h:208},{x:680,y:365,w:252,h:192}];
  const abort=new AbortController();
- let disposed=false;
+ let disposed=false,visible=false;
 
  let ready=false,frame=0,px=0,py=0,tracking=false,lastFrame=0;
  // Translate the photographed iris rigidly over a sclera backing.
@@ -22,9 +22,16 @@ function mountProfileEyes(art) {
  source.width=1536;source.height=1024;
  const sourceContext=source.getContext('2d',{willReadFrequently:true});
  let patches=[];
- function schedule(){if(!disposed&&!frame)frame=requestAnimationFrame(tick);}
+ const active=()=>!disposed&&visible&&!document.hidden&&art.isConnected&&art.closest('#zz-overlay')?.classList.contains('open');
+ function schedule(){if(active()&&!frame)frame=requestAnimationFrame(tick);}
+ const visibility=new IntersectionObserver(entries=>{
+  visible=entries[0].isIntersecting;
+  if(active()){lastFrame=0;schedule();}
+  else{cancelAnimationFrame(frame);frame=0;lastFrame=0;}
+ });
+ visibility.observe(art);
  photo.onload=()=>{
-  if(!sourceContext)return;
+  if(disposed||!sourceContext)return;
   sourceContext.drawImage(photo,0,0,1536,1024);
   patches=eyes.map(eye=>{
    const left=eye.x-width/2,top=eye.y-height/2;
@@ -85,7 +92,7 @@ function mountProfileEyes(art) {
   frame=0;
   const elapsed=lastFrame?Math.min(50,now-lastFrame):16.7;lastFrame=now;
 
-  if(!ready||!canvas||!art.isConnected)return;
+  if(!ready||!canvas||!active())return;
   const r=art.getBoundingClientRect();
   if(!r.width||!r.height)return;
   let state=states.get(canvas);
@@ -122,7 +129,7 @@ function mountProfileEyes(art) {
    ctx.drawImage(canvas,crop.x,crop.y,crop.w,crop.h,0,0,target.width,target.height);
    target.dataset.gazeX=state.eyes[index].x.toFixed(2);
   });
-  if(settling)frame=requestAnimationFrame(tick);
+  if(settling)schedule();
  }
  const reset=()=>{tracking=false;schedule();};
  const move=e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();};
@@ -134,7 +141,7 @@ function mountProfileEyes(art) {
  reduce.addEventListener('change',schedule,{signal:abort.signal});
  window.addEventListener('resize',schedule,{signal:abort.signal});
  window.addEventListener('hashchange',schedule,{signal:abort.signal});
- return ()=>{disposed=true;abort.abort();cancelAnimationFrame(frame);photo.onload=null;};
+ return ()=>{disposed=true;abort.abort();visibility.disconnect();cancelAnimationFrame(frame);photo.onload=null;};
 }
 
 window.ZooniiProfile={unfold(){},hero(){return "    <article class=\"profile-page profile-poster profile\" id=\"now\" aria-labelledby=\"profile-title\">\n\n      <p class=\"profile-eyebrow\">ILLUSTRATION · WEB/APP · BRANDING · EDUCATION</p>\n      <h1 id=\"profile-title\" class=\"profile-title\">\n        <span class=\"profile-line\">저는 <img class=\"profile-art board-art board-profile\" src=\"/assets/profile-yellow/profile-board.webp?v=c14f5f32d7\" alt=\"피젯보드 Profile 그래픽\" draggable=\"false\"/> <span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-illustration\">상상</button><span class=\"profile-word-label\" id=\"profile-illustration\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Illustration</span></span>을 그리고<sup>+</sup></span><span class=\"profile-comma\">,</span></span>\n        <span class=\"profile-line\"><span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-experience\">경험</button><span class=\"profile-word-label\" id=\"profile-experience\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>User Experience</span></span>을 <span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-design\">설계</button><span class=\"profile-word-label\" id=\"profile-design\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Design & Planning</span></span>하고<sup>+</sup></span><span class=\"profile-comma\">,</span> <img class=\"profile-art board-art board-archive\" src=\"/assets/profile-yellow/archive.webp?v=f9e0a697c8\" alt=\"Archive — 하트를 안은 곰\" draggable=\"false\"/></span>\n        <span class=\"profile-line\">아이디어를 <img class=\"profile-art board-art board-career\" src=\"/assets/profile-yellow/career-board.webp?v=7b83cd8570\" alt=\"피젯보드 Career 그래픽\" draggable=\"false\"/> <span class=\"profile-underlined\"><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-vibe-coding\">실제로 만드는</button><span class=\"profile-word-label\" id=\"profile-vibe-coding\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Vibe Coding</span></span><sup>+</sup></span></span>\n        <span class=\"profile-line\">김주연, Zoonii입니다.</span>\n      </h1>\n      <p class=\"profile-subtitle\">그리고 <span><span class=\"profile-word\"><button type=\"button\" aria-describedby=\"profile-teaching\">만드는 방법</button><span class=\"profile-word-label\" id=\"profile-teaching\" role=\"tooltip\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"4.5\" r=\"2.6\"/><path d=\"M2.5 14v-2a5.5 5.5 0 0 1 11 0v2Z\"/></svg>Teaching</span></span>을 나눕니다</span><sup>+</sup> .</p>\n      <p class=\"profile-description\">일러스트레이션, 웹과 앱을 디자인합니다.<br/>아이디어를 직접 구현하고, 만드는 방법을 함께 나눕니다.</p>\n      <div class=\"profile-side-links\"><div class=\"profile-eyes\" role=\"img\" aria-label=\"마우스를 따라 바라보는 콜라주 눈\"><span class=\"profile-eye-cutout\"><canvas class=\"profile-eye profile-eye-left\" width=\"500\" height=\"416\" aria-hidden=\"true\"></canvas></span><span class=\"profile-eye-cutout\"><canvas class=\"profile-eye profile-eye-right\" width=\"504\" height=\"384\" aria-hidden=\"true\"></canvas></span></div><nav class=\"profile-sns\" aria-label=\"SNS\"><a href=\"https://www.instagram.com/thingthingclub/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Instagram · 띵띵클럽 (새 탭)\" title=\"Instagram\"><svg viewBox=\"0 0 64 64\" width=\"56\" height=\"56\" fill=\"none\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M9 14 24 6 48 8 59 20 57 42 43 57 19 59 6 45 5 27Z\" fill=\"#e8ded0\"/><path d=\"m11 16 15-7 21 2 9 10-2 20-13 13-21 2L9 44 8 28Z\" fill=\"#f1e8dc\"/><g stroke=\"#29251f\" stroke-width=\"2.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M23 18 41 19Q47 20 46 26L45 42Q44 47 38 46L22 45Q17 44 18 38L19 24Q19 18 23 18Z\"/><circle cx=\"32\" cy=\"32\" r=\"7\"/><circle cx=\"40\" cy=\"24\" r=\"1.3\" fill=\"#29251f\" stroke=\"none\"/></g></svg></a><a href=\"https://www.youtube.com/@Thingthingclub\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"YouTube · 띵띵클럽 (새 탭)\" title=\"YouTube\"><svg viewBox=\"0 0 64 64\" width=\"56\" height=\"56\" fill=\"none\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M9 14 24 6 48 8 59 20 57 42 43 57 19 59 6 45 5 27Z\" fill=\"#e8ded0\"/><path d=\"m11 16 15-7 21 2 9 10-2 20-13 13-21 2L9 44 8 28Z\" fill=\"#f1e8dc\"/><g stroke=\"#29251f\" stroke-width=\"2.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 22Q32 19 45 22Q49 31 45 42Q32 45 19 42Q15 32 19 22Z\"/><path d=\"m29 26 10 6-10 6Z\" fill=\"#29251f\"/></g></svg></a></nav>\n      <nav class=\"profile-links\" aria-label=\"프로필 바로가기\"><a class=\"profile-primary\" href=\"/archive/\">Archive ↗</a><a href=\"/career/\">Career ↗</a><a href=\"/contact/\">Contact ↗</a></nav></div>\n    </article>\n";}};

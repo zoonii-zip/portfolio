@@ -58,6 +58,8 @@
 :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-product,.theme-visual) .archive-tabs button.selected::after{display:none}
 :root body #zz-fullscreen #zz-body .archive-shell.theme-product .archive-tabs button{color:#20383e!important;text-shadow:0 1px 2px #ffffff70;opacity:.65}
 :root body #zz-fullscreen #zz-body .archive-shell.theme-product .archive-tabs button:is(.selected,:hover,:focus-visible){opacity:1}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual .archive-tabs button{opacity:.68}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual .archive-tabs button:is(.selected,:hover,:focus-visible){opacity:1}
 :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-product,.theme-visual) .archive-tabs strong{
  display:block;
  max-width:none!important;
@@ -109,3 +111,4 @@
  }
  :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-product,.theme-visual) #archive-panel{padding-inline:16px!important}
 }
+:root body #zz-fullscreen #zz-body .archive-shell.theme-visual #archive-panel{padding:24px 0 0!important}

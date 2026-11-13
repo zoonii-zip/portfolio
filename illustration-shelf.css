@@ -1,10 +1,11 @@
-/* A full-width collection: quiet paper, printed spines, one open cover. */
-/* Reuse Artwork's exact print and paper; luminosity blending shifts only the palette. */
-:root{--ib-wall-color:#bfd3df}
+/* Printed spines and one open cover against a quiet black canvas. */
+:root{--ib-wall-color:#080808}
 #zz-fullscreen:has(.archive-shell.theme-story){overflow:clip!important}
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){background-color:var(--ib-wall-color);background-image:var(--aw-wall-image);background-size:var(--aw-wall-sizes);background-position:0 0;background-repeat:repeat;background-blend-mode:luminosity}
-#zz-fullscreen:has(.archive-shell.theme-story)::after{content:'';position:fixed;inset:auto 0 0;height:120px;background-color:var(--ib-wall-color);background-image:var(--aw-wall-image);background-size:var(--aw-wall-sizes);background-position:0 calc(120px - 100svh);background-blend-mode:luminosity;mask-image:linear-gradient(transparent,#000 70%);pointer-events:none;z-index:1000}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){background:var(--ib-wall-color);color:#f3f0e6}
+#zz-fullscreen:has(.archive-shell.theme-story)::after{content:'';position:fixed;inset:auto 0 0;height:120px;background:var(--ib-wall-color);mask-image:linear-gradient(transparent,#000 70%);pointer-events:none;z-index:1000}
 html.viewing-space:has(#zz-overlay.open .theme-story) body::after{display:none}
+:root body #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs button{color:#f3f0e6!important}
+html:has(#zz-overlay.open .theme-story) .portfolio-window.is-book :is(.book-title,.book-scroll-hint,.book-page-count){color:#f3f0e6}
 #zz-fullscreen #zz-body .archive-shell.theme-story{display:grid;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto 1fr!important;gap:14px;min-height:100svh;width:100%;padding:88px 0 112px}
 #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs{position:relative!important;top:auto!important;grid-column:1!important;grid-row:1!important;display:flex;flex-direction:row!important;align-items:center;justify-content:center;gap:42px!important;width:auto;min-height:40px;margin:0 24px!important;--archive-tab-type-size:25px}
 #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs button{align-self:center;min-height:40px!important;padding:0!important;opacity:.38}
@@ -43,7 +44,7 @@ html.viewing-space:has(#zz-overlay.open .theme-story) body::after{display:none}
 #zz-fullscreen #zz-body .illustration-shelf .ib-cover-unesco img{object-fit:contain}
 #zz-fullscreen #zz-body .illustration-shelf .ib-cover-sif{background:#a8d5da}
 #zz-fullscreen #zz-body .illustration-shelf .ib-cover-sif img{object-fit:cover;object-position:center}
-#zz-fullscreen #zz-body .theme-story .ib-current{position:relative;inset:auto;display:flex;align-items:center;gap:18px;width:100%;height:60px;box-sizing:border-box;padding:14px clamp(24px,3vw,48px) 0;pointer-events:auto;color:#33392f}
+#zz-fullscreen #zz-body .theme-story .ib-current{position:relative;inset:auto;display:flex;align-items:center;gap:18px;width:100%;height:60px;box-sizing:border-box;padding:14px clamp(24px,3vw,48px) 0;pointer-events:auto;color:#f3f0e6}
 #zz-fullscreen #zz-body .theme-story .ib-current>span{font-size:11px;letter-spacing:.08em;white-space:nowrap;opacity:.55;min-width:46px}
 #zz-fullscreen #zz-body .theme-story .ib-current>div{display:flex;align-items:baseline;gap:15px;min-width:0}
 #zz-fullscreen #zz-body .theme-story .ib-current strong{font-size:15px;line-height:1.5;font-weight:650;letter-spacing:-.03em}

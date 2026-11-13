@@ -23,6 +23,7 @@
   let timer;
   let revision = 0;
   let animations = [];
+  let wasActive = false;
 
   function load(position) {
     if (!cache.has(position)) {
@@ -34,7 +35,7 @@
   }
 
   function active() {
-    return inView && !document.hidden && !motion.matches;
+    return inView && !document.hidden && !motion.matches && !document.documentElement.classList.contains('viewing-space');
   }
 
   function schedule(delay = 220) {
@@ -81,6 +82,7 @@
   }
 
   function sync() {
+    wasActive = active();
     revision++;
     clearTimeout(timer);
     animations.forEach(animation => animation.cancel());
@@ -93,6 +95,7 @@
     inView = entries[0].isIntersecting;
     sync();
   }, { threshold: 0.1 }).observe(intro);
+  new MutationObserver(() => { if (active() !== wasActive) sync(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   document.addEventListener('visibilitychange', sync);
   motion.addEventListener('change', sync);
 })();

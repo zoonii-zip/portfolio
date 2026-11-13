@@ -83,18 +83,25 @@ class BuildTests(unittest.TestCase):
                 with self.subTest(branding=key):
                     page = pages[f"/projects/{key}/"]
                     content = page["content"]
-                    self.assertIn(f'data-brand-file="{key}"', content)
+                    self.assertIn(f'class="project-case case-visual brand-exhibit be-{key}"', content)
+                    self.assertIn(f'data-brand-project="{key}"', content)
                     self.assertIn(f"<h1>{name}</h1>", content)
+                    self.assertIn(f'<p class="be-classification"><span>{kind}</span><span>{year}</span></p>', content)
+                    self.assertIn('class="be-poster" aria-hidden="true"', content)
+                    self.assertIn('type="button" data-brand-scroll class="be-scroll" aria-label="작업 범위 보기"', content)
+                    self.assertIn('class="be-information"', content)
                     self.assertIn(f"<dt>YEAR</dt><dd>{year}</dd>", content)
                     self.assertIn(f"<dt>TYPE</dt><dd>{kind}</dd>", content)
                     self.assertIn("<dt>DESIGNER</dt><dd>김주연 / Zoonii</dd>", content)
-                    self.assertEqual(content.count('class="bf-deliverable-number"'), len(scope))
+                    self.assertEqual(content.count('class="be-deliverable-number"'), len(scope))
                     for deliverable in scope:
                         self.assertIn(f"<strong>{deliverable}</strong>", content)
                     self.assertIn("작업 이미지 준비 중", content)
                     self.assertNotIn("IMAGE PLACEHOLDER", content)
                     self.assertNotIn("LAYOUT PREVIEW", content)
                     self.assertNotIn('class="case-section"', content)
+                    self.assertNotIn('brand-dossier', content)
+                    self.assertNotIn('bf-', content)
                     self.assertFalse(page["index"])
             for route in pages:
                 file = root / (route.strip("/") + "/index.html" if route != "/" else "index.html")

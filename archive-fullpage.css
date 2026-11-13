@@ -89,7 +89,9 @@ html:has(#zz-overlay.open .theme-product) :is(#zz-global-dock,#zz-fixed-links) b
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-story){background-image:linear-gradient(#fff8c5a6,#fff8c5a6),url('/assets/textures/illustration-crumpled-yellow.webp');background-size:cover;background-position:center;background-repeat:no-repeat;background-blend-mode:normal}
 
 /* Category canvases: black print gallery and vintage desktop landscape. */
-#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-visual){--archive-page:#171715;background:#171715;color:#f5f0e5}
+:root{--brand-wall-color:#69492f;--brand-wall-image:url('/assets/textures/branding-walnut-v1.webp');--brand-wall-size:1024px auto}
+#zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-visual){--archive-page:var(--brand-wall-color);background-color:var(--brand-wall-color);background-image:var(--brand-wall-image);background-position:0 0;background-size:var(--brand-wall-size);background-repeat:repeat;color:#f5f0e5}
+#zz-fullscreen:has(.archive-shell.theme-visual)::after{content:'';position:fixed;inset:auto 0 0;height:120px;background-color:var(--brand-wall-color);background-image:var(--brand-wall-image);background-size:var(--brand-wall-size);background-position:0 calc(120px - 100svh);mask-image:linear-gradient(transparent,#000 70%);pointer-events:none;z-index:1000}
 #zz-fullscreen #zz-body .archive-shell.theme-visual .archive-tabs button{color:#f5f0e5!important}
 #zz-fullscreen #zz-body .theme-visual .brand-category h2{color:#f5f0e5;border-bottom-color:#f5f0e540}
 #zz-fullscreen #zz-overlay.overlay:has(.archive-shell.theme-product){background:#a5b9bd url('/assets/textures/web-vintage-meadow.webp') center / cover no-repeat}

@@ -15,34 +15,10 @@
  @media(prefers-reduced-motion:reduce){#zz-fullscreen .zz-board-clock{transition:none}}
  `;
  document.head.appendChild(style);
- // Remove only the connected white clock-face backing, retaining white ink in the artwork.
- const ringArtwork=new Image();
- const transparentRing=document.createElement('canvas');
- ringArtwork.onload=()=>{
-  const width=ringArtwork.naturalWidth,height=ringArtwork.naturalHeight;
-  transparentRing.width=width;transparentRing.height=height;
-  const context=transparentRing.getContext('2d');
-  context.drawImage(ringArtwork,0,0);
-  const pixels=context.getImageData(0,0,width,height),data=pixels.data;
-  const seen=new Uint8Array(width*height),queue=[Math.floor(height*.5)*width+Math.floor(width*.45)];
-  for(let next=0;next<queue.length;next++){
-   const pixel=queue[next];if(seen[pixel])continue;seen[pixel]=1;
-   const i=pixel*4,low=Math.min(data[i],data[i+1],data[i+2]),high=Math.max(data[i],data[i+1],data[i+2]);
-   if(data[i+3]===0||low<235||high-low>15)continue;
-   data[i+3]=0;
-   const x=pixel%width,y=Math.floor(pixel/width);
-   if(x>0)queue.push(pixel-1);if(x<width-1)queue.push(pixel+1);
-   if(y>0)queue.push(pixel-width);if(y<height-1)queue.push(pixel+width);
-  }
-  context.putImageData(pixels,0,0);
-  document.querySelectorAll('.zz-clock-ring').forEach(canvas=>{
-   canvas.width=width;canvas.height=height;canvas.getContext('2d').drawImage(transparentRing,0,0);
-  });
- };
- ringArtwork.src='/assets/clock/graphic-ring.webp';
  function face(){
   const el=document.createElement('span');el.className='zz-clock-face';
-  const ring=document.createElement('canvas');ring.className='zz-clock-ring';ring.setAttribute('aria-hidden','true');ring.width=1182;ring.height=879;if(transparentRing.width===1182)ring.getContext('2d').drawImage(transparentRing,0,0);el.append(ring);
+  // Precomputed with the original connected-white removal; keep the printed white ink.
+  const ring=document.createElement('img');ring.className='zz-clock-ring';ring.src='/assets/clock/graphic-ring-cutout.webp';ring.width=1182;ring.height=879;ring.alt='';ring.draggable=false;el.append(ring);
   ['hour','minute','second'].forEach(k=>{const hand=document.createElement('i');hand.className='zz-clock-hand '+k;hand.dataset.clockHand=k;el.append(hand)});
   const center=document.createElement('img');center.className='zz-clock-center-logo';center.src='/assets/clock/center-logo.png';center.alt='';center.draggable=false;el.append(center);return el;
  }

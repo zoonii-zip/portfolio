@@ -106,7 +106,7 @@ body .guest-actions .guest-refresh:hover{transform:rotate(9deg) translateY(-2px)
 body .guest-actions .guest-refresh:focus-visible{outline:2px solid #555c38;outline-offset:4px}
 
 /* Paint cork on the scroll container so it covers the viewport at every scroll offset. */
-#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){background-color:#d99046;background-image:linear-gradient(#8080808c,#8080808c),url('/assets/fidget-board-cork.webp');background-position:center;background-size:auto,680px auto;background-repeat:repeat;background-attachment:scroll;background-blend-mode:color,normal;isolation:isolate}
+#zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section){background-color:#d99046;background-image:linear-gradient(#8080808c,#8080808c),url('/assets/textures/fidget-board-cork-v2.webp');background-position:center;background-size:auto,680px auto;background-repeat:repeat;background-attachment:scroll;background-blend-mode:color,normal;isolation:isolate}
 #zz-fullscreen #zz-overlay:has(#zz-body>#zz-message-section)::before{content:none}
 
 /* Keep writing and refresh controls anchored while the memo wall scrolls. */
