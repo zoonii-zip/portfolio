@@ -1,0 +1,124 @@
+/* Branding opens as a project folder: a title sheet, a record tag and its scope. */
+.portfolio-window.is-folio{width:min(1280px,calc(100vw - 40px));height:calc(100svh - 24px);border:0;border-radius:0;background:transparent;box-shadow:none;overflow:hidden;color:#eee8d9}
+.portfolio-window.is-folio::backdrop{background:#1c1e1bf0;background-image:linear-gradient(#1c1e1bf5,#1c1e1bf5),url('/assets/textures/fine-art-paper-v1.webp');background-size:auto,540px;backdrop-filter:blur(8px)}
+.portfolio-window.is-folio .folio-toolbar{min-height:72px;padding:12px 26px 16px;border:0;background:transparent;color:#eee8d9;gap:24px}
+.portfolio-window.is-folio .folio-label{display:flex;align-items:center;gap:24px;min-width:0;font-size:10px;letter-spacing:.1em}
+.portfolio-window.is-folio .folio-count{font-size:11px;font-weight:400;white-space:nowrap;letter-spacing:.12em}
+.portfolio-window.is-folio .folio-toolbar nav{gap:10px}
+.portfolio-window.is-folio .folio-toolbar button{display:grid;place-items:center;min-width:44px;min-height:44px}
+.portfolio-window.is-folio .folio-toolbar .folio-close{margin-left:8px;padding:10px 20px;font-size:25px;line-height:1;white-space:nowrap}
+.portfolio-window.is-folio .pw-content{background:transparent;padding:30px 40px 72px;scrollbar-gutter:stable;outline-offset:-4px;scroll-behavior:smooth}
+.portfolio-window.is-folio .pw-content:focus-visible{outline:1px dashed #eee8d970}
+.portfolio-window.is-folio .brand-dossier{max-width:min(1080px,calc((100svh - 190px) * 1.45));margin:0 auto}
+.brand-dossier{--bf-red:#bb422d;width:100%;max-width:1080px;color:#292b23}
+.brand-dossier .bf-cover{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,26%);align-items:center;padding:46px 26px 36px 22px;isolation:isolate}
+.brand-dossier .bf-cover::before{content:'';position:absolute;inset:24px 0 15px;z-index:-2;background:#c4ab86 url('/assets/textures/fine-art-paper-v1.webp');background-blend-mode:multiply;background-size:420px;border-radius:3px;box-shadow:2px 3px 0 #806c4e,5px 9px 16px #0003;transform:rotate(.7deg)}
+.brand-dossier .bf-cover::after{content:'';position:absolute;inset:auto 0 15px;height:16px;z-index:-1;background:#aa8f6940;transform:rotate(.7deg);transform-origin:right center}
+.brand-dossier .bf-tab{position:absolute;top:0;right:26px;display:flex;align-items:center;justify-content:space-between;gap:30px;width:25%;min-width:176px;height:48px;padding:0 22px 8px;background:#c4ab86 url('/assets/textures/fine-art-paper-v1.webp');background-blend-mode:multiply;background-size:420px;border-radius:8px 8px 0 0;transform:rotate(.7deg);font-size:10px;letter-spacing:.08em;color:#473c2c}
+.brand-dossier .bf-tab>span:first-child{font-size:17px;font-weight:600}
+.brand-dossier .bf-jacket{position:relative;display:flex;flex-direction:column;justify-content:space-between;container-type:inline-size;min-width:0;aspect-ratio:1.1;padding:30px 34px;background-color:var(--bf-tone);background-image:linear-gradient(color-mix(in srgb,var(--bf-tone) 92%,transparent),color-mix(in srgb,var(--bf-tone) 92%,transparent)),url('/assets/textures/fine-art-paper-v1.webp');background-size:auto,440px;color:var(--bf-ink);box-shadow:1px 1px #ffffff30,3px 7px 12px #31281e3d;transform:rotate(-1.5deg);z-index:1}
+.brand-dossier .bf-cover-meta{display:flex;justify-content:space-between;gap:18px;font-size:8px;line-height:1.4;letter-spacing:.12em}
+.brand-dossier .bf-type-poster{position:relative;display:flex;align-items:center;flex:1;min-height:0;padding:8% 0 14%}
+:root body .brand-dossier .bf-display,:root body .brand-dossier .bf-display>span{font-family:'Source Sans 3',SUIT,sans-serif!important;font-size:25cqw;line-height:.88;letter-spacing:-.065em;font-weight:850}
+.brand-dossier .bf-display{position:relative;z-index:1;width:100%}
+.brand-dossier .bf-display>span{display:block}
+.brand-dossier .bf-asterisk{position:absolute;right:-2%;bottom:4%;font-size:17cqw;line-height:1;font-weight:400;transform:rotate(12deg);opacity:.9}
+.brand-dossier .bf-cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+:root body .brand-dossier .bf-cover-bottom h1{font-family:var(--font-body)!important;font-size:17px;line-height:1.35;letter-spacing:-.025em;font-weight:600;margin:0;word-break:keep-all}
+.brand-dossier .bf-cover-bottom>span{font-size:8px;line-height:1.4;letter-spacing:.06em;white-space:nowrap}
+:root body .bf-branding0 .bf-display,:root body .bf-branding0 .bf-display>span,:root body .bf-branding3 .bf-display,:root body .bf-branding3 .bf-display>span{font-family:Georgia,'Times New Roman',serif!important;font-weight:400;font-style:italic;letter-spacing:-.075em}
+:root body .bf-branding0 .bf-display>span:first-child{font-size:31cqw}
+:root body .bf-branding0 .bf-display>span:last-child{font-size:12cqw;font-style:normal;letter-spacing:-.05em;margin-top:4%}
+:root body .bf-branding1 .bf-display>span{font-family:SUIT,sans-serif!important;font-size:25cqw;letter-spacing:-.085em}
+.bf-branding1 .bf-asterisk{right:2%;bottom:2%;font-size:20cqw}
+:root body .bf-branding2 .bf-display>span{font-family:SUIT,sans-serif!important;font-size:30cqw;letter-spacing:-.09em}
+.bf-branding2 .bf-display>span:last-child{text-align:right;padding-right:2%}
+.bf-branding2 .bf-asterisk{right:auto;left:0;bottom:0;font-size:15cqw}
+:root body .bf-branding3 .bf-display>span{font-size:27cqw}
+.bf-branding3 .bf-asterisk{bottom:2%;right:8%;font-size:15cqw}
+:root body .bf-branding4 .bf-display>span{font-size:40cqw;letter-spacing:-.07em}
+:root body .bf-chimpsburger .bf-display>span{font-size:23cqw;line-height:.88;letter-spacing:-.065em}
+.bf-chimpsburger .bf-asterisk{font-size:12cqw;right:0;bottom:0}
+.brand-dossier .bf-record{position:relative;z-index:2;align-self:center;min-width:0;padding:26px 24px 24px;margin:32px -6px 0 -12px;background:#eee6d6 url('/assets/textures/fine-art-paper-v1.webp');background-blend-mode:multiply;background-size:360px;box-shadow:1px 2px #b9b09d,4px 7px 9px #43331f2e;transform:rotate(3deg)}
+.brand-dossier .bf-record::before{content:'';position:absolute;top:-11px;left:calc(50% - 36px);width:72px;height:25px;background:#e5d6acb3;clip-path:polygon(1% 3%,98% 0,100% 96%,0 100%);transform:rotate(-7deg);box-shadow:0 1px 0 #fff2}
+.brand-dossier .bf-record-caption{font-size:9px;line-height:1.4;letter-spacing:.13em;margin:0 0 24px;color:#69604e}
+.brand-dossier .bf-record dl{display:grid;gap:20px;margin:0}
+.brand-dossier .bf-record dt{font-size:8px;letter-spacing:.08em;opacity:.6;margin:0 0 5px}
+.brand-dossier .bf-record dd{font-size:14px;line-height:1.45;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
+.brand-dossier .bf-record dl>div:first-child dd{font-size:29px;line-height:1.15;letter-spacing:-.06em;font-weight:600}
+.brand-dossier .bf-seal{display:flex;flex-direction:column;align-items:center;justify-content:center;width:82px;height:82px;margin:30px 0 0 auto;border:1.5px solid var(--bf-red);border-radius:50%;color:var(--bf-red);transform:rotate(-13deg);outline:1px solid color-mix(in srgb,var(--bf-red) 52%,transparent);outline-offset:-6px;mix-blend-mode:multiply}
+:root body .brand-dossier .bf-seal strong{font-family:Georgia,'Times New Roman',serif!important;font-size:42px;line-height:1;font-style:italic;font-weight:400;letter-spacing:-.1em;margin-left:-5px}
+.brand-dossier .bf-seal small{font-size:6px;letter-spacing:.1em;margin-top:5px}
+.brand-dossier .bf-details{position:relative;display:grid;grid-template-columns:1fr 1.7fr;gap:16px 54px;padding:48px 50px;margin:52px 18px 0;background:#f2ecdd url('/assets/textures/fine-art-paper-v1.webp');background-blend-mode:multiply;background-size:440px;box-shadow:3px 4px 0 #c4bca9;transform:rotate(.4deg)}
+.brand-dossier .bf-section-label{grid-column:1;font-size:9px;line-height:1.5;letter-spacing:.12em;margin:0;color:#786b54}
+:root body .brand-dossier .bf-details h2{grid-column:1;font-family:var(--font-body)!important;font-size:25px;font-weight:500;line-height:1.3;letter-spacing:-.045em;margin:0;word-break:keep-all}
+.brand-dossier .bf-deliverables{grid-column:2;grid-row:1/span 2;list-style:none;margin:0;padding:0}
+.brand-dossier .bf-deliverables li{display:grid;grid-template-columns:20px 1fr 20px;align-items:baseline;gap:18px;padding:18px 0;border-bottom:1px solid #85765826}
+.brand-dossier .bf-deliverables li:first-child{padding-top:0}
+.brand-dossier .bf-deliverables li:last-child{border:0;padding-bottom:0}
+.brand-dossier .bf-deliverable-number{font-size:9px;opacity:.5}
+.brand-dossier .bf-deliverables strong{font-size:15px;line-height:1.6;font-weight:500;letter-spacing:-.035em;word-break:keep-all}
+.brand-dossier .bf-scope-mark{font-size:14px;opacity:.45}
+.brand-dossier .bf-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:36px 22px 0;color:#d4cdbb;font-size:10px;line-height:1.5;letter-spacing:.01em}
+.brand-dossier .bf-footer a{font-size:13px}
+.brand-dossier .bf-availability{margin:0;opacity:.55}
+/* A direct project URL uses the same file, clear of the global masthead and dock. */
+#zz-fullscreen #zz-overlay:has(#zz-body>.brand-dossier){background:#1c1e1b}
+#zz-fullscreen #zz-overlay:has(#zz-body>.brand-dossier)>.panelhead{display:none}
+#zz-fullscreen #zz-body:has(>.brand-dossier){max-width:1200px;padding:100px 44px 180px!important}
+html.viewing-space:has(#zz-body>.brand-dossier) body::after{background:linear-gradient(transparent,#1c1e1b 66%)}
+html:has(#zz-body>.brand-dossier){--chrome-ink:#eee8d9;--chrome-accent:#dcb887}
+@media(max-width:900px){
+ .portfolio-window.is-folio .pw-content{padding:28px 26px 60px}
+ .brand-dossier .bf-cover{padding:44px 18px 28px 16px;grid-template-columns:minmax(0,1fr) minmax(170px,27%)}
+ .brand-dossier .bf-jacket{padding:24px}
+ .brand-dossier .bf-record{padding:24px 20px}
+ .brand-dossier .bf-cover-bottom{gap:10px;flex-wrap:wrap}
+ .brand-dossier .bf-cover-bottom h1{font-size:15px}
+ .brand-dossier .bf-details{padding:36px;gap:14px 30px}
+}
+@media(max-width:600px){
+ .portfolio-window.is-folio{width:100%;height:100svh}
+ .portfolio-window.is-folio .folio-toolbar{min-height:68px;padding:10px 20px;gap:12px}
+ .portfolio-window.is-folio .folio-label{gap:0}
+ .portfolio-window.is-folio .folio-kind{display:none}
+ .portfolio-window.is-folio .folio-toolbar nav{gap:8px}
+ .portfolio-window.is-folio .folio-toolbar .folio-close{margin-left:4px;padding:10px 16px;font-size:24px}
+ .portfolio-window.is-folio .pw-content{padding:22px 22px 48px;scrollbar-gutter:auto}
+ .brand-dossier .bf-cover{display:block;padding:42px 14px 24px 12px}
+ .brand-dossier .bf-cover::before{inset:24px 0 12px}
+ .brand-dossier .bf-cover::after{bottom:12px}
+ .brand-dossier .bf-tab{right:16px;width:49%;min-width:0;height:42px;padding:0 16px 8px;gap:15px;font-size:8px}
+ .brand-dossier .bf-tab>span:first-child{font-size:15px}
+ .brand-dossier .bf-jacket{aspect-ratio:.91;padding:24px 22px;transform:rotate(-1.6deg)}
+ .brand-dossier .bf-cover-meta{font-size:6px;letter-spacing:.08em;gap:12px}
+ .brand-dossier .bf-type-poster{padding:12% 0 18%}
+ :root body .brand-dossier .bf-cover-bottom h1{font-size:14px}
+ .brand-dossier .bf-cover-bottom>span{font-size:6px}
+ .brand-dossier .bf-record{display:grid;grid-template-columns:minmax(0,1fr) 68px;gap:16px;align-items:center;width:83%;padding:22px 20px;margin:-18px 0 0 auto;transform:rotate(3deg)}
+ .brand-dossier .bf-record-caption{grid-column:1/-1;margin:0;font-size:7px;letter-spacing:.12em}
+ .brand-dossier .bf-record dl{gap:12px}
+ .brand-dossier .bf-record dt{font-size:7px;margin-bottom:3px}
+ .brand-dossier .bf-record dd{font-size:11px}
+ .brand-dossier .bf-record dl>div:first-child dd{font-size:24px}
+ .brand-dossier .bf-seal{width:66px;height:66px;margin:0;align-self:end}
+ :root body .brand-dossier .bf-seal strong{font-size:34px}
+ .brand-dossier .bf-seal small{font-size:5px}
+ .brand-dossier .bf-details{display:block;padding:30px 24px;margin:36px 5px 0;transform:rotate(.5deg)}
+ .brand-dossier .bf-section-label{font-size:8px;margin-bottom:10px}
+ :root body .brand-dossier .bf-details h2{font-size:24px;margin:0 0 30px}
+ .brand-dossier .bf-deliverables li{gap:10px;grid-template-columns:18px 1fr 14px;padding-block:14px}
+ .brand-dossier .bf-deliverables strong{font-size:13px;line-height:1.7}
+ .brand-dossier .bf-footer{padding:30px 10px 0;gap:20px 12px;flex-wrap:wrap;font-size:8px}
+ .brand-dossier .bf-footer a{font-size:11px}
+ .brand-dossier .bf-availability{width:100%}
+ #zz-fullscreen #zz-body:has(>.brand-dossier){padding:90px 22px 160px!important}
+}
+@media(max-width:360px){
+ .brand-dossier .bf-record{width:91%;padding:22px 16px;grid-template-columns:minmax(0,1fr) 56px;gap:14px 12px}
+ .brand-dossier .bf-record dl>div:first-child dd{font-size:22px}
+ .brand-dossier .bf-seal{width:56px;height:56px}
+ :root body .brand-dossier .bf-seal strong{font-size:29px}
+ .brand-dossier .bf-seal small{font-size:4.5px}
+}
+@media(prefers-reduced-motion:reduce){.portfolio-window.is-folio .pw-content{scroll-behavior:auto}}
