@@ -210,7 +210,7 @@
         else if(e.key==='End')index=items.length-1;
         else return;
         e.preventDefault();items[index].querySelector('button').focus({preventScroll:true});
-        if(matchMedia('(max-width:700px)').matches)items[index].scrollIntoView({block:'nearest',inline:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+        if(matchMedia('(max-width:700px),(max-height:560px) and (max-width:1100px)').matches)items[index].scrollIntoView({block:'nearest',inline:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
       });
     });
     target.replaceChildren(...items);

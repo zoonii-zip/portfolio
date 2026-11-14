@@ -9,7 +9,38 @@ concurrency:
   group: portfolio-pages
   cancel-in-progress: true
 jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Verify static site
+        run: |
+          python3 scripts/verify-seo.py
+          python3 -m unittest discover -s tests -p test_build.py
+          node --test tests/*.test.mjs
+      - name: Install browser test tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.1
+          npx playwright install --with-deps chromium
+      - name: Check mobile layouts and touch flows
+        env:
+          MOBILE_SHOTS_DIR: mobile-screenshots
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/mobile-server.log" 2>&1 &
+          node scripts/mobile-smoke.mjs
+      - name: Upload mobile previews
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: mobile-preview-${{ github.run_id }}-${{ github.run_attempt }}
+          path: mobile-screenshots
+          retention-days: 7
   deploy:
+    needs: mobile
     runs-on: ubuntu-latest
     permissions:
       contents: read

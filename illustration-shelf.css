@@ -59,14 +59,14 @@ html:has(#zz-overlay.open .theme-story) .portfolio-window.is-book :is(.book-titl
  #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs{gap:30px!important}
  #zz-fullscreen #zz-body .illustration-shelf .ib-item.is-selected{flex-grow:3.8}
 }
-@media(max-width:700px){
+@media(max-width:700px),(max-height:560px) and (max-width:1100px){
  #zz-fullscreen #zz-body .archive-shell.theme-story{padding:88px 0 120px;gap:12px}
  #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs{margin:0 20px!important;justify-content:space-between;gap:15px!important;--archive-tab-type-size:clamp(19px,5vw,26px)}
  #zz-fullscreen #zz-body .archive-shell.theme-story .archive-tabs button{min-height:40px!important}
- #zz-fullscreen #zz-body .theme-story .ib-scroll{--shelf-unit:min(calc((100svh - 308px) / 430),1.26px);--shelf-height:calc(430 * var(--shelf-unit));overflow-x:auto;overscroll-behavior-x:contain;scroll-padding-inline:20px;scrollbar-width:none!important;padding-bottom:12px}
+ #zz-fullscreen #zz-body .theme-story .ib-scroll{--shelf-unit:clamp(1px,calc((100svh - 308px) / 430),1.26px);--shelf-height:calc(430 * var(--shelf-unit));overflow-x:auto;overscroll-behavior-x:contain;scroll-padding-inline:20px;scroll-snap-type:x proximity;scrollbar-width:none!important;padding-bottom:12px;touch-action:pan-x pan-y pinch-zoom}
  #zz-fullscreen #zz-body .theme-story .ib-scroll::-webkit-scrollbar{display:none}
  #zz-fullscreen #zz-body .theme-story .collection-objects.illustration-shelf{width:max(100%,calc(630 * var(--shelf-unit)));gap:calc(9 * var(--shelf-unit));padding:calc(24 * var(--shelf-unit)) calc(22 * var(--shelf-unit)) calc(15 * var(--shelf-unit))}
- #zz-fullscreen #zz-body .illustration-shelf .ib-item{min-width:calc(44 * var(--shelf-unit));max-width:calc(56 * var(--shelf-unit) * var(--volume-width,1))}
+ #zz-fullscreen #zz-body .illustration-shelf .ib-item{min-width:calc(44 * var(--shelf-unit));max-width:calc(56 * var(--shelf-unit) * var(--volume-width,1));scroll-snap-align:start;scroll-margin-inline:20px}
  #zz-fullscreen #zz-body .illustration-shelf .ib-item.is-selected{flex-grow:4.1;min-width:calc(175 * var(--shelf-unit));max-width:calc(var(--shelf-height) * .65)}
  #zz-fullscreen #zz-body .theme-story .ib-current{padding:6px 21px 0;gap:10px;height:56px}
  #zz-fullscreen #zz-body .theme-story .ib-current>span{min-width:38px;font-size:10px}

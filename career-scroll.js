@@ -208,12 +208,19 @@
    const cards=[...journey.querySelectorAll('.cs-milestone')];
    const count=journey.querySelector('.cs-journey-count');
    const motion=matchMedia('(prefers-reduced-motion: reduce)');
-   let frame=0, start=0, step=1;
+   const shortViewport=matchMedia('(max-height: 520px)');
+   const hero=article.querySelector('.cs-hero');
+   let frame=0, start=0, step=1, previousActive=-1, heroVisible=false;
+   const syncHero=()=>hero.classList.toggle('is-out-of-view',!heroVisible||document.hidden);
+   const heroVisibility=new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;syncHero();},{root:panel});
+   heroVisibility.observe(hero);syncHero();
    function paint(){
     frame=0;
-    if(motion.matches)return;
+    if(motion.matches||shortViewport.matches||document.hidden)return;
     const progress=Math.max(0,Math.min(cards.length-1,(panel.scrollTop-start)/step));
     const active=Math.round(progress);
+    if(active===previousActive)return;
+    previousActive=active;
     count.textContent=String(active+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
     cards.forEach((card,index)=>{
      const delta=index-active;
@@ -226,10 +233,13 @@
      card.style.zIndex=String(cards.length-Math.round(distance*2));
     });
    }
-   function schedule(){if(!frame)frame=requestAnimationFrame(paint);}
+   function schedule(){if(!frame&&!motion.matches&&!shortViewport.matches&&!document.hidden)frame=requestAnimationFrame(paint);}
    function measure(){
-    journey.classList.toggle('cs-rolling',!motion.matches);
-    if(motion.matches){
+    const rolling=!motion.matches&&!shortViewport.matches;
+    previousActive=-1;
+    journey.classList.toggle('cs-rolling',rolling);
+    if(!rolling){
+     cancelAnimationFrame(frame);frame=0;
      journey.style.removeProperty('--journey-height');
      cards.forEach(card=>{card.style.transform='';card.style.opacity='';card.style.visibility='';});
      return;
@@ -242,6 +252,9 @@
    panel.addEventListener('scroll',schedule,{passive:true});
    window.addEventListener('resize',measure);
    motion.addEventListener('change',measure);
+   shortViewport.addEventListener('change',measure);
+   const syncVisibility=()=>{syncHero();if(document.hidden){cancelAnimationFrame(frame);frame=0;}else schedule();};
+   document.addEventListener('visibilitychange',syncVisibility);
    measure();
    function moveTo(top){panel.scrollTo({top,behavior:'instant'});}
    function click(event){
@@ -267,7 +280,7 @@
    const observer=new MutationObserver(()=>{if(!article.isConnected||!panel.classList.contains('open'))cleanup();});
    observer.observe(document.getElementById('zz-body'),{childList:true});
    observer.observe(panel,{attributes:true,attributeFilter:['class']});
-   cleanup=()=>{cancelAnimationFrame(frame);panel.removeEventListener('scroll',schedule);window.removeEventListener('resize',measure);motion.removeEventListener('change',measure);observer.disconnect();article.removeEventListener('click',click);cleanup=()=>{};};
+   cleanup=()=>{cancelAnimationFrame(frame);hero.classList.add('is-out-of-view');heroVisibility.disconnect();panel.removeEventListener('scroll',schedule);window.removeEventListener('resize',measure);motion.removeEventListener('change',measure);shortViewport.removeEventListener('change',measure);document.removeEventListener('visibilitychange',syncVisibility);observer.disconnect();article.removeEventListener('click',click);cleanup=()=>{};};
   }
  };
 })();

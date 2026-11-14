@@ -132,7 +132,7 @@ html.viewing-space:has(#zz-body>#zz-message-section) body .guest-actions{display
 #zz-message-section .guest-compose-dialog .paper-preview{margin:12px auto 20px;filter:drop-shadow(2px 5px 2px #49351c20)}
 :root body #zz-message-section .guest-compose-dialog .guest-dialog-close,
 :root body #zz-message-section .guest-compose-dialog .guest-stick{--paper-tone:#191917;color:#fff9e9!important}
-#zz-message-section .guest-compose-dialog .guest-dialog-close{margin:0;width:40px;height:40px}
+#zz-message-section .guest-compose-dialog .guest-dialog-close{margin:0;width:44px;height:44px}
 #zz-message-section .guest-compose-dialog .guest-stick{display:block;width:min(270px,100%);margin:0 auto;min-height:48px;font-size:17px!important;font-weight:500!important;letter-spacing:.02em}
 #zz-message-section .guest-compose-dialog .guest-stick:disabled{opacity:.45}
 #zz-message-section .guest-compose-dialog #zz-guest-status{margin:16px auto 0;max-width:420px;text-align:center;font-size:12px;line-height:1.65;color:#716757}
@@ -169,4 +169,20 @@ body .guest-actions :is(button):focus-visible{outline:2px dashed #262622;outline
  #zz-message-section .guest-compose-dialog .paper-preview.paper-pink{height:var(--memo-size);padding:calc(var(--memo-size) * .22) calc(var(--memo-size) * .27) calc(var(--memo-size) * .31) calc(var(--memo-size) * .29)}
  #zz-message-section .guest-compose-dialog .paper-preview:is(.paper-lined,.paper-ticket){height:calc(var(--memo-size) * 1.426667);padding:calc(var(--memo-size) * .72) calc(var(--memo-size) * .24) calc(var(--memo-size) * .17)}
  #zz-message-section .guest-compose-dialog .paper-preview.paper-house{padding:40px calc(var(--memo-size) * .18) 32px}
+}
+
+@media(max-width:760px){
+ #zz-message-section .guest-compose-dialog{
+  --memo-size:min(300px,calc(100vw - 72px - var(--safe-left,0px) - var(--safe-right,0px)));
+  inset:var(--safe-top,0px) var(--safe-right,0px) var(--safe-bottom,0px) var(--safe-left,0px);
+  width:calc(100vw - 32px - var(--safe-left,0px) - var(--safe-right,0px));
+  max-height:calc(100dvh - 24px - var(--safe-top,0px) - var(--safe-bottom,0px));
+  padding:18px;
+  scroll-padding-block:20px;
+ }
+ #zz-message-section .guest-compose-dialog .paper-preview :is(input,textarea){font-size:16px;scroll-margin-block:60px}
+ #zz-message-section .guest-compose-dialog .paper-preview textarea{line-height:1.35}
+ #zz-message-section .guest-compose-dialog .guest-dialog-heading h2{font-size:40px!important}
+ #zz-message-section .guest-compose-dialog .guest-dialog-close{flex:none;min-width:44px;min-height:44px}
+ #zz-fullscreen #zz-body>#zz-message-section{padding-bottom:calc(var(--guest-bottom-clearance,240px) + var(--safe-bottom,0px))!important}
 }

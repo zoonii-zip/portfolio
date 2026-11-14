@@ -70,3 +70,26 @@ html.portfolio-window-open #zz-fullscreen #zz-overlay.overlay{overflow:hidden!im
 .portfolio-window.is-folio .case-header h1{font-family:Georgia,'Apple SD Gothic Neo',serif;letter-spacing:-.05em}
 .portfolio-window.is-folio .case-media{background:#e8e1d2}
 @media(max-width:700px){.portfolio-window .folio-toolbar{padding:12px;gap:8px;font-size:9px}.portfolio-window .folio-toolbar nav{gap:2px}.portfolio-window.is-folio{width:calc(100vw - 28px);height:calc(100svh - 40px)}}
+
+/* Keep the browser chrome usable on narrow touch screens without enlarging its dots. */
+@media(max-width:700px),(max-width:1000px) and (any-pointer:coarse){
+ .portfolio-window:not(.is-book):not(.is-folio){inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+ :root body .portfolio-window:not(.is-book):not(.is-folio) .pw-toolbar{height:108px;padding:4px 12px 8px;grid-template-columns:144px minmax(0,1fr) 44px;grid-template-rows:44px 44px;gap:8px}
+ .portfolio-window .pw-lights{grid-column:1;grid-row:1}
+ .portfolio-window .pw-light:not(.zz-paper-control){position:relative;width:44px;height:44px;border:0;background:transparent}
+ .portfolio-window .pw-light:not(.zz-paper-control)::before{content:'';position:absolute;inset:15px;width:14px;height:14px;border:1px solid #0002;border-radius:50%;background:var(--pw-dot)}
+ .portfolio-window .pw-close{--pw-dot:#ff6058}
+ .portfolio-window .pw-minimize{--pw-dot:#ffbd2e}
+ .portfolio-window .pw-maximize{--pw-dot:#28c840}
+ .portfolio-window .pw-light :is(span,svg){position:relative;z-index:1;opacity:1}
+ .portfolio-window .pw-navigation{grid-row:2;grid-column:1/-1;justify-self:center}
+ .portfolio-window .pw-navigation button,.portfolio-window .pw-original{width:44px;height:44px}
+ .portfolio-window .pw-original{grid-column:3;grid-row:1}
+ .portfolio-window .pw-address{grid-column:2;grid-row:1}
+}
+@media(max-height:500px) and (any-pointer:coarse) and (min-width:701px){
+ :root body .portfolio-window:not(.is-book):not(.is-folio) .pw-toolbar{height:56px;padding:6px 12px;grid-template-columns:144px 96px minmax(0,1fr) 44px;grid-template-rows:44px}
+ .portfolio-window .pw-navigation{grid-column:2;grid-row:1}
+ .portfolio-window .pw-address{grid-column:3}
+ .portfolio-window .pw-original{grid-column:4}
+}

@@ -14,9 +14,9 @@ html:has(#zz-overlay.open .career-scroll):not(.chrome-on-blue){--chrome-paper:#f
 #zz-fullscreen #zz-body .career-scroll .cs-eyebrow{font-size:11px;font-weight:600;line-height:1.5;letter-spacing:.045em}
 /* The original centered intro uses one scale for its type, reel and spacing. */
 #zz-fullscreen #zz-body .career-scroll .cs-hero{
- --hero-top:90px;--hero-bottom:105px;--hero-side:max(22px,5vw);
- --hero-unit:min(calc((100vw - 2 * var(--hero-side)) / 560),calc((100dvh - var(--hero-top) - var(--hero-bottom)) / 705));
- display:flex;flex-direction:column;position:relative;box-sizing:border-box;width:100%;height:100dvh;min-height:100dvh;
+ --hero-top:90px;--hero-bottom:105px;--hero-side:max(22px,5vw);--hero-height:100dvh;
+ --hero-unit:min(calc((100vw - 2 * var(--hero-side)) / 560),calc((var(--hero-height) - var(--hero-top) - var(--hero-bottom)) / 705));
+ display:flex;flex-direction:column;position:relative;box-sizing:border-box;width:100%;height:var(--hero-height);min-height:var(--hero-height);
  padding:var(--hero-top) var(--hero-side) var(--hero-bottom);gap:calc(24 * var(--hero-unit));
  background:#f5f3ec;color:#20211f;--cs-blue:#2549db;
 }
@@ -41,6 +41,7 @@ html:has(#zz-overlay.open .career-scroll):not(.chrome-on-blue){--chrome-paper:#f
 #zz-fullscreen #zz-body .career-scroll .cs-reel-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 32%}
 :root body #zz-fullscreen #zz-body .career-scroll .cs-reel-toggle{display:grid;place-items:center;position:absolute;right:0;bottom:0;width:max(44px,calc(32 * var(--hero-unit)));height:max(44px,calc(32 * var(--hero-unit)));min-height:44px;padding:0!important;font-size:max(11px,calc(12 * var(--hero-unit)))!important;line-height:1;cursor:pointer}
 #zz-fullscreen #zz-body .career-scroll .is-paused .cs-reel-track{animation-play-state:paused}
+#zz-fullscreen #zz-body .career-scroll .cs-hero.is-out-of-view :is(.cs-reel-track,.cs-scroll-next svg){animation-play-state:paused}
 @keyframes cs-single-roll{0%,20%{transform:translateY(0)}25%,45%{transform:translateY(-100%)}50%,70%{transform:translateY(-200%)}75%,95%{transform:translateY(-300%)}100%{transform:translateY(-400%)}}
 #zz-fullscreen #zz-body .career-scroll .cs-hero .cs-cover-footer{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;text-align:center;border:0;padding:0;gap:calc(12 * var(--hero-unit))}
 #zz-fullscreen #zz-body .career-scroll .cs-hero .cs-cover-statement{font-family:var(--font-display-en)!important;font-size:max(20px,calc(34 * var(--hero-unit)));font-weight:700;line-height:1.2;letter-spacing:-.025em}
@@ -186,3 +187,23 @@ html:has(#zz-overlay.open .career-scroll):not(.chrome-on-blue){--chrome-paper:#f
  #zz-fullscreen #zz-body .career-scroll :is(.cs-more,.cs-background-icon){transition:none}
 }
 @media(prefers-reduced-motion:reduce) and (max-width:760px){#zz-fullscreen #zz-body .career-scroll .cs-timeline{grid-template-columns:1fr;padding:0 22px;gap:48px}}
+
+/* Small screens scroll naturally rather than shrinking the cover below legibility. */
+@media(max-width:760px),(max-height:520px) and (pointer:coarse){
+ #zz-fullscreen #zz-body .career-scroll .cs-hero{--hero-height:max(100dvh,580px);--hero-top:calc(92px + var(--safe-top,0px));--hero-bottom:calc(120px + var(--safe-bottom,0px));--hero-side:max(22px,5vw,var(--safe-left,0px),var(--safe-right,0px))}
+ #zz-fullscreen #zz-body .career-scroll .cs-hero-meta .cs-eyebrow{font-size:10px;letter-spacing:.025em}
+ #zz-fullscreen #zz-body .career-scroll .cs-hero .cs-cover-caption>p{font-size:13px}
+ #zz-fullscreen #zz-body .career-scroll :is(.cs-journey-top,.cs-journey-bottom){font-size:11px;gap:16px}
+ #zz-fullscreen #zz-body .career-scroll .cs-journey-top .cs-eyebrow{font-size:10px}
+ #zz-fullscreen #zz-body .career-scroll .cs-journey-bottom a{display:inline-flex;align-items:center;min-height:44px;padding-block:8px}
+ #zz-fullscreen #zz-body .career-scroll .cs-rolling .cs-milestone p{font-size:14px;overflow-wrap:anywhere}
+ #zz-fullscreen #zz-body .career-scroll .cs-chapter h3{font-size:clamp(44px,12vw,76px)}
+ #zz-fullscreen #zz-body .career-scroll .cs-records p{font-size:14px;overflow-wrap:anywhere}
+ #zz-fullscreen #zz-body .career-scroll .cs-project-list summary{display:flex;align-items:center;min-height:44px;padding-block:8px}
+ #zz-fullscreen #zz-body .career-scroll .cs-more{min-height:48px;font-size:14px;align-items:center}
+ #zz-fullscreen #zz-body .career-scroll .cs-end>a{display:inline-flex;align-items:center;min-height:44px}
+}
+@media(max-width:760px){
+ #zz-fullscreen #zz-body .career-scroll .cs-journey:not(.cs-rolling) .cs-timeline{grid-template-columns:1fr;padding:0 22px;gap:48px}
+ #zz-fullscreen #zz-body .career-scroll .cs-journey:not(.cs-rolling) .cs-year{white-space:normal;overflow-wrap:anywhere}
+}
