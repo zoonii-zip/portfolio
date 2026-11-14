@@ -15,7 +15,7 @@ const routes = [
   ['profile', '/profile/', '.profile-poster'],
   ['career', '/career/', '.career-scroll'],
   ['illustration', '/archive/illustration/', '.illustration-shelf .ib-spine'],
-  ['artwork', '/archive/artwork/', '[data-aw-open]'],
+  ['artwork', '/archive/artwork/', '#zz-body [data-aw-open]'],
   ['branding', '/archive/branding/', '.brand-stamp'],
   ['uiux', '/archive/uiux/', '.ff-project'],
   ['contact', '/contact/', '.contact-picker-trigger'],
@@ -90,7 +90,7 @@ async function interactions(page, name, prefix) {
     await book.locator('.book-close').click();
     await book.waitFor({ state: 'hidden' });
   } else if (name === 'artwork') {
-    await page.locator('[data-aw-open]').first().click();
+    await page.locator('#zz-body [data-aw-open]').first().click();
     const viewer = page.locator('.aw-viewer[open]');
     await viewer.waitFor({ state: 'visible' });
     await checkLayout(page, `${prefix}-viewer`, { nav: false });
@@ -187,6 +187,10 @@ try {
         await page.locator('html.zz-seo-ready').waitFor({ state: 'attached' });
         await page.locator(ready).first().waitFor({ state: 'visible' });
         await page.locator('#zz-fullscreen.travelling').waitFor({ state: 'hidden' });
+        await page.evaluate(() => Promise.race([
+          document.fonts.ready,
+          new Promise(resolve => setTimeout(resolve, 2_000))
+        ]));
         if (name === 'home') {
           await screenshot(page, `${prefix}-intro`);
           await page.locator('#zz-scrollboard').click();
