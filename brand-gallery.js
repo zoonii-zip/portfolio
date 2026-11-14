@@ -1,6 +1,21 @@
 /* Project stamps retain the archive data and ordinary detail links. */
 (() => {
+  function revealTab(tab) {
+    if (!tab) return;
+    const tabs = tab.closest('.archive-tabs');
+    if (!tabs || tabs.scrollWidth <= tabs.clientWidth + 1) return;
+    tabs.scrollTo({left:tab.offsetLeft - (tabs.clientWidth - tab.offsetWidth) / 2, behavior:'instant'});
+  }
+  function enhanceTabs() {
+    const tabs = document.querySelector('#zz-body .archive-tabs');
+    if (!tabs || tabs.dataset.horizontalNavReady) return;
+    tabs.dataset.horizontalNavReady = 'true';
+    tabs.setAttribute('aria-orientation','horizontal');
+    tabs.addEventListener('focusin',event=>revealTab(event.target.closest('[role="tab"]')));
+    requestAnimationFrame(()=>revealTab(tabs.querySelector('[aria-selected="true"]')));
+  }
   function mount() {
+    enhanceTabs();
     const target = document.querySelector('#zz-fullscreen .theme-visual .collection-objects');
     if (!target || target.dataset.brandReady) return;
     const cards = [...target.querySelectorAll('.sample-tray')];
@@ -68,6 +83,11 @@
   }
   const body = document.getElementById('zz-body');
   if (body) new MutationObserver(mount).observe(body, {childList: true, subtree: true});
+  let tabResizeFrame;
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(tabResizeFrame);
+    tabResizeFrame=requestAnimationFrame(()=>revealTab(document.querySelector('#zz-body .archive-tabs [aria-selected="true"]')));
+  },{passive:true});
   mount();
 })();
 

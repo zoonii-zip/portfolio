@@ -132,7 +132,7 @@ function mountProfileEyes(art) {
   if(settling)schedule();
  }
  const reset=()=>{tracking=false;schedule();};
- const move=e=>{px=e.clientX;py=e.clientY;tracking=true;schedule();};
+ const move=e=>{if(e.pointerType==='touch'&&e.type==='pointermove')return;px=e.clientX;py=e.clientY;tracking=true;schedule();};
  window.addEventListener('pointermove',move,{passive:true,signal:abort.signal});
  window.addEventListener('pointerdown',move,{passive:true,signal:abort.signal});
  document.documentElement.addEventListener('pointerleave',reset,{signal:abort.signal});
@@ -151,6 +151,7 @@ function sync(){const next=document.querySelector('.profile-poster .profile-eyes
 new MutationObserver(sync).observe(document.documentElement,{childList:true,subtree:true});sync();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const word=e.target.closest('.profile-word');if(word)word.classList.add('tooltip-dismissed');}});
 for(const name of ['pointerover','focusin','click'])document.addEventListener(name,e=>{const word=e.target.closest('.profile-word');if(word)word.classList.remove('tooltip-dismissed');});
+document.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;document.querySelectorAll('.profile-word').forEach(word=>word.classList.toggle('tooltip-dismissed',!word.contains(e.target)));},{passive:true});
 })();
 
 // Copy the public contact address without submitting the inquiry form.

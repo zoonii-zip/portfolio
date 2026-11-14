@@ -32,3 +32,25 @@
  #zz-fullscreen .profile-poster .profile-side-links .profile-sns{bottom:calc(100% + 12px)}
  #zz-fullscreen .profile-poster .profile-description{font-size:11px;line-height:1.6}
 }
+
+/* Keep the four-line poster readable without fitting controls over its copy. */
+@media(max-width:700px),(max-height:520px) and (pointer:coarse){
+ #zz-fullscreen #zz-overlay:has(.profile-poster){overflow-y:auto!important;overflow-x:clip!important;overscroll-behavior-y:contain}
+ #zz-fullscreen #zz-body:has(>.profile-poster){height:auto;min-height:100dvh;overflow:visible!important}
+ #zz-fullscreen .profile-poster{height:auto;min-height:100dvh;padding:calc(104px + var(--safe-top,0px)) max(22px,var(--safe-right,0px)) calc(140px + var(--safe-bottom,0px)) max(22px,var(--safe-left,0px));overflow:visible;justify-content:flex-start}
+ #zz-fullscreen .profile-poster .profile-eyebrow{font-size:10px;line-height:1.6;margin-bottom:24px;letter-spacing:.025em}
+ #zz-fullscreen .profile-poster .profile-title{font-size:clamp(20px,6.45vw,32px);width:100%;max-width:none}
+ #zz-fullscreen .profile-poster .profile-line{min-height:1.6em;gap:.17em}
+ #zz-fullscreen .profile-poster .profile-word>button{display:inline-flex;align-items:center;min-height:44px;touch-action:manipulation}
+ #zz-fullscreen .profile-poster .profile-subtitle{font-size:clamp(16px,4.4vw,22px);line-height:1.5;margin:18px 0 16px}
+ #zz-fullscreen .profile-poster .profile-description{font-size:13px;line-height:1.8;margin-bottom:0;word-break:keep-all;overflow-wrap:anywhere}
+ #zz-fullscreen .profile-poster .profile-side-links{position:relative;inset:auto;transform:none;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:20px 12px;margin-top:28px}
+ #zz-fullscreen .profile-poster .profile-side-links .profile-eyes{position:relative;inset:auto;bottom:auto;right:auto;width:130px;max-width:100%;transform:rotate(-7deg)}
+ #zz-fullscreen .profile-poster .profile-side-links .profile-sns{position:relative;inset:auto;bottom:auto;right:auto;margin:0;gap:8px}
+ #zz-fullscreen .profile-poster .profile-side-links .profile-links{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:10px}
+ :root body #zz-fullscreen .profile-poster .profile-links a.zz-paper-control{display:flex;align-items:center;justify-content:center;min-width:0;min-height:44px;width:100%;padding:10px 8px;font-size:clamp(21px,5.8vw,26px);text-align:center;touch-action:manipulation}
+ #zz-fullscreen .profile-poster .profile-art{animation:none;will-change:auto}
+}
+@media(max-width:360px){
+ #zz-fullscreen .profile-poster{padding-inline:18px}
+}

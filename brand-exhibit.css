@@ -1,7 +1,7 @@
 /* A stamp expands into a full-bleed editorial canvas. */
-.portfolio-window.is-folio{--folio-bar-height:76px;--be-tone:#244b40;--be-ink:#f2ead8;inset:0;width:100%;height:100svh;margin:0;border:0;border-radius:0;background:var(--be-tone);color:var(--be-ink);box-shadow:none;overflow:hidden;animation:none!important}
+.portfolio-window.is-folio{--folio-bar-height:calc(76px + env(safe-area-inset-top));--be-tone:#244b40;--be-ink:#f2ead8;inset:0;width:100%;height:100dvh;margin:0;border:0;border-radius:0;background:var(--be-tone);color:var(--be-ink);box-shadow:none;overflow:hidden;animation:none!important}
 .portfolio-window.is-folio::backdrop{background:#17191638;backdrop-filter:blur(2px)}
-.portfolio-window.is-folio .folio-toolbar{position:relative;z-index:30;height:var(--folio-bar-height);min-height:var(--folio-bar-height);padding:12px clamp(24px,4.5vw,72px);border:0;background:var(--be-tone);color:var(--be-ink);gap:24px}
+.portfolio-window.is-folio .folio-toolbar{position:relative;z-index:30;height:var(--folio-bar-height);min-height:var(--folio-bar-height);padding:calc(12px + env(safe-area-inset-top)) max(clamp(24px,4.5vw,72px),env(safe-area-inset-right)) 12px max(clamp(24px,4.5vw,72px),env(safe-area-inset-left));border:0;background:var(--be-tone);color:var(--be-ink);gap:24px}
 .portfolio-window.is-folio .folio-label{display:flex;align-items:center;gap:28px;margin-left:auto;font-size:10px;line-height:1.4;letter-spacing:.1em}
 .portfolio-window.is-folio .folio-kind{opacity:.65}
 .portfolio-window.is-folio .folio-count{font-size:11px;letter-spacing:.1em;white-space:nowrap;font-weight:400}
@@ -16,7 +16,7 @@
 .portfolio-window.is-folio.folio-closing .pw-content{overflow:hidden}
 .folio-transition{position:absolute;inset:var(--folio-bar-height) 0 0;z-index:20;overflow:hidden;pointer-events:none}
 .brand-exhibit{width:100%;max-width:none;background:var(--be-tone);color:var(--be-ink);isolation:isolate}
-.brand-exhibit .be-hero{position:relative;display:flex;flex-direction:column;min-height:570px;height:calc(100svh - var(--folio-bar-height,0px));padding:20px clamp(28px,5vw,80px) 30px;isolation:isolate;overflow:hidden}
+.brand-exhibit .be-hero{position:relative;display:flex;flex-direction:column;min-height:570px;height:calc(100dvh - var(--folio-bar-height,0px));padding:20px clamp(28px,5vw,80px) 30px;isolation:isolate;overflow:hidden}
 .brand-exhibit .be-hero::before{content:'';position:absolute;inset:0;z-index:-1;background:url('/assets/textures/fine-art-paper-v1.webp') repeat;background-size:600px;mix-blend-mode:multiply;opacity:.16;pointer-events:none}
 .brand-exhibit .be-heading{position:relative;z-index:2;display:flex;align-items:baseline;justify-content:space-between;gap:32px}
 :root body .brand-exhibit .be-heading h1{margin:0;font-family:var(--font-body)!important;font-size:19px;font-weight:500;line-height:1.45;letter-spacing:-.03em;word-break:keep-all}
@@ -73,8 +73,8 @@ html:has(#zz-body>.be-branding3){--chrome-paper:#d6c6df;--chrome-ink:#4c3457}
 html:has(#zz-body>.be-branding4){--chrome-paper:#e4a266;--chrome-ink:#493024}
 html:has(#zz-body>.be-chimpsburger){--chrome-paper:#e4bd55;--chrome-ink:#342d20}
 @media(max-width:700px){
- .portfolio-window.is-folio{--folio-bar-height:68px}
- .portfolio-window.is-folio .folio-toolbar{padding:10px 16px;gap:10px}
+ .portfolio-window.is-folio{--folio-bar-height:calc(68px + env(safe-area-inset-top))}
+ .portfolio-window.is-folio .folio-toolbar{padding:calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 10px calc(16px + env(safe-area-inset-left));gap:10px}
  .portfolio-window.is-folio .folio-label{gap:0}
  .portfolio-window.is-folio .folio-kind{display:none}
  .portfolio-window.is-folio .folio-count{font-size:9px}
@@ -102,4 +102,21 @@ html:has(#zz-body>.be-chimpsburger){--chrome-paper:#e4bd55;--chrome-ink:#342d20}
  :root body .brand-exhibit .be-footer a{font-size:24px}
 }
 @media(max-height:650px) and (min-width:701px){.brand-exhibit .be-hero{min-height:500px}}
+/* Leave the home indicator and landscape camera cutout clear of the exhibit. */
+.portfolio-window.is-folio .be-hero{padding-right:max(clamp(28px,5vw,80px),env(safe-area-inset-right));padding-left:max(clamp(28px,5vw,80px),env(safe-area-inset-left))}
+.portfolio-window.is-folio .be-information,.portfolio-window.is-folio .be-footer{padding-right:max(clamp(28px,5vw,80px),env(safe-area-inset-right));padding-left:max(clamp(28px,5vw,80px),env(safe-area-inset-left))}
+.portfolio-window.is-folio .be-footer{padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+@media(max-width:700px){
+ .portfolio-window.is-folio .be-hero{padding-inline:24px}
+ .portfolio-window.is-folio .be-information,.portfolio-window.is-folio .be-footer{padding-right:calc(26px + env(safe-area-inset-right));padding-left:calc(26px + env(safe-area-inset-left))}
+ .portfolio-window.is-folio .be-footer{padding-bottom:calc(44px + env(safe-area-inset-bottom))}
+}
+@media(max-height:500px){
+ .portfolio-window.is-folio{--folio-bar-height:calc(60px + env(safe-area-inset-top))}
+ .portfolio-window.is-folio .folio-toolbar{padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px}
+ .portfolio-window.is-folio .be-hero{min-height:280px;padding-top:12px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+ .portfolio-window.is-folio .be-poster{padding-bottom:12px}
+ .portfolio-window.is-folio .be-heading{gap:20px}
+ .portfolio-window.is-folio .be-hero-footer{min-height:44px}
+}
 @media(prefers-reduced-motion:reduce){.portfolio-window.is-folio .pw-content{scroll-behavior:auto}}

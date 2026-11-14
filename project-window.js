@@ -100,8 +100,8 @@
       if(event.key==='Home'||event.key==='End'){event.preventDefault();showBookPage(event.key==='Home'?0:bookUnits.length-1);}
     });
     let swipeStart;
-    content.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')swipeStart={x:event.clientX,y:event.clientY};});
-    content.addEventListener('pointerup',event=>{if(!swipeStart)return;const dx=swipeStart.x-event.clientX,dy=swipeStart.y-event.clientY;swipeStart=null;if(Math.max(Math.abs(dx),Math.abs(dy))>45)turnBook(Math.sign(Math.abs(dx)>Math.abs(dy)?dx:dy));});
+    content.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')swipeStart=event.isPrimary?{id:event.pointerId,x:event.clientX,y:event.clientY}:null;});
+    content.addEventListener('pointerup',event=>{if(!swipeStart||swipeStart.id!==event.pointerId)return;const dx=swipeStart.x-event.clientX,dy=swipeStart.y-event.clientY;swipeStart=null;if(Math.max(Math.abs(dx),Math.abs(dy))>45)turnBook(Math.sign(Math.abs(dx)>Math.abs(dy)?dx:dy));});
     content.addEventListener('pointercancel',()=>{swipeStart=null;});
     new ResizeObserver(()=>{if(dialog.open&&dialog.classList.contains('is-book')){cancelBookTurn();scheduleBookFit();}}).observe(content);
     bookMobile.addEventListener('change',()=>{if(dialog.open&&dialog.classList.contains('is-book'))setupBook();});

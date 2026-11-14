@@ -98,7 +98,22 @@
   justify-content:space-between;
   gap:clamp(8px,2.4vw,16px)!important;
   margin:0 20px!important;
+  min-height:48px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:2px;
+  scrollbar-width:none;
+  touch-action:pan-x pan-y pinch-zoom;
  }
+ :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-product,.theme-visual) .archive-tabs::-webkit-scrollbar{display:none}
+ :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-product,.theme-visual) .archive-tabs button{
+  flex:0 0 auto!important;
+  min-width:44px;
+  min-height:44px!important;
+  scroll-snap-align:center;
+ }
+ :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-artwork,.theme-story,.theme-product,.theme-visual) .archive-tabs button:focus-visible{outline-offset:-2px}
  :root body #zz-fullscreen #zz-body .archive-shell:is(.theme-product,.theme-visual) #archive-panel{padding:30px 20px 0!important}
  :root body #zz-fullscreen #zz-body .archive-shell.theme-artwork{padding-bottom:150px}
  :root body #zz-fullscreen #zz-body .archive-shell.theme-story{gap:12px;padding-bottom:120px}
