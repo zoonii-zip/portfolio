@@ -13,7 +13,7 @@ const viewports = [
 const routes = [
   ['home', '/', '#zz-fullscreen'],
   ['profile', '/profile/', '.profile-poster'],
-  ['career', '/career/', '.career-scroll'],
+  ['career', '/career/', '.career-annual04 .summary-record'],
   ['illustration', '/archive/illustration/', '.illustration-shelf .ib-spine'],
   ['artwork', '/archive/artwork/', '#zz-body [data-aw-open]'],
   ['branding', '/archive/branding/', '.brand-stamp'],
@@ -67,15 +67,36 @@ async function interactions(page, name, prefix) {
     assert(controls.every(r => r.width >= 43.5 && r.height >= 43.5 && r.left >= -1 && r.right <= page.viewportSize().width + 1), 'Profile navigation fits and remains touch sized');
     await screenshot(page, `${prefix}-controls`);
   } else if (name === 'career') {
-    await page.locator('.cs-reel-toggle').click();
-    assert.equal(await page.locator('.cs-reel-toggle').getAttribute('aria-pressed'), 'true', 'Career reel can pause by tap');
-    await page.locator('[data-cs-link="timeline"]').click();
-    await page.locator('.cs-journey').waitFor({ state: 'visible' });
-    if (page.viewportSize().height <= 520) {
-      assert.equal(await page.locator('.cs-journey.cs-rolling').count(), 0, 'Short landscape uses the readable static timeline');
+    const career = page.locator('#zz-body > .career-annual04');
+    assert.equal(await career.locator('.summary-record').count(), 6, 'Career shows all six employment summaries');
+    if (page.viewportSize().width <= 760) {
+      await career.locator('[data-tab="uiux"]').click();
+      assert.equal(await career.locator('[data-tab="uiux"]').getAttribute('aria-pressed'), 'true', 'Digital field can be selected by tap');
     }
-    await checkLayout(page, `${prefix}-timeline`);
-    await screenshot(page, `${prefix}-timeline`);
+    const digital = career.locator('[data-field="uiux"]');
+    assert.equal(await digital.locator('.entry').count(), 4, 'Career limits a project page to four records');
+    await digital.locator('[data-page-next]').click();
+    assert.equal(await digital.locator('.page-status').textContent(), '5–8 / 23', 'Career advances to the next four projects');
+    await digital.locator('[data-page-prev]').click();
+    assert.equal(await digital.locator('.page-status').textContent(), '1–4 / 23', 'Career can return to the first project page');
+    const search = career.locator('#annual04-search');
+    await search.fill('Chimps');
+    assert.equal(await career.locator('#annual04-search-status').textContent(), '“Chimps” · 1개 기록', 'Shared category memberships count as one project');
+    assert.equal(await career.locator('[data-field="branding"] .entry').count(), 1, 'Chimps is present in Branding');
+    assert.equal(await career.locator('[data-field="illustration"] .entry').count(), 1, 'Chimps remains in Illustration');
+    await search.fill('GenQ');
+    assert.equal(await digital.locator('.entry').count(), 1, 'Career search finds the resume project');
+    assert.equal(await digital.locator('.field-paging').isVisible(), false, 'A single search result needs no pagination');
+    if (page.viewportSize().width <= 760) {
+      assert.equal(await career.locator('[data-tab="uiux"]').getAttribute('aria-pressed'), 'true', 'Search selects the field containing its result');
+    }
+    await search.press('Escape');
+    assert.equal(await search.inputValue(), '', 'Escape clears search without closing Career');
+    assert.equal(await career.isVisible(), true, 'Career stays open after clearing search');
+    await career.locator('.summary-heading a').click();
+    await career.locator('#annual04-notes h2').waitFor({ state: 'visible' });
+    await checkLayout(page, `${prefix}-background`);
+    await screenshot(page, `${prefix}-background`);
   } else if (name === 'illustration') {
     await page.locator('.illustration-shelf .ib-spine').first().click();
     const book = page.locator('.portfolio-window.is-book[open]');

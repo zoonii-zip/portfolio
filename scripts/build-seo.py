@@ -16,8 +16,13 @@ source = re.sub(r'<title>.*?</title>', '', source, count=1, flags=re.S)
 runtime_sources = [ROOT / path.lstrip('/') for path in re.findall(r'<script[^>]+src="(/scripts/runtime/[^"?]+)', source)]
 data_source = source + '\n' + '\n'.join(path.read_text() for path in runtime_sources)
 projects = json.loads(re.search(r'const projects=(.*?);\n', data_source).group(1))
-records = json.loads(re.search(r'const careerRecords=(.*?);', data_source).group(1))
-extras = json.loads(re.search(r'const careerExtras=(.*?);\n', data_source).group(1))
+# Career is sourced only from the latest user-supplied resume. Keep this required:
+# silently falling back to legacy runtime records would restore superseded facts.
+career_source = (ROOT/'career-data.js').read_text()
+career_match = re.search(r'window\.ZooniiCareerData\s*=\s*(\{.*\})\s*;\s*$', career_source, re.S)
+if not career_match:
+ raise ValueError('career-data.js must assign a JSON object to window.ZooniiCareerData')
+career = json.loads(career_match[1])
 origin = 'https://' + (ROOT/'CNAME').read_text().strip()
 person = {'@type':'Person','@id':origin+'/profile/#person','name':'김주연','alternateName':'Zoonii','url':origin+'/profile/','jobTitle':'Illustrator · Experience Maker · Educator','description':'그림을 그리고, 경험을 설계하고, 아이디어를 실제의 모습으로 만드는 김주연 / Zoonii.','sameAs':['https://www.instagram.com/thingthingclub/'],'knowsAbout':['Illustration','UI/UX Design','Brand Design','Creative Coding','Design Education']}
 labels={'STORY':('illustration','일러스트레이션'),'PRODUCT':('uiux','UI/UX · 웹 · 앱 디자인'),'VISUAL':('branding','브랜딩 · 편집 디자인')}
@@ -53,12 +58,33 @@ def artwork_content():
 add('/archive/artwork/','Artwork — Zoonii','김주연 / Zoonii의 아트워크 갤러리. 다채로운 색과 장면으로 이어지는 일러스트레이션 작품 모음.',artwork_content(),'files',mode='ARTWORK')
 for mode,(slug,label) in labels.items():
  add('/archive/'+slug+'/',label+' — Zoonii',f'김주연 / Zoonii의 {label} 프로젝트 목록과 작업 역할.','<h1>'+label+'</h1>'+category_nav+listing(mode)+'<p>프로젝트 이미지 · 상세 준비 중</p>','files',mode=mode)
-rows=''.join('<tr>'+''.join('<td>'+esc(r[i])+'</td>' for i in [0,2,3,5])+'</tr>' for r in records if r[4] not in ['teaching','exhibition'])
-career_extras = re.sub(r'<h2>[^<]*(?:학력|수상·자격)[^<]*</h2>.*?(?=<h2>|$)', '', extras, flags=re.S)
-career_extras = career_extras.replace('<li>Seoul Illustration Fair V.15–V.18</li>', '<li>2024.12.26–12.29 · Seoul Illustration Fair V.18</li><li>2024.07.04–07.07 · Seoul Illustration Fair V.17</li><li>2023.12.21–12.24 · Seoul Illustration Fair V.16</li><li>2023.07.06–07.09 · Seoul Illustration Fair V.15</li>')
-career_extras = career_extras.replace('<li>Hong Kong Illustration &amp; Creative Show V.5–V.6</li>', '<li>2023.11.25–11.26 · Hong Kong Illustration &amp; Creative Show V.6</li><li>2023.06.24–06.25 · Hong Kong Illustration &amp; Creative Show V.5</li>')
-career_extras = career_extras.replace('<li>Taipei Illustration Fair 2025</li>', '<li>2025.12.05–12.07 · Taipei Illustration Fair 2025</li>')
-add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.','<h1>김주연 / Zoonii의 작업 이력</h1><table><thead><tr><th>기간</th><th>프로젝트 / 회사</th><th>역할</th><th>분야</th></tr></thead><tbody>'+rows+'</tbody></table>'+career_extras,'career')
+def career_table(section, title, headings, fields, records):
+ head=''.join('<th scope="col">'+esc(heading)+'</th>' for heading in headings)
+ rows=[]
+ for record in records:
+  record_id=' data-career-project="'+esc(record['id'])+'"' if section=='projects' else ''
+  cells=''.join('<td>'+esc(record.get(field,''))+'</td>' for field in fields)
+  rows.append('<tr'+record_id+'>'+cells+'</tr>')
+ return '<section data-career-section="'+section+'"><h2>'+esc(title)+'</h2><table><thead><tr>'+head+'</tr></thead><tbody>'+''.join(rows)+'</tbody></table></section>'
+def career_list(section, title, items):
+ return '<section data-career-section="'+section+'"><h2>'+esc(title)+'</h2><ul>'+''.join('<li>'+esc(item)+'</li>' for item in items)+'</ul></section>'
+def career_content():
+ intro=career['intro']
+ content='<h1>'+esc(intro['name'])+'의 작업 이력</h1><p>'+esc(' · '.join(intro['roles']))+'</p><p>'+esc(intro['description'])+'</p>'
+ content+=career_table('employment','소속 및 핵심 경력',['기간','회사 / 소속','역할'],['period','title','role'],career['employment'])
+ categories={'illustration':'일러스트레이션','branding':'그래픽·브랜딩','uiux':'UI/UX'}
+ project_records=[dict(record, category_label=' · '.join(categories[category] for category in record.get('categories',[record['category']]))) for record in career['projects']]
+ content+=career_table('projects','프로젝트',['기간','프로젝트 / 회사','역할','분야'],['period','title','role','category_label'],project_records)
+ saltware=career['saltware']
+ content+='<section data-career-section="saltware"><h2>솔트웨어 / 포털 시스템 디자인·퍼블리싱 ('+esc(saltware['period'])+')</h2><p>'+esc(saltware['description'])+'</p><ul>'+''.join('<li>'+esc(item)+'</li>' for item in saltware['projects'])+'</ul></section>'
+ content+=career_table('education','학력',['기간','학교','전공','상태'],['period','title','detail','status'],career['education'])
+ content+=career_table('teaching','강의',['기간','기관','내용','상태'],['period','title','role','status'],career['teaching'])
+ content+=career_table('exhibitions','전시·라이브 페인팅',['기간','전시 / 행사','내용'],['period','title','role'],career['exhibitions'])
+ content+=career_list('fairs','페어 / Thingthingclub',career['fairs'])
+ content+=career_list('qualifications','수상·자격',career['qualifications'])
+ content+=career_list('notes','이력서 기재 상태',career['notes'])
+ return content
+add('/career/','Career — 김주연 / Zoonii의 작업 이력','김주연 / Zoonii의 UI/UX, 일러스트레이션, 브랜딩 프로젝트와 디자인 교육 이력.',career_content(),'career')
 for path,title,desc,action in [('/contact/','Contact','프로젝트와 협업, 강의 이야기를 들려주세요. 문의 양식으로 메시지를 보내거나 illu_junny@naver.com으로 연락해주세요.','contact'),('/guestbook/','Guestbook','메모 보드는 준비 중이에요.','guest'),('/thingthingclub/','ThingThingClub','감정을 판매하는 식료품점. 그림에서 제품으로, 전시에서 일상으로. 상품 이미지와 판매 링크는 준비 중입니다.','club')]:
  add(path,title+' — Zoonii',desc,'<h1>'+title+'</h1><p>'+desc+'</p>'+nav,action,index=False)
 # Reusable detail layouts: replace project copy and media without changing structure.
