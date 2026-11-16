@@ -32,17 +32,5 @@ html:has(#zz-fullscreen.board-night):not(.viewing-space) #zz-global-dock .dock-m
 @media(max-width:900px){html.viewing-space #zz-global-dock .dock-icon{width:44px;height:44px}html.viewing-space #zz-global-dock [data-dock="home"] .dock-art img{width:44px;height:38px}}
 @media(prefers-reduced-motion:reduce){#zz-global-dock .dock-icon{transition:none}}
 
-/* Highlight only the menu name, without moving the sticker or surrounding items. */
-#zz-global-dock button:is(:focus,:focus-visible) .dock-mobile-label{
- background:#000;color:#fff!important;text-shadow:none!important;
- box-shadow:0 0 0 4px #000;text-decoration:none;border-radius:0;
-}
-@media(hover:hover){
- #zz-global-dock button:hover .dock-mobile-label{
-  background:#000;color:#fff!important;text-shadow:none!important;
-  box-shadow:0 0 0 4px #000;text-decoration:none;border-radius:0;
- }
-}
-
 /* Main sections use the persistent dock for navigation. */
 #zz-fullscreen #zz-overlay:has(.archive-shell,.profile-page,.career-scroll,.club-collage) > .panelhead button[data-action="close"]{display:none!important}
