@@ -56,3 +56,7 @@
  .project-case .case-grid-3 .case-media-cross{font-size:18px;margin-bottom:8px}
  .project-case .case-footer{margin-top:52px}
 }
+/* A plate holds real artwork instead of a placeholder box. */
+.project-case .case-media.book-plate{aspect-ratio:auto;display:block;padding:0;background:none}
+.project-case .case-media.case-cover{padding:0}
+.project-case .case-media.book-plate img{display:block;height:auto;object-fit:contain}

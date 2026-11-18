@@ -164,3 +164,21 @@ html.illustration-reader-open,html.illustration-reader-open body{overflow:hidden
 .portfolio-window.is-book .book-dot.is-current::before{opacity:1;transform:scale(2.1)}
 @media(max-width:700px){.portfolio-window.is-book .book-pagination .book-dot{flex-basis:22px;width:22px}}
 @media(prefers-reduced-motion:reduce){.portfolio-window.is-book,.portfolio-window.is-book .book-dot::before{transition:none}}
+/* Real artwork is printed straight on the page: no box, and capped in height so the text beside it keeps its size. */
+.portfolio-window .illustration-book .case-media.book-plate{padding:0;background:none;border:0;box-shadow:none}
+.portfolio-window .illustration-book .book-plate img{width:100%;height:auto;max-height:62svh;object-fit:contain}
+.portfolio-window .illustration-book .case-section-heading+.book-media-group .book-plate img{max-height:40svh}
+.portfolio-window .illustration-book .book-plate:not(:only-child) img{max-height:34svh}
+@media(max-width:700px){
+ /* A phone leaf is short: keep each plate small enough that the page is not shrunk to fit. */
+ .portfolio-window .illustration-book .book-plate img{max-height:50svh}
+ .portfolio-window .illustration-book .case-section-heading+.book-media-group .book-plate img{max-height:26svh}
+ .portfolio-window .illustration-book .book-plate:not(:only-child) img{max-height:25svh}
+}
+/* A long book has more leaves than a phone has room for full-size dots. */
+@media(max-width:700px){
+ .portfolio-window.is-book .book-dots:has(.book-dot:nth-child(15)) .book-dot::before{width:6px;height:6px;margin:-3px}
+ /* The dots give way, not the two page buttons. */
+ .portfolio-window.is-book .book-pagination>button{flex:none}
+ .portfolio-window.is-book .book-pagination:has(.book-dot:nth-child(15)){gap:12px}
+}

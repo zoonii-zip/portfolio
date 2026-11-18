@@ -1,0 +1,28 @@
+/* A drawn device whose screen is its own scroll area, so a long page can be read inside it.
+   Markup (scripts/project_cases.py device_frame() writes it):
+   <figure class="device device-monitor" style="--screen-ratio:16 / 10;--screen-bg:#fff">
+     <div class="device-body"><div class="device-screen" tabindex="0" role="region" aria-label="…"><img …>…</div></div>
+     <div class="device-stand" aria-hidden="true"></div><div class="device-foot" aria-hidden="true"></div>
+     <figcaption>…</figcaption>
+   </figure>
+   .device-phone is the same without the stand. Scrolling is never intercepted: at either end of the
+   screen the page behind it carries on. */
+.device{--device-ink:#1c1c1e;--device-edge:#3b3b3f;--screen-ratio:16 / 10;--screen-bg:#fff;margin:0 auto;min-width:0}
+.device *{box-sizing:border-box}
+.device-body{background:var(--device-ink);box-shadow:inset 0 0 0 1.5px var(--device-edge),0 34px 46px -34px #00000080}
+.device-screen{aspect-ratio:var(--screen-ratio);overflow-x:hidden;overflow-y:auto;background:var(--screen-bg);scrollbar-width:thin;scrollbar-color:#00000059 transparent}
+.device-screen:focus-visible{outline:3px solid #2f6fed;outline-offset:3px}
+.device-screen img{display:block;width:100%;height:auto}
+.device figcaption{margin-top:18px;text-align:center;font:11px/1.6 monospace;letter-spacing:.07em;color:#73736b}
+
+/* Never taller than the window it sits in: the whole monitor, stand included, stays in view while its screen is read. */
+.device-monitor{width:100%;max-width:max(300px,min(1040px,calc((100svh - 360px) * 1.6)))}
+.device-monitor .device-body{padding:clamp(6px,1.3vw,15px) clamp(6px,1.3vw,15px) clamp(15px,3.1vw,36px);border-radius:clamp(9px,1.7vw,20px)}
+.device-monitor .device-screen{border-radius:clamp(2px,.4vw,5px)}
+/* Neck and foot of the stand. */
+.device-stand{width:17%;height:clamp(22px,5.4vw,62px);margin:0 auto;background:linear-gradient(#2c2c2f,var(--device-ink));clip-path:polygon(9% 0,91% 0,100% 100%,0 100%)}
+.device-foot{width:36%;height:clamp(6px,1.1vw,12px);margin:0 auto;border-radius:clamp(3px,.6vw,7px) clamp(3px,.6vw,7px) 2px 2px;background:var(--device-ink)}
+
+.device-phone{width:min(100%,300px);--screen-ratio:9 / 19}
+.device-phone .device-body{padding:clamp(7px,2.6%,10px);border-radius:34px}
+.device-phone .device-screen{border-radius:26px}

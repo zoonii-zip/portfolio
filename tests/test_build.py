@@ -34,7 +34,7 @@ class BuildTests(unittest.TestCase):
             (root / "scripts").mkdir()
             for name in ("index.html", "CNAME", "artwork-gallery.json", "career-data.js"):
                 shutil.copy2(ROOT / name, root / name)
-            for name in ("build-seo.py", "asset_versions.py"):
+            for name in ("build-seo.py", "asset_versions.py", "project_cases.py"):
                 shutil.copy2(ROOT / "scripts" / name, root / "scripts" / name)
             shutil.copytree(ROOT / "scripts/runtime", root / "scripts/runtime")
             subprocess.run(

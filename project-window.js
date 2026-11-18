@@ -224,6 +224,11 @@
     let palette=cover&&ready(cover)?sampleTones(cover):[];
     if(cover&&!ready(cover))cover.addEventListener(cover.tagName==='IMG'?'load':'loadeddata',()=>{if(cover.isConnected){updateBookTones();renderBookDots();paintBookTone();}},{once:true});
     if(!palette.length)palette=[rgbToHsl(value>>16,value>>8&255,value&255)];
+    // A spread's own artwork sets its colour once it has loaded.
+    for(const spread of spreads){
+      const plate=spread.querySelector('.book-plate img');
+      if(plate&&!ready(plate)&&!plate.dataset.toneWait){plate.dataset.toneWait='1';plate.addEventListener('load',()=>{if(plate.isConnected){updateBookTones();renderBookDots();paintBookTone();}},{once:true});}
+    }
     const tones=spreads.map((spread,i)=>{
       const own=[...spread.querySelectorAll('img,video')].find(ready);
       // Fewer colours than spreads: walk the palette again a little further round the wheel.
@@ -447,7 +452,7 @@
     cancelBookTurn();bookUnits=[];bookIndex=0;
     current = index;
     article.querySelector('h1').id = 'pw-project-title';
-    if (/^\/projects\/uiux[0-4]\/$/.test(path)) {
+    if (/^\/projects\/uiux[0-4]\/$/.test(path) && article.querySelector('.case-media')) {
       const cover = article.querySelector('.case-media');
       const image = document.createElement('img');
       image.src = '/assets/web-projects/' + path.split('/')[2] + '.svg';
