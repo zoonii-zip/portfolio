@@ -1,7 +1,7 @@
 /* Current-site controls only; archived weeks retain their original styling. */
 (()=>{
  if(location.pathname.startsWith('/weeks/'))return;
- const selector=['#zz-overview-button','.overview-close','#zz-weeks .weeks-toggle','#zz-fullscreen .action','#zz-fullscreen .chapterbar button','.pp-facts-tabs button','.profile-links a','.cs-reel-toggle','.cs-scroll-next','.guest-stick','.guest-dialog-close','#zz-leave-note','#zz-wall-back','#zz-contact-back','#zz-overlay .panelhead button','.ttc-game button','.ttc-shop-replay','.club-store-actions .club-shop-link','.portfolio-window button:not(.ib-spine)','.pw-original','.case-back'].join(',');
+ const selector=['#zz-overview-button','.overview-close','#zz-weeks .weeks-toggle','#zz-fullscreen .action','#zz-fullscreen .chapterbar button','.pp-facts-tabs button','.profile-links a','.cs-reel-toggle','.cs-scroll-next','.guest-stick','.guest-dialog-close','#zz-leave-note','#zz-wall-back','#zz-contact-back','#zz-overlay .panelhead button','.ttc-game button','.ttc-shop-replay','.club-store-actions .club-shop-link','.portfolio-window button:not(.ib-spine,.book-dot)','.pw-original','.case-back'].join(',');
  const paths={back:'m14 6-7 6 7 6M7 12h14',next:'m10 6 7 6-7 6M4 12h13',close:'m7 6 11 12M18 6 7 18',minus:'M5 12h14',expand:'M5 10V5h5m4 0h5v5M5 14v5h5m4 0h5v-5'};
  function enhance(el){
   if(el.closest('.portfolio-window:not(.is-book)'))return;

@@ -4,6 +4,8 @@
   let dialog, content, address, previous, next, original, maximize;
   let collection = [], current = -1, returnFocus;
   let bookIndex=0, bookUnits=[], bookBusy=false, wheelTotal=0, wheelTimer, bookTurn, bookFitFrame=0;
+  let bookTones=[], bookBase='', bookMotion=[];
+  const bookCaptions='.case-eyebrow,.case-header h1,.case-summary,.case-meta,.case-intro,.case-section-heading>*,.case-media figcaption,.case-media small,.case-media-index,.case-footer';
   let brandMotion=[], brandCurtain, brandClosing=false;
   const bookMobile=matchMedia("(max-width:700px)"), reduceBookMotion=matchMedia("(prefers-reduced-motion: reduce)");
   const pages = () => window.ZooniiSEOPages || {};
@@ -80,10 +82,15 @@
     content = dialog.querySelector('.pw-content');
     const controls=document.createElement('nav');
     controls.className='book-pagination';controls.hidden=true;controls.setAttribute('aria-label','책장 넘기기');
-    controls.innerHTML='<button type="button" class="book-prev" aria-label="이전 책장">←</button><span class="book-page-count" role="status" aria-live="polite"></span><button type="button" class="book-next" aria-label="다음 책장">→</button>';
+    controls.innerHTML='<button type="button" class="book-prev" aria-label="이전 책장">←</button><span class="book-page-count" role="status" aria-live="polite"></span><div class="book-dots" role="group" aria-label="책장 바로가기"></div><button type="button" class="book-next" aria-label="다음 책장">→</button>';
     dialog.append(controls);
     controls.querySelector('.book-prev').addEventListener('click',()=>turnBook(-1));
     controls.querySelector('.book-next').addEventListener('click',()=>turnBook(1));
+    controls.querySelector('.book-dots').addEventListener('click',event=>{
+      const dot=event.target.closest('.book-dot');if(!dot)return;
+      const index=Number(dot.dataset.index),step=index-bookIndex;
+      if(Math.abs(step)===1)turnBook(step);else if(step)showBookPage(index);
+    });
     dialog.addEventListener('wheel',event=>{
       if(!dialog.classList.contains('is-book'))return;
       if(event.ctrlKey)return;
@@ -174,10 +181,71 @@
     });
     for(const [body,transform] of fitted)if(body.style.transform!==transform)body.style.transform=transform;
   }
-  function cancelBookTurn(){
+  function cancelBookTurn(landed){
     if(bookTurn)cancelAnimationFrame(bookTurn.frame);
     bookTurn?.layer.remove();bookTurn=null;
     dialog?.classList.remove('is-turning');
+    // A landed turn lets its captions finish arriving; any other interruption shows them at once.
+    if(!landed){bookMotion.forEach(animation=>animation.cancel());bookMotion=[];}
+  }
+  // The room takes the colour of the open spread: its own artwork, or else the cover's palette.
+  function rgbToHsl(r,g,b){
+    r/=255;g/=255;b/=255;
+    const max=Math.max(r,g,b),min=Math.min(r,g,b),l=(max+min)/2,d=max-min;
+    if(!d)return[0,0,l];
+    const h=max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;
+    return[h*60,d/(1-Math.abs(2*l-1)),l];
+  }
+  function sampleTones(media){
+    try{
+      const size=24,canvas=document.createElement('canvas');canvas.width=canvas.height=size;
+      const context=canvas.getContext('2d',{willReadFrequently:true});
+      context.drawImage(media,0,0,size,size);
+      const data=context.getImageData(0,0,size,size).data,buckets=new Map();
+      for(let i=0;i<data.length;i+=4){
+        if(data[i+3]<128)continue;
+        const [h,s,l]=rgbToHsl(data[i],data[i+1],data[i+2]);
+        if(s<.18||l<.12||l>.92)continue;
+        const key=Math.floor(h/30),weight=s*(1-Math.abs(l-.5)),angle=h*Math.PI/180;
+        const bucket=buckets.get(key)||{x:0,y:0,s:0,l:0,weight:0};
+        bucket.x+=Math.cos(angle)*weight;bucket.y+=Math.sin(angle)*weight;bucket.s+=s*weight;bucket.l+=l*weight;bucket.weight+=weight;
+        buckets.set(key,bucket);
+      }
+      const ranked=[...buckets.values()].sort((a,b)=>b.weight-a.weight);
+      return ranked.filter(bucket=>bucket.weight>ranked[0].weight*.1).map(bucket=>[(Math.atan2(bucket.y,bucket.x)*180/Math.PI+360)%360,bucket.s/bucket.weight,bucket.l/bucket.weight]);
+    }catch{return[];}
+  }
+  function updateBookTones(){
+    const book=content.querySelector('.illustration-book');if(!book)return;
+    const ready=media=>media.tagName==='IMG'?media.complete&&media.naturalWidth>0:media.readyState>=2;
+    const spreads=[...book.querySelectorAll('.book-spread')];
+    const hex=/^#?([0-9a-f]{6})$/i.exec(bookBase.trim()),value=hex?parseInt(hex[1],16):0x2a2a2a;
+    const cover=book.querySelector('.book-artwork :is(img,video)');
+    let palette=cover&&ready(cover)?sampleTones(cover):[];
+    if(cover&&!ready(cover))cover.addEventListener(cover.tagName==='IMG'?'load':'loadeddata',()=>{if(cover.isConnected){updateBookTones();renderBookDots();paintBookTone();}},{once:true});
+    if(!palette.length)palette=[rgbToHsl(value>>16,value>>8&255,value&255)];
+    const tones=spreads.map((spread,i)=>{
+      const own=[...spread.querySelectorAll('img,video')].find(ready);
+      // Fewer colours than spreads: walk the palette again a little further round the wheel.
+      const [h,s,l]=(own&&sampleTones(own)[0])||palette[i%palette.length].map((part,channel)=>channel?part:(part+Math.floor(i/palette.length)*38)%360);
+      return[h,s<.1?s:Math.min(.78,Math.max(.34,s)),Math.min(.68,Math.max(.46,l))];
+    });
+    bookTones=bookUnits.map(unit=>tones[spreads.indexOf(unit.closest('.book-spread'))]||tones[0]);
+  }
+  const toneColor=tone=>tone?`hsl(${tone[0].toFixed(1)} ${(tone[1]*100).toFixed(1)}% ${(tone[2]*100).toFixed(1)}%)`:'#2a2a2a';
+  function renderBookDots(){
+    dialog.querySelector('.book-dots').replaceChildren(...bookUnits.map((unit,i)=>{
+      const dot=document.createElement('button');dot.type='button';dot.className='book-dot';dot.dataset.index=i;
+      dot.setAttribute('aria-label',`${i+1}번째 책장으로`);dot.style.setProperty('--dot-tone',toneColor(bookTones[i]));
+      return dot;
+    }));
+  }
+  function paintBookTone(){
+    dialog.style.setProperty('--book-tone',toneColor(bookTones[bookIndex]));
+    dialog.querySelectorAll('.book-dot').forEach((dot,i)=>{
+      dot.classList.toggle('is-current',i===bookIndex);
+      if(i===bookIndex)dot.setAttribute('aria-current','true');else dot.removeAttribute('aria-current');
+    });
   }
   function updateBookStack(){
     const book=content.querySelector('.illustration-book');if(!book)return;
@@ -208,6 +276,7 @@
     dialog.querySelector('.book-prev').disabled=bookIndex===0;
     dialog.querySelector('.book-next').disabled=bookIndex===bookUnits.length-1;
     if(document.activeElement?.matches('.book-pagination button:disabled'))content.focus({preventScroll:true});
+    paintBookTone();
     syncBookVideos();
     updateBookStack();
     scheduleBookFit();
@@ -220,6 +289,7 @@
     book.querySelectorAll('.book-spread,.book-leaf').forEach(el=>{el.hidden=false;el.inert=false;});
     bookUnits=[...book.querySelectorAll(bookMobile.matches?'.book-leaf':'.book-spread')];
     const preserved=folio?bookUnits.findIndex(unit=>[...unit.querySelectorAll('.book-folio')].some(el=>el.textContent===folio)):-1;
+    updateBookTones();renderBookDots();
     showBookPage(Math.max(0,preserved));
   }
   // Freeze the actual page, including a playing cover video, for both sides of the moving paper.
@@ -263,6 +333,8 @@
     // Lay out and fit the incoming page before it is copied; it must not jump at the end of the turn.
     target.hidden=false;target.classList.add('book-measuring');fitBookPages();
     const backCopy=copyBookLeaf(back,width,height);
+    // The paper turns bare; its captions arrive once the spread has settled.
+    backCopy.querySelectorAll(bookCaptions).forEach(caption=>{caption.style.opacity='0';});
     target.classList.remove('book-measuring');
     showBookPage(nextIndex);
     const layer=document.createElement('div');layer.className='book-turn-layer';layer.setAttribute('aria-hidden','true');layer.inert=true;
@@ -283,6 +355,14 @@
     book.append(layer);dialog.classList.add('is-turning');
     const faceWidth=stripWidth+overlap*2;
     const state={layer,frame:0,started:performance.now(),duration:960};bookTurn=state;
+    // The whole book leans into the turn and settles as the leaf lands, within the turn's own time.
+    bookMotion.push(book.animate([{transform:'none'},{transform:`rotateY(${-direction*2.2}deg) rotateX(1deg) scale(.982)`,offset:.4},{transform:`rotateY(${direction*.45}deg) scale(1.004)`,offset:.88},{transform:'none'}],{duration:state.duration,easing:'cubic-bezier(.3,0,.2,1)'}));
+    const revealed=mobile?target:target.children[direction>0?1:0];
+    for(const [leaf,delay] of [[revealed,state.duration*.62],[mobile?null:back,state.duration]]){
+      leaf?.querySelectorAll(bookCaptions).forEach((caption,i)=>{
+        bookMotion.push(caption.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:280,delay:delay+Math.min(i,3)*35,easing:'cubic-bezier(.2,.7,.2,1)',fill:'backwards'}));
+      });
+    }
     function draw(now){
       if(bookTurn!==state)return;
       const t=Math.min(1,(now-state.started)/state.duration);
@@ -301,7 +381,7 @@
       }
       shadow.style.opacity=(shade*.3).toFixed(3);
       shadow.style.transform=`translateX(-50%) scaleX(${.6+shade*1.5})`;
-      if(t<1)state.frame=requestAnimationFrame(draw);else cancelBookTurn();
+      if(t<1)state.frame=requestAnimationFrame(draw);else cancelBookTurn(true);
     }
     draw(state.started);
   }
@@ -385,6 +465,7 @@
       if(media&&slot){const copy=media.cloneNode(true);copy.removeAttribute('aria-hidden');if(copy.tagName==='IMG')copy.alt=article.querySelector('h1').textContent+' 표지';else{copy.muted=true;copy.playsInline=true;copy.loop=true;}
         slot.replaceChildren(copy);slot.classList.add('book-artwork');slot.style.background=getComputedStyle(shelfCover).background;
       }
+      bookBase=shelfCover?.closest('.ib-item')?.style.getPropertyValue('--book-color')||'';
     }
     const isFolio=page.mode==='VISUAL';
     for(const variable of ['--be-tone','--be-ink']){
@@ -394,6 +475,7 @@
     dialog.classList.toggle('is-folio',isFolio);
     dialog.querySelector('.folio-toolbar').hidden=!isFolio;
     dialog.classList.toggle('is-book', isBook);
+    if(!isBook)dialog.style.removeProperty('--book-tone');
     dialog.setAttribute('aria-labelledby',isBook?'pw-book-title':'pw-project-title');
     dialog.querySelector('.pw-toolbar').hidden = isBook || isFolio;
     dialog.querySelector('.book-toolbar').hidden = !isBook;
