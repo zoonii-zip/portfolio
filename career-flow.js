@@ -1,5 +1,5 @@
 /* Career as a scroll through time: the newest era first, back to where it started.
-   Everything shown is read from career-data.js; nothing here adds a fact of its own. */
+   Every record shown is read from career-data.js; nothing here adds a fact of its own. */
 (() => {
   'use strict';
 
@@ -78,20 +78,28 @@
     const title = work.path ? `<a href="${escape(work.path)}">${escape(work.title)}</a>` : escape(work.title);
     return `<li class="work" data-category="${escape(work.category)}"${extra ? ' data-extra hidden' : ''}><span class="work-title">${title}${work.role ? `<span class="work-role">${escape(work.role)}</span>` : ''}</span><time>${escape(work.period)}</time></li>`;
   }
+  // One upright word, squeezed to fill its column exactly. The first reads upward, the second downward.
+  function cutout(word, side, id, file) {
+    const turn = side ? 'translate(0 5) rotate(90)' : 'translate(100 235) rotate(-90)';
+    const image = file ? `<image href="/assets/illustration-covers/${file}" width="100" height="240" preserveAspectRatio="xMidYMid slice"/>` : '';
+    return `<svg class="cut" viewBox="0 0 100 240" focusable="false"><defs><clipPath id="${id}"><text transform="${turn}" font-size="136" font-weight="900" textLength="230" lengthAdjust="spacingAndGlyphs">${word}</text></clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${side ? '#ffb41f' : '#ff4a1c'}"/><stop offset="1" stop-color="${side ? '#ff4a1c' : '#ffb41f'}"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="100" height="240" fill="url(#${id}-ink)"/>${image}</g></svg>`;
+  }
   function chapter(era, prefix) {
     const id = `${prefix}era-${era.index}`;
     const printed = era.works.filter(work => COVERS[work.path]).slice(0, 4);
     const listed = era.works.filter(work => !printed.includes(work));
-    const years = `${era.from}${era.to > era.from ? `<span>–${String(era.to).slice(2)}</span>` : ''}${era.open ? '<i>now</i>' : ''}`;
+    // The two ends of the era stand as cut-out type: each word is a window onto that period's work.
+    const words = [String(era.from), era.open ? 'NOW' : String(era.to)];
+    const poster = words.map((word, side) => cutout(word, side, `${id}-cut-${side}`, COVERS[(printed[side] || printed[0])?.path]?.[0])).join('');
     const fields = FIELDS.map(([key, label]) => `<li${era.fields.has(key) ? ' class="is-on"' : ''} data-field-mark="${key}">${escape(label)}</li>`).join('');
     const prints = printed.length ? `<div class="era-prints" data-count="${printed.length}">${printed.map(work => {
       const [file, width, height] = COVERS[work.path];
       return `<div class="era-print reveal${width / height > 1.6 ? ' is-wide' : ''}"><figure><a href="${escape(work.path)}" aria-label="${escape(work.title)} 작업 기록 보기"><img src="/assets/illustration-covers/${file}" alt="${escape(work.title)} — ${escape(work.role)}" width="${width}" height="${height}" loading="lazy" decoding="async"></a><figcaption><span>${escape(work.title)}</span><time>${escape(work.period)}</time></figcaption></figure></div>`;
     }).join('')}</div>` : '';
     const rest = listed.length - VISIBLE >= 3 ? listed.length - VISIBLE : 0;   // folding away one or two rows is not worth a button
-    const works = era.works.length ? `<div class="era-group reveal"><p class="era-label">이 무렵의 작업 <span>${era.works.length}</span></p>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}${listed.length ? `<ul class="era-works" id="${id}-works">${listed.map((work, index) => workRow(work, rest > 0 && index >= VISIBLE)).join('')}</ul>` : ''}${rest > 0 ? `<button type="button" class="era-more" aria-expanded="false" aria-controls="${id}-works" data-rest="${rest}">나머지 ${rest}개 보기</button>` : ''}</div>` : '';
-    const notes = era.notes.length ? `<div class="era-group reveal"><p class="era-label">같은 시기</p><ul class="era-notes">${era.notes.map(item => `<li class="era-note"><b>${escape(item.kind)}</b><span>${escape(item.title)}${item.detail ? `<em>${escape(item.detail)}</em>` : ''}</span><time>${escape(item.period)}</time></li>`).join('')}</ul></div>` : '';
-    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><div class="era-side"><p class="era-years" aria-hidden="true">${years}</p><div class="era-head"><time class="era-period">${escape(era.period)}</time><h2 class="era-title" id="${id}-title"><span>${escape(era.title)}</span></h2><p class="era-role">${escape(era.role)}</p><ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul></div></div><div class="era-body">${prints}${works}${notes}</div></section>`;
+    const works = era.works.length ? `<div class="era-group reveal"><p class="era-label">내가 만든 것들 <span>${era.works.length}</span></p>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}${listed.length ? `<ul class="era-works" id="${id}-works">${listed.map((work, index) => workRow(work, rest > 0 && index >= VISIBLE)).join('')}</ul>` : ''}${rest > 0 ? `<button type="button" class="era-more" aria-expanded="false" aria-controls="${id}-works" data-rest="${rest}">나머지 ${rest}개 보기</button>` : ''}</div>` : '';
+    const notes = era.notes.length ? `<div class="era-group reveal"><p class="era-label">나를 만든 것들</p><ul class="era-notes">${era.notes.map(item => `<li class="era-note"><b>${escape(item.kind)}</b><span>${escape(item.title)}${item.detail ? `<em>${escape(item.detail)}</em>` : ''}</span><time>${escape(item.period)}</time></li>`).join('')}</ul></div>` : '';
+    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><p class="era-strip" aria-hidden="true">${words.map(word => `<span>${word}</span>`).join('')}</p><div class="era-side"><div class="era-poster" aria-hidden="true">${poster}</div><div class="era-head"><time class="era-period">${escape(era.period)}</time><h2 class="era-title" id="${id}-title"><span>${escape(era.title)}</span></h2><p class="era-role">${escape(era.role)}</p><ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul></div></div><div class="era-body">${prints}${works}${notes}</div></section>`;
   }
 
   function mount(root, scrollport, data) {
@@ -103,11 +111,6 @@
     const rail = Array.from({length: top - bottom + 1}, (_, index) => `<li data-year="${top - index}">${top - index}</li>`).join('');
     story.innerHTML = `<ol class="story-rail" aria-hidden="true">${rail}</ol><div class="story-chapters">${eras.map(era => chapter(era, prefix)).join('')}</div>`;
 
-    const lede = root.querySelector('.flow-lede');
-    if (lede) {
-      const text = data.intro.description, cut = text.indexOf('. ');
-      lede.textContent = cut > 0 ? text.slice(0, cut + 1) : text;
-    }
     const index = root.querySelector(`#${prefix}summary-records`);
     if (index) index.innerHTML = eras.map(era => `<a class="summary-record" href="#${prefix}era-${era.index}"><time>${escape(era.period)}</time><strong>${escape(era.title)}</strong></a>`).join('');
 
