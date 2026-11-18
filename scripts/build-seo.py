@@ -3,6 +3,7 @@
 from pathlib import Path
 import re, json, html
 from asset_versions import version_html
+import project_cases
 ROOT = Path(__file__).resolve().parents[1]
 esc = lambda x: html.escape(str(x), quote=True)
 def js(x): return json.dumps(x, ensure_ascii=False).replace('<', '\\u003c')
@@ -144,13 +145,80 @@ def brand_case_content(key, p):
  <footer class="be-footer"><p class="be-availability">작업 이미지 준비 중</p><a href="/archive/branding/">← Back to archive</a><span>김주연 / Zoonii</span></footer></article>'''
 
 # This pending cover intentionally has no generic sample chapters.
+# Illustration books with their real pages. Every line of text comes from the artist's own
+# project PDF for that work; images are regions of the same PDF under assets/illustration-projects/,
+# listed as (file, alt, width, height). Drawings on white are exported with the white removed so the page shows through.
+# 'cover' is the PDF's own cover page; the book reader swaps it for the shelf cover.
+def book_plate(folder, spec):
+ name,alt,width,height=spec
+ return f'<figure class="case-media book-plate"><img src="/assets/illustration-projects/{folder}/{name}.webp" alt="{esc(alt)}" width="{width}" height="{height}" decoding="async"></figure>'
+story_books={
+ 'illustration0': {'folder':'umbro','cover':('cover-page','2026 Summer T-Shirt Key Visual — Diamond Escape',1200,765),
+  'summary':'엄브로(UMBRO) 2026 여름 시즌 티셔츠 컬렉션의 키비주얼 일러스트레이션 작업입니다. 캐릭터 디자인부터 레터링, 전체 그래픽까지 하나의 무드로 이어지도록 구성했습니다.',
+  'meta':[('CLIENT','UMBRO'),('WORK','Key Visual Illust · Lettering · Character Design'),('ILLUSTRATED BY','JuyeonKim'),('YEAR','2026')],
+  'intro':'UMBRO 2026 여름 시즌 티셔츠 키비주얼 일러스트레이션 협업',
+  'sections':[
+   ('Concept','모든 길은 해변으로 이어지고, 모든 파도는 보물을 품고 있다.',['이번 컬렉션은 \'여름 휴가\'를 하나의 여정처럼 풀어냈습니다.','보물지도를 펼쳐 떠나는 여행에서, 도착한 해변에서의 나른한 하루,','그리고 그 끝에 만나는 진짜 보물까지 — 각 디자인은 여정의 한 장면입니다.'],
+    [('concept-lettering','UMBRO Vacation 레터링',900,420),('cover-page','2026 Summer T-Shirt Key Visual — Diamond Escape',1200,765),('concept-slogan','Every road leads to the shore, every wave holds a treasure',1200,262)]),
+   ('Chapter.1','Diamond Escape',['파도와 바퀴, 그리고 주말.','클래식 카에 서프보드를 싣고, 사막을 가로질러 시작되는 여정'],
+    [('ch1-key','Diamond Escape 키비주얼',900,969),('ch1-source','Diamond Escape — Graphic Source, Lettering',1000,874),('ch1-tees','Diamond Escape 티셔츠',1200,834)]),
+   ('Chapter.2','The Treasure Map',['여정의 시작. 보물지도 위에 표시한 휴식지들.','지도 위 다이아 마크는 내가 찾고 싶은 순간들의 좌표.'],
+    [('ch2-key','The Treasure Map 키비주얼',860,1244),('ch2-source','The Treasure Map — Graphic Source, Lettering',1000,837),('ch2-tees','The Treasure Map 티셔츠',1200,834)]),
+   ('Chapter.3','Diamond on the Coast',['마침내 도착한 휴양지의 전경.','야자수와 파도, 백사장이 펼쳐진 여름의 한복판.','보물같은 풍경을 보는 순간'],
+    [('ch3-key','Diamond on the Coast 키비주얼',900,776),('ch3-source','Diamond on the Coast — Graphic Source, Lettering',1000,877),('ch3-tees','Diamond on the Coast 티셔츠',1200,834)]),
+   ('Chapter.4','Claim The Treasure',['선베드에 몸을 맡기고 시간조차 잊는,','다이아몬드처럼 찬란한 하루.'],
+    [('ch4-key','Claim The Treasure 키비주얼',860,1067),('ch4-source','Claim The Treasure — Graphic Source, Lettering',1000,965),('ch4-tees','Claim The Treasure 티셔츠',1200,834)]),
+   ('Chapter.5','UMBRO',['긴 여행 끝에 얻은 보물상자.','지금까지의 여정이 피어난 엄브로의 로고'],
+    [('ch5-key','UMBRO 키비주얼',1000,899),('ch5-source','UMBRO — Graphic Source, Lettering',1000,905),('ch5-tees','UMBRO 티셔츠',1200,834)]),
+   ('Summer Story','UMBRO × JuyeonKim',['ⓒ UMBRO. All rights reserved.'],
+    [('summer-story','UMBRO Summer Story — Diamond Escape',1200,834),('credits','UMBRO × JuyeonKim — Client UMBRO, Illustrated by JuyeonKim, Year 2026',1000,418)])]},
+ 'illustration1': {'folder':'ottogi','cover':('cover-page','와이로운 독립생활 — Package Key Visual & illustration, Illustrated by Thingthingclub',1200,675),
+  'summary':'독립생활의 하루를 한 채의 집 안에 담았습니다. KT Y와 오뚜기가 함께한 1인 가구 독립생활 응원 프로젝트입니다. 쉬고, 먹고, 청소하고, 잠드는 평범한 하루를 네 개의 방으로 나누고, 각 장면을 캐릭터와 생활 소품으로 구성해 하나의 작은 집으로 연결했습니다.',
+  'meta':[('CLIENT','KT × 오뚜기'),('WORK','Key Visual Illustration · Character Illustration · Package Graphic'),('ILLUSTRATED BY','Thingthingclub'),('YEAR','2025')],
+  'intro':'와이로운 독립생활 — Package Key Visual & illustration',
+  'sections':[
+   ('Concept','혼자 살아도, 나만의 생활은 계속된다.',['독립생활은 거창한 사건보다 작은 루틴으로 만들어집니다.','누군가는 소파에서 쉬고, 누군가는 한 끼를 챙기고,','누군가는 집을 돌보고, 누군가는 침대에서 하루를 마무리합니다.'],
+    [('concept-rooms','4 Routines, 4 Rooms — 펭귄, 다람쥐, 코끼리, 파랑새의 방',1200,342),('cover-page','와이로운 독립생활 — Package Key Visual & illustration, Illustrated by Thingthingclub',1200,675),('concept-banner','4 Routines, 4 Rooms, 1 House — A house full of little routines. 각자의 작은 생활들이 모여 하나의 독립생활이 됩니다.',1000,262)]),
+   ('Key Idea','각자의 삶이 있는 하나의 공간',['각각의 일상 장면을 독립된 컷으로','보여주는 데서 끝내지 않고,','실제 패키지 형태와 연결되는','‘집’의 구조로 통합했습니다.'],
+    [('idea-top','펭귄 — 소파에서 보내는 나만의 시간, 다람쥐 — 혼자여도 입안가득 챙기는 한 끼',1000,608),('idea-bottom','코끼리 — 나의 공간을 직접 돌보는 생활, 파랑새 — 가장 편안한 방식으로 끝내는 하루',1000,589)]),
+   ('Early Sketch','From scenes to structure',['01 SCENE 4개의 생활 공간','02 HOUSE 하나의 집으로 통합','03 PACKAGE 실물 전개 구조에 적용'],
+    [('sketch-scene','01 SCENE 4개의 생활 공간 스케치',900,1040),('sketch-house','02 HOUSE 하나의 집으로 통합 스케치',900,1060),('sketch-package','03 PACKAGE 실물 전개 구조에 적용 스케치',900,1039)]),
+   ('Final Illustration','와이로운 독립생활',[],
+    [('final','와이로운 독립생활 Final Illustration',1000,1098)]),
+   ('Package Design','그림 속 집이 실제 패키지가 되도록',['외부에서는 캐릭터들의 독립생활이 보이고,','패키지를 열면 실제 오뚜기 제품이 집 안의 팬트리처럼 나타납니다.'],
+    [('package-closed','와이로운 독립생활 패키지 외부',900,980),('package-open','패키지를 열면 나타나는 오뚜기 제품',900,979)]),
+   ('Package Detail 01','내 이름을 적는 순간, 우리 집이 되는 순간.',['“___의 밥상” 영역에 직접 이름을 적을 수 있도록 패키지 전면에 네임 플레이트를 구성했습니다.'],
+    [('detail1-names','“___의 밥상” 네임 플레이트',800,1002),('detail1-hand','패키지 전면 네임 플레이트에 이름을 적는 모습',1000,988)]),
+   ('Package Detail 02','패키지의 일부가 집의 일부로',['패키지 구조 일부를 활용해 스마트폰을','세워둘 수 있는 오브젝트로 확장했습니다.','그래픽을 보는 경험에서 끝나지 않고','실제 독립생활 속 사용 경험까지 연결합니다.'],
+    [('detail2-window','패키지와 스마트폰을 세워둔 오브젝트',900,1038),('detail2-stand','패키지 구조 일부를 활용한 스마트폰 오브젝트',900,1040)]),
+   ('Package Detail 03','집 안을 채우는 1인 가구의 한 끼.',['밥, 소스, 참치, 케첩 등 실제 생활에서 쉽게 사용할 수 있는 제품이','패키지 컨셉 속에서 하나의 ‘팬트리’처럼 구성됩니다.','PACK + PRODUCTS','제품을 단순히 담는 상자가 아닌 독립생활의 장면을 경험하는 패키지로'],
+    [('detail3-house','와이로운 독립생활 패키지',800,904),('detail3-products','PACK + PRODUCTS — 패키지에 담긴 오뚜기 제품',1000,850)]),
+   ('오뚜기 공식 홈페이지','뉴스룸에 소개된 와이로운 독립생활 캠페인',['KT와 오뚜기가 2034세대 1인 가구를 응원하는','캠페인을 진행하며, 오뚜기 공식 홈페이지 뉴스룸에서','Y 아티스트‘띵띵클럽’의 패키지 디자인 협업을 소개했습니다.','출처 : otoki.com / PR / Newsroom'],
+    [('newsroom','오뚜기 공식 홈페이지 뉴스룸 기사',720,1312)]),
+   ('KT Y × OTTOGI','와이로운 독립생활',['Package Key Visual & Illustration'],
+    [('instagram','yspotlight 인스타그램 와이로운 독립생활 게시물',900,959),('closing','와이로운 독립생활 — KT Y × OTTOGI, Package Key Visual & Illustration',1000,845)])]},
+}
+def story_book_content(key, p):
+ book=story_books[key]
+ slug,label=labels[p['mode']]
+ meta=''.join(f'<div><dt>{esc(term)}</dt><dd>{esc(value)}</dd></div>' for term,value in book['meta'])
+ sections=''
+ for eyebrow,title,copy,media in book['sections']:
+  grid=''.join(book_plate(book['folder'],item) for item in media)
+  sections+=f'<section class="case-section"><div class="case-section-heading"><span>{esc(eyebrow)}</span><h2>{esc(title)}</h2>{"<p>"+"<br>".join(esc(line) for line in copy)+"</p>" if copy else ""}</div><div class="case-grid case-grid-{len(media)}">{grid}</div></section>'
+ return f'''<article class="project-case case-story">
+ <header class="case-header"><div class="case-eyebrow"><a href="/archive/{slug}/">← Archive</a><span>ILLUSTRATION / SELECTED WORK</span></div><h1>{esc(p['name'])}</h1><p class="case-summary">{esc(book['summary'])}</p><dl class="case-meta">{meta}</dl></header>
+ <figure class="case-media case-cover" style="--media-ratio:{book['cover'][2]} / {book['cover'][3]}"><img src="/assets/illustration-projects/{book['folder']}/{book['cover'][0]}.webp" alt="{esc(book['cover'][1])}" width="{book['cover'][2]}" height="{book['cover'][3]}" decoding="async"></figure>
+ <div class="case-intro"><span>ABOUT THE PROJECT</span><h2>{esc(book['intro'])}</h2></div>
+ {sections}<footer class="case-footer"><span>THANK YOU FOR WATCHING</span><a href="/archive/{slug}/">← Back to ILLUSTRATION</a><small>김주연 / Zoonii</small></footer></article>'''
 pending_content={'illustration5':'<article class="project-case case-story"><header class="case-header"><div class="case-eyebrow"><a href="/archive/illustration/">← Archive</a><span>ILLUSTRATION</span></div><h1>KT Y × 서일페</h1><p class="case-summary">프로젝트 상세 내용을 준비 중입니다.</p></header><figure class="case-media" style="--media-ratio:4 / 5"><div><figcaption>KT Y × 서일페</figcaption><small>표지 · 상세 준비 중</small></div></figure></article>'}
 for key,p in projects.items():
  path='/projects/'+key+'/'
- desc=p['name']+' — '+p.get('description',p['role'])+'. Zoonii의 '+labels[p['mode']][1]+' 프로젝트. 상세 준비 중입니다.'
+ desc=p['name']+' — '+p.get('description',p['role'])+'. Zoonii의 '+labels[p['mode']][1]+' 프로젝트.'+('' if key in story_books else ' 상세 준비 중입니다.')
  work={'@type':'CreativeWork','@id':origin+path+'#work','name':p['name'],'url':origin+path,'creator':{'@id':person['@id']},'description':p.get('description',p['role']),'genre':labels[p['mode']][1]}
- content=brand_case_content(key,p) if p['mode']=='VISUAL' else pending_content[key] if key in pending_content else case_content(p)
+ content=brand_case_content(key,p) if p['mode']=='VISUAL' else pending_content[key] if key in pending_content else story_book_content(key,p) if key in story_books else case_content(p)
  content=re.sub(r'(?m)^[ \t]+$', '', content)
+ content=project_cases.apply(key,content)
  add(path,p['name']+' — Zoonii',desc,content,'project',index=False,mode=p['mode'],work=work)
 # Hooks notify only after the existing UI actually changes, including keyboard navigation.
 if '/* SEO bridge */' not in data_source:

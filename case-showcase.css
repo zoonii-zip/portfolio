@@ -1,0 +1,26 @@
+/* Real project material inside the shared case layout: measured colours, type and element plates,
+   then the result. Sits in the same two columns as .case-section-heading. */
+.project-case .case-kit{display:grid;gap:clamp(40px,6vw,72px)}
+.project-case .kit-block{display:grid;grid-template-columns:1fr 2fr;gap:16px 50px;align-items:start}
+.project-case .kit-block>h3{margin:0;padding-top:6px;font:11px/1.6 monospace;letter-spacing:.07em}
+.project-case .kit-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:22px 14px;margin:0;padding:0;list-style:none}
+.project-case .kit-swatches li{display:grid;gap:10px;font:11px/1.4 monospace;letter-spacing:.04em}
+.project-case .kit-swatches li::before{content:'';aspect-ratio:1;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px #0000001f}
+.project-case .kit-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;min-width:0}
+.project-case .kit-plate{margin:0;min-width:0}
+.project-case .kit-plate.is-wide{grid-column:1 / -1}
+/* Each plate is cut from the delivered page, so the box takes that page's own background. */
+.project-case .kit-plate>div{position:relative;aspect-ratio:var(--plate-ratio,3 / 2);background:var(--plate,#e9e9e3)}
+.project-case .kit-plate img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain}
+.project-case .kit-plate figcaption{margin-top:10px;font:11px/1.6 monospace;letter-spacing:.04em;color:#65655e}
+.project-case .case-result{padding-top:clamp(70px,9vw,120px)}
+.project-case .case-result .device{margin-top:clamp(8px,2vw,24px)}
+@media(max-width:700px){
+ .project-case .kit-block{grid-template-columns:1fr;gap:14px}
+ .project-case .kit-block>h3{padding-top:0}
+ .project-case .kit-swatches{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:18px 10px}
+ .project-case .kit-swatches li{font-size:10px}
+ .project-case .kit-plates{grid-template-columns:1fr;gap:12px}
+ .project-case .kit-plate img{inset:5%;width:90%;height:90%}
+ .project-case .case-result{padding-top:56px}
+}
