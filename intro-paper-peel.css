@@ -1,0 +1,11 @@
+/* Intro → fidget board paper peel. Only applies once intro-paper-peel.js has added .zz-peel. */
+html.zz-peel #zz-logo-entry,html.zz-peel #zz-fullscreen{scroll-snap-align:none}
+/* While the sheet moves, both sections hold still in the viewport: the intro above, the board beneath. */
+html.zz-peel #zz-logo-entry{position:sticky;top:0;z-index:40}
+html.zz-peel #zz-fullscreen{position:sticky;bottom:0}
+/* At rest the hidden section returns to its ordinary place, so observers and scrollIntoView behave as before. */
+html.zz-peel.zz-peel-open #zz-logo-entry{position:relative;z-index:auto;visibility:hidden}
+html.zz-peel.zz-peel-closed #zz-fullscreen{position:relative}
+#zz-peel-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:41;pointer-events:none}
+.zz-peel-snap{position:absolute;left:0;width:1px;height:100svh;pointer-events:none;scroll-snap-align:start;scroll-snap-stop:always}
+html:is(.viewing-space,.zz-text-view) :is(#zz-peel-canvas,.zz-peel-snap){display:none}
