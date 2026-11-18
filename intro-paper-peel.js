@@ -10,7 +10,8 @@
   // Settings
   const TRAIL = 0.22;   // how far the hem trails behind the top while moving, in screen heights
   const DIM = 0.42;     // how dark the board is while the sheet still covers most of it
-  const FOLLOW = 0.14;  // seconds the sheet takes to catch up with the scroll: its weight
+  const FOLLOW = 0.07;  // seconds the sheet takes to catch up with the scroll: its weight
+  const PACE = 2.6;     // the slowest the sheet travels, in screens per second, so it never lingers at the end
   const STEP = 4;       // height of one drawn strip, in px
 
   const root = document.documentElement;
@@ -128,8 +129,9 @@
     const target = progress(), step = last ? Math.min(.1, (now - last) / 1000) : 1 / 60;
     last = now;
     if (Math.abs(target - shown) > 1e-4) heading = Math.sign(target - shown);
-    shown += (target - shown) * (1 - Math.exp(-step / FOLLOW));
-    if (Math.abs(target - shown) < .0015) shown = target;
+    const gap = Math.abs(target - shown);
+    shown += Math.sign(target - shown) * Math.min(gap, Math.max(gap * (1 - Math.exp(-step / FOLLOW)), PACE * step));
+    if (Math.abs(target - shown) < 1e-4) shown = target;
     // The hem follows the direction of travel, turning over gently when the scroll reverses.
     lean += (heading - lean) * (1 - Math.exp(-step / .18));
     settle();
