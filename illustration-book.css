@@ -151,3 +151,16 @@ html.illustration-reader-open,html.illustration-reader-open body{overflow:hidden
  .portfolio-window.is-book .book-scroll-hint{display:none}
  .portfolio-window.is-book .book-artwork{max-height:calc(100dvh - var(--book-controls-space) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px)}
 }
+
+/* Each turn re-tints the room with the open spread's colour; dots carry the colour of every spread. */
+@property --book-tone{syntax:'<color>';inherits:true;initial-value:#141414}
+.portfolio-window.is-book{transition:--book-tone .9s cubic-bezier(.3,0,.2,1)}
+.portfolio-window.is-book::backdrop{background:radial-gradient(120% 85% at 50% 46%,color-mix(in oklab,var(--book-tone) 38%,#090909) 0,color-mix(in oklab,var(--book-tone) 15%,#070707) 58%,#060606 100%)}
+.portfolio-window.is-book .book-page-count{position:absolute;width:1px;height:1px;min-width:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.portfolio-window.is-book .book-dots{display:flex;align-items:center;justify-content:center;min-width:0}
+.portfolio-window.is-book .book-pagination .book-dot{position:relative;flex:0 1 28px;width:28px;height:44px;padding:0;background:transparent}
+.portfolio-window.is-book .book-dot::before{content:'';position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--dot-tone);box-shadow:0 0 0 1px #ffffff2b;opacity:.5;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.portfolio-window.is-book .book-dot:hover::before{opacity:.9}
+.portfolio-window.is-book .book-dot.is-current::before{opacity:1;transform:scale(2.1)}
+@media(max-width:700px){.portfolio-window.is-book .book-pagination .book-dot{flex-basis:22px;width:22px}}
+@media(prefers-reduced-motion:reduce){.portfolio-window.is-book,.portfolio-window.is-book .book-dot::before{transition:none}}
