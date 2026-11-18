@@ -1,0 +1,10 @@
+/* Music on/off, a paper control immediately left of Menu. site-music.js sets its top and right. */
+:root body #zz-music-toggle{--paper-tilt:3deg;position:fixed;display:flex;align-items:center;justify-content:center;width:48px;height:48px;padding:12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:root body #zz-music-toggle[hidden]{display:none}
+#zz-music-toggle svg{flex:none;width:22px;height:22px}
+#zz-music-toggle[aria-pressed="true"] .mute{display:none}
+#zz-music-toggle[aria-pressed="false"] .note{opacity:.45}
+#zz-music-toggle.is-playing svg{animation:zz-music-bob .476s ease-in-out infinite alternate}
+#zz-music-toggle:focus-visible{outline:2px solid #3b82f6;outline-offset:5px}
+@keyframes zz-music-bob{to{transform:translateY(-2px) rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){#zz-music-toggle.is-playing svg{animation:none}}
