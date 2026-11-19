@@ -84,7 +84,8 @@
     return eras;
   }
 
-  // One upright word, squeezed to fill its column exactly. The first reads upward, the second downward.
+  // One upright word in Anton, fitted to its column: at 115.6 the figures are exactly 100 units tall and "2024" runs 228.
+  // The first word reads upward, the second downward.
   function cutout(word, side, id, name, lines) {
     const turn = side ? 'translate(0 4) rotate(90)' : 'translate(100 236) rotate(-90)';
     let fill = '';
@@ -93,7 +94,7 @@
       const rows = Array.from({length: 30}, (_, row) => `<text x="${row % 2 ? -8 : -2}" y="${7 + row * 8}" font-size="6.6" font-weight="800" fill="#15130f" fill-opacity=".62">${escape(Array.from({length: 4}, (_, i) => lines[(row * 3 + side * 5 + i) % lines.length]).join('  '))}</text>`).join('');
       fill = `<g>${rows}</g>`;
     }
-    return `<svg class="cut" viewBox="0 0 100 240" focusable="false"><defs><clipPath id="${id}"><text transform="${turn}" font-size="136" font-weight="900" textLength="232" lengthAdjust="spacingAndGlyphs">${word}</text></clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${side ? '#ffb41f' : '#ff4a1c'}"/><stop offset="1" stop-color="${side ? '#ff4a1c' : '#ffb41f'}"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="100" height="240" fill="url(#${id}-ink)"/>${fill}</g></svg>`;
+    return `<svg class="cut" viewBox="0 0 100 240" focusable="false"><defs><clipPath id="${id}"><text transform="${turn}" font-size="115.6" textLength="232" lengthAdjust="spacingAndGlyphs">${word}</text></clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${side ? '#ffb41f' : '#ff4a1c'}"/><stop offset="1" stop-color="${side ? '#ff4a1c' : '#ffb41f'}"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="100" height="240" fill="url(#${id}-ink)"/>${fill}</g></svg>`;
   }
   function plates(era) {
     const picked = [];
