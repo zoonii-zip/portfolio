@@ -1,26 +1,22 @@
 /* Career as a poster you scroll through: the newest era first, back to where it started.
-   Type is cut out as windows onto the work. Every record shown is read from career-data.js;
-   nothing here adds a fact of its own. */
+   Each sheet is two upright words in Anton, cut out as one window onto one picture, on black.
+   Every record shown is read from career-data.js; nothing here adds a fact of its own. */
 (() => {
   'use strict';
 
   // Settings
-  const MID_YEAR = 6;       // a record dated only by year is placed in the middle of that year
-  const PLATES_MAX = 4;     // full-colour images shown per era
-  const LONG_WALL = 16;     // an era with more works than this sets its names smaller
-  // Archive pages with real images. `cut` names the duotone crops in /assets/career-cutout/ that fill the type;
-  // `plates` are the full-colour images: [path under /assets/, width, height].
-  const WORK = {
-    '/projects/tongkeun/': {cut: ['tongkeun'], plates: [['illustration-covers/tongkeun-cover.webp', 855, 1200]]},
-    '/projects/illustration0/': {cut: ['umbro', 'umbro2'], plates: [['illustration-covers/umbro-poster.webp', 960, 1280], ['illustration-projects/umbro/ch1-key.webp', 900, 969], ['illustration-projects/umbro/ch3-key.webp', 900, 776]]},
-    '/projects/illustration1/': {cut: ['ottogi'], plates: [['illustration-covers/kty-ottogi-cover.webp', 960, 1200]]},
-    '/projects/illustration2/': {cut: ['konai'], plates: [['illustration-covers/konai-cover.webp', 900, 1200]]},
-    '/projects/illustration3/': {cut: ['unesco'], plates: [['illustration-covers/unesco-cover.webp', 1200, 1200]]},
-    '/projects/illustration4/': {cut: ['ok'], plates: [['illustration-covers/ok-savings-cover.webp', 960, 1200]]},
-    '/projects/illustration5/': {cut: ['sif'], plates: [['illustration-covers/kty-sif-cover.webp', 1200, 480]]},
-    '/projects/uiux4/': {cut: ['luck', 'luck2'], plates: [['web-projects/luck/page-01.webp', 1440, 1308], ['web-projects/luck/element-tokenomics.webp', 1360, 600]]}
-  };
-  const STRIP = ['tongkeun', 'umbro2', 'unesco', 'luck', 'ottogi', 'konai', 'umbro', 'ok', 'luck2', 'sif'];   // passes through the opening line
+  const MID_YEAR = 6;        // a record dated only by year is placed in the middle of that year
+  const TWO_COLUMNS = 12;    // an era with more works than this lists them in two columns
+  const HERO = ['ZOONII', 'CAREER'];
+  // Archive pages with a picture for the type to open onto: file name in /assets/career-cutout/ (scripts/career-cutout.sh).
+  const CUT = {'/projects/tongkeun/': 'tongkeun', '/projects/illustration0/': 'umbro', '/projects/illustration1/': 'ottogi', '/projects/illustration2/': 'konai', '/projects/illustration3/': 'unesco', '/projects/illustration4/': 'ok', '/projects/illustration5/': 'sif', '/projects/uiux4/': 'luck'};
+  // Anton's own measurements, per 1000 units of type size: how far each glyph advances, how tall it stands,
+  // and the blank it carries at each end of a word.
+  const ADVANCE = {0: 494, 1: 331, 2: 494, 3: 494, 4: 494, 5: 494, 6: 494, 7: 494, 8: 494, 9: 494, A: 485, C: 474, E: 412, I: 227, N: 498, O: 486, R: 477, W: 712, Z: 410};
+  const TALL = 868, BEARING = 30;
+  const SHEET = 1000;        // every sheet is drawn this tall; its width follows from the two words
+  const GAP = 14;            // black between the two words
+  const BLEED = 40;          // the picture runs this far past the sheet so it can drift without showing an edge
   const FIELDS = [['uiux', 'Digital'], ['branding', 'Brand & Print'], ['illustration', 'Illustration'], ['teaching', 'Teaching']];
   const KINDS = ['학업', '강의', '전시', '수상·자격'];
 
@@ -33,7 +29,7 @@
     const eras = data.employment.map((item, index) => {
       const dates = marks(item.period), open = /현재/.test(item.period);
       const from = Math.floor(dates[0] / 100);
-      return {...item, index, start: dates[0], open, from, to: open ? Math.max(from, thisYear) : Math.floor(dates[dates.length - 1] / 100), works: [], notes: [], fields: new Set(), text: '', lines: []};
+      return {...item, index, start: dates[0], open, from, to: open ? Math.max(from, thisYear) : Math.floor(dates[dates.length - 1] / 100), works: [], notes: [], fields: new Set(), text: ''};
     });
     const oldest = eras[eras.length - 1];
     const eraAt = key => eras.find(era => era.start <= key);
@@ -77,43 +73,33 @@
     for (const era of eras) {
       era.works.sort((a, b) => b.key - a.key);
       era.notes.sort((a, b) => b.key - a.key);
-      era.cut = era.works.flatMap(work => WORK[work.path]?.cut || []);
-      // An era with no images of its own is filled with the names of what was made in it.
-      if (!era.cut.length) era.lines = era.works.map(work => work.title);
+      // The type opens onto the newest work of the era that has an image; an era without one stays plain ink.
+      era.cut = era.works.map(work => CUT[work.path]).find(Boolean) || '';
     }
     return eras;
   }
 
-  // One upright word in Anton, fitted to its column: at 115.6 the figures are exactly 100 units tall and "2024" runs 228.
-  // The first word reads upward, the second downward.
-  function cutout(word, side, id, name, lines) {
-    const turn = side ? 'translate(0 4) rotate(90)' : 'translate(100 236) rotate(-90)';
-    let fill = '';
-    if (name) fill = `<image href="/assets/career-cutout/${name}.webp" x="-6" y="-14" width="112" height="268" preserveAspectRatio="xMidYMid slice"/>`;
-    else if (lines.length) {
-      const rows = Array.from({length: 30}, (_, row) => `<text x="${row % 2 ? -8 : -2}" y="${7 + row * 8}" font-size="6.6" font-weight="800" fill="#15130f" fill-opacity=".62">${escape(Array.from({length: 4}, (_, i) => lines[(row * 3 + side * 5 + i) % lines.length]).join('  '))}</text>`).join('');
-      fill = `<g>${rows}</g>`;
-    }
-    return `<svg class="cut" viewBox="0 0 100 240" focusable="false"><defs><clipPath id="${id}"><text transform="${turn}" font-size="115.6" textLength="232" lengthAdjust="spacingAndGlyphs">${word}</text></clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${side ? '#ffb41f' : '#ff4a1c'}"/><stop offset="1" stop-color="${side ? '#ff4a1c' : '#ffb41f'}"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="100" height="240" fill="url(#${id}-ink)"/>${fill}</g></svg>`;
+  // Two words set upright, each sized so it runs the full height of the sheet: the shorter word comes out bigger.
+  // The first reads upward and the second downward, feet to the middle, and one picture shows through both.
+  function sheet(words, name, id) {
+    const columns = words.map(word => {
+      const run = [...word].reduce((sum, glyph) => sum + ADVANCE[glyph], 0);
+      const size = SHEET * 1000 / (run - BEARING * 2);
+      return {word, size, width: TALL * size / 1000, run: run * size / 1000, inset: BEARING * size / 1000};
+    });
+    const [up, down] = columns, width = up.width + GAP + down.width;
+    const number = value => Number(value.toFixed(1));
+    const text = (column, turn) => `<text transform="${turn}" font-size="${number(column.size)}" textLength="${number(column.run)}" lengthAdjust="spacingAndGlyphs">${column.word}</text>`;
+    const picture = kind => `<image class="${kind}" x="${-BLEED}" y="${-BLEED}" width="${number(width + BLEED * 2)}" height="${SHEET + BLEED * 2}" preserveAspectRatio="xMidYMid slice"${kind === 'cut-base' && name ? ` data-href="/assets/career-cutout/${name}.webp"` : ''}/>`;
+    return `<svg class="cut" viewBox="0 0 ${number(width)} ${SHEET}" width="${number(width)}" height="${SHEET}" preserveAspectRatio="xMinYMin meet" focusable="false"><defs><clipPath id="${id}">${text(up, `translate(${number(up.width)} ${number(SHEET + up.inset)}) rotate(-90)`)}${text(down, `translate(${number(up.width + GAP)} ${number(-down.inset)}) rotate(90)`)}</clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ee4a1c"/><stop offset="1" stop-color="#ffc233"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="${number(width)}" height="${SHEET}" fill="url(#${id}-ink)"/>${picture('cut-base')}${picture('cut-over')}</g></svg>`;
   }
-  function plates(era) {
-    const picked = [];
-    const withImages = era.works.filter(work => WORK[work.path]);
-    for (const work of withImages) picked.push([work, WORK[work.path].plates[0]]);
-    // A lone project gets its further images rather than leaving the era thin.
-    for (const work of withImages) for (const plate of WORK[work.path].plates.slice(1)) if (picked.length < 3) picked.push([work, plate]);
-    return picked.slice(0, PLATES_MAX);
-  }
+  const row = (work, body) => work.path ? `<a class="work" href="${escape(work.path)}"${CUT[work.path] ? ` data-cut="${CUT[work.path]}"` : ''}>${body}</a>` : `<div class="work">${body}</div>`;
   function chapter(era, prefix) {
     const id = `${prefix}era-${era.index}`;
-    const words = [String(era.from), era.open ? 'NOW' : String(era.to)];
-    const poster = words.map((word, side) => cutout(word, side, `${id}-cut-${side}`, era.cut[side] || era.cut[0], era.lines)).join('');
     const fields = FIELDS.filter(([key]) => era.fields.has(key)).map(([, label]) => `<li>${escape(label)}</li>`).join('');
-    const shown = plates(era);
-    const images = shown.length ? `<div class="era-plates" data-count="${shown.length}">${shown.map(([work, [file, width, height]]) => `<figure class="plate reveal${width / height > 1.5 ? ' is-wide' : ''}"><a href="${escape(work.path)}" aria-label="${escape(work.title)} 작업 기록 보기"><img src="/assets/${file}" alt="${escape(work.title)}${work.role ? ` — ${escape(work.role)}` : ''}" width="${width}" height="${height}" loading="lazy" decoding="async"></a><figcaption><span>${escape(work.title)}</span><time>${escape(work.period)}</time></figcaption></figure>`).join('')}</div>` : '';
-    const wall = era.works.length ? `<section class="era-group reveal" aria-labelledby="${id}-made"><h3 class="era-label" id="${id}-made">내가 만든 것들 <span>${era.works.length}</span></h3>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}<ul class="era-wall${era.works.length > LONG_WALL ? ' is-long' : ''}">${era.works.map(work => `<li>${work.path ? `<a class="wall-item" href="${escape(work.path)}"` : '<span class="wall-item" tabindex="0"'} data-note="${escape([work.role, work.period].filter(Boolean).join('  '))}">${escape(work.title)}${work.path ? '</a>' : '</span>'}</li>`).join('')}</ul><p class="wall-note" aria-live="polite"></p></section>` : '';
+    const works = era.works.length ? `<section class="era-group reveal" aria-labelledby="${id}-made"><h3 class="era-label" id="${id}-made">내가 만든 것들 <span>${era.works.length}</span></h3>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}<ul class="era-works${era.works.length > TWO_COLUMNS ? ' is-long' : ''}">${era.works.map(work => `<li>${row(work, `<span class="work-name">${escape(work.title)}</span>${work.role ? `<span class="work-role">${escape(work.role)}</span>` : ''}<time>${escape(work.period)}</time>`)}</li>`).join('')}</ul></section>` : '';
     const made = era.notes.length ? `<section class="era-group reveal" aria-labelledby="${id}-makers"><h3 class="era-label" id="${id}-makers">나를 만든 것들</h3><dl class="era-made">${KINDS.filter(kind => era.notes.some(item => item.kind === kind)).map(kind => `<div><dt>${escape(kind)}</dt><dd><ul>${era.notes.filter(item => item.kind === kind).map(item => `<li><span>${escape(item.title)}${item.detail ? `<em>${escape(item.detail)}</em>` : ''}</span><time>${escape(item.period)}</time></li>`).join('')}</ul></dd></div>`).join('')}</dl></section>` : '';
-    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><p class="era-strip" aria-hidden="true">${words.map(word => `<span>${word}</span>`).join('')}</p><div class="era-side"><div class="era-poster" aria-hidden="true">${poster}</div><div class="era-head"><time class="era-period">${escape(era.period)}</time><h2 class="era-title" id="${id}-title"><span>${escape(era.title)}</span></h2><p class="era-role">${escape(era.role)}</p>${fields ? `<ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul>` : ''}</div></div><div class="era-body">${images}${wall}${made}</div></section>`;
+    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><div class="era-side"><div class="era-poster" aria-hidden="true">${sheet([String(era.from), era.open ? 'NOW' : String(era.to)], era.cut, `${id}-cut`)}</div></div><div class="era-body"><header class="era-head reveal"><time class="era-period">${escape(era.period)}</time><h2 class="era-title" id="${id}-title">${escape(era.title)}</h2><p class="era-role">${escape(era.role)}</p>${fields ? `<ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul>` : ''}</header>${works}${made}</div></section>`;
   }
 
   function mount(root, scrollport, data) {
@@ -121,41 +107,34 @@
     if (!story || !data) return () => {};
     const prefix = 'annual04-';
     const eras = build(data);
-    const top = eras[0].to, bottom = eras[eras.length - 1].from;
-    const rail = Array.from({length: top - bottom + 1}, (_, index) => `<li data-year="${top - index}">${top - index}</li>`).join('');
-    story.innerHTML = `<ol class="story-rail" aria-hidden="true">${rail}</ol><div class="story-chapters">${eras.map(era => chapter(era, prefix)).join('')}</div>`;
-
-    // The work that passes behind the opening line; doubled so the loop has no seam.
-    const strip = root.querySelector('.knock-strip');
-    if (strip) strip.innerHTML = [...STRIP, ...STRIP].map(name => `<img src="/assets/career-cutout/${name}.webp" alt="" height="520" decoding="async">`).join('');
+    story.innerHTML = eras.map(era => chapter(era, prefix)).join('');
+    const opening = root.querySelector('.flow-poster');
+    if (opening) opening.innerHTML = sheet(HERO, 'me', `${prefix}cut-opening`);
     const index = root.querySelector(`#${prefix}summary-records`);
     if (index) index.innerHTML = eras.map(era => `<a class="summary-record" href="#${prefix}era-${era.index}"><time>${escape(era.period)}</time><strong>${escape(era.title)}</strong></a>`).join('');
 
-    // A name on the wall says what it was when pointed at, focused or tapped.
+    const show = image => { if (image.dataset.href) { image.setAttribute('href', image.dataset.href); delete image.dataset.href; } };
+    // Pointing at a work that has a picture turns the era's type into a window onto that work.
     const controller = new AbortController();
-    const describe = event => {
-      const item = event.target.closest?.('.wall-item');
-      if (!item) return;
-      const note = item.closest('.era-group').querySelector('.wall-note');
-      for (const other of item.closest('.era-wall').querySelectorAll('.is-shown')) other.classList.remove('is-shown');
-      item.classList.add('is-shown');
-      note.textContent = item.dataset.note;
+    const look = on => event => {
+      const work = event.target.closest?.('.work[data-cut]');
+      const over = work?.closest('.era').querySelector('.cut-over');
+      if (!over) return;
+      if (on) over.setAttribute('href', `/assets/career-cutout/${work.dataset.cut}.webp`);
+      over.classList.toggle('is-on', on);
     };
-    for (const type of ['pointerover', 'focusin', 'click']) story.addEventListener(type, describe, {signal: controller.signal});
+    for (const type of ['pointerover', 'focusin']) story.addEventListener(type, look(true), {signal: controller.signal});
+    for (const type of ['pointerout', 'focusout']) story.addEventListener(type, look(false), {signal: controller.signal});
 
     const observers = [];
+    const pictures = [...root.querySelectorAll('.cut-base[data-href]')];
     if ('IntersectionObserver' in window) {
-      const years = [...story.querySelectorAll('.story-rail li')];
-      // The era crossing the middle of the screen is the one the year rail marks.
-      const band = new IntersectionObserver(entries => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const era = eras[Number(entry.target.dataset.era)];
-          for (const year of years) year.classList.toggle('is-on', year.dataset.year >= era.from && year.dataset.year <= era.to);
-        }
-      }, {root: scrollport, rootMargin: '-45% 0px -45% 0px'});
-      for (const section of story.querySelectorAll('.era')) band.observe(section);
-      observers.push(band);
+      // A sheet's picture is fetched as the sheet comes near, not all eight at once.
+      const near = new IntersectionObserver(entries => {
+        for (const entry of entries) if (entry.isIntersecting) { show(entry.target.querySelector('.cut-base')); near.unobserve(entry.target); }
+      }, {root: scrollport, rootMargin: '80% 0px'});
+      for (const picture of pictures) near.observe(picture.ownerSVGElement);
+      observers.push(near);
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         root.classList.add('flow-anim');
         const seen = new IntersectionObserver(entries => {
@@ -164,7 +143,7 @@
         for (const element of story.querySelectorAll('.reveal')) seen.observe(element);
         observers.push(seen);
       }
-    }
+    } else pictures.forEach(show);
     return () => {
       controller.abort();
       for (const observer of observers) observer.disconnect();
