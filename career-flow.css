@@ -1,144 +1,119 @@
 /* Career as a poster you scroll through. Loaded after career-services.css; only applies to .career-flow.
-   One theme for the whole page: off-black, off-white, one hot orange. Sharp corners throughout. */
-html:has(#zz-overlay.open .career-flow){--chrome-paper:#15130f;--chrome-ink:#f4f0e6;--chrome-accent:#ff4a1c;--zz-scroll-thumb:#f4f0e640}
-#zz-fullscreen #zz-overlay.overlay:has(.career-flow){background:#15130f;color:#f4f0e6}
-#zz-fullscreen #zz-body .career-annual04.career-flow{--paper:#15130f;--ink:#f4f0e6;--muted:#9a9485;--hot:#ff4a1c;--warm:#ffb41f;--red:var(--hot);--blue:var(--warm);background:var(--paper);color:var(--ink)}
+   Black sheet, type cut out onto one picture in orange and yellow, and nothing else in colour. Sharp corners throughout. */
+html:has(#zz-overlay.open .career-flow){--chrome-paper:#121110;--chrome-ink:#f4f0e6;--chrome-accent:#ff5a1f;--zz-scroll-thumb:#f4f0e640}
+#zz-fullscreen #zz-overlay.overlay:has(.career-flow){background:#121110;color:#f4f0e6}
+#zz-fullscreen #zz-body .career-annual04.career-flow{--paper:#121110;--ink:#f4f0e6;--muted:#989284;--hot:#ff5a1f;--warm:#ffc233;--red:var(--hot);--blue:var(--warm);--side:min(40%,540px);--between:clamp(36px,6vw,112px);background:var(--paper);color:var(--ink)}
 #zz-fullscreen #zz-body .career-annual04.career-flow::before{background:var(--paper)}
 #zz-fullscreen #zz-body .career-annual04.career-flow::after{display:none}
-#zz-fullscreen #zz-body .career-annual04.career-flow ::selection{background:var(--hot);color:var(--paper)}
+#zz-fullscreen #zz-body .career-annual04.career-flow ::selection{background:var(--warm);color:var(--paper)}
+#zz-fullscreen #zz-body .career-annual04.career-flow :is(a,button,input):focus-visible{outline:2px solid var(--warm);outline-offset:4px}
 
-/* Opening: the line itself is cut out, and the work passes behind it. */
-#zz-fullscreen #zz-body .career-annual04.career-flow .page-head{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:clamp(20px,3.4vh,40px);min-height:calc(100dvh - var(--annual04-top) - 128px - var(--safe-bottom,0px));padding:clamp(4px,1.4vh,18px) var(--gutter) clamp(28px,5vh,56px)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .flow-intro{min-width:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow h1{display:inline-block;margin:0 0 clamp(6px,1.2vh,14px);font:400 clamp(34px,3vw,48px)/1 A04Hand,cursive;font-family:A04Hand,cursive!important;letter-spacing:0;white-space:nowrap;color:var(--warm);transform:rotate(-5deg);transform-origin:left bottom}
-#zz-fullscreen #zz-body .career-annual04.career-flow .flow-knock{position:relative;isolation:isolate;overflow:hidden;margin-left:-.04em;background:linear-gradient(100deg,var(--hot),var(--warm))}
-#zz-fullscreen #zz-body .career-annual04.career-flow .knock-strip{position:absolute;inset:0 auto 0 0;display:flex;height:100%;animation:career-pan 80s linear infinite}
-#zz-fullscreen #zz-body .career-annual04.career-flow .knock-strip img{flex:none;width:auto;height:100%;object-fit:cover}
-/* Off-black everywhere except the letters: "darken" keeps the darker of this layer and the work behind it. */
-#zz-fullscreen #zz-body .career-annual04.career-flow .flow-lede{position:relative;margin:0;padding:.04em 0 .1em;background:var(--paper);color:#fff;mix-blend-mode:darken;font-size:clamp(46px,min(13.4vw,20.5vh),220px);font-weight:900;line-height:1.04;letter-spacing:-.07em;word-break:keep-all;white-space:nowrap}
-#zz-fullscreen #zz-body .career-annual04.career-flow .current{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:6px 14px;min-width:0;margin-top:clamp(16px,2.6vh,30px);padding:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .current-label{margin:0;padding:3px 8px;background:var(--hot);color:var(--paper);font-size:11px;font-weight:800}
-#zz-fullscreen #zz-body .career-annual04.career-flow .current strong{font-size:clamp(15px,1.25vw,19px)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .current>span:last-child{margin:0;font-size:12px;color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .career-summary{min-width:0;padding:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading{margin-bottom:10px}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading h2{font:700 12px/1.4 A04SUIT,sans-serif;font-family:A04SUIT,Arial,sans-serif!important;letter-spacing:0;color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading a{color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading a:hover{color:var(--warm)}
-#zz-fullscreen #zz-body .career-annual04.career-flow #annual04-summary-records{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 clamp(14px,2vw,34px)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record{display:flex;flex-direction:column;justify-content:flex-start;gap:6px;min-height:76px;padding:12px 0 0;box-shadow:inset 0 2px 0 #f4f0e633;transition:box-shadow .2s ease,color .2s ease}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record time{color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record strong{font-size:clamp(14px,1.15vw,17px);font-weight:800;line-height:1.35}
-#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record:hover,#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record:focus-visible{box-shadow:inset 0 2px 0 var(--hot);color:var(--warm)}
-
-/* The story: a year rail beside six chapters. Each chapter holds its two years still while its work scrolls past. */
-#zz-fullscreen #zz-body .career-annual04.career-flow .career-story{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(20px,3vw,52px);padding:0 var(--gutter)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .story-rail{position:sticky;top:calc(var(--annual04-mask) + 30px);align-self:start;display:flex;flex-direction:column;gap:2px;margin:clamp(56px,9vh,104px) 0 0;padding:0;list-style:none}
-#zz-fullscreen #zz-body .career-annual04.career-flow .story-rail li{padding:0 6px;font:500 11px/20px A04Source,A04SUIT,sans-serif;font-family:A04Source,A04SUIT,sans-serif!important;font-variant-numeric:tabular-nums;color:#9a948580;transition:color .25s ease,background .25s ease}
-#zz-fullscreen #zz-body .career-annual04.career-flow .story-rail li.is-on{background:var(--warm);color:var(--paper);font-weight:700}
-#zz-fullscreen #zz-body .career-annual04.career-flow .story-chapters{min-width:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);column-gap:clamp(32px,5.5vw,104px);align-items:start;min-height:min(96vh,920px);padding-block:clamp(56px,9vh,104px);view-timeline-name:--era}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-side{position:sticky;top:calc(var(--annual04-mask) + 26px);min-width:0}
-/* Type cut-out: two upright words as windows onto the era's work, in one hot duotone. */
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-poster{display:flex;gap:4.5%;height:min(46vh,480px);min-height:230px}
-#zz-fullscreen #zz-body .career-annual04.career-flow .cut{display:block;flex:0 1 auto;width:auto;height:100%;min-width:0;overflow:hidden}
+/* The cut-out sheet: Anton set upright, one picture behind both words. */
+#zz-fullscreen #zz-body .career-annual04.career-flow .cut{display:block;overflow:hidden}
 #zz-fullscreen #zz-body .career-annual04.career-flow .cut text{font-family:A04Anton,Impact,A04SUIT,sans-serif!important;font-weight:400}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-strip{display:none}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-head{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:clamp(18px,3vh,30px)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-period{font:500 12px/1.4 A04Source,A04SUIT,sans-serif;font-family:A04Source,A04SUIT,sans-serif!important;font-variant-numeric:tabular-nums;color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-title{margin:0;font-size:clamp(17px,1.55vw,23px);font-weight:800;line-height:1.3;letter-spacing:-.03em;word-break:keep-all}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-title span{display:inline-block;padding:.38em .7em .42em;background:var(--hot);color:var(--paper)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-role{max-width:24em;font-size:clamp(15px,1.2vw,18px);font-weight:600;line-height:1.6;letter-spacing:-.02em;word-break:keep-all}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-fields{display:flex;flex-wrap:wrap;gap:0;margin:2px 0 0;padding:0;list-style:none;font-size:12px;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .cut-over{opacity:0;transition:opacity .32s ease}
+#zz-fullscreen #zz-body .career-annual04.career-flow .cut-over.is-on{opacity:1}
+
+/* Opening: the sheet on the left, the line and the six eras on the right. */
+#zz-fullscreen #zz-body .career-annual04.career-flow .page-head{display:grid;grid-template-columns:var(--side) minmax(0,1fr);grid-template-rows:1fr auto;gap:28px var(--between);align-items:start;min-height:0;padding:clamp(4px,1.4vh,18px) var(--gutter) clamp(48px,8vh,96px)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster{grid-row:1/3;height:min(calc(100dvh - var(--annual04-top) - 132px - var(--safe-bottom,0px)),860px);min-height:400px}
+#zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster .cut{width:auto;max-width:100%;height:100%}
+#zz-fullscreen #zz-body .career-annual04.career-flow .flow-intro{min-width:0}
+#zz-fullscreen #zz-body .career-annual04.career-flow h1{position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#zz-fullscreen #zz-body .career-annual04.career-flow .flow-lede{margin:-.14em 0 0;font-size:clamp(30px,3.8vw,62px);font-weight:800;line-height:1.24;letter-spacing:-.05em;word-break:keep-all;color:var(--ink)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .career-summary{align-self:end;min-width:0;max-width:560px;padding:0}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading{margin-bottom:6px}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading h2{font:700 13px/1.4 A04SUIT,sans-serif;font-family:A04SUIT,Arial,sans-serif!important;letter-spacing:0;color:var(--warm)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading a{color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-heading a:hover{color:var(--ink)}
+#zz-fullscreen #zz-body .career-annual04.career-flow #annual04-summary-records{display:flex;flex-direction:column}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record{grid-template-columns:8.6em minmax(0,1fr);column-gap:18px;min-height:0;padding:8px 0;transition:color .18s ease}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record time{font-size:12px;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record strong{font-size:clamp(15px,1.25vw,18px);font-weight:700;line-height:1.4}
+#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record:hover,#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record:focus-visible{color:var(--warm)}
+
+/* The story: six chapters. Each holds its sheet still while what was made in those years scrolls past. */
+#zz-fullscreen #zz-body .career-annual04.career-flow .career-story{display:block;padding:0 var(--gutter)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era{display:grid;grid-template-columns:var(--side) minmax(0,1fr);column-gap:var(--between);align-items:start;min-height:min(94vh,900px);padding-block:clamp(60px,10vh,120px);view-timeline-name:--era}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-side{position:sticky;top:calc(var(--annual04-mask) + 28px);min-width:0}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-poster .cut{width:100%;height:auto;max-height:calc(100dvh - var(--annual04-mask) - 150px - var(--safe-bottom,0px))}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-body{display:flex;flex-direction:column;gap:clamp(40px,6.4vh,72px);min-width:0}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-head{display:flex;flex-direction:column;align-items:flex-start}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-period,#zz-fullscreen #zz-body .career-annual04.career-flow .work time,#zz-fullscreen #zz-body .career-annual04.career-flow .era-made time{font:400 12px/1.5 A04Source,A04SUIT,sans-serif;font-family:A04Source,A04SUIT,sans-serif!important;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-period{font-size:13px}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-title{margin:10px 0 0;font-size:clamp(30px,3.4vw,54px);font-weight:800;line-height:1.14;letter-spacing:-.055em;word-break:keep-all}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-role{max-width:30em;margin-top:16px;font-size:clamp(16px,1.25vw,19px);font-weight:500;line-height:1.65;letter-spacing:-.02em;word-break:keep-all;color:#f4f0e6cc}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-fields{display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;padding:0;list-style:none;font-size:12px;color:var(--muted)}
 #zz-fullscreen #zz-body .career-annual04.career-flow .era-fields li+li::before{content:'/';margin:0 .55em;opacity:.5}
 
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-body{display:flex;flex-direction:column;gap:clamp(34px,5.4vh,60px);min-width:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:clamp(12px,1.3vw,20px)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-plates[data-count="1"]{grid-template-columns:minmax(0,.72fr)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-plates[data-count="3"] .plate:first-child{grid-row:span 2}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate{margin:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate.is-wide,#zz-fullscreen #zz-body .career-annual04.career-flow .era-plates[data-count="1"] .plate.is-wide{grid-column:1/-1}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-plates[data-count="1"]:has(.is-wide){grid-template-columns:minmax(0,1fr)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate a{display:block;overflow:hidden;background:#f4f0e60f}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate img{display:block;width:100%;height:auto;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate a:hover img{transform:scale(1.03)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:9px;font-size:12px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
-#zz-fullscreen #zz-body .career-annual04.career-flow .plate figcaption time,#zz-fullscreen #zz-body .career-annual04.career-flow .era-made time{font:400 11px/1.5 A04Source,A04SUIT,sans-serif;font-family:A04Source,A04SUIT,sans-serif!important;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-label{display:flex;align-items:baseline;gap:10px;margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0;color:var(--muted)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-label span{color:var(--warm);font-size:13px}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-text{max-width:34em;margin-bottom:18px;font-size:14px;line-height:1.75;word-break:keep-all;color:var(--muted)}
-/* The works as a wall of names rather than a table; what each one was appears beneath on hover, focus or tap. */
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-wall{display:flex;flex-wrap:wrap;gap:.1em 0;margin:0;padding:0;list-style:none;font-size:clamp(23px,2.35vw,36px);font-weight:900;line-height:1.22;letter-spacing:-.05em}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-wall.is-long{font-size:clamp(17px,1.5vw,23px);font-weight:800;line-height:1.34;letter-spacing:-.04em}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-wall li{display:flex;align-items:baseline}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-wall li:not(:last-child)::after{content:'/';margin:0 .34em;font-weight:400;color:#f4f0e640}
-#zz-fullscreen #zz-body .career-annual04.career-flow .wall-item{color:var(--ink);word-break:keep-all;cursor:default;transition:color .16s ease}
-#zz-fullscreen #zz-body .career-annual04.career-flow a.wall-item{cursor:pointer;text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.16em;text-decoration-color:var(--hot)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .wall-item:hover,#zz-fullscreen #zz-body .career-annual04.career-flow .wall-item:focus-visible,#zz-fullscreen #zz-body .career-annual04.career-flow .wall-item.is-shown{color:var(--warm);outline:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .wall-note{min-height:1.7em;margin-top:14px;font-size:13px;line-height:1.7;color:var(--warm);white-space:pre-wrap;word-break:keep-all}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made{display:flex;flex-direction:column;gap:18px;margin:0}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-label{display:flex;align-items:baseline;gap:9px;margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:0;color:var(--warm)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-label span{font-weight:500;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-text{max-width:34em;margin-bottom:16px;font-size:14px;line-height:1.75;word-break:keep-all;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-works{margin:0;padding:0;list-style:none}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-works.is-long{columns:2;column-gap:clamp(24px,3vw,48px)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-works li{break-inside:avoid}
+#zz-fullscreen #zz-body .career-annual04.career-flow .work{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:9px 0;color:var(--ink)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .work-name{font-size:clamp(17px,1.45vw,22px);font-weight:700;line-height:1.35;letter-spacing:-.035em;word-break:keep-all;transition:color .16s ease}
+#zz-fullscreen #zz-body .career-annual04.career-flow .is-long .work-name{font-size:clamp(15px,1.15vw,17px);font-weight:600}
+#zz-fullscreen #zz-body .career-annual04.career-flow .is-long .work{padding:6px 0}
+#zz-fullscreen #zz-body .career-annual04.career-flow .work-role{grid-column:1;font-size:13px;line-height:1.55;word-break:keep-all;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .work time{grid-column:2;grid-row:1}
+#zz-fullscreen #zz-body .career-annual04.career-flow a.work .work-name::after{content:'↗';margin-left:.35em;font-size:.82em;font-weight:400;color:var(--hot)}
+#zz-fullscreen #zz-body .career-annual04.career-flow a.work:hover .work-name,#zz-fullscreen #zz-body .career-annual04.career-flow a.work:focus-visible .work-name{color:var(--warm)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made{display:flex;flex-direction:column;gap:20px;margin:0}
 #zz-fullscreen #zz-body .career-annual04.career-flow .era-made>div{display:grid;grid-template-columns:5.2em minmax(0,1fr);column-gap:16px;align-items:baseline}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made dt{font-size:12px;font-weight:700;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made dt{font-size:13px;font-weight:500;color:var(--muted)}
 #zz-fullscreen #zz-body .career-annual04.career-flow .era-made dd{margin:0}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made ul{display:flex;flex-direction:column;gap:9px;margin:0;padding:0;list-style:none}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:baseline;font-size:14px;line-height:1.5}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made li span{font-weight:700;letter-spacing:-.02em;word-break:keep-all}
-#zz-fullscreen #zz-body .career-annual04.career-flow .era-made em{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--muted)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made ul{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;font-size:15px;line-height:1.5}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made li span{font-weight:600;letter-spacing:-.025em;word-break:keep-all}
+#zz-fullscreen #zz-body .career-annual04.career-flow .era-made em{display:block;font-style:normal;font-weight:400;font-size:13px;color:var(--muted)}
 
 /* After the story, the searchable records stay as reference, in the same theme. */
 #zz-fullscreen #zz-body .career-annual04.career-flow .directory-head{padding:clamp(56px,9vh,110px) var(--gutter) 6px}
-#zz-fullscreen #zz-body .career-annual04.career-flow .directory-head h2{font-size:clamp(34px,4.6vw,76px);font-weight:900;line-height:1.05;letter-spacing:-.06em}
+#zz-fullscreen #zz-body .career-annual04.career-flow .directory-head h2{font-size:clamp(34px,4.6vw,76px);font-weight:800;line-height:1.05;letter-spacing:-.06em}
 #zz-fullscreen #zz-body .career-annual04.career-flow .notes .employment,#zz-fullscreen #zz-body .career-annual04.career-flow .notes .saltware{display:none}
-#zz-fullscreen #zz-body .career-annual04.career-flow .notes{background:#1c1a15}
-#zz-fullscreen #zz-body .career-annual04.career-flow .notes :is(h2,h3){font-family:A04SUIT,Arial,sans-serif!important;font-weight:900;letter-spacing:-.05em}
+#zz-fullscreen #zz-body .career-annual04.career-flow .notes{background:#191816}
+#zz-fullscreen #zz-body .career-annual04.career-flow .notes :is(h2,h3){font-family:A04SUIT,Arial,sans-serif!important;font-weight:800;letter-spacing:-.05em}
 #zz-fullscreen #zz-body .career-annual04.career-flow .annual04-footer{background:var(--paper)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .field .text-cover{background:var(--hot);color:var(--paper)}
-#zz-fullscreen #zz-body .career-annual04.career-flow .field .digital-cover{background:var(--warm)}
+#zz-fullscreen #zz-body .career-annual04.career-flow .field .text-cover{background:linear-gradient(180deg,#ee4a1c,#ffc233);color:var(--paper)}
 #zz-fullscreen #zz-body .career-annual04.career-flow .field .text-cover :is(time,strong,p,span){color:inherit}
 
-#zz-fullscreen #zz-body .career-annual04.career-flow.flow-anim .reveal{opacity:0;transform:translateY(18px)}
+#zz-fullscreen #zz-body .career-annual04.career-flow.flow-anim .reveal{opacity:0;transform:translateY(16px)}
 #zz-fullscreen #zz-body .career-annual04.career-flow.flow-anim .reveal.is-in{opacity:1;transform:none;transition:opacity .5s ease,transform .6s cubic-bezier(.16,1,.3,1)}
-/* Anton (SIL OFL 1.1, assets/fonts/Anton-OFL.txt): the condensed poster face for the cut-out years. */
+/* Anton (SIL OFL 1.1, assets/fonts/Anton-OFL.txt): the condensed poster face for the cut-out type. */
 @font-face{font-family:A04Anton;src:url('/assets/fonts/Anton-Regular.ttf') format('truetype');font-display:swap}
-@keyframes career-pan{to{transform:translateX(-50%)}}
-@keyframes career-drift{from{transform:translateY(-14px)}to{transform:translateY(14px)}}
-/* Where the browser can tie animation to scroll, the work drifts inside the letters as the chapter passes. */
+@keyframes career-drift{from{transform:translateY(-34px)}to{transform:translateY(34px)}}
+/* Where the browser can tie animation to scroll, the picture drifts inside the type as the chapter passes. */
 @supports (animation-timeline:view()){
-  #zz-fullscreen #zz-body .career-annual04.career-flow .cut image{animation:career-drift linear both;animation-timeline:--era;animation-range:cover 0% cover 100%}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era .cut image{animation:career-drift linear both;animation-timeline:--era;animation-range:cover 0% cover 100%}
 }
 
-@media(max-width:1100px){
-  #zz-fullscreen #zz-body .career-annual04.career-flow .career-story{grid-template-columns:minmax(0,1fr)}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .story-rail{display:none}
-  #zz-fullscreen #zz-body .career-annual04.career-flow #annual04-summary-records{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px}
-}
 @media(min-width:761px) and (max-height:620px){
   #zz-fullscreen #zz-body .career-annual04.career-flow .era{min-height:0}
   #zz-fullscreen #zz-body .career-annual04.career-flow .era-side{position:static}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .page-head{min-height:0}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster{height:auto;min-height:0}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster .cut{width:min(100%,300px);height:auto}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era-poster .cut{max-height:none}
 }
 @media(max-width:760px){
-  #zz-fullscreen #zz-body .career-annual04.career-flow .page-head{min-height:0;padding-top:4px;padding-bottom:30px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow h1{font-size:34px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-lede{font-size:clamp(40px,13.6vw,64px);line-height:1.08}
-  #zz-fullscreen #zz-body .career-annual04.career-flow #annual04-summary-records{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .summary-record{min-height:64px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era{display:block;min-height:0;padding-block:34px}
-  /* The poster opens the chapter; a slim strip of the same two words stays under the top bar. */
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-side{display:contents}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-strip{position:sticky;top:var(--annual04-mask);z-index:5;display:flex;gap:.38em;margin:0 calc(-1 * var(--gutter));padding:7px var(--gutter) 8px;background:var(--paper);font:400 25px/1 A04Anton,Impact,sans-serif;font-family:A04Anton,Impact,A04SUIT,sans-serif!important;letter-spacing:.01em}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-strip span{background:linear-gradient(100deg,var(--hot),var(--warm));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-poster{height:64vw;min-height:0;margin-top:8px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-head{margin-top:20px;margin-bottom:30px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-plates{gap:12px}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-plates[data-count="1"]{grid-template-columns:minmax(0,.86fr)}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-wall{font-size:clamp(22px,6.6vw,28px)}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .era-wall.is-long{font-size:17px}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .page-head{display:flex;flex-direction:column;align-items:stretch;gap:30px;padding-top:6px;padding-bottom:44px}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster{height:auto;min-height:0}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-poster .cut{width:100%;height:auto}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .flow-lede{margin:0;font-size:clamp(30px,9.2vw,44px)}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .career-summary{align-self:stretch;max-width:none}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .summary-record{padding:10px 0}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era{display:block;min-height:0;padding-block:44px}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era-side{position:static;margin-bottom:28px}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era-poster .cut{max-height:none}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era-title{font-size:clamp(28px,8.4vw,38px)}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era-works.is-long{columns:1}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .work{padding:10px 0}
   #zz-fullscreen #zz-body .career-annual04.career-flow .era-made>div{grid-template-columns:1fr;row-gap:8px}
   #zz-fullscreen #zz-body .career-annual04.career-flow .era-made li{grid-template-columns:1fr}
   #zz-fullscreen #zz-body .career-annual04.career-flow .directory-head{padding-top:48px}
 }
 @media(prefers-reduced-motion:reduce){
-  #zz-fullscreen #zz-body .career-annual04.career-flow .knock-strip,#zz-fullscreen #zz-body .career-annual04.career-flow .cut image{animation:none}
-  #zz-fullscreen #zz-body .career-annual04.career-flow .plate img,#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record,#zz-fullscreen #zz-body .career-annual04.career-flow .story-rail li,#zz-fullscreen #zz-body .career-annual04.career-flow .wall-item{transition:none}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .era .cut image{animation:none}
+  #zz-fullscreen #zz-body .career-annual04.career-flow .cut-over,#zz-fullscreen #zz-body .career-annual04.career-flow .summary-record,#zz-fullscreen #zz-body .career-annual04.career-flow .work-name{transition:none}
 }
