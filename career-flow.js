@@ -1,5 +1,5 @@
-/* Career as a poster you scroll through: the newest era first, back to where it started.
-   Each sheet is two upright words in Anton, cut out as one window onto one picture, on black.
+/* Career as a desktop you scroll down: a sky wallpaper, app icons standing on it, and one window per era,
+   the newest first. The icons are real works and open their Archive pages.
    Every record shown is read from career-data.js; nothing here adds a fact of its own. */
 (() => {
   'use strict';
@@ -7,16 +7,9 @@
   // Settings
   const MID_YEAR = 6;        // a record dated only by year is placed in the middle of that year
   const TWO_COLUMNS = 12;    // an era with more works than this lists them in two columns
-  const HERO = ['ZOONII', 'CAREER'];
-  // Archive pages with a picture for the type to open onto: file name in /assets/career-cutout/ (scripts/career-cutout.sh).
-  const CUT = {'/projects/tongkeun/': 'tongkeun', '/projects/illustration0/': 'umbro', '/projects/illustration1/': 'ottogi', '/projects/illustration2/': 'konai', '/projects/illustration3/': 'unesco', '/projects/illustration4/': 'ok', '/projects/illustration5/': 'sif', '/projects/uiux4/': 'luck'};
-  // Anton's own measurements, per 1000 units of type size: how far each glyph advances, how tall it stands,
-  // and the blank it carries at each end of a word.
-  const ADVANCE = {0: 494, 1: 331, 2: 494, 3: 494, 4: 494, 5: 494, 6: 494, 7: 494, 8: 494, 9: 494, A: 485, C: 474, E: 412, I: 227, N: 498, O: 486, R: 477, W: 712, Z: 410};
-  const TALL = 868, BEARING = 30;
-  const SHEET = 1000;        // every sheet is drawn this tall; its width follows from the two words
-  const GAP = 14;            // black between the two words
-  const BLEED = 40;          // the picture runs this far past the sheet so it can drift without showing an edge
+  const ICONS_SHOWN = 4;     // most app icons one era puts on the desktop
+  // Archive pages that have an app icon: file name in /assets/career-desktop/ (scripts/career-icons.sh).
+  const ICON = {'/projects/tongkeun/': 'tongkeun', '/projects/illustration0/': 'umbro', '/projects/illustration1/': 'ottogi', '/projects/illustration2/': 'konai', '/projects/illustration3/': 'unesco', '/projects/illustration4/': 'ok', '/projects/illustration5/': 'sif', '/projects/uiux4/': 'luck'};
   const FIELDS = [['uiux', 'Digital'], ['branding', 'Brand & Print'], ['illustration', 'Illustration'], ['teaching', 'Teaching']];
   const KINDS = ['학업', '강의', '전시', '수상·자격'];
 
@@ -73,33 +66,25 @@
     for (const era of eras) {
       era.works.sort((a, b) => b.key - a.key);
       era.notes.sort((a, b) => b.key - a.key);
-      // The type opens onto the newest work of the era that has an image; an era without one stays plain ink.
-      era.cut = era.works.map(work => CUT[work.path]).find(Boolean) || '';
+      // The era's newest works that have an icon stand on the desktop beside its window.
+      era.apps = era.works.filter((work, at, all) => ICON[work.path] && all.findIndex(other => other.path === work.path) === at).slice(0, ICONS_SHOWN);
     }
     return eras;
   }
 
-  // Two words set upright, each sized so it runs the full height of the sheet: the shorter word comes out bigger.
-  // The first reads upward and the second downward, feet to the middle, and one picture shows through both.
-  function sheet(words, name, id) {
-    const columns = words.map(word => {
-      const run = [...word].reduce((sum, glyph) => sum + ADVANCE[glyph], 0);
-      const size = SHEET * 1000 / (run - BEARING * 2);
-      return {word, size, width: TALL * size / 1000, run: run * size / 1000, inset: BEARING * size / 1000};
-    });
-    const [up, down] = columns, width = up.width + GAP + down.width;
-    const number = value => Number(value.toFixed(1));
-    const text = (column, turn) => `<text transform="${turn}" font-size="${number(column.size)}" textLength="${number(column.run)}" lengthAdjust="spacingAndGlyphs">${column.word}</text>`;
-    const picture = kind => `<image class="${kind}" x="${-BLEED}" y="${-BLEED}" width="${number(width + BLEED * 2)}" height="${SHEET + BLEED * 2}" preserveAspectRatio="xMidYMid slice"${kind === 'cut-base' && name ? ` data-href="/assets/career-cutout/${name}.webp"` : ''}/>`;
-    return `<svg class="cut" viewBox="0 0 ${number(width)} ${SHEET}" width="${number(width)}" height="${SHEET}" preserveAspectRatio="xMinYMin meet" focusable="false"><defs><clipPath id="${id}">${text(up, `translate(${number(up.width)} ${number(SHEET + up.inset)}) rotate(-90)`)}${text(down, `translate(${number(up.width + GAP)} ${number(-down.inset)}) rotate(90)`)}</clipPath><linearGradient id="${id}-ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ee4a1c"/><stop offset="1" stop-color="#ffc233"/></linearGradient></defs><g clip-path="url(#${id})"><rect width="${number(width)}" height="${SHEET}" fill="url(#${id}-ink)"/>${picture('cut-base')}${picture('cut-over')}</g></svg>`;
-  }
-  const row = (work, body) => work.path ? `<a class="work" href="${escape(work.path)}"${CUT[work.path] ? ` data-cut="${CUT[work.path]}"` : ''}>${body}</a>` : `<div class="work">${body}</div>`;
+  const LIGHTS = '<span class="win-lights" aria-hidden="true"><i></i><i></i><i></i></span>';
+  const picture = name => `<span class="app-tile"><img src="/assets/career-desktop/${name}.webp" alt="" width="288" height="288" loading="lazy" decoding="async"></span>`;
+  const row = (work, body) => work.path ? `<a class="work" href="${escape(work.path)}"${ICON[work.path] ? ` data-app="${ICON[work.path]}"` : ''}>${body}</a>` : `<div class="work">${body}</div>`;
   function chapter(era, prefix) {
     const id = `${prefix}era-${era.index}`;
+    // An era with no pictured work keeps a plain folder on the desktop, named by its years.
+    const apps = era.apps.length
+      ? era.apps.map(work => `<a class="app" href="${escape(work.path)}" data-app="${ICON[work.path]}">${picture(ICON[work.path])}<span class="app-name">${escape(work.title)}</span></a>`).join('')
+      : `<div class="app is-folder">${picture('folder')}<span class="app-name">${escape(era.period)}</span></div>`;
     const fields = FIELDS.filter(([key]) => era.fields.has(key)).map(([, label]) => `<li>${escape(label)}</li>`).join('');
-    const works = era.works.length ? `<section class="era-group reveal" aria-labelledby="${id}-made"><h3 class="era-label" id="${id}-made">내가 만든 것들 <span>${era.works.length}</span></h3>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}<ul class="era-works${era.works.length > TWO_COLUMNS ? ' is-long' : ''}">${era.works.map(work => `<li>${row(work, `<span class="work-name">${escape(work.title)}</span>${work.role ? `<span class="work-role">${escape(work.role)}</span>` : ''}<time>${escape(work.period)}</time>`)}</li>`).join('')}</ul></section>` : '';
-    const made = era.notes.length ? `<section class="era-group reveal" aria-labelledby="${id}-makers"><h3 class="era-label" id="${id}-makers">나를 만든 것들</h3><dl class="era-made">${KINDS.filter(kind => era.notes.some(item => item.kind === kind)).map(kind => `<div><dt>${escape(kind)}</dt><dd><ul>${era.notes.filter(item => item.kind === kind).map(item => `<li><span>${escape(item.title)}${item.detail ? `<em>${escape(item.detail)}</em>` : ''}</span><time>${escape(item.period)}</time></li>`).join('')}</ul></dd></div>`).join('')}</dl></section>` : '';
-    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><div class="era-side"><div class="era-poster" aria-hidden="true">${sheet([String(era.from), era.open ? 'NOW' : String(era.to)], era.cut, `${id}-cut`)}</div></div><div class="era-body"><header class="era-head reveal"><time class="era-period">${escape(era.period)}</time><h2 class="era-title" id="${id}-title">${escape(era.title)}</h2><p class="era-role">${escape(era.role)}</p>${fields ? `<ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul>` : ''}</header>${works}${made}</div></section>`;
+    const works = era.works.length ? `<section class="era-group" aria-labelledby="${id}-made"><h3 class="era-label" id="${id}-made">내가 만든 것들 <span>${era.works.length}</span></h3>${era.text ? `<p class="era-text">${escape(era.text)}</p>` : ''}<ul class="era-works${era.works.length > TWO_COLUMNS ? ' is-long' : ''}">${era.works.map(work => `<li>${row(work, `<span class="work-name">${escape(work.title)}</span>${work.role ? `<span class="work-role">${escape(work.role)}</span>` : ''}<time>${escape(work.period)}</time>`)}</li>`).join('')}</ul></section>` : '';
+    const made = era.notes.length ? `<section class="era-group" aria-labelledby="${id}-makers"><h3 class="era-label" id="${id}-makers">나를 만든 것들</h3><dl class="era-made">${KINDS.filter(kind => era.notes.some(item => item.kind === kind)).map(kind => `<div><dt>${escape(kind)}</dt><dd><ul>${era.notes.filter(item => item.kind === kind).map(item => `<li><span>${escape(item.title)}${item.detail ? `<em>${escape(item.detail)}</em>` : ''}</span><time>${escape(item.period)}</time></li>`).join('')}</ul></dd></div>`).join('')}</dl></section>` : '';
+    return `<section class="era" id="${id}" data-era="${era.index}" aria-labelledby="${id}-title"><div class="era-side reveal${era.apps.length > 2 ? ' is-many' : ''}">${apps}</div><div class="era-body win reveal"><div class="win-bar">${LIGHTS}<time class="win-title era-period">${escape(era.period)}</time></div><div class="win-body"><header class="era-head"><h2 class="era-title" id="${id}-title">${escape(era.title)}</h2><p class="era-role">${escape(era.role)}</p>${fields ? `<ul class="era-fields" aria-label="이 시기에 한 분야">${fields}</ul>` : ''}</header>${works}${made}</div></div></section>`;
   }
 
   function mount(root, scrollport, data) {
@@ -108,45 +93,31 @@
     const prefix = 'annual04-';
     const eras = build(data);
     story.innerHTML = eras.map(era => chapter(era, prefix)).join('');
-    const opening = root.querySelector('.flow-poster');
-    if (opening) opening.innerHTML = sheet(HERO, 'me', `${prefix}cut-opening`);
     const index = root.querySelector(`#${prefix}summary-records`);
     if (index) index.innerHTML = eras.map(era => `<a class="summary-record" href="#${prefix}era-${era.index}"><time>${escape(era.period)}</time><strong>${escape(era.title)}</strong></a>`).join('');
 
-    const show = image => { if (image.dataset.href) { image.setAttribute('href', image.dataset.href); delete image.dataset.href; } };
-    // Pointing at a work that has a picture turns the era's type into a window onto that work.
+    // An icon and its line in the window answer each other: pointing at one picks out the other.
     const controller = new AbortController();
-    const look = on => event => {
-      const work = event.target.closest?.('.work[data-cut]');
-      const over = work?.closest('.era').querySelector('.cut-over');
-      if (!over) return;
-      if (on) over.setAttribute('href', `/assets/career-cutout/${work.dataset.cut}.webp`);
-      over.classList.toggle('is-on', on);
+    const pair = on => event => {
+      const item = event.target.closest?.('[data-app]');
+      if (!item) return;
+      for (const twin of item.closest('.era').querySelectorAll(`[data-app="${item.dataset.app}"]`)) if (twin !== item) twin.classList.toggle('is-hot', on);
     };
-    for (const type of ['pointerover', 'focusin']) story.addEventListener(type, look(true), {signal: controller.signal});
-    for (const type of ['pointerout', 'focusout']) story.addEventListener(type, look(false), {signal: controller.signal});
+    for (const type of ['pointerover', 'focusin']) story.addEventListener(type, pair(true), {signal: controller.signal});
+    for (const type of ['pointerout', 'focusout']) story.addEventListener(type, pair(false), {signal: controller.signal});
 
-    const observers = [];
-    const pictures = [...root.querySelectorAll('.cut-base[data-href]')];
-    if ('IntersectionObserver' in window) {
-      // A sheet's picture is fetched as the sheet comes near, not all eight at once.
-      const near = new IntersectionObserver(entries => {
-        for (const entry of entries) if (entry.isIntersecting) { show(entry.target.querySelector('.cut-base')); near.unobserve(entry.target); }
-      }, {root: scrollport, rootMargin: '80% 0px'});
-      for (const picture of pictures) near.observe(picture.ownerSVGElement);
-      observers.push(near);
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        root.classList.add('flow-anim');
-        const seen = new IntersectionObserver(entries => {
-          for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add('is-in'); seen.unobserve(entry.target); }
-        }, {root: scrollport, rootMargin: '0px 0px -10% 0px', threshold: .04});
-        for (const element of story.querySelectorAll('.reveal')) seen.observe(element);
-        observers.push(seen);
-      }
-    } else pictures.forEach(show);
+    let seen;
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Windows and icons open as they come into view.
+      root.classList.add('flow-anim');
+      seen = new IntersectionObserver(entries => {
+        for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add('is-in'); seen.unobserve(entry.target); }
+      }, {root: scrollport, rootMargin: '0px 0px -8% 0px', threshold: .02});
+      for (const element of root.querySelectorAll('.reveal')) seen.observe(element);
+    }
     return () => {
       controller.abort();
-      for (const observer of observers) observer.disconnect();
+      seen?.disconnect();
       root.classList.remove('flow-anim');
     };
   }
