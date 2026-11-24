@@ -1,9 +1,16 @@
 import {arrangeStore} from './club-store-layout.mjs?v=7ccb74170c';
-import {catchPose} from './scripts/cart-motion.mjs';
+import {catchPose,rainPose} from './scripts/cart-motion.mjs?v=2ed8094c09';
 import {CART_ENDPOINT, CART_PUBLIC_KEY} from './club-cart-config.mjs?v=86df37af63';
 import {createGame,step,FPS,TICKS,VERSION} from './supabase/functions/_shared/cart-model.mjs?v=a5f4dd3349';
 const style=document.createElement('link');style.rel='stylesheet';style.href='/club-cart-game.css?v=e7cbbe9c50';document.head.append(style);
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+// Entry-screen rain: how many goods fall at once, and their size in CSS pixels from the farthest to the nearest.
+const RAIN={wide:{count:16,far:58,near:132},compact:{count:10,far:44,near:88}};
+const RAIN_BEHIND_TEXT=.1;   // how much of a falling item still shows while it passes behind the rules line (behind the menu: none)
+const RAIN_FADE=48;          // CSS pixels over which an item fades before its edge reaches such text
+const RAIN_SHORT=520;        // a screen lower than this (a phone on its side) gets the compact rain too
+const RAIN_FROM=13.3;          // the moment the rain opens on: nothing is behind the site logo or the corner buttons then, which is also the still picture when motion is turned off
+const RAIN_REMEASURE=1000;   // ms between looks at where that text is, since the menu can settle after the game mounts
 const local=!CART_ENDPOINT&&['localhost','127.0.0.1'].includes(location.hostname);
 const endpoint=local?'/api/cart-game':CART_ENDPOINT;
 const art=Array.from({length:9},(_,i)=>{const image=new Image();image.src=`/assets/club-products/product-${i+1}.webp`;return image;});
@@ -26,7 +33,7 @@ function mount(){
  shop.before(host);const replay=document.createElement('button');replay.type='button';replay.className='ttc-shop-replay';replay.textContent='CART GAME ↗';shop.prepend(replay);arrangeStore(shop,replay);
  const $=s=>host.querySelector(s),canvas=$('canvas'),ctx=canvas.getContext('2d'),screen=$('.ttc-screen'),status=$('[data-status]');
  const abort=new AbortController(),on=(el,event,fn)=>el.addEventListener(event,fn,{signal:abort.signal});
- let game=createGame(197),session=null,events=[],state='ready',keys=0,touch=0,lastMask=-1,frame=0,last=0,acc=0,auto=0,run=0,resultTime=0;
+ let game=createGame(197),session=null,events=[],state='ready',keys=0,touch=0,lastMask=-1,frame=0,last=0,acc=0,auto=0,run=0,resultTime=0,rainTime=RAIN_FROM,quiet=[],quietAt=0;
  function message(s){status.textContent=s;}
  function ranks(entries){const list=$('[data-ranking]');list.replaceChildren();let prev=-1,rank=0;entries.forEach((entry,i)=>{if(entry.score!==prev)rank=i+1;prev=entry.score;const li=document.createElement('li'),n=document.createElement('span'),name=document.createElement('strong'),points=document.createElement('b');n.textContent=String(rank).padStart(2,'0');name.textContent=entry.name;points.textContent=entry.score.toLocaleString();li.append(n,name,points);list.append(li);});if(!entries.length){const li=document.createElement('li');li.textContent='첫 번째 기록을 남겨주세요.';list.append(li);}}
  api().then(d=>{if(!host.isConnected)return;ranks(d.entries);message(local?'이 로컬 서버에 저장된 기록입니다.':'최고 기록으로 순위가 정해져요.');}).catch(e=>message(e.message));
@@ -39,8 +46,13 @@ function mount(){
   const width=Math.round(canvasBox.width*density),height=Math.round(canvasBox.height*density);
   if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
  }
- const canvasResize=new ResizeObserver(entries=>{canvasBox=entries[0].contentRect;sizeCanvas();});canvasResize.observe(canvas);
- on(window,'resize',sizeCanvas);sizeCanvas();
+ // Where small text sits over the canvas (the rules line, the site menu), so the rain can fade as it passes behind it.
+ function findQuiet(){const c=canvas.getBoundingClientRect();quiet=c.width?[[host.querySelector('.ttc-rules'),RAIN_BEHIND_TEXT],[document.getElementById('zz-global-dock'),0],[document.getElementById('zz-fixed-links'),0]].flatMap(([element,floor])=>{if(!element)return [];
+   // The menu's stickers stand taller than its own box, so the zone is the box together with everything inside it.
+   const r=[element,...element.querySelectorAll('*')].map(node=>node.getBoundingClientRect()).filter(box=>box.width&&box.height).reduce((all,box)=>all?{left:Math.min(all.left,box.left),right:Math.max(all.right,box.right),top:Math.min(all.top,box.top),bottom:Math.max(all.bottom,box.bottom)}:box,null);
+   return r?[{left:r.left-c.left,right:r.right-c.left,top:r.top-c.top,bottom:r.bottom-c.top,floor}]:[];}):[];}
+ const canvasResize=new ResizeObserver(entries=>{canvasBox=entries[0].contentRect;sizeCanvas();findQuiet();});canvasResize.observe(canvas);
+ on(window,'resize',()=>{sizeCanvas();findQuiet();});sizeCanvas();
  function draw(){
   const box=canvasBox;if(!box.width||!box.height)return;
   const aspect=(box.width/960)/(box.height/560);
@@ -52,6 +64,20 @@ function mount(){
   const intro=state==='ready'||state==='starting',compact=box.width<600;
   const scale=intro?Math.min(compact?220:320,box.width*(compact?.48:.32))*960/(208*box.width):(.75+game.z*.27)*1.215;
   const p=intro?{x:960*((compact?.5:.70)+(game.x-.5)*(compact?.35:.22)),y:560*(compact?.59:.46)+64*scale*aspect}:project(game.x,game.z);
+  // Entry only: the shop's goods fall past behind the cart and the title. Never part of the score model.
+  if(intro){
+   const rain=compact||box.height<RAIN_SHORT?RAIN.compact:RAIN.wide,unit=960/box.width;
+   const items=Array.from({length:rain.count},(_,i)=>rainPose(i,rain.count,rainTime)).sort((a,b)=>a.depth-b.depth);
+   for(const item of items){
+    const image=art[item.kind];if(!image.complete||!image.naturalWidth)continue;
+    const size=rain.far+(rain.near-rain.far)*item.depth;
+    const x=item.u*box.width,y=-size*.75+item.v*(box.height+size*1.5);
+    let alpha=1;
+    for(const zone of quiet){const away=Math.hypot(Math.max(zone.left-x,0,x-zone.right),Math.max(zone.top-y,0,y-zone.bottom));alpha*=zone.floor+(1-zone.floor)*Math.max(0,Math.min(1,(away-size*.45)/RAIN_FADE));}
+    if(alpha<=0)continue;
+    ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingQuality='high';ctx.translate(x*unit,y*560/box.height);ctx.scale(unit,unit*aspect);ctx.rotate(item.rotation);ctx.drawImage(image,-size/2,-size/2,size,size);ctx.restore();
+   }
+  }
   const drawCart=()=>{
    ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale*aspect);
    const shadow=ctx.createRadialGradient(-3,12,8,-3,12,79);shadow.addColorStop(0,'#26382b24');shadow.addColorStop(1,'#26382b00');
@@ -101,9 +127,9 @@ function mount(){
    ctx.restore();
   }
  }
- function tick(t){if(!host.isConnected){cleanup();return;}if(state==='ready'){const mask=keys|touch;if(mask){const old=game.tick;step(game,mask);game.tick=old;}}if(state==='playing'){acc+=Math.min(150,t-last);while(acc>=1000/FPS&&game.tick<TICKS){const mask=keys|touch;if(mask!==lastMask){events.push([game.tick,mask]);lastMask=mask;}step(game,mask);acc-=1000/FPS;}$('[data-time]').textContent=Math.ceil((TICKS-game.tick)/FPS);$('[data-score]').textContent=game.score.toLocaleString();if(game.tick>=TICKS)finish();}if(state==='result'&&!document.hidden&&!reducedMotion.matches)resultTime+=Math.min(100,t-last)/1000;last=t;draw();frame=requestAnimationFrame(tick);}
+ function tick(t){if(!host.isConnected){cleanup();return;}if(state==='ready'){const mask=keys|touch;if(mask){const old=game.tick;step(game,mask);game.tick=old;}}if(state==='playing'){acc+=Math.min(150,t-last);while(acc>=1000/FPS&&game.tick<TICKS){const mask=keys|touch;if(mask!==lastMask){events.push([game.tick,mask]);lastMask=mask;}step(game,mask);acc-=1000/FPS;}$('[data-time]').textContent=Math.ceil((TICKS-game.tick)/FPS);$('[data-score]').textContent=game.score.toLocaleString();if(game.tick>=TICKS)finish();}if(state==='result'&&!document.hidden&&!reducedMotion.matches)resultTime+=Math.min(100,t-last)/1000;if(state==='ready'||state==='starting'){if(t-quietAt>RAIN_REMEASURE){quietAt=t;findQuiet();}if(!document.hidden&&!reducedMotion.matches)rainTime+=Math.min(100,t-last)/1000;}last=t;draw();frame=requestAnimationFrame(tick);}
  function showShop(){run++;clearTimeout(auto);state='shop';keys=touch=0;cancelAnimationFrame(frame);host.hidden=true;shop.hidden=false;safeSet(sessionStorage,'ttc-played','1');replay.focus({preventScroll:true});}
- function openGame(){host.hidden=false;shop.hidden=true;state='ready';host.dataset.state=state;screen.hidden=false;screen.innerHTML=entrance;game=createGame(197);clearTimeout(auto);cancelAnimationFrame(frame);frame=requestAnimationFrame(tick);$('[data-start]').focus({preventScroll:true});}
+ function openGame(){host.hidden=false;shop.hidden=true;state='ready';host.dataset.state=state;screen.hidden=false;screen.innerHTML=entrance;findQuiet();game=createGame(197);clearTimeout(auto);cancelAnimationFrame(frame);frame=requestAnimationFrame(tick);$('[data-start]').focus({preventScroll:true});}
  async function start(){if(state==='starting')return;const token=++run;state='starting';host.dataset.state=state;$('[data-start]').disabled=true;message('쇼핑 준비 중…');try{session=await api({action:'start'});if(session.version!==VERSION)throw Error('게임이 업데이트되었어요. 새로고침 후 다시 시작해주세요.');}catch(e){session=null;message(e.message);}if(token!==run||!host.isConnected)return;game=createGame(session?.seed??crypto.getRandomValues(new Uint32Array(1))[0]);events=[];keys=touch=0;lastMask=-1;acc=0;last=performance.now();state='playing';host.dataset.state=state;screen.hidden=true;$('[data-mode]').textContent=session?(local?'LOCAL RANKED':'RANKED PLAY'):'PRACTICE';if(session)message(local?'로컬 테스트 기록으로 참여 중':'전체 랭킹에 도전 중');canvas.focus({preventScroll:true});}
  function finish(){resultTime=0;state='result';host.dataset.state=state;keys=touch=0;screen.hidden=false;message('');screen.innerHTML=`<div class="ttc-result-card"><span class="ttc-overline">NICE SHOPPING!</span><h2>${game.score.toLocaleString()} <small>PTS</small></h2>${session?'<form data-submit><label>Your Nickname<input name="name" maxlength="16" required autocomplete="nickname" placeholder="예: 띵띵쇼퍼"></label><button class="ttc-primary" type="submit">SAVE SCORE ↗</button></form>':'<p>연습 모드 · 전체 랭킹에는 등록되지 않아요.</p>'}<div class="ttc-result-actions"><button type="button" data-start>↖ CART GAME</button><button type="button" data-skip>GO PAGE ↗</button></div></div>`;const input=screen.querySelector('input');if(input)input.value=safeGet(localStorage,'ttc-name')||'';(input||screen.querySelector('[data-skip]')).focus({preventScroll:true});}
  on(host,'submit',async e=>{if(!e.target.matches('[data-submit]'))return;e.preventDefault();const token=run,form=e.target,button=form.querySelector('button'),name=form.elements.name.value.trim();button.disabled=true;try{const d=await api({action:'finish',id:session.id,name,events});if(token!==run||!host.isConnected)return;safeSet(localStorage,'ttc-name',name);ranks(d.entries);screen.innerHTML=`<div class="ttc-result-card"><span class="ttc-overline">${local?'LOCAL TEST RANKING':'GLOBAL RANKING'}</span><h2>#${d.rank}</h2><p>이번 점수 ${d.score} · 내 최고 기록 ${d.best}</p><div class="ttc-result-actions"><button type="button" data-start>↖ CART GAME</button><button type="button" class="ttc-primary" data-skip>GO PAGE ↗</button></div></div>`;const ranking=$('[data-ranking]').cloneNode(true);ranking.removeAttribute('data-ranking');ranking.className='ttc-result-ranking';screen.querySelector('.ttc-result-card').append(ranking);message('');}catch(error){message(error.message);button.disabled=false;}});
